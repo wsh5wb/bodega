@@ -78,16 +78,11 @@ void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
 
 void DisplayObjectContainer::draw(AffineTransform &at){
 	DisplayObject::draw(at);
-	at.translate(position.x,position.y);
-	at.rotate(rotation);
-	at.scale(scaleX,scaleY);
+	DisplayObject::applyTransformations(at);
 
 	for(DisplayObject* child : children){
 		child->draw(at);
 	}
 	
-	at.scale(1/scaleX,1/scaleY);
-	at.rotate(-rotation);
-	at.translate(-position.x,-position.y);
-	
+	DisplayObject::reverseTransformations(at);	
 }
