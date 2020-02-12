@@ -1,0 +1,110 @@
+#include <DisplayObjectContainer.h>
+#include <iostream>
+
+using namespace std;
+
+DisplayObjectContainer::DisplayObjectContainer() : DisplayObject(){
+	
+}
+
+DisplayObjectContainer::DisplayObjectContainer(string id, string filepath) : DisplayObject(id,filepath){
+	
+}
+
+DisplayObjectContainer::DisplayObjectContainer(string id, int red, int green, int blue) : DisplayObject(id,red,green,blue){
+
+}
+
+DisplayObjectContainer::~DisplayObjectContainer(){
+	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
+		delete *it;
+	}children.clear();
+}
+
+void DisplayObjectContainer::addChild(DisplayObject* child){
+	//child->movePivot(position.x,position.y);
+	//child->moveTo(position.x,position.y);
+	children.push_back(child);
+}
+
+void DisplayObjectContainer::removeImmediateChild(DisplayObject* child){
+	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
+		if(child == *it){
+			delete *it;
+			children.erase(it);
+			break;
+		}
+	}
+}
+
+void DisplayObjectContainer::removeImmediateChild(string id){
+	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
+		if(id == (*it)->id){
+			delete *it;
+			children.erase(it);
+			break;
+		}
+	}
+}
+
+void DisplayObjectContainer::removeChild(int index){
+	vector<DisplayObject*>::iterator it = children.begin() + index;
+	delete *it;
+	children.erase(it);
+}
+
+void DisplayObjectContainer::removeThis(){
+	
+}
+
+int DisplayObjectContainer::numChildren(){
+	return children.size();
+}
+
+DisplayObject* DisplayObjectContainer::getChild(int index){
+	return children[index];
+}
+
+DisplayObject* DisplayObjectContainer::getChild(string id){
+	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
+		if(id == (*it)->id){ return *it; }
+	}
+}
+
+void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
+	DisplayObject::update(pressedKeys);
+	//cout << "called here";
+	for(DisplayObject* child : children){
+		//cout << "update child";
+		child->update(pressedKeys);
+	}
+}
+
+void DisplayObjectContainer::draw(AffineTransform &at){
+	DisplayObject::draw(at);
+	//at.translate(-pivot.x,-pivot.y);
+	at.translate(position.x,position.y);
+	at.rotate(rotation);
+	at.scale(scaleX,scaleY);
+	//at.rotate(rotation);
+	//at.translate(position.x,position.y);
+	
+	//at.translate(pivot.x,pivot.y);
+
+	
+
+	for(DisplayObject* child : children){
+		child->draw(at);
+	}
+	
+	
+	//at.translate(-pivot.x,-pivot.y);
+
+	//at.translate(-position.x,-position.y);
+	//at.rotate(-rotation);
+	at.scale(1/scaleX,1/scaleY);
+	at.rotate(-rotation);
+	//at.translate(pivot.x,pivot.y);
+	at.translate(-position.x,-position.y);
+	
+}
