@@ -22,8 +22,6 @@ DisplayObjectContainer::~DisplayObjectContainer(){
 }
 
 void DisplayObjectContainer::addChild(DisplayObject* child){
-	//child->movePivot(position.x,position.y);
-	//child->moveTo(position.x,position.y);
 	children.push_back(child);
 }
 
@@ -73,38 +71,23 @@ DisplayObject* DisplayObjectContainer::getChild(string id){
 
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
 	DisplayObject::update(pressedKeys);
-	//cout << "called here";
 	for(DisplayObject* child : children){
-		//cout << "update child";
 		child->update(pressedKeys);
 	}
 }
 
 void DisplayObjectContainer::draw(AffineTransform &at){
 	DisplayObject::draw(at);
-	//at.translate(-pivot.x,-pivot.y);
 	at.translate(position.x,position.y);
 	at.rotate(rotation);
 	at.scale(scaleX,scaleY);
-	//at.rotate(rotation);
-	//at.translate(position.x,position.y);
-	
-	//at.translate(pivot.x,pivot.y);
-
-	
 
 	for(DisplayObject* child : children){
 		child->draw(at);
 	}
 	
-	
-	//at.translate(-pivot.x,-pivot.y);
-
-	//at.translate(-position.x,-position.y);
-	//at.rotate(-rotation);
 	at.scale(1/scaleX,1/scaleY);
 	at.rotate(-rotation);
-	//at.translate(pivot.x,pivot.y);
 	at.translate(-position.x,-position.y);
 	
 }
