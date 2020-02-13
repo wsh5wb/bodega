@@ -10,8 +10,8 @@ EventDispatcher::~EventDispatcher(){
 		vector<EventListener*> *l = it->second;
 		for(int i = 0; i < l->size(); i++){
 			delete (*l)[i];
-			l->erase(l->begin() + i);
 		}
+		l->clear();
 		delete l;
 	}
 	delete listeners;
