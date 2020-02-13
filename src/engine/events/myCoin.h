@@ -5,8 +5,8 @@ class EventDispatcher;
 class Coin : public EventDispatcher, public Sprite{
 public:
   Coin(string id, string filepath) : Sprite(id, filepath){
-    this->pickedUp = new Event("PICKED_UP", this);
-    
+    this->pickedUp = new Event("COIN_PICKED_UP", this);
+
   }
   ~Coin(){
     delete this->pickedUp;

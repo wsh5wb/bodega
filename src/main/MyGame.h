@@ -6,6 +6,8 @@
 #include <iostream>
 #include "Game.h"
 #include "AnimatedSprite.h"
+#include "myCoin.h"
+#include "QuestManager.h"
 
 using namespace std;
 
@@ -19,8 +21,9 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
-	
 	AnimatedSprite* character;
+	Coin* myCoin;
+	bool isQuestDone;
 };
 
 #endif
