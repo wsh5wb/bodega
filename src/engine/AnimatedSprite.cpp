@@ -24,7 +24,6 @@ AnimatedSprite::~AnimatedSprite(){
 		}
 		i++;
 		SDL_FreeSurface(*it);
-		//delete *it;
 	}images.clear();
 	for(unordered_map<string,Animation*>::iterator it2 = animationMap.begin(); it2 != animationMap.end();it2++){
 		delete it2->second;
@@ -37,16 +36,12 @@ void AnimatedSprite::addAnimation(string basepath, string animName, int numFrame
 	a->numFrames = numFrames;
 	a->frameRate = frameRate;
 	a->startIndex = images.size();
-	//curFrame = images.size();
 	a->endIndex = curFrame + numFrames - 1;
 	loop = loop;
 	for(int i=1; i<numFrames+1;i++){
 		SDL_Surface* image = IMG_Load((basepath + "_" + to_string(i) + ".png").c_str());
 		images.push_back(image);
-		//cout << (basepath + "_" + to_string(i)).c_str() << endl;;
 	}
-	//DisplayObject::setImage(images[0]);
-	//play("Dead");
 }
 
 Animation* AnimatedSprite::getAnimation(string animName){
@@ -62,8 +57,6 @@ void AnimatedSprite::play(string animName){
 	startIndex = a->startIndex;
 	curFrame = startIndex;
 	endIndex = a->endIndex;
-
-	//cout << "Playing";
 	start = std::clock();
 	playing = true;
 }
@@ -83,7 +76,6 @@ void AnimatedSprite::setFrameRate(int rate){
 }
 
 void AnimatedSprite::update(set<SDL_Scancode> pressedKeys){
-	//cout << "update";
 	if(playing){
 		std::clock_t end = std::clock();
 		double duration = (( end - start ) / (double) CLOCKS_PER_SEC)*1000;
@@ -91,22 +83,15 @@ void AnimatedSprite::update(set<SDL_Scancode> pressedKeys){
 			start = end;
 			if(curFrame < endIndex){
 				curFrame++;
-				//cout << "curFrame: " << curFrame << " " << images.size() << endl;
 				DisplayObject::setImage(images[curFrame]);
-				//cout << "update";
-				// update frame in display object
 			}else{
 				if(loop){
 					replay();
 					return;
 				}stop();
 			}
-			
-
 		}
-
 	}
-
 }
 
 void AnimatedSprite::draw(AffineTransform &at){

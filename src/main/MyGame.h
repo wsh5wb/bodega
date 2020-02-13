@@ -20,10 +20,7 @@ public:
 
 private:
 	
-	//DisplayObjectContainer* game;
 	AnimatedSprite* character;
-	DisplayObjectContainer* earth;
-	bool characterPlaying = false, characterPlaying2 = false; 
 };
 
 #endif

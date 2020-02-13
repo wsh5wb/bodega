@@ -15,9 +15,6 @@ DisplayObject::DisplayObject(){
 	position.x = 0;
 	position.y = 0;
 	pivot.x = 0; pivot.y = 0;
-	//cout << "here";
-	//w = image->w;
-	//h = image->h;
 }
 
 DisplayObject::DisplayObject(string id, string filepath){
@@ -39,7 +36,6 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue){
 }
 
 DisplayObject::~DisplayObject(){
-	//TODO: Get this freeing working
 	if(image != NULL) SDL_FreeSurface(image);
 	if(texture != NULL) SDL_DestroyTexture(texture);
 	
@@ -59,7 +55,6 @@ void DisplayObject::loadTexture(string filepath){
 }
 
 void DisplayObject::setImage(SDL_Surface* img){
-	//SDL_FreeSurface(image);
 	image = img;
 	if(texture != NULL) SDL_DestroyTexture(texture);
 	texture = SDL_CreateTextureFromSurface(Game::renderer, image);
@@ -170,33 +165,31 @@ double DisplayObject::getRotation(){
 }
 
 void DisplayObject::rotateCW(){
-	//rotation += .26179;
 	rotation += rotationAmount;
-	/*if(rotation > PI && (rotation - rotationAmount) < PI){
-		pivot.y = -50;
-		cout << "Update";
-	}*/
-	if(rotation > 2*PI){
-		//pivot.y = 50;
-		rotation -= 2*PI;
-	}
-	pivot.x = (5*.0001)/(20+.0001 *cos(rotation));
 }
 
 void DisplayObject::rotateCCW(){
-	//rotation -= .26179;
 	rotation -= rotationAmount;
-	if(rotation < -2*PI){
-		rotation += 2*PI;
-	}
 }
 
 double DisplayObject::dist(SDL_Point &a, SDL_Point &b){
 	return sqrt((b.y-a.y)*(b.y-a.y) + (b.x-a.x)*(b.x-a.x));
 }
 
+void DisplayObject::applyTransformations(AffineTransform &at){
+	at.translate(position.x,position.y);
+	at.rotate(rotation);
+	at.scale(scaleX,scaleY);
+}
+
+void DisplayObject::reverseTransformations(AffineTransform &at){
+	at.scale(1/scaleX,1/scaleY);
+	at.rotate(-rotation);
+	at.translate(-position.x,-position.y);
+}
+
 void DisplayObject::update(set<SDL_Scancode> pressedKeys){
-	//cout << "UPD";
+
 }
 
 void DisplayObject::draw(AffineTransform &at){
@@ -204,9 +197,7 @@ void DisplayObject::draw(AffineTransform &at){
 	if(curTexture != NULL){
 		if(!vis){return;}
 
-		at.translate(position.x,position.y);
-		at.rotate(rotation);
-		at.scale(scaleX,scaleY);
+		applyTransformations(at);
 		at.translate(-pivot.x,-pivot.y);
 		
 		SDL_Point topL = at.transformPoint(0,0);
@@ -225,13 +216,7 @@ void DisplayObject::draw(AffineTransform &at){
 		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
 		
 		at.translate(pivot.x,pivot.y);
-		//at.translate(-position.x,-position.y);
-		//at.rotate(-rotation);
-		at.scale(1/scaleX,1/scaleY);
-		at.rotate(-rotation);
-		//at.translate(pivot.x,pivot.y);
-		at.translate(-position.x,-position.y);
-
+		reverseTransformations(at);
 
 	}
 }

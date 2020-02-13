@@ -58,6 +58,8 @@ public:
 	void rotateCW();
 	void rotateCCW();
 	double dist(SDL_Point &a, SDL_Point &b);
+	void applyTransformations(AffineTransform &at);
+	void reverseTransformations(AffineTransform &at);
 
 private:
 	SDL_Texture* texture = NULL;
