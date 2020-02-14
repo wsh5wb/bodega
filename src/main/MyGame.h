@@ -24,6 +24,8 @@ public:
 private:
 	
 	Scene* character;
+	string scene;
+	bool changed;
 };
 
 #endif

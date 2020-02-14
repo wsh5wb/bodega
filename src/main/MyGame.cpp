@@ -16,8 +16,8 @@ MyGame::MyGame() : Game(1200, 1000){
 	//character = new AnimatedSprite("girl","./resources/character/Idle_1.png");
 	//character = new Sprite("character", "./resources/character/Idle_1.png");
 	this->addChild(character);
-	character->loadScene("./resources/scenes/test.txt");
-
+	this->scene = "./resources/scenes/test.txt";
+	character->loadScene(scene);
 }
 
 MyGame::~MyGame(){
@@ -100,6 +100,18 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 			case SDL_SCANCODE_P:
 			{
+				if (changed == true){
+					scene = "./resources/scenes/test.txt";
+					character->removeThis();
+					character->loadScene(scene);
+					changed = false;
+				}
+				else{
+					scene = "./resources/scenes/test2.txt";
+					character->removeThis();
+					character->loadScene(scene);
+					changed = true;
+				}
 				break;
 			}
 		}
@@ -109,7 +121,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 void MyGame::draw(AffineTransform &at){
 	Game::draw(at);
-
 	SDL_RenderClear(Game::renderer);
 	DisplayObjectContainer::draw(at);
 	SDL_RenderPresent(Game::renderer);

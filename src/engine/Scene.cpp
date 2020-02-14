@@ -18,8 +18,9 @@ void Scene::loadScene(string sceneFilePath) {
 	int numDependencies;
 	i >> numObjects;
 	i >> numDependencies;
-
+	
 	vector<DisplayObject*> objects;
+	objects.clear();
 	while (numObjects--) {
 		int type;
 		i >> type;
@@ -31,7 +32,7 @@ void Scene::loadScene(string sceneFilePath) {
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
-			} else if (temp->imgPath != "") {
+			} else if (temp->imgPath != "0") {
 				temp->loadTexture(temp->imgPath);
 			}
 			break;
@@ -69,7 +70,7 @@ void Scene::loadScene(string sceneFilePath) {
 			}
 			break;
 		}
-		case 4: { //AnimatedSprite (haven't added some fields yet)
+		case 4: { //AnimatedSprite (haven't added some fields yet - needs to be finished). 
 			Sprite *temp = new Sprite();
 			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
 			objects.push_back(temp);
