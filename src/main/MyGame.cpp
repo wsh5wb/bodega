@@ -26,7 +26,7 @@ MyGame::~MyGame(){
 //	o << "0 " << "Scene" << " "<< "0" << " " << "0" << " "<< "0" << " "<< "0" << " "<< "true" << " "<< "false"  << " "<< "0" << " "<< "0" << std::endl;
 //	o << "3 " << character->id << " "<< character->imgPath << " " << character->red << " "<< character->green << " "<< character->blue << " "<< std::boolalpha << character->vis << " "<< std::boolalpha << character->isRGB << " "<< character->w << " "<< character->h << std::endl;
 //	o << "Scene" << " " << character->id << std::endl;
-	cerr << character->numChildren();
+	//cerr << character->numChildren();
 }
 
 
