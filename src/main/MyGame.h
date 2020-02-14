@@ -6,6 +6,9 @@
 #include <iostream>
 #include "Game.h"
 #include "AnimatedSprite.h"
+#include "DisplayObjectContainer.h"
+#include "Sprite.h"
+#include "Scene.h"
 
 using namespace std;
 
@@ -20,7 +23,7 @@ public:
 
 private:
 	
-	AnimatedSprite* character;
+	Scene* character;
 };
 
 #endif

@@ -1,9 +1,11 @@
 #include "Scene.h"
+#include <iostream>
 //#include "json.hpp"
 //#include "jsonConversions.h"
 // for convenience
 
-Scene(): DisplayObjectContainer() {
+Scene::Scene() :
+		DisplayObjectContainer() {
 	//just calling parent constructor
 }
 
@@ -17,43 +19,58 @@ void Scene::loadScene(string sceneFilePath) {
 	i >> numObjects;
 	i >> numDependencies;
 
-//	j.at("id").get_to(p.id);
-//		j.at("imgPath").get_to(p.imgPath);
-//		j.at("red").get_to(p.red);
-//		j.at("green").get_to(p.green);
-//		j.at("blue").get_to(p.blue);
-//		j.at("type").get_to(p.type);
-//		j.at("vis").get_to(p.vis);
-//		j.at("isRGB").get_to(p.isRGB);
-//		j.at("w").get_to(p.w);
-//		j.at("h").get_to(p.h);
-//		j.at("children").get_to(p.children);
 	vector<DisplayObject*> objects;
 	while (numObjects--) {
-		string type;
+		int type;
 		i >> type;
 		switch (type) {
 
-		case "Scene": {
-			Scene temp = new Scene();
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
+		case 0: { //Scene
+			Scene *temp = this;
+			i >> id >> imgPath >> red >> green >> blue >> std::boolalpha >> vis >> std::boolalpha >> isRGB >> w >> h;
 			objects.push_back(temp);
+			if (temp->isRGB) {
+				temp->loadRGBTexture(red, green, blue);
+			} else if (temp->imgPath != "") {
+				temp->loadTexture(temp->imgPath);
+			}
 			break;
 		}
-		case "DisplayObject": {
-			Scene temp = new DisplayObject();
+		case 1: { //DisplayObject
+			DisplayObject *temp = new DisplayObject();
 			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
 			objects.push_back(temp);
+			if (temp->isRGB) {
+				temp->loadRGBTexture(red, green, blue);
+			} else if (temp->imgPath != "") {
+				temp->loadTexture(temp->imgPath);
+			}
 			break;
 		}
-		case "DisplayObjectContainer": {
-			Scene temp = new DisplayObjectContainer();
+		case 2: { //DisplayObjectContainer
+			DisplayObjectContainer *temp = new DisplayObjectContainer();
 			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
 			objects.push_back(temp);
+			if (temp->isRGB) {
+				temp->loadRGBTexture(red, green, blue);
+			} else if (temp->imgPath != "") {
+				temp->loadTexture(temp->imgPath);
+			}
 			break;
 		}
-		case "Sprite": {
-			Scene temp = new Sprite();
+		case 3: { //Sprite
+			Sprite *temp = new Sprite();
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
+			objects.push_back(temp);
+			if (temp->isRGB) {
+				temp->loadRGBTexture(red, green, blue);
+			} else if (temp->imgPath != "") {
+				temp->loadTexture(temp->imgPath);
+			}
+			break;
+		}
+		case 4: { //AnimatedSprite (haven't added some fields yet)
+			Sprite *temp = new Sprite();
 			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
 			objects.push_back(temp);
 			break;
@@ -75,17 +92,18 @@ void Scene::loadScene(string sceneFilePath) {
 
 		for (vector<DisplayObject*>::iterator it = objects.begin(); it != objects.end(); it++) {
 			if (id1 == (*it)->id) {
-				temp1 = it;
+				temp1 = (DisplayObjectContainer*) (*it);
 			}
 		}
 
 		for (vector<DisplayObject*>::iterator it = objects.begin(); it != objects.end(); it++) {
 			if (id2 == (*it)->id) {
-				temp2 = it;
+				temp2 = *it;
 			}
 		}
 		temp1->addChild(temp2);
 	}
+
 }
 
 void Scene::saveScene(string sceneFilePath) {

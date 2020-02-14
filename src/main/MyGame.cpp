@@ -12,15 +12,21 @@ using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
 	//game = new DisplayObjectContainer();
-	scene = new Scene();
+	character = new Scene();
 	//character = new AnimatedSprite("girl","./resources/character/Idle_1.png");
-	this->addChild(scene);
-	scene->loadScene("test.json");
+	//character = new Sprite("character", "./resources/character/Idle_1.png");
+	this->addChild(character);
+	character->loadScene("./resources/scenes/test.txt");
 
 }
 
 MyGame::~MyGame(){
-	//scene.saveScene("test.json")
+//	std::ofstream o("./resources/scenes/test.txt");
+//	o << "2 1" << std::endl;
+//	o << "0 " << "Scene" << " "<< "0" << " " << "0" << " "<< "0" << " "<< "0" << " "<< "true" << " "<< "false"  << " "<< "0" << " "<< "0" << std::endl;
+//	o << "3 " << character->id << " "<< character->imgPath << " " << character->red << " "<< character->green << " "<< character->blue << " "<< std::boolalpha << character->vis << " "<< std::boolalpha << character->isRGB << " "<< character->w << " "<< character->h << std::endl;
+//	o << "Scene" << " " << character->id << std::endl;
+	cerr << character->numChildren();
 }
 
 
