@@ -17,6 +17,9 @@ public:
 	/* Load scene from a file */
 	void loadScene(string sceneFilePath);
 
+	/*Save scene to a file, used for testing*/
+	void saveScene(string sceneFilePath);
+
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 

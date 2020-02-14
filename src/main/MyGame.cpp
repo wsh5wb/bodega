@@ -2,19 +2,25 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include "DisplayObject.h"
+#include "DisplayObjectContainer.h"
+#include "Scene.h"
+#include "Sprite.h"
+#include "AnimatedSprite.h"
 #include "MyGame.h"
 
 using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
 	//game = new DisplayObjectContainer();
-	character = new AnimatedSprite("girl","./resources/character/Idle_1.png");
-	this->addChild(character);
+	scene = new Scene();
+	//character = new AnimatedSprite("girl","./resources/character/Idle_1.png");
+	this->addChild(scene);
+	scene->loadScene("test.json");
 
 }
 
 MyGame::~MyGame(){
-
+	//scene.saveScene("test.json")
 }
 
 
