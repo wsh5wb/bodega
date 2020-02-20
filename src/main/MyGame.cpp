@@ -2,32 +2,25 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include "DisplayObject.h"
+#include "DisplayObjectContainer.h"
+#include "Scene.h"
+#include "Sprite.h"
+#include "AnimatedSprite.h"
 #include "MyGame.h"
 
 using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
-	//game = new DisplayObjectContainer();
-	character = new AnimatedSprite("girl", "./resources/character/Idle_1.png");
-	myCoin = new Coin("coin","./resources/miscellaneous/Dogecoin_Logo.png");
-	QuestManager* CoinQuest = new QuestManager();
-	myCoin->addEventListener(CoinQuest, "COIN_PICKED_UP");
-
-	myCoin->movePivot(myCoin->w/2, myCoin->h/2);
-	myCoin->scale(.25);
-	myCoin->moveTo(600, 500);
-	character->scale(.5);
-	character->moveTo(character->w/2, 500);
-	character->movePivot(character->w/2, character->h/2);
-	this->addChild(myCoin);
-	this->addChild(character);
-
-	isQuestDone = false;
 
 }
 
 MyGame::~MyGame(){
-
+//	std::ofstream o("./resources/scenes/test.txt");
+//	o << "2 1" << std::endl;
+//	o << "0 " << "Scene" << " "<< "0" << " " << "0" << " "<< "0" << " "<< "0" << " "<< "true" << " "<< "false"  << " "<< "0" << " "<< "0" << std::endl;
+//	o << "3 " << character->id << " "<< character->imgPath << " " << character->red << " "<< character->green << " "<< character->blue << " "<< std::boolalpha << character->vis << " "<< std::boolalpha << character->isRGB << " "<< character->w << " "<< character->h << std::endl;
+//	o << "Scene" << " " << character->id << std::endl;
+	//cerr << character->numChildren();
 }
 
 
@@ -120,7 +113,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 void MyGame::draw(AffineTransform &at){
 	Game::draw(at);
-
 	SDL_RenderClear(Game::renderer);
 	DisplayObjectContainer::draw(at);
 	SDL_RenderPresent(Game::renderer);

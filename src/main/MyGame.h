@@ -6,6 +6,9 @@
 #include <iostream>
 #include "Game.h"
 #include "AnimatedSprite.h"
+#include "DisplayObjectContainer.h"
+#include "Sprite.h"
+#include "Scene.h"
 #include "myCoin.h"
 #include "QuestManager.h"
 
@@ -21,9 +24,14 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
+	
+	Scene* character;
+	string scene;
+	bool changed;
 	AnimatedSprite* character;
 	Coin* myCoin;
 	bool isQuestDone;
+
 };
 
 #endif

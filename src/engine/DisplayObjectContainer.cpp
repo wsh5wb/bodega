@@ -52,7 +52,9 @@ void DisplayObjectContainer::removeChild(int index){
 }
 
 void DisplayObjectContainer::removeThis(){
-	
+	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
+		delete *it;
+	}children.clear();
 }
 
 int DisplayObjectContainer::numChildren(){
