@@ -28,11 +28,6 @@ private:
 	Scene* character;
 	string scene;
 	Sound effect;
-	bool changed;
-	AnimatedSprite* character;
-	Coin* myCoin;
-	bool isQuestDone;
-
 };
 
 #endif

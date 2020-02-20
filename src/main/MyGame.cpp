@@ -108,15 +108,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 			}
 		}
 	}
-	SDL_Point char_piv = character->getPosition();
-	SDL_Point coin_piv = myCoin->getPosition();
-	double distance = character->dist(char_piv, coin_piv);
-
-	if( distance < 50 && !isQuestDone ){
-		isQuestDone = true;
-		myCoin->makeInvisible();
-		myCoin->dispatchEvent();
-	}
 
 }
 
