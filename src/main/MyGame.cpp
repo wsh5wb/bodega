@@ -11,7 +11,9 @@
 using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
-
+	// character = new Scene();
+	// character->loadScene("./resources/scenes/test.txt");
+	// this->addChild(character);
 }
 
 MyGame::~MyGame(){
@@ -98,15 +100,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 			// 	break;
 			// }
 		}
-	}
-	SDL_Point char_piv = character->getPosition();
-	SDL_Point coin_piv = myCoin->getPosition();
-	double distance = character->dist(char_piv, coin_piv);
-
-	if( distance < 50 && !isQuestDone ){
-		isQuestDone = true;
-		myCoin->makeInvisible();
-		myCoin->dispatchEvent();
 	}
 
 }
