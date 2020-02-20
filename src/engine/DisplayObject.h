@@ -60,6 +60,8 @@ public:
 	double dist(SDL_Point &a, SDL_Point &b);
 	void applyTransformations(AffineTransform &at);
 	void reverseTransformations(AffineTransform &at);
+	SDL_Point getPivot();
+	SDL_Point getPosition();
 
 private:
 	SDL_Texture* texture = NULL;

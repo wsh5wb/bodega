@@ -18,6 +18,8 @@ EventDispatcher::~EventDispatcher(){
 }
 
 void EventDispatcher::addEventListener(EventListener* l, string eventType){
+	if(!(*listeners)[eventType])
+		(*listeners)[eventType] = new std::vector<EventListener*>;
 	(*listeners)[eventType]->push_back(l);
 }
 

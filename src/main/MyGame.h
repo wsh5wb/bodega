@@ -9,6 +9,8 @@
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "myCoin.h"
+#include "QuestManager.h"
 
 using namespace std;
 
@@ -26,6 +28,10 @@ private:
 	Scene* character;
 	string scene;
 	bool changed;
+	AnimatedSprite* character;
+	Coin* myCoin;
+	bool isQuestDone;
+
 };
 
 #endif
