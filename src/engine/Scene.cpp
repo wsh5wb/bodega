@@ -21,7 +21,9 @@ void Scene::loadScene(string sceneFilePath) {
 	
 	vector<DisplayObject*> objects;
 	objects.clear();
+
 	while (numObjects--) {
+
 		int type;
 		i >> type;
 		switch (type) {

@@ -28,7 +28,6 @@ private:
 	Scene* character;
 	string scene;
 	bool changed;
-	AnimatedSprite* character;
 	Coin* myCoin;
 	bool isQuestDone;
 
