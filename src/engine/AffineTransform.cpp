@@ -60,6 +60,7 @@ void AffineTransform::concatenate(AffineTransform &at){
 		}
 	}
 
+	cleanMatrix(transform);
 	transform = newIdentity;
 }
 

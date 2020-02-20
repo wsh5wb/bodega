@@ -176,6 +176,14 @@ double DisplayObject::dist(SDL_Point &a, SDL_Point &b){
 	return sqrt((b.y-a.y)*(b.y-a.y) + (b.x-a.x)*(b.x-a.x));
 }
 
+SDL_Point DisplayObject::getPivot(){
+	return this->pivot;
+}
+
+SDL_Point DisplayObject::getPosition(){
+	return this->position;
+}
+
 void DisplayObject::applyTransformations(AffineTransform &at){
 	at.translate(position.x,position.y);
 	at.rotate(rotation);
