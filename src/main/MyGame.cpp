@@ -18,6 +18,7 @@ MyGame::MyGame() : Game(1200, 1000){
 	this->addChild(character);
 	this->scene = "./resources/scenes/test.txt";
 	character->loadScene(scene);
+	effect.loadMusic("./resources/sounds/clock_ticking.wav");
 }
 
 MyGame::~MyGame(){
@@ -100,18 +101,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 			case SDL_SCANCODE_P:
 			{
-				if (changed == true){
-					scene = "./resources/scenes/test.txt";
-					character->removeThis();
-					character->loadScene(scene);
-					changed = false;
-				}
-				else{
-					scene = "./resources/scenes/test2.txt";
-					character->removeThis();
-					character->loadScene(scene);
-					changed = true;
-				}
+				effect.playMusic();
 				break;
 			}
 		}
