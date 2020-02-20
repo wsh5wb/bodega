@@ -10,6 +10,8 @@
 #include "Sprite.h"
 #include "Scene.h"
 #include "Sound.h"
+#include "myCoin.h"
+#include "QuestManager.h"
 
 using namespace std;
 
@@ -26,6 +28,11 @@ private:
 	Scene* character;
 	string scene;
 	Sound effect;
+	bool changed;
+	AnimatedSprite* character;
+	Coin* myCoin;
+	bool isQuestDone;
+
 };
 
 #endif

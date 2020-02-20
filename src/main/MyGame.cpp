@@ -19,6 +19,7 @@ MyGame::MyGame() : Game(1200, 1000){
 	this->scene = "./resources/scenes/test.txt";
 	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
+
 }
 
 MyGame::~MyGame(){
@@ -41,63 +42,64 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 			case SDL_SCANCODE_DOWN:
 			{
-				character->translateUp();
+				character->translateDown();
 				break;
 			}case SDL_SCANCODE_UP:
 			{
-				character->translateDown();
+				character->translateUp();
 				break;
 			}case SDL_SCANCODE_LEFT:
 			{
-				character->translateRight();
+				character->translateLeft();
 				break;
 			}case SDL_SCANCODE_RIGHT:
 			{
-				character->translateLeft();
-				break;
-			}case SDL_SCANCODE_Q:
-			{
-				character->scaleOut();
-				break;
-			}case SDL_SCANCODE_W:
-			{
-				character->scaleIn();
-				break;
-			}case SDL_SCANCODE_A:
-			{
-				character->rotateCW();
-				break;
-			}case SDL_SCANCODE_S:
-			{
-				character->rotateCCW();
+				character->translateRight();
 				break;
 			}
-			case SDL_SCANCODE_I: 
-			{
-				character->movePivotUp();
-				break;
-			}case SDL_SCANCODE_J:
-			{
-				character->movePivotLeft();
-				break;
-			}case SDL_SCANCODE_K:
-			{
-				character->movePivotDown();
-				break;
-			}case SDL_SCANCODE_L:
-			{
-				character->movePivotRight();
-				break;
+			//case SDL_SCANCODE_Q:
+			// {
+			// 	character->scaleOut();
+			// 	break;
+			// }case SDL_SCANCODE_W:
+			// {
+			// 	character->scaleIn();
+			// 	break;
+			// }case SDL_SCANCODE_A:
+			// {
+			// 	character->rotateCW();
+			// 	break;
+			// }case SDL_SCANCODE_S:
+			// {
+			// 	character->rotateCCW();
+			// 	break;
+			// }
+			// case SDL_SCANCODE_I: 
+			// {
+			// 	character->movePivotUp();
+			// 	break;
+			// }case SDL_SCANCODE_J:
+			// {
+			// 	character->movePivotLeft();
+			// 	break;
+			// }case SDL_SCANCODE_K:
+			// {
+			// 	character->movePivotDown();
+			// 	break;
+			// }case SDL_SCANCODE_L:
+			// {
+			// 	character->movePivotRight();
+			// 	break;
 
-			}case SDL_SCANCODE_Z:
-			{
-				character->increaseAlpha();
-				break;
-			}case SDL_SCANCODE_X:
-			{
-				character->decreaseAlpha();
-				break;
-			}
+			// }case SDL_SCANCODE_Z:
+			// {
+			// 	character->increaseAlpha();
+			// 	break;
+			// }case SDL_SCANCODE_X:
+			// {
+			// 	character->decreaseAlpha();
+			// 	break;
+			// }
 
 			case SDL_SCANCODE_P:
 			{
@@ -105,6 +107,15 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 				break;
 			}
 		}
+	}
+	SDL_Point char_piv = character->getPosition();
+	SDL_Point coin_piv = myCoin->getPosition();
+	double distance = character->dist(char_piv, coin_piv);
+
+	if( distance < 50 && !isQuestDone ){
+		isQuestDone = true;
+		myCoin->makeInvisible();
+		myCoin->dispatchEvent();
 	}
 
 }
