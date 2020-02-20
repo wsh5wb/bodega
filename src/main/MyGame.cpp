@@ -11,9 +11,14 @@
 using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
-	// character = new Scene();
-	// character->loadScene("./resources/scenes/test.txt");
-	// this->addChild(character);
+	//game = new DisplayObjectContainer();
+	//character = new Scene();
+	//character = new AnimatedSprite("girl","./resources/character/Idle_1.png");
+	//character = new Sprite("character", "./resources/character/Idle_1.png");
+	//this->addChild(character);
+	//this->scene = "./resources/scenes/test.txt";
+	//character->loadScene(scene);
+	effect.loadMusic("./resources/sounds/clock_ticking.wav");
 }
 
 MyGame::~MyGame(){
@@ -95,10 +100,11 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 			// 	break;
 			// }
 
-			// case SDL_SCANCODE_P:
-			// {
-			// 	break;
-			// }
+			case SDL_SCANCODE_P:
+			{
+				effect.playMusic();
+				break;
+			}
 		}
 	}
 

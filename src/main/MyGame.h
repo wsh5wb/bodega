@@ -9,8 +9,7 @@
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
-#include "myCoin.h"
-#include "QuestManager.h"
+#include "Sound.h"
 
 using namespace std;
 
@@ -24,13 +23,13 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
-	
 	Scene* character;
 	string scene;
 	bool changed;
 	Coin* myCoin;
 	bool isQuestDone;
 
+	Sound effect;
 };
 
 #endif
