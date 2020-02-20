@@ -20,12 +20,14 @@ FSAN_FLAGS = -fsanitize=address,leak
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
-production_setup:
-	export ASAN_OPTIONS=new_delete_type_mismatch=0:alloc_dealloc_mismatch=0
+run:
+	$(shell export ASAN_OPTIONS=new_delete_type_mismatch=0:alloc_dealloc_mismatch=0 && $(BUILD_DIR)/$(TARGET_EXEC)) || true
+
+sanitize_setup:
 	$(eval LDFLAGS += $(FSAN_FLAGS))
 	$(eval CPPFLAGS += $(FSAN_FLAGS))
 
-production: production_setup $(OBJS)
+sanitize: sanitize_setup $(OBJS)
 	$(CXX) $(OBJS) -o $(BUILD_DIR)/$(TARGET_EXEC) $(LDFLAGS)
 
 # assembly
@@ -43,7 +45,7 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-.PHONY: clean, production, production_setup
+.PHONY: clean, sanitize, sanitize_setup, run
 
 clean:
 	$(RM) -r $(BUILD_DIR)
