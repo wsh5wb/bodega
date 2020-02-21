@@ -10,7 +10,8 @@
 
 using namespace std;
 
-MyGame::MyGame() : Game(1200, 1000){
+MyGame::MyGame() :
+		Game(1200, 1000) {
 	myCamera = Camera::getCamera();
 	character = new Scene();
 	myCamera->addScene(character);
@@ -21,7 +22,7 @@ MyGame::MyGame() : Game(1200, 1000){
 
 }
 
-MyGame::~MyGame(){
+MyGame::~MyGame() {
 //	std::ofstream o("./resources/scenes/test.txt");
 //	o << "2 1" << std::endl;
 //	o << "0 " << "Scene" << " "<< "0" << " " << "0" << " "<< "0" << " "<< "0" << " "<< "true" << " "<< "false"  << " "<< "0" << " "<< "0" << std::endl;
@@ -30,8 +31,7 @@ MyGame::~MyGame(){
 	//cerr << character->numChildren();
 }
 
-
-void MyGame::update(set<SDL_Scancode> pressedKeys){
+void MyGame::update(set<SDL_Scancode> pressedKeys) {
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
@@ -43,57 +43,64 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 	int cs = 15;
 
 	//these need to be set
-	int xmin = -10000;
-	int ymin = -10000;
-	int xmax = 10000;
-	int ymax = 10000;
+	int xmin = 0;
+	int ymin = 0;
+	int xmax = 1500;
+	int ymax = 4200;
+
+	int xmax2 = 0;
+	int ymin2 = 4120;
+
+	//these need to be set
+	int xminZ = 1200;
+	int yminZ = 3900;
+	int xmaxZ = 1500;
+	int ymaxZ = 4200;
 
 	//bounds can also be done like this
-	if(x>400&&x<500&&y>400&&y<500){
-		myCamera->setZoom(250,250);
-	}else{
-		myCamera->setZoom(500,500);
+	if (x >= xminZ && x <= xmaxZ && y > yminZ && y <= ymaxZ) {
+		myCamera->setZoom(490, 490);
+	} else {
+		myCamera->setZoom(500, 500);
 	}
 
-	for(SDL_Scancode code : pressedKeys){
-		switch(code){
+	for (SDL_Scancode code : pressedKeys) {
+		switch (code) {
 
-			case SDL_SCANCODE_DOWN:
-			{
-				//character->translateDown();
-				if(y<ymax)
-					myCamera->pan(0,cs);
-				break;
-			}case SDL_SCANCODE_UP:
-			{
-				//character->translateUp();
-				if(y>ymin)
-				myCamera->pan(0,-cs);
-				break;
-			}case SDL_SCANCODE_LEFT:
-			{
-				//character->translateLeft();
-				if(x<xmax)
-				myCamera->pan(-cs,0);
-				break;
-			}case SDL_SCANCODE_RIGHT:
-			{
-				//character->translateRight();
-				if(x>xmin)
-				myCamera->pan(cs,0);
-				break;
-			}
-			case SDL_SCANCODE_Q:
-			 {
-			 	//character->scaleOut();
-				 myCamera->zoom(2, 2);
-			 	break;
-			 }case SDL_SCANCODE_W:
-			 {
-			 	//character->scaleIn();
-				myCamera->zoom(.5, .5);
-			 	break;
-			 }
+		case SDL_SCANCODE_DOWN: {
+			//character->translateDown();
+			if (y < ymax)
+				myCamera->pan(0, cs);
+			break;
+		}
+		case SDL_SCANCODE_UP: {
+			//character->translateUp();
+			if ((y >= ymin && x <= xmax2) || y >= ymin2)
+				myCamera->pan(0, -cs);
+			break;
+		}
+		case SDL_SCANCODE_LEFT: {
+			//character->translateLeft();
+			if (x > xmin)
+				myCamera->pan(-cs, 0);
+			break;
+		}
+		case SDL_SCANCODE_RIGHT: {
+			//character->translateRight();
+			if ((x < xmax && y > ymin2) || x < xmax2)
+				myCamera->pan(cs, 0);
+			break;
+		}
+		case SDL_SCANCODE_Q: {
+			//character->scaleOut();
+			myCamera->zoom(2, 2);
+			break;
+		}
+		case SDL_SCANCODE_W: {
+			//character->scaleIn();
+			myCamera->zoom(.5, .5);
+			break;
+		}
 			//case SDL_SCANCODE_A:
 			// {
 			// 	character->rotateCW();
@@ -130,17 +137,16 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 			// 	break;
 			// }
 
-			case SDL_SCANCODE_P:
-			{
-				effect.playMusic();
-				break;
-			}
+		case SDL_SCANCODE_P: {
+			effect.playMusic();
+			break;
+		}
 		}
 	}
 
 }
 
-void MyGame::draw(AffineTransform &at){
+void MyGame::draw(AffineTransform &at) {
 	Game::draw(at);
 //	myCamera->draw(at);
 	SDL_RenderClear(Game::renderer);
