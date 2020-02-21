@@ -16,7 +16,7 @@ public:
 	void loadMusic(const char* filepath);
 
 private:
-	SDL_AudioSpec wavSpec;
+	SDL_AudioSpec wavSpec, wavHave;
 	Uint32  wavLength;
 	Uint8 *wavBuffer;
 	SDL_AudioDeviceID deviceId;

@@ -12,12 +12,12 @@ using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
 	//game = new DisplayObjectContainer();
-	//character = new Scene();
+	character = new Scene();
 	//character = new AnimatedSprite("girl","./resources/character/Idle_1.png");
 	//character = new Sprite("character", "./resources/character/Idle_1.png");
-	//this->addChild(character);
-	//this->scene = "./resources/scenes/test.txt";
-	//character->loadScene(scene);
+	this->addChild(character);
+	this->scene = "./resources/scenes/test.txt";
+	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
 }
 
@@ -114,5 +114,6 @@ void MyGame::draw(AffineTransform &at){
 	Game::draw(at);
 	SDL_RenderClear(Game::renderer);
 	DisplayObjectContainer::draw(at);
+	character->draw(at);
 	SDL_RenderPresent(Game::renderer);
 }

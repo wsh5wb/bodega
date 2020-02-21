@@ -9,6 +9,8 @@
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "myCoin.h"
+#include "QuestManager.h"
 #include "Sound.h"
 
 using namespace std;
