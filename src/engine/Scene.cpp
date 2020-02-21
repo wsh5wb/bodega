@@ -52,6 +52,8 @@ void Scene::loadScene(string sceneFilePath) {
 			} else if (temp->imgPath != "0") {
 				temp->loadTexture(temp->imgPath);
 			}
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		case 1: { //DisplayObject
@@ -81,6 +83,8 @@ void Scene::loadScene(string sceneFilePath) {
 			} else if (temp->imgPath != "") {
 				temp->loadTexture(temp->imgPath);
 			}
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		case 2: { //DisplayObjectContainer
@@ -110,6 +114,8 @@ void Scene::loadScene(string sceneFilePath) {
 			} else if (temp->imgPath != "") {
 				temp->loadTexture(temp->imgPath);
 			}
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		case 3: { //Sprite
@@ -139,6 +145,8 @@ void Scene::loadScene(string sceneFilePath) {
 			} else if (temp->imgPath != "") {
 				temp->loadTexture(temp->imgPath);
 			}
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		case 4: { //AnimatedSprite (haven't added some fields yet - needs to be finished). 
@@ -163,6 +171,8 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
 			objects.push_back(temp);
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		case 5: { //DemoSprite
@@ -185,7 +195,7 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->setRotation(rotationAmount);
 			temp->setAlpha(alpha);
 			temp->moveTo(position.x, position.y);
-			cerr << "Position:"<<position.x<<", "<<position.y<<"\n";
+			cerr << "Position:" << position.x << ", " << position.y << "\n";
 			temp->movePivot(pivot.x, pivot.y);
 			objects.push_back(temp);
 			if (temp->isRGB) {
@@ -193,6 +203,8 @@ void Scene::loadScene(string sceneFilePath) {
 			} else if (temp->imgPath != "") {
 				temp->loadTexture(temp->imgPath);
 			}
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		default: {

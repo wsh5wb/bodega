@@ -13,6 +13,7 @@ Camera* Camera::getCamera() {
 	if (camera == 0) {
 		camera = new Camera();
 		camera->container = new DisplayObjectContainer();
+		(camera->container)->id = "camera";
 	}
 	return camera;
 }
@@ -45,6 +46,7 @@ void Camera::setZoom(double w, double h) {
 
 void Camera::update(set<SDL_Scancode> pressedKeys) {
 	container->moveTo(-x, -y);
+	container->movePivot(-viewportWidth/2, -viewportHeight/2);
 	container->setScale(1.0 * viewportWidth / 500.0,
 			1.0 * viewportHeight / 500.0);
 	container->update(pressedKeys);

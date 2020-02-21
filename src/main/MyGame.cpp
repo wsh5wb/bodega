@@ -37,28 +37,50 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
 	myCamera->update(pressedKeys);
 
+	int x = myCamera->x;
+	int y = myCamera->y;
+
+	int cs = 15;
+
+	//these need to be set
+	int xmin = -10000;
+	int ymin = -10000;
+	int xmax = 10000;
+	int ymax = 10000;
+
+	//bounds can also be done like this
+	if(x>400&&x<500&&y>400&&y<500){
+		myCamera->setZoom(250,250);
+	}else{
+		myCamera->setZoom(500,500);
+	}
+
 	for(SDL_Scancode code : pressedKeys){
 		switch(code){
 
 			case SDL_SCANCODE_DOWN:
 			{
 				//character->translateDown();
-				myCamera->pan(0,1);
+				if(y<ymax)
+					myCamera->pan(0,cs);
 				break;
 			}case SDL_SCANCODE_UP:
 			{
 				//character->translateUp();
-				myCamera->pan(0,-1);
+				if(y>ymin)
+				myCamera->pan(0,-cs);
 				break;
 			}case SDL_SCANCODE_LEFT:
 			{
 				//character->translateLeft();
-				myCamera->pan(-1,0);
+				if(x<xmax)
+				myCamera->pan(-cs,0);
 				break;
 			}case SDL_SCANCODE_RIGHT:
 			{
 				//character->translateRight();
-				myCamera->pan(1,0);
+				if(x>xmin)
+				myCamera->pan(cs,0);
 				break;
 			}
 			case SDL_SCANCODE_Q:
