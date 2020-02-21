@@ -9,6 +9,7 @@
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "Sound.h"
 #include "myCoin.h"
 #include "QuestManager.h"
 #include "Sound.h"
