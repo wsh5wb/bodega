@@ -11,14 +11,14 @@
 using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
-	//game = new DisplayObjectContainer();
+	myCamera = Camera::getCamera();
 	character = new Scene();
-	//character = new AnimatedSprite("girl","./resources/character/Idle_1.png");
-	//character = new Sprite("character", "./resources/character/Idle_1.png");
-	this->addChild(character);
+	myCamera->addScene(character);
 	this->scene = "./resources/scenes/test.txt";
+
 	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
+
 }
 
 MyGame::~MyGame(){
@@ -35,36 +35,44 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
+	myCamera->update(pressedKeys);
 
 	for(SDL_Scancode code : pressedKeys){
 		switch(code){
 
 			case SDL_SCANCODE_DOWN:
 			{
-				character->translateDown();
+				//character->translateDown();
+				myCamera->pan(0,1);
 				break;
 			}case SDL_SCANCODE_UP:
 			{
-				character->translateUp();
+				//character->translateUp();
+				myCamera->pan(0,-1);
 				break;
 			}case SDL_SCANCODE_LEFT:
 			{
-				character->translateLeft();
+				//character->translateLeft();
+				myCamera->pan(-1,0);
 				break;
 			}case SDL_SCANCODE_RIGHT:
 			{
-				character->translateRight();
+				//character->translateRight();
+				myCamera->pan(1,0);
 				break;
 			}
-			//case SDL_SCANCODE_Q:
-			// {
-			// 	character->scaleOut();
-			// 	break;
-			// }case SDL_SCANCODE_W:
-			// {
-			// 	character->scaleIn();
-			// 	break;
-			// }case SDL_SCANCODE_A:
+			case SDL_SCANCODE_Q:
+			 {
+			 	//character->scaleOut();
+				 myCamera->zoom(2, 2);
+			 	break;
+			 }case SDL_SCANCODE_W:
+			 {
+			 	//character->scaleIn();
+				myCamera->zoom(.5, .5);
+			 	break;
+			 }
+			//case SDL_SCANCODE_A:
 			// {
 			// 	character->rotateCW();
 			// 	break;
@@ -112,8 +120,9 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 void MyGame::draw(AffineTransform &at){
 	Game::draw(at);
+//	myCamera->draw(at);
 	SDL_RenderClear(Game::renderer);
+	myCamera->draw(at);
 	DisplayObjectContainer::draw(at);
-	character->draw(at);
 	SDL_RenderPresent(Game::renderer);
 }

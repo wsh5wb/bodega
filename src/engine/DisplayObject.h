@@ -37,6 +37,7 @@ public:
 	void setImage(SDL_Surface* img);
 	void decreaseAlpha();
 	void increaseAlpha();
+	void setAlpha(int a);//added
 	void toggleVisibility();
 	void makeVisible();
 	void makeInvisible();
@@ -53,7 +54,9 @@ public:
 	void scaleIn();
 	void scaleOut();
 	void scale(double s);
+	void setScale(double x, double y);//added
 	void setRotation(double angle);
+	void setRotationValue(double angle);//added
 	double getRotation();
 	void rotateCW();
 	void rotateCCW();
@@ -62,6 +65,7 @@ public:
 	void reverseTransformations(AffineTransform &at);
 	SDL_Point getPivot();
 	SDL_Point getPosition();
+	void setSpeed(int s);//added
 
 private:
 	SDL_Texture* texture = NULL;

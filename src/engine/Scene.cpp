@@ -18,19 +18,34 @@ void Scene::loadScene(string sceneFilePath) {
 	int numDependencies;
 	i >> numObjects;
 	i >> numDependencies;
-	
+
 	vector<DisplayObject*> objects;
 	objects.clear();
-
 	while (numObjects--) {
-
 		int type;
 		i >> type;
 		switch (type) {
 
 		case 0: { //Scene
 			Scene *temp = this;
-			i >> id >> imgPath >> red >> green >> blue >> std::boolalpha >> vis >> std::boolalpha >> isRGB >> w >> h;
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			SDL_Point pivot, position;
+			i >> id >> imgPath >> red >> green >> blue >> std::boolalpha >> vis
+					>> std::boolalpha >> isRGB >> w >> h >> speed >> scaleX
+					>> scaleY >> rotation >> rotationAmount >> alpha >> pivot.x
+					>> pivot.y >> position.x >> position.y;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
@@ -41,7 +56,25 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 1: { //DisplayObject
 			DisplayObject *temp = new DisplayObject();
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			SDL_Point pivot, position;
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
+					>> temp->blue >> std::boolalpha >> temp->vis
+					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
+					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
+					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
@@ -52,7 +85,25 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 2: { //DisplayObjectContainer
 			DisplayObjectContainer *temp = new DisplayObjectContainer();
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			SDL_Point pivot, position;
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
+					>> temp->blue >> std::boolalpha >> temp->vis
+					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
+					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
+					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
@@ -63,7 +114,25 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 3: { //Sprite
 			Sprite *temp = new Sprite();
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			int x1, x2, y1, y2;
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
+					>> temp->blue >> std::boolalpha >> temp->vis
+					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
+					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
+					>> alpha >> x1 >> y1 >> x2 >> y2;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(x2, y2);
+			temp->movePivot(x1, y1);
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
@@ -74,8 +143,56 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 4: { //AnimatedSprite (haven't added some fields yet - needs to be finished). 
 			Sprite *temp = new Sprite();
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green >> temp->blue >> std::boolalpha >> temp->vis >> std::boolalpha >> temp->isRGB >> temp->w >> temp->h;
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			SDL_Point pivot, position;
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
+					>> temp->blue >> std::boolalpha >> temp->vis
+					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
+					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
+					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
 			objects.push_back(temp);
+			break;
+		}
+		case 5: { //DemoSprite
+			DemoSprite *temp = new DemoSprite();
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			SDL_Point pivot, position;
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
+					>> temp->blue >> std::boolalpha >> temp->vis
+					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
+					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
+					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(position.x, position.y);
+			cerr << "Position:"<<position.x<<", "<<position.y<<"\n";
+			temp->movePivot(pivot.x, pivot.y);
+			objects.push_back(temp);
+			if (temp->isRGB) {
+				temp->loadRGBTexture(red, green, blue);
+			} else if (temp->imgPath != "") {
+				temp->loadTexture(temp->imgPath);
+			}
 			break;
 		}
 		default: {
@@ -93,13 +210,15 @@ void Scene::loadScene(string sceneFilePath) {
 		DisplayObjectContainer *temp1;
 		DisplayObject *temp2;
 
-		for (vector<DisplayObject*>::iterator it = objects.begin(); it != objects.end(); it++) {
+		for (vector<DisplayObject*>::iterator it = objects.begin();
+				it != objects.end(); it++) {
 			if (id1 == (*it)->id) {
 				temp1 = (DisplayObjectContainer*) (*it);
 			}
 		}
 
-		for (vector<DisplayObject*>::iterator it = objects.begin(); it != objects.end(); it++) {
+		for (vector<DisplayObject*>::iterator it = objects.begin();
+				it != objects.end(); it++) {
 			if (id2 == (*it)->id) {
 				temp2 = *it;
 			}

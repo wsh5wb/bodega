@@ -1,4 +1,4 @@
 2 1
-0 Scene ./resources/planets/planet/jupiter.png 0 0 0 true false 0 0
-3 character ./resources/planets/planet/saturne.png 0 0 0 true false 416 454
+0 Scene ./resources/planets/planet/jupiter.png 0 0 0 true false 0 0 0 1 1 0 0 255 0 0 0 0
+3 character ./resources/planets/planet/saturne.png 0 0 0 true false 416 454 0 1 1 0 0 255 0 0 0 0
 Scene character

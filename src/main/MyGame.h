@@ -10,9 +10,9 @@
 #include "Sprite.h"
 #include "Scene.h"
 #include "Sound.h"
+#include "Camera.h"
 #include "myCoin.h"
 #include "QuestManager.h"
-#include "Sound.h"
 
 using namespace std;
 
@@ -26,12 +26,9 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
+	Camera* myCamera;
 	Scene* character;
 	string scene;
-	bool changed;
-	Coin* myCoin;
-	bool isQuestDone;
-
 	Sound effect;
 };
 

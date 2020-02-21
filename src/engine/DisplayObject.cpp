@@ -90,6 +90,10 @@ void DisplayObject::increaseAlpha(){
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
+void DisplayObject::setAlpha(int a){
+	alpha = a;
+}
+
 void DisplayObject::toggleVisibility(){
 	vis = !vis;
 }
@@ -159,8 +163,17 @@ void DisplayObject::scale(double s){
 	scaleY *= s;
 }
 
+void DisplayObject::setScale(double x, double y){
+	scaleX = x;
+	scaleY = y;
+}
+
 void DisplayObject::setRotation(double angle){
 	rotationAmount = angle*PI/180;
+}
+
+void DisplayObject::setRotationValue(double angle){
+	rotation = angle*PI/180;
 }
 
 double DisplayObject::getRotation(){
@@ -185,6 +198,10 @@ SDL_Point DisplayObject::getPivot(){
 
 SDL_Point DisplayObject::getPosition(){
 	return this->position;
+}
+
+void DisplayObject::setSpeed(int s){
+	speed = s;
 }
 
 void DisplayObject::applyTransformations(AffineTransform &at){
