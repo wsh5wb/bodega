@@ -3,7 +3,7 @@
 using namespace std;
 
 DevTool::DevTool() : Game(1200, 1000){
-	resourceBar = new ResourceBar();
+	resourceBar = new ResourceBar(this->windowWidth, this->windowHeight);
 }
 
 DevTool::~DevTool(){
@@ -15,15 +15,16 @@ DevTool::~DevTool(){
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
+	resourceBar->update(pressedKeys);
 }
 
 
 void DevTool::draw(AffineTransform &at){
 	Game::draw(at);
-	resourceBar->draw(at);
 	SDL_RenderClear(Game::renderer);
-	DisplayObjectContainer::draw(at);
+	resourceBar->draw(at);
 	SDL_RenderPresent(Game::renderer);
+
 }
 
 
