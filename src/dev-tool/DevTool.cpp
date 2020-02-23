@@ -1,12 +1,35 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <DisplayObject.h>
 #include "DevTool.h"
-#include <iostream>
 
 using namespace std;
 
+DevTool::DevTool() : Game(1200, 1000){
+
+}
+
+DevTool::~DevTool(){
+
+
+}
+
+
+void DevTool::update(set<SDL_Scancode> pressedKeys){
+	Game::update(pressedKeys);
+	DisplayObjectContainer::update(pressedKeys);
+}
+
+
+void DevTool::draw(AffineTransform &at){
+	Game::draw(at);
+	SDL_RenderClear(Game::renderer);
+	DisplayObjectContainer::draw(at);
+	SDL_RenderPresent(Game::renderer);
+}
+
+
 int main(int argc, char ** argv){
 	cout << "hello" << endl;
+	DevTool* devTool = new DevTool();
+ 	devTool->start();
+ 	delete devTool;
 	return 0;
 }
