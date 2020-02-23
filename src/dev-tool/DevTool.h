@@ -6,10 +6,11 @@
 #include <iostream>
 #include "Game.h"
 #include "AnimatedSprite.h"
-#include <DisplayObject.h>
+#include "DisplayObject.h"
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "ResourceBar.h"
 
 using namespace std;
 
