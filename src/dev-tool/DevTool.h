@@ -7,6 +7,6 @@ class DevTool{
 public:
 
 private:
-}
+};
 
 #endif
