@@ -13,10 +13,15 @@
 
 class ResourceBar : public DisplayObjectContainer{
 public:
-	ResourceBar();
+	ResourceBar(int windowWidth, int windowHeight);
 	~ResourceBar();
+	void addChild(DisplayObject* child);
+	virtual void update(set<SDL_Scancode> pressedKeys);
+	virtual void draw(AffineTransform &at);
 private:
-	DisplayObjectContainer menu;
+	DisplayObjectContainer* menu;
+	double windowHeight;
+	double windowWidth;
 };
 
 
