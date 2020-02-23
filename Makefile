@@ -11,10 +11,11 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -std=c++17 -g
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -std=c++17 -g 
+CXX := g++-8
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lstdc++fs
 FSAN_FLAGS = -fsanitize=address,leak
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
@@ -33,7 +34,7 @@ sanitize: sanitize_setup $(OBJS)
 # assembly
 $(BUILD_DIR)/%.s.o: %.s
 	$(MKDIR_P) $(dir $@)
-	$(AS) $(ASFLAGS) -c $< -o $@
+	$(AS) $(ASFLAGS) -c $< -o $@ 
 
 # c source
 $(BUILD_DIR)/%.c.o: %.c
@@ -43,7 +44,7 @@ $(BUILD_DIR)/%.c.o: %.c
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@ -lstdc++fs
 
 .PHONY: clean, sanitize, sanitize_setup, run
 

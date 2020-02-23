@@ -21,6 +21,7 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 private:
+	ResourceBar* resourceBar;
 };
 
 #endif
