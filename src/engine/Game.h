@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "DisplayObjectContainer.h"
+#include "Mouse.h"
 #include <vector>
 #include <set>
 
@@ -32,13 +33,13 @@ public:
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
-
+	Mouse* mouse;
 private:
 
 	void initSDL();
 	void quitSDL();
 	set<SDL_Scancode> pressedKeys;
-	
+
 };
 
 #endif

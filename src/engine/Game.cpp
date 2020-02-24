@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -21,6 +22,10 @@ Game::Game(int windowWidth, int windowHeight){
 
 	initSDL();
 	TTF_Init();
+	// cout << Game::renderer << endl;
+	mouse = new Mouse("Mouse",100,100,100);
+	mouse->makeInvisible();
+	mouse->alpha = 155;
 }
 
 Game::~Game(){
@@ -78,7 +83,10 @@ void Game::start(){
 			case SDL_KEYUP:
 				pressedKeys.erase(event.key.keysym.scancode);
 				break;
+
 		}
+
+		mouse->setState(event.type, event);
 	
 	}
 }

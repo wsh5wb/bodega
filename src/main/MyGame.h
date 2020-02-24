@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "AnimatedSprite.h"
 #include "DisplayObjectContainer.h"
+#include <string>
 #include "Sprite.h"
 #include "Scene.h"
 #include "myCoin.h"
@@ -30,7 +31,6 @@ private:
 	bool changed;
 	Coin* myCoin;
 	bool isQuestDone;
-
 };
 
 #endif

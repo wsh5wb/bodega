@@ -24,7 +24,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight) : DisplayObjectConta
 	int x = 0;
 	int y = 0;
 	menu->moveTo(0, base_height);
-	
+
 	for (const auto& dirEntry : std::filesystem::recursive_directory_iterator("./resources")){
 		std::filesystem::path path = dirEntry.path();
 		string string_path = path.string();
@@ -43,7 +43,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight) : DisplayObjectConta
 	    	//std::cout << dirEntry << std::endl;
 			}
 		}
-			
+
 }
 
 ResourceBar::~ResourceBar(){

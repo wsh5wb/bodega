@@ -187,6 +187,10 @@ SDL_Point DisplayObject::getPosition(){
 	return this->position;
 }
 
+SDL_Texture* DisplayObject::getCurTexture(){
+	return this->curTexture;
+}
+
 void DisplayObject::applyTransformations(AffineTransform &at){
 	at.translate(position.x,position.y);
 	at.rotate(rotation);
@@ -220,10 +224,14 @@ void DisplayObject::draw(AffineTransform &at){
 		
 		int distAdj = dist(topL,topR);
 		int distOpp = dist(topR,bottomR);
+
+		topL = {500, 500};
+		distAdj = 100;
+		distOpp = 100;
 		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
 
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
-
+		angle = 0;
 		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
 		
 		at.translate(pivot.x,pivot.y);

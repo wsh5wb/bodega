@@ -69,6 +69,7 @@ DisplayObject* DisplayObjectContainer::getChild(string id){
 	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
 		if(id == (*it)->id){ return *it; }
 	}
+	return NULL;
 }
 
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
