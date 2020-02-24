@@ -30,9 +30,9 @@ void DevTool::draw(AffineTransform &at){
 }
 
 
-int main(int argc, char ** argv){
-	DevTool* devTool = new DevTool();
- 	devTool->start();
- 	delete devTool;
-	return 0;
-}
+// int main(int argc, char ** argv){
+// 	DevTool* devTool = new DevTool();
+//  	devTool->start();
+//  	delete devTool;
+// 	return 0;
+// }
