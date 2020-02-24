@@ -225,9 +225,6 @@ void DisplayObject::draw(AffineTransform &at){
 		int distAdj = dist(topL,topR);
 		int distOpp = dist(topR,bottomR);
 
-		topL = {500, 500};
-		distAdj = 100;
-		distOpp = 100;
 		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
 
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
@@ -239,7 +236,3 @@ void DisplayObject::draw(AffineTransform &at){
 
 	}
 }
-
-
-
-

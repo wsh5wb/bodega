@@ -25,7 +25,7 @@ Game::Game(int windowWidth, int windowHeight){
 	// cout << Game::renderer << endl;
 	mouse = new Mouse("Mouse",100,100,100);
 	mouse->makeInvisible();
-	mouse->alpha = 155;
+	mouse->alpha = 80;
 }
 
 Game::~Game(){
