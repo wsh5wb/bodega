@@ -10,6 +10,9 @@ Mouse::Mouse() : DisplayObject(){
 	leftClick = false;
 	rightClick = false;
 	isMoving = false;
+	wheelUp = false;
+	wheelDown = false;
+	isScrolling = false;
 	vis = false;
 }
 
@@ -19,6 +22,9 @@ Mouse::Mouse(string id, int red, int green, int blue) : DisplayObject(id, red, g
 	leftClick = false;
 	rightClick = false;
 	isMoving = false;
+	wheelUp = false;
+	wheelDown = false;
+	isScrolling = false;
 	vis = false;
 }
 
@@ -30,13 +36,12 @@ SDL_Point Mouse::getCoordinates(){
 	return this->mouseCoords;
 }
 
-void Mouse::setState(Uint32 eventType, SDL_Event event){
+void Mouse::setState(Uint32 eventType, const SDL_Event &event){
 	if (eventType == SDL_MOUSEBUTTONUP){
 		if (event.button.button == SDL_BUTTON_LEFT && this->leftClick) {
 	        this->leftClick = false;
 	        makeInvisible();
 	    }
-
 	    if(event.button.button == SDL_BUTTON_RIGHT){
 	    	this->rightClick = false;
 	    }
@@ -54,9 +59,21 @@ void Mouse::setState(Uint32 eventType, SDL_Event event){
 	        this->rightClick = true;
 	        // SDL_GetMouseState( &this->start_coords.x, &this->start_coords.y );
     	}
+
+	} 
+
+	if(eventType == SDL_MOUSEWHEEL){
+		isScrolling = true;
+		if(event.wheel.y > 0 && !wheelUp)			wheelUp = true;
+		else if(event.wheel.y < 0 && !wheelDown)	wheelDown = true;
+
+	} else { 
+		wheelUp = false; 
+		wheelDown = false; 
+		isScrolling = false;
 	}
 
-    if ( eventType == SDL_MOUSEMOTION ) {
+	if ( eventType == SDL_MOUSEMOTION ) {
         this->isMoving = true;
         this->mouseCoords.x = event.motion.x;
         this->mouseCoords.y = event.motion.y;

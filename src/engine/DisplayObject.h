@@ -37,6 +37,7 @@ public:
 	void setImage(SDL_Surface* img);
 	void decreaseAlpha();
 	void increaseAlpha();
+	void setAlpha(int alpha);
 	void toggleVisibility();
 	void makeVisible();
 	void makeInvisible();

@@ -10,17 +10,22 @@ public:
 	Mouse(string id, int red, int green, int blue);
 	~Mouse();
 	SDL_Point getCoordinates();
-	void setState(Uint32 eventType, SDL_Event event);
+	void setState(Uint32 eventType, const SDL_Event &event);
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
-private:
-	SDL_Point mouseCoords;
-	SDL_Point leftClickCoords;
 	bool leftClick;
 	bool rightClick;
 	bool isMoving;
+	bool isScrolling;
+	bool wheelUp;
+	bool wheelDown;
+
+private:
+	SDL_Point mouseCoords;
+	SDL_Point leftClickCoords;
+	
 };
 
 #endif

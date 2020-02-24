@@ -25,10 +25,11 @@ Game::Game(int windowWidth, int windowHeight){
 	// cout << Game::renderer << endl;
 	mouse = new Mouse("Mouse",100,100,100);
 	mouse->makeInvisible();
-	mouse->alpha = 80;
+	mouse->setAlpha(80);
 }
 
 Game::~Game(){
+	// delete mouse;
 	quitSDL();
 }
 
@@ -83,7 +84,6 @@ void Game::start(){
 			case SDL_KEYUP:
 				pressedKeys.erase(event.key.keysym.scancode);
 				break;
-
 		}
 
 		mouse->setState(event.type, event);

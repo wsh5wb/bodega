@@ -53,6 +53,10 @@ void ResourceBar::addChild(DisplayObject* obj){
 	DisplayObjectContainer::addChild(obj);
 }
 
+void ResourceBar::setMouseListener(Mouse* mouse){
+	this->mouseListener = mouse;
+}
+
 void ResourceBar::draw(AffineTransform &at){
 	DisplayObjectContainer::draw(at);
 	menu->draw(at);
@@ -61,6 +65,7 @@ void ResourceBar::draw(AffineTransform &at){
 void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
 
+	// keyboard actions
 	for(SDL_Scancode code : pressedKeys){
 		switch(code){
 
@@ -83,4 +88,20 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 			}
 		}
 	}
+	
+	if(this->mouseListener == NULL)	return;
+
+	// mouse actions
+	if(this->mouseListener->isScrolling){
+		if (this->mouseListener->wheelUp){
+			SDL_Point pos = menu->getPosition();
+			menu->moveTo(pos.x-20,pos.y);
+		}
+		else if(this->mouseListener->wheelDown){
+			SDL_Point pos = menu->getPosition();
+			menu->moveTo(pos.x+20,pos.y);
+		}
+	}
+	SDL_Delay(15);
+
 }

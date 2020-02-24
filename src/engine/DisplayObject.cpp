@@ -90,6 +90,11 @@ void DisplayObject::increaseAlpha(){
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
+void DisplayObject::setAlpha(int alpha){
+	this->alpha = alpha;
+	SDL_SetTextureAlphaMod(curTexture,alpha);
+}
+
 void DisplayObject::toggleVisibility(){
 	vis = !vis;
 }
