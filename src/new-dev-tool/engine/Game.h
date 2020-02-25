@@ -4,11 +4,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <glad/glad.h>
 #include "DisplayObjectContainer.h"
+#include "imgui/imgui_impl_sdl.h"
+#include "imgui/imgui_impl_opengl3.h"
 #include "Mouse.h"
 #include <vector>
 #include <set>
 
+using namespace std;
 
 class Game : public DisplayObjectContainer{
 

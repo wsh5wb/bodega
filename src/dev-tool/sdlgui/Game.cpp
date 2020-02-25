@@ -46,8 +46,14 @@ void Game::initSDL(){
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 
-	window = SDL_CreateWindow("myGame",
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->windowWidth, this->windowHeight, 0);
+	window = SDL_CreateWindow(
+		"myGame",
+		SDL_WINDOWPOS_UNDEFINED, 
+		SDL_WINDOWPOS_UNDEFINED, 
+		this->windowWidth, 
+		this->windowHeight, 
+		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN  | SDL_WINDOW_ALLOW_HIGHDPI
+	);
 
 	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
 

@@ -32,6 +32,17 @@
 #include <sdlgui/tabwidget.h>
 #include <sdlgui/switchbox.h>
 #include <sdlgui/formhelper.h>
+#include <sdlgui/AffineTransform.h>
+#include <sdlgui/AnimatedSprite.h>
+#include <sdlgui/Animations.h>
+#include <sdlgui/DisplayObjectContainer.h>
+#include <sdlgui/DisplayObject.h>
+#include <sdlgui/Game.h>
+#include <sdlgui/jsonConversions.h>
+#include <sdlgui/json.hpp>
+#include <sdlgui/Mouse.h>
+#include <sdlgui/Scene.h>
+#include <sdlgui/Sprite.h>
 #include <memory>
 
 #if defined(_WIN32)
@@ -39,8 +50,8 @@
 #endif
 #include <iostream>
 
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 using std::cout;
 using std::cerr;

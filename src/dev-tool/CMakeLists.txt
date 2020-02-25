@@ -5,6 +5,8 @@ project("sdlgui")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -w -lstdc++fs")
+set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS})
 
 # Required libraries for linking against nngui (all targets)
 set(NNGUI_EXTRA_LIBS "")
@@ -47,17 +49,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
   endif()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244 /wd4100 /wd4101 /wd4018 /wd4201 /wd4189 /wd4457 /wd4456 /wd4245 /wd4838 /wd4389 /wd4702")
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  CHECK_CXX_COMPILER_FLAG("-std=c++14" HAS_CPP14_FLAG)
-  CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_CPP11_FLAG)
 
-  if (HAS_CPP14_FLAG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-  elseif (HAS_CPP11_FLAG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-  else()
-    message(FATAL_ERROR "Unsupported compiler -- requires C++11 support!")
-  endif()
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -132,6 +124,7 @@ list(APPEND NNGUI_BASIC_SOURCE
      sdlgui/Animations.h
      sdlgui/jsonConversions.h
      sdlgui/json.hpp
+     sdlgui/ResourceBar.h
      
      sdlgui/button.cpp
      sdlgui/checkbox.cpp
@@ -171,17 +164,18 @@ list(APPEND NNGUI_BASIC_SOURCE
      sdlgui/Game.cpp
      sdlgui/Scene.cpp
      sdlgui/Animations.cpp
+     sdlgui/ResourceBar.cpp
      sdlgui/nanovg.c
 )
      
 option(NANOGUI_BUILD_EXAMPLE "Build example application" ON)
 if (NANOGUI_BUILD_EXAMPLE)
   # Build example application if desired
-  add_executable(example1 ${NNGUI_EXTRA_SOURCE} ${NNGUI_BASIC_SOURCE} example1.cpp )
+  add_executable(dev-tool ${NNGUI_EXTRA_SOURCE} ${NNGUI_BASIC_SOURCE} DevTool.cpp )
   set_target_properties(
-      example1 PROPERTIES
+      dev-tool PROPERTIES
       VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build/debug")
-  target_link_libraries(example1 ${NNGUI_EXTRA_LIBS} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
+  target_link_libraries(dev-tool ${NNGUI_EXTRA_LIBS} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
 
   # Copy icons for example application
   if (WIN32) 
