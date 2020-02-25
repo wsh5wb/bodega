@@ -3,7 +3,7 @@
 using namespace std;
 
 DevTool::DevTool() : Game(1200, 1000){
-	resourceBar = new ResourceBar(this->windowWidth, this->windowHeight);
+	resourceBar = new ResourceBar(this->windowWidth, this->windowHeight, *(this->draggable));
 	resourceBar->setMouseListener(mouse);
 	this->addChild(resourceBar);
 	this->addChild(mouse);

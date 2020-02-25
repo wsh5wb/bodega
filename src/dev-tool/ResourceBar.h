@@ -14,7 +14,7 @@
 
 class ResourceBar : public DisplayObjectContainer{
 public:
-	ResourceBar(int windowWidth, int windowHeight);
+	ResourceBar(int windowWidth, int windowHeight, DisplayObject &draggable);
 	~ResourceBar();
 	void addChild(DisplayObject* child);
 	void setMouseListener(Mouse* mouse);
@@ -22,6 +22,7 @@ public:
 	virtual void draw(AffineTransform &at);
 private:
 	DisplayObjectContainer* menu;
+	DisplayObject* drag;
 	double windowHeight;
 	double windowWidth;
 	Mouse* mouseListener;

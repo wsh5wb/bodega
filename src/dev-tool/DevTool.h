@@ -22,6 +22,7 @@ public:
 	virtual void draw(AffineTransform &at);
 private:
 	ResourceBar* resourceBar;
+	DisplayObject* draggable = NULL;
 };
 
 #endif

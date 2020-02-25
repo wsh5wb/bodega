@@ -14,9 +14,10 @@ bool checkExt(const string& filename)
     return false;
 }
 
-ResourceBar::ResourceBar(int windowWidth, int windowHeight) : DisplayObjectContainer(){
+ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject &draggable) : DisplayObjectContainer(){
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
+	this->drag = &draggable;
 	cout << windowWidth << windowHeight << endl;
 	menu = new DisplayObjectContainer();
 	int base_height = (int) (windowHeight * (4.0/7.0));
@@ -35,10 +36,10 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight) : DisplayObjectConta
 			temp->scale(.1);
 			temp->moveTo(x,y);
 			x += 30;
-			// if(x > windowWidth){
-			// 	y += 40;
-			// 	x = 0;
-			// }
+			if(x > windowWidth* 3){
+			 	y += 40;
+			 	x = 0;
+			}
 	    	menu->addChild(temp);
 	    	//std::cout << dirEntry << std::endl;
 		}
@@ -60,6 +61,8 @@ void ResourceBar::setMouseListener(Mouse* mouse){
 void ResourceBar::draw(AffineTransform &at){
 	DisplayObjectContainer::draw(at);
 	menu->draw(at);
+	if(drag != NULL)
+		drag->draw(at);
 }
 
 void ResourceBar::update(set<SDL_Scancode> pressedKeys){
@@ -95,13 +98,38 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	if(this->mouseListener->isScrolling){
 		if (this->mouseListener->wheelUp){
 			SDL_Point pos = menu->getPosition();
+			if(pos.x < -windowWidth* 2)
+				pos.x = -windowWidth* 2;
+
 			menu->moveTo(pos.x-20,pos.y);
+			//menu->translateLeft();
 		}
 		else if(this->mouseListener->wheelDown){
 			SDL_Point pos = menu->getPosition();
+			if(pos.x > 0)
+				pos.x = 0;
 			menu->moveTo(pos.x+20,pos.y);
+			//menu->translateRight();
 		}
 	}
-	SDL_Delay(15);
 
+	if(this->mouseListener->leftClick){
+		cout << "making new obj" << endl;
+		for(DisplayObject* child : menu->children){
+			cout << "checking " << child->id << endl;
+			auto child_coords = child->getPosition();
+			auto click_coords = this->mouseListener->getPosition();
+			if (dist(child_coords, click_coords) < 30){
+				this->drag = new DisplayObject(child->id, child->imgPath);
+				auto point = this->mouseListener->getPosition();
+				this->drag->moveTo(point.x, point.y);
+				break;
+			}
+		}
+	}
+	SDL_Event sdlevent;
+    sdlevent.type = SDL_KEYDOWN;
+    sdlevent.key.keysym.sym = SDLK_1;
+
+ 	SDL_PushEvent(&sdlevent);
 }
