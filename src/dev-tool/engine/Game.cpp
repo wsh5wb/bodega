@@ -7,7 +7,6 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <typeinfo>
-#include "imgui.h"
 
 using namespace std;
 
@@ -48,7 +47,7 @@ void Game::initSDL(){
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 
-	// set OpenGL attributes
+    // set OpenGL attributes
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
@@ -87,17 +86,18 @@ void Game::initSDL(){
         | SDL_WINDOW_RESIZABLE
         | SDL_WINDOW_ALLOW_HIGHDPI
         );
+    window = SDL_CreateWindow(
+        "myGame",
+        SDL_WINDOWPOS_UNDEFINED, 
+        SDL_WINDOWPOS_UNDEFINED, 
+        this->windowWidth, 
+        this->windowHeight, 
+        window_flags
+        );
+    // limit to which minimum size user can resize the window
+    SDL_SetWindowMinimumSize(window, 500, 300);
 
-	window = SDL_CreateWindow(
-		"myGame",
-		SDL_WINDOWPOS_UNDEFINED, 
-		SDL_WINDOWPOS_UNDEFINED, 
-		this->windowWidth, 
-		this->windowHeight, 
-		window_flags
-		);
-
-	SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+    SDL_GLContext gl_context = SDL_GL_CreateContext(window);
     SDL_GL_MakeCurrent(window, gl_context);
 
     // enable VSync
@@ -114,24 +114,17 @@ void Game::initSDL(){
 
     glViewport(0, 0, windowWidth, windowHeight);
 
-    // setup platform/renderer bindings
-    ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
-    ImGui_ImplOpenGL3_Init(glsl_version.c_str());
-
-	// SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
-
-	// Game::renderer = renderer;
-}
-
-void Game::start(){
-
-	// setup Dear ImGui context
+    // setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 
     // setup Dear ImGui style
     ImGui::StyleColorsDark();
+
+    // setup platform/renderer bindings
+    ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
+    ImGui_ImplOpenGL3_Init(glsl_version.c_str());
 
     // colors are set in RGBA, but as float
     ImVec4 background = ImVec4(35/255.0f, 35/255.0f, 35/255.0f, 1.00f);
@@ -243,6 +236,17 @@ void Game::start(){
     SDL_Quit();
 
     // ...
+
+	// SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
+
+	// Game::renderer = renderer;
+}
+
+void Game::start(){
+
+
+
+    // ...
 }
 
 	// int ms_per_frame = (1.0/(double)this->frames_per_sec)*1000;
@@ -278,7 +282,7 @@ void Game::start(){
 	// 	mouse->setState(event.type, event);
 	
 	// }
-}
+// }
 
 void Game::update(set<SDL_Scancode> pressedKeys){
 	frameCounter++;

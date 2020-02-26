@@ -1,55 +1,24 @@
-cmake_minimum_required (VERSION 2.8.3)
+# CMakeFile based off https://github.com/retifrav/sdl-imgui-example/blob/master/CMakeLists.txt
 
-project("sdlgui")
+cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -w -lstdc++fs")
-set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS})
+project(bitchin-dev-tool)
 
-# Required libraries for linking against nngui (all targets)
-set(NNGUI_EXTRA_LIBS "")
+# for filesystem functionality from C++17
+set(CMAKE_CXX_STANDARD 17)
 
-# Platform-dependent files for nngui
-set(NNGUI_EXTRA_SOURCE "")
+find_package(OpenGL REQUIRED)
 
-include(CheckCXXCompilerFlag)
-
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "Setting build type to 'Release' as none was specified.")
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
-    "MinSizeRel" "RelWithDebInfo")
-endif()
-string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
-
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  # Quench annoying deprecation warnings when compiling GLFW on OSX
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
+if (WIN32)
+    set(WHERE-IS-SDL "c:/programs/sdl/lib/x64")
+    set(WHERE-IS-SDL-HEADERS "c:/programs/sdl/include")
+    set(WHERE-IS-GLAD "c:/programs/glad/src/glad.c")
+    set(WHERE-IS-GLAD-HEADERS "c:/programs/glad/include")
 endif()
 
-if (MSVC)
-  # Disable annoying MSVC warnings (all targets)
-  add_definitions(/D "_CRT_SECURE_NO_WARNINGS")
-
-  # Parallel build on MSVC (all targets)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
-
-  if (NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:SSE2")
-  endif()
-endif()
-
-# Compile with compiler warnings turned on
-if(MSVC)
-  if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
-    string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-  else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-  endif()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244 /wd4100 /wd4101 /wd4018 /wd4201 /wd4189 /wd4457 /wd4456 /wd4245 /wd4838 /wd4389 /wd4702")
-
+if (UNIX)
+    set(WHERE-IS-GLAD "./glad/src/glad.c")
+    set(WHERE-IS-GLAD-HEADERS "./glad/include")
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
@@ -59,128 +28,103 @@ find_package(SDL2IMAGE REQUIRED)
 find_package(SDL2TTF REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR})
-include_directories(${SDL2TTF_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+include_directories(${SDL2TTF_INCLUDE_DIR})
 
-# Required core libraries on various platforms
-if (WIN32) 
-  list(APPEND NNGUI_EXTRA_LIBS opengl32)
-elseif (APPLE)
-  find_library(cocoa_library Cocoa)
-  find_library(opengl_library OpenGL)
-  find_library(corevideo_library CoreVideo)
-  find_library(iokit_library IOKit)
-  list(APPEND NNGUI_EXTRA_LIBS ${cocoa_library} ${opengl_library} ${corevideo_library} ${iokit_library})
-  list(APPEND NNGUI_EXTRA_SOURCE darwin.mm)
-elseif(CMAKE_SYSTEM MATCHES "Linux")
-  list(APPEND NNGUI_EXTRA_LIBS GL Xxf86vm Xrandr Xinerama Xcursor Xi X11 pthread dl rt)
+#message(${WHERE-IS-SDL})
+#message(${WHERE-IS-SDL-HEADERS})
+#message(${WHERE-IS-GLAD})
+#message(${WHERE-IS-GLAD-HEADERS})
+
+if (WIN32 OR APPLE)
+    find_library(SDL SDL2 PATHS ${WHERE-IS-SDL})
+    if (WIN32)
+        find_library(SDLmain SDL2main PATHS ${WHERE-IS-SDL})
+    endif()
+
+    include_directories(
+        "${WHERE-IS-SDL-HEADERS}"
+    )
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/include
-                    ${CMAKE_CURRENT_BINARY_DIR})
 
-message(${NNGUI_EXTRA_LIBS})
+add_library("glad" ${WHERE-IS-GLAD})
+include_directories(
+        "${WHERE-IS-GLAD-HEADERS}"
+    )
 
-set(NNGUI_BASIC_SOURCE "")
-list(APPEND NNGUI_BASIC_SOURCE
-     sdlgui/button.h
-     sdlgui/checkbox.h
-     sdlgui/colorpicker.h
-     sdlgui/colorwheel.h
-     sdlgui/combobox.h
-     sdlgui/common.h
-     sdlgui/graph.h
-     sdlgui/imagepanel.h
-     sdlgui/imageview.h
-     sdlgui/label.h
-     sdlgui/layout.h
-     sdlgui/messagedialog.h
-     sdlgui/popup.h
-     sdlgui/popupbutton.h
-     sdlgui/progressbar.h
-     sdlgui/screen.h
-     sdlgui/slider.h
-     sdlgui/stackedwidget.h
-     sdlgui/tabheader.h
-     sdlgui/tabwidget.h
-     sdlgui/textbox.h
-     sdlgui/theme.h
-     sdlgui/vscrollpanel.h
-     sdlgui/switchbox.h
-     sdlgui/dropdownbox.h
-     sdlgui/widget.h
-     sdlgui/window.h
-     sdlgui/nanovg.h
-     sdlgui/nanovg_rt.h
-     sdlgui/DisplayObject.h
-     sdlgui/DisplayObjectContainer.h
-     sdlgui/AffineTransform.h
-     sdlgui/AnimatedSprite.h
-     sdlgui/Mouse.h
-     sdlgui/Sprite.h
-     sdlgui/Game.h
-     sdlgui/Scene.h
-     sdlgui/Animations.h
-     sdlgui/jsonConversions.h
-     sdlgui/json.hpp
-     sdlgui/ResourceBar.h
-     
-     sdlgui/button.cpp
-     sdlgui/checkbox.cpp
-     sdlgui/colorpicker.cpp
-     sdlgui/colorwheel.cpp
-     sdlgui/combobox.cpp
-     sdlgui/common.cpp
-     sdlgui/graph.cpp
-     sdlgui/imagepanel.cpp
-     sdlgui/imageview.cpp
-     sdlgui/label.cpp
-     sdlgui/layout.cpp
-     sdlgui/loadimages.cpp
-     sdlgui/messagedialog.cpp
-     sdlgui/resources.cpp
-     sdlgui/popup.cpp
-     sdlgui/popupbutton.cpp
-     sdlgui/progressbar.cpp
-     sdlgui/screen.cpp
-     sdlgui/slider.cpp
-     sdlgui/stackedwidget.cpp
-     sdlgui/tabheader.cpp
-     sdlgui/tabwidget.cpp
-     sdlgui/textbox.cpp
-     sdlgui/switchbox.cpp
-     sdlgui/dropdownbox.cpp
-     sdlgui/theme.cpp
-     sdlgui/vscrollpanel.cpp
-     sdlgui/widget.cpp
-     sdlgui/window.cpp
-     sdlgui/DisplayObject.cpp
-     sdlgui/DisplayObjectContainer.cpp
-     sdlgui/AffineTransform.cpp
-     sdlgui/AnimatedSprite.cpp
-     sdlgui/Mouse.cpp
-     sdlgui/Sprite.cpp
-     sdlgui/Game.cpp
-     sdlgui/Scene.cpp
-     sdlgui/Animations.cpp
-     sdlgui/ResourceBar.cpp
-     sdlgui/nanovg.c
+set(sources
+	imgui/imconfig.h
+    imgui/imgui.cpp
+    imgui/imgui.h
+    imgui/imgui_demo.cpp
+    imgui/imgui_draw.cpp
+    imgui/imgui_internal.h
+    imgui/imgui_widgets.cpp
+    imgui/imstb_rectpack.h
+    imgui/imstb_textedit.h
+    imgui/imstb_truetype.h
+    imgui/imgui_impl_opengl3.cpp
+    imgui/imgui_impl_opengl3.h
+    imgui/imgui_impl_sdl.cpp
+    imgui/imgui_impl_sdl.h
+
+    engine/AffineTransform.cpp
+	engine/AffineTransform.h
+	engine/AnimatedSprite.cpp
+	engine/AnimatedSprite.h
+	engine/Animations.cpp
+	engine/Animations.h
+	engine/DevTool.cpp
+	engine/DevTool.h
+	engine/DisplayObjectContainer.cpp
+	engine/DisplayObjectContainer.h
+	engine/DisplayObject.cpp
+	engine/DisplayObject.h
+	engine/Event.cpp
+	engine/EventDispatcher.cpp
+	engine/EventDispatcher.h
+	engine/Event.h
+	engine/EventListener.h
+	engine/Game.cpp
+	engine/Game.h
+	engine/jsonConversions.h
+	engine/Mouse.cpp
+	engine/Mouse.h
+	engine/myCoin.h
+	engine/QuestManager.cpp
+	engine/QuestManager.h
+	engine/Scene.cpp
+	engine/Scene.h
+	engine/Sprite.cpp
+	engine/Sprite.h
 )
-     
-option(NANOGUI_BUILD_EXAMPLE "Build example application" ON)
-if (NANOGUI_BUILD_EXAMPLE)
-  # Build example application if desired
-  add_executable(dev-tool ${NNGUI_EXTRA_SOURCE} ${NNGUI_BASIC_SOURCE} DevTool.cpp )
-  set_target_properties(
-      dev-tool PROPERTIES
-      VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build/debug")
-  target_link_libraries(dev-tool ${NNGUI_EXTRA_LIBS} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
 
-  # Copy icons for example application
-  if (WIN32) 
-    file(COPY resources/icons DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/debug)
-  else()
-    file(COPY resources/icons DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-  endif()
+if (WIN32)
+    add_executable(${CMAKE_PROJECT_NAME} WIN32 ${sources})
+    target_link_libraries(${CMAKE_PROJECT_NAME}
+        "glad"
+        ${SDL}
+        ${SDLmain}
+        ${OPENGL_gl_LIBRARY}
+        )
+else()
+    add_executable(${CMAKE_PROJECT_NAME} ${sources})
+    target_link_libraries(${CMAKE_PROJECT_NAME}
+            "glad"
+            ${OPENGL_gl_LIBRARY}
+            )
+    if (APPLE)
+        target_link_libraries(${CMAKE_PROJECT_NAME}
+            ${SDL}
+            )
+    endif()
+    if (UNIX AND NOT APPLE)
+        target_link_libraries(${CMAKE_PROJECT_NAME}
+            ${SDL2_LIBRARY}
+            ${SDL2IMAGE_LIBRARY}
+            ${SDL2TTF_LIBRARY}
+            ${CMAKE_DL_LIBS}
+            )
+    endif()
 endif()

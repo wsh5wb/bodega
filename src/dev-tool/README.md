@@ -1,7 +1,13 @@
-In order to run this dev tool, do the following.
+dev tool
 
-Install deps: `sudo apt install build-essential cmake libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev`
+install dependencies:
 
-Compile Code: `make`
+`sudo apt install freeglut3 freeglut3-dev g++-8 libglu1-mesa-dev mesa-common-dev build-essential"
 
-To run the compiled code, move into the created `build/` directory and run the executable
+Ensure OpenGL has been installed via `glxinfo | grep "OpenGL version"` (Ideally this is a version > 4.0)
+
+Building the tool:
+
+`cmake .`
+
+`cmake --build .`
