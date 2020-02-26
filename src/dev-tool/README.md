@@ -13,3 +13,12 @@ Ensure OpenGL has been installed via `glxinfo | grep "OpenGL version"` (Ideally 
 * `cmake --build .`
 
 * `./bitchin-dev-tool`
+
+
+#Notes on build
+
+If you encounter a clock skew, enter the following commands:
+
+* `$ find . -type f | xargs -n 5 touch`
+* `$ make clean`
+* `$ make`
