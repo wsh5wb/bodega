@@ -37,6 +37,7 @@ SDL_Point Mouse::getCoordinates(){
 }
 
 void Mouse::setState(Uint32 eventType, const SDL_Event &event){
+
 	if (eventType == SDL_MOUSEBUTTONUP){
 		if (event.button.button == SDL_BUTTON_LEFT && this->leftClick) {
 	        this->leftClick = false;

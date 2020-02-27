@@ -93,14 +93,6 @@ flycheck_*.el
 
 .DS_Store
 
+# Builds
 bin/*
-
-# CMake
-*.cmake
-CMakeCache.txt
-CMakeFiles/
-imgui.ini
-
-#executables
-bitchin-dev-tool
 src/dev_tool/build/*

@@ -91,20 +91,18 @@ void Game::start(){
 	kiss_window_new(&char_attributes_bar, NULL, 1, kiss_screen_width*4/5, 0, kiss_screen_width/5, 
 		kiss_screen_height*3/4);
 
-		//kiss_entry_new(&xPosEntry,&char_attributes_bar,0,"xPos:",kiss_screen_width*4/5 + 20,20,60);
+	//kiss_entry_new(&xPosEntry,&char_attributes_bar,0,"xPos:",kiss_screen_width*4/5 + 20,20,60);
 	
 	char_attributes_bar.bg = darkGrey; sprite_bar.bg = darkGrey;
 	infoBar = ItemBar(&char_attributes_bar);
 
-	kiss_window_new(&dir_window, NULL, 1, 
-		kiss_screen_width / 2 - 300 / 2, 
-		kiss_screen_height / 2- 300 / 2, 300, 300);
-
-	SceneWindow scene_window(kiss_screen_width, kiss_screen_height);
+	kiss_window_new(&editor_window,NULL,1, 0,0, kiss_screen_width, kiss_screen_height);
+	editor_window.bg = kiss_black;
+	SceneWindow scene_window(kiss_screen_width, kiss_screen_height, &editor_window, this);
 
 	sprite_bar.visible = 1;
 	char_attributes_bar.visible = 1;
-	dir_window.visible = 0;
+	editor_window.visible = 1;
 
 	bool quit = false;
 	SDL_Event event;
@@ -113,7 +111,7 @@ void Game::start(){
 	std::clock_t start = std::clock();
 
 	while(!quit){
-
+		SDL_Delay(10);
 		while(SDL_PollEvent(&event)){
 
 			switch (event.type)
@@ -131,11 +129,14 @@ void Game::start(){
 
 			kiss_window_event(&sprite_bar, &event, &draw);
 			kiss_window_event(&char_attributes_bar, &event, &draw);
-			kiss_window_event(&dir_window, &event, &draw);
+
 			infoBar.event(&event,&draw);
 			//kiss_entry_event(&xPosEntry,&event,&draw);
 
-			scene_window.event(&event, &draw, window1, dir_window);
+			// scene_window.event(&event, &draw, window1, dir_window);
+			scene_window.event(&event, &draw);
+			kiss_window_event(&editor_window, &event, &draw);
+
 
 			mouse->setState(event.type, event);
 		}
@@ -149,20 +150,20 @@ void Game::start(){
 			start = end;
 		}
 
-		
-		scene_window.draw(renderer);
-
-
 		// Do all scene drawing between the above renderer and next kiss_draws
 		this->update(pressedKeys);
 		AffineTransform at;
+
+		kiss_window_draw(&editor_window, renderer);
 		this->draw(at);
 
 		kiss_window_draw(&sprite_bar, renderer);
 		kiss_window_draw(&char_attributes_bar, renderer);
-		kiss_window_draw(&dir_window, renderer);
+
 		infoBar.draw(renderer);
 		//kiss_entry_draw(&xPosEntry,renderer);
+
+		scene_window.draw(renderer);
 		
 		SDL_RenderPresent(renderer);
 

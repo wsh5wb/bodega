@@ -235,6 +235,7 @@ void Scene::loadScene(string sceneFilePath) {
 				temp2 = *it;
 			}
 		}
+
 		temp1->addChild(temp2);
 	}
 

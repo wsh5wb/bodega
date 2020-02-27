@@ -74,6 +74,7 @@ DisplayObject* DisplayObjectContainer::getChild(string id){
 
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
 	DisplayObject::update(pressedKeys);
+
 	for(DisplayObject* child : children){
 		child->update(pressedKeys);
 	}

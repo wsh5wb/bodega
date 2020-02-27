@@ -16,6 +16,8 @@
 #include "ItemBar.h"
 #include "ResourceBar.h"
 
+#define SCENE_DOC_INDEX 0
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 

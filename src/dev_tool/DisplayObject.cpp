@@ -218,7 +218,6 @@ void DisplayObject::reverseTransformations(AffineTransform &at){
 }
 
 void DisplayObject::update(set<SDL_Scancode> pressedKeys){
-
 }
 
 void DisplayObject::draw(AffineTransform &at){

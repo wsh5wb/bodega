@@ -2,36 +2,36 @@
 
 using namespace std;
 
-DevTool::DevTool() : Game(1200, 800){
-	child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
+DevTool::DevTool() : Game(1280, 720){
+	// child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
+
 	Scene* scene = new Scene();
-	scene->loadScene("./resources/scenes/test.txt");
+	// scene->loadScene("./resources/scenes/test.txt");
 
 	resourceBar = new ResourceBar(1280, 720, draggable);
 	resourceBar->setMouseListener(mouse);
 
-	//this->addChild(resourceBar);
 	this->addChild(scene);
+	// this->addChild(resourceBar);
 	this->addChild(mouse);
 }
 
 DevTool::~DevTool(){
-	//delete resourceBar;
+	delete resourceBar;
 }
 
 
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
-	resourceBar->update(pressedKeys);
-
+	// resourceBar->update(pressedKeys);
 }
 
 
 void DevTool::draw(AffineTransform &at){
 	Game::draw(at);
 	DisplayObjectContainer::draw(at);
-	resourceBar->draw(at);
+	// resourceBar->draw(at);
 }
 
 

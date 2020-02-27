@@ -18,6 +18,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
 	this->drag = draggable;
+	this->id = "resourcebar";
 	cout << windowWidth << windowHeight << endl;
 	menu = new DisplayObjectContainer();
 	int base_height = (int) (windowHeight * (4.0/7.0));
@@ -30,6 +31,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 		std::filesystem::path path = dirEntry.path();
 		string string_path = path.string();
 		std::error_code ec;
+
 		if (std::filesystem::is_regular_file(path, ec) and checkExt(string_path)){
 			std::cout << path << std::endl;
 			DisplayObject* temp = new DisplayObject(string_path, string_path);
@@ -43,6 +45,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 	    	menu->addChild(temp);
 	    	//std::cout << dirEntry << std::endl;
 		}
+
 	}
 }
 

@@ -10,13 +10,17 @@
 
 class SceneWindow{
 public:
-	SceneWindow(int parent_width, int parent_height);
+	SceneWindow(int parent_width, int parent_height, kiss_window* window, Game* running_tool);
 	void draw(SDL_Renderer *renderer);
-	void event(SDL_Event *event, int* draw, kiss_window& wdw, kiss_window& dir_wdw);
-	kiss_window window = {0};
+	void event(SDL_Event *event, int* draw);
+	kiss_window* window;
+	kiss_window scene_dialogue_window;
+	kiss_entry scene_path_entry;
 	kiss_button load_scene_button = {0};
 private:
-	void load_scene_event(kiss_window& wdw, kiss_window& dir_wdw);
+	void display_dialogue_window();
+	void load_scene_from_path();
+	static Game * running_dev_tool;
 };
 
 #endif

@@ -1,33 +1,64 @@
 #include "SceneWindow.h"
+#include "DevTool.h"
 #include <iostream>
 
-SceneWindow::SceneWindow(int parent_width, int parent_height){
-	int window_height = parent_height*3/4;
-	int window_width = parent_width*3/5;
+Game* SceneWindow::running_dev_tool;
 
-	kiss_window_new(&window, NULL, 1, parent_width/5, 0, 
-		window_width, window_height);
+SceneWindow::SceneWindow(int parent_width, int parent_height, kiss_window* window, Game* running_tool){
+	int dialogue_height = parent_height/5;
+	int dialogue_width = parent_width/3;
+	int window_start_x = parent_width/2 - dialogue_width/2;
+	int window_start_y = parent_height/2 - dialogue_height/2;
+	int entry_width = dialogue_width*8/10;
+	int entry_start_x = dialogue_width/2 - entry_width/2 + window_start_x;
+	int entry_start_y = dialogue_height/2 - kiss_textfont.lineheight + window_start_y;
 
-	window.bg = kiss_black;
+	this->window = window;
 
-	kiss_button_new(&load_scene_button, &window, "Load Scene", parent_width/5 + 5,5);
-	window.visible = 1;
+	kiss_window_new(&scene_dialogue_window, NULL, 1, window_start_x, window_start_y,
+		dialogue_width, dialogue_height);
+	scene_dialogue_window.visible = 0;
+
+	kiss_button_new(&load_scene_button, window, "Load Scene", 5, 5);
+	kiss_entry_new(&scene_path_entry, &scene_dialogue_window, 1, "Enter Scene Path",
+		entry_start_x, entry_start_y, entry_width);
+
+	running_dev_tool = running_tool;
 }
 
 void SceneWindow::draw(SDL_Renderer *renderer){
-	kiss_window_draw(&window, renderer);
+	kiss_window_draw(&scene_dialogue_window, renderer);
 	kiss_button_draw(&load_scene_button, renderer);
+	kiss_entry_draw(&scene_path_entry, renderer);
 }
 
-void SceneWindow::event(SDL_Event *event, int* draw, kiss_window& wdw, kiss_window& dir_wdw){
+void SceneWindow::event(SDL_Event *event, int* draw){
 	if(kiss_button_event(&load_scene_button, event, draw)){
-		load_scene_event(wdw, dir_wdw);
+		display_dialogue_window();
 	}
-	kiss_window_event(&window, event, draw);
+	kiss_window_event(&scene_dialogue_window, event, draw);
+	if(kiss_entry_event(&scene_path_entry, event, draw)){
+		load_scene_from_path();
+	}
+
 }
 
-void SceneWindow::load_scene_event(kiss_window& wdw, kiss_window& dir_wdw){
-	dir_wdw.visible = 1;
-	dir_wdw.focus = 1;
-	wdw.focus = 0;
+void SceneWindow::display_dialogue_window(){
+	scene_dialogue_window.visible = 1;
+}
+
+void SceneWindow::load_scene_from_path(){
+	ifstream i(scene_path_entry.text);
+	string s = "Enter valid path!";
+
+	if(i.good()){
+		Scene *scene = new Scene();
+		scene->loadScene(scene_path_entry.text);
+		running_dev_tool->removeChild(SCENE_DOC_INDEX);
+		running_dev_tool->children[SCENE_DOC_INDEX] = scene;
+		scene_dialogue_window.visible = 0;
+		strcpy(scene_path_entry.text, "");
+	}
+	else
+		strcpy(scene_path_entry.text, "Enter valid path!");
 }
