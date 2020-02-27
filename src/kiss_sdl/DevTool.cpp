@@ -6,9 +6,9 @@ DevTool::DevTool() : Game(1200, 1000){
 	child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
 	Scene* scene = new Scene();
 	scene->loadScene("./resources/scenes/test.txt");
-	this->addChild(mouse);
 	// this->addChild(child);
 	this->addChild(scene);
+	this->addChild(mouse);
 }
 
 DevTool::~DevTool(){
@@ -24,10 +24,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 
 void DevTool::draw(AffineTransform &at){
 	Game::draw(at);
-
 	DisplayObjectContainer::draw(at);
-
-
 }
 
 
