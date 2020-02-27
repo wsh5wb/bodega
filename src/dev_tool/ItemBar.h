@@ -22,6 +22,8 @@ public:
 private:
 	//DisplayObject* draggable = NULL;
 	kiss_entry xPosEntry = {0};
+	kiss_label xPosLabel = {0};
+
 };
 
 #endif

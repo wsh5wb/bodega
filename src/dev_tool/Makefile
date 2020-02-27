@@ -1,68 +1,44 @@
-#CPP = clang++
-#C = clang
-CPP = g++-8
+TARGET_EXEC ?= DevTool
 
-### 32 bit Windows
+BUILD_DIR ?= ./build
+SRC_DIRS ?= ./
 
-#LDFLAGS = -LC:\SDL2-2.0.8\i686-w64-mingw32\lib \
--LC:\SDL2_ttf-2.0.14\i686-w64-mingw32\lib \
--LC:\SDL2_image-2.0.3\i686-w64-mingw32\lib \
--lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf \
--mwindows -m32 -march=i686
-#CFLAGS = -IC:\SDL2-2.0.8\i686-w64-mingw32\include \
--IC:\SDL2-2.0.8\i686-w64-mingw32\include\SDL2 \
--IC:\SDL2_ttf-2.0.14\i686-w64-mingw32\include \
--IC:\SDL2_image-2.0.3\i686-w64-mingw32\include \
--Wall -c -std=c89 -m32 -march=i686
-#BIN1 = kiss_example1.exe
-#BIN2 = kiss_example2.exe
+SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 
-### 64 bit Windows
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-#LDFLAGS = -LC:\SDL2-2.0.8\x86_64-w64-mingw32\lib \
--LC:\SDL2_ttf-2.0.14\x86_64-w64-mingw32\lib \
--LC:\SDL2_image-2.0.3\x86_64-w64-mingw32\lib \
--lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf \
--mwindows
-#CFLAGS = -IC:\SDL2-2.0.8\x86_64-w64-mingw32\include \
--IC:\SDL2-2.0.8\x86_64-w64-mingw32\include\SDL2 \
--IC:\SDL2_ttf-2.0.14\x86_64-w64-mingw32\include \
--IC:\SDL2_image-2.0.3\x86_64-w64-mingw32\include \
--Wall -c -std=c89
-#BIN1 = kiss_example1.exe
-#BIN2 = kiss_example2.exe
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -g -w -std=c++17 
+CXX := g++-8
 
-### macOS
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lstdc++fs 
 
-#LDFLAGS = -framework SDL2 -framework SDL2_ttf -framework SDL2_image
-#CFLAGS = -I/Library/Frameworks/SDL2.framework/Headers \
--I/Library/Frameworks/SDL2_ttf.framework/Headers \
--I/Library/Frameworks/SDL2_image.framework/Headers \
--Wall -c -std=c89
-#BIN1 = kiss_example1
-#BIN2 = kiss_example2
+$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
-### Linux
+# assembly
+$(BUILD_DIR)/%.s.o: %.s
+	$(MKDIR_P) $(dir $@)
+	$(AS) $(ASFLAGS) -c $< -o $@
 
-LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
-CFLAGS = -Wall -c -std=c89
-CPPFLAGS ?= -lstdc++fs
-CPPSRCS := $(shell find ./engine -name *.cpp)
-CSRCS := $(shell find . -name '*.c')
-SRCS := $(CPPSRCS:%=$(CSRCS))
-OBJS := $(SRCS:%=%.o)
+# c source
+$(BUILD_DIR)/%.c.o: %.c
+	$(MKDIR_P) $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-run: $(OBJS)
-	$(CPP) $(OBJS) $(LDFLAGS) -o $@
+# c++ source
+$(BUILD_DIR)/%.cpp.o: %.cpp
+	$(MKDIR_P) $(dir $@)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-kiss_draw.o: kiss_draw.c kiss_sdl.h
-kiss_example1.o: kiss_example1.c kiss_sdl.h
-kiss_general.o: kiss_general.c kiss_sdl.h
-kiss_posix.o: kiss_posix.c kiss_sdl.h
-kiss_widgets.o: kiss_widgets.c kiss_sdl.h
+
+.PHONY: clean
 
 clean:
-	rm *.o && rm $(BIN1)
-#	del *.o
-#	del $(BIN1)
+	$(RM) -r $(BUILD_DIR)
 
+-include $(DEPS)
+
+MKDIR_P ?= mkdir -p
