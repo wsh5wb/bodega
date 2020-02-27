@@ -24,6 +24,7 @@ private:
 	DisplayObjectContainer* mainWindow;
 	DisplayObjectContainer* menu;
 	DisplayObject* drag;
+	int baseHeight;
 	double windowHeight;
 	double windowWidth;
 	Mouse* mouseListener;

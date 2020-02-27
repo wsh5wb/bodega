@@ -19,13 +19,14 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 	this->windowHeight = windowHeight;
 	this->drag = draggable;
 	this->mainWindow = mainwindow;
-	cout << windowWidth << windowHeight << endl;
+	this->baseHeight = (int) (windowHeight * (3.0/4.0));
+
+	//cout << windowWidth << windowHeight << endl;
 	menu = new DisplayObjectContainer();
-	int base_height = (int) (windowHeight * (3.0/4.0));
-	cout << base_height << std::endl;
+	cout << baseHeight << std::endl;
 	int x = 0;
 	int y = 0;
-	menu->moveTo(0, base_height);
+	menu->moveTo(0, baseHeight);
 	
 	for (const auto& dirEntry : std::filesystem::recursive_directory_iterator("./resources")){
 		std::filesystem::path path = dirEntry.path();
@@ -120,19 +121,25 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	}
 	else if(this->mouseListener->leftClick){ //handle resourcebar left clicks
 		cout << "click" << endl;
-		for(DisplayObject* child : menu->children){
-			auto child_coords = child->getWorld();
-			auto click_coords = this->mouseListener->getCoordinates();
-			//cout << "child x: " << child_coords.x << " child y: " << child_coords.y << endl;
-			if (dist(child_coords, click_coords) < 30){
-				cout << "making new obj" << endl;
-				cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
-				this->drag = new DisplayObject(child->id, child->imgPath);
-				break;
+		auto click_coords = this->mouseListener->getCoordinates();
+		if (click_coords.y < baseHeight){
+
+		} // if the click is outside of the resourcebar
+		else{
+			for(DisplayObject* child : menu->children){
+				auto child_coords = child->getWorldCenter();
+				//cout << "child x: " << child_coords.x << " child y: " << child_coords.y << endl;
+				if (dist(child_coords, click_coords) < 30){
+					cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
+					this->drag = new DisplayObject(child->id, child->imgPath);
+					this->drag->isCopy = true;
+					break;
+				}
 			}
 		}
 	}
-	else if (drag != NULL){
+	else if (drag != NULL and drag->isCopy){
+		drag->isCopy = false;
 		mainWindow->addChild(drag);
 		drag = NULL;
 	}
