@@ -14,7 +14,7 @@
 
 class ResourceBar : public DisplayObjectContainer{
 public:
-	ResourceBar(int windowWidth, int windowHeight, DisplayObject &draggable);
+	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable);
 	~ResourceBar();
 	void addChild(DisplayObject* child);
 	void setMouseListener(Mouse* mouse);
