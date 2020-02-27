@@ -15,6 +15,7 @@ DisplayObject::DisplayObject(){
 	position.x = 0;
 	position.y = 0;
 	pivot.x = 0; pivot.y = 0;
+	world = {0, 0};
 }
 
 DisplayObject::DisplayObject(string id, string filepath){
@@ -201,6 +202,10 @@ SDL_Point DisplayObject::getPosition(){
 	return this->position;
 }
 
+SDL_Point DisplayObject::getWorld(){
+	return this->world;
+}
+
 void DisplayObject::setSpeed(int s){
 	speed = s;
 }
@@ -239,7 +244,7 @@ void DisplayObject::draw(AffineTransform &at){
 		int distAdj = dist(topL,topR);
 		int distOpp = dist(topR,bottomR);
 		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
-
+		world = {topL.x + distAdj/2, topL.y + distOpp/2};
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
 
 		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
