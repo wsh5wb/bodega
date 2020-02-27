@@ -37,7 +37,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 			temp->scale(.1);
 			temp->moveTo(x,y);
 			x += 30;
-			if(x > windowWidth* 3){
+			if(x > windowWidth* 2){
 			 	y += 40;
 			 	x = 0;
 			}
