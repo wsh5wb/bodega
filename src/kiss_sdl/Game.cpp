@@ -3,6 +3,7 @@
 #include <string>
 #include <ctime>
 #include "DisplayObject.h"
+#include "SceneWindow.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
@@ -88,6 +89,8 @@ void Game::start(){
 		(2 * textbox_width + 2 * kiss_up.w - kiss_edge) / 2,
 		3 * kiss_normal.h, textbox_width, textbox_height);
 
+	SceneWindow scene_window(kiss_screen_width, kiss_screen_height);
+
 	window.visible = 1;
 
 	bool quit = false;
@@ -114,6 +117,8 @@ void Game::start(){
 			}
 
 			kiss_window_event(&window, &event, &draw);
+			kiss_window_event(&scene_window.window, &event, &draw);
+
 			kiss_entry_event(&entry, &event, &draw);
 
 			mouse->setState(event.type, event);
@@ -130,11 +135,12 @@ void Game::start(){
 		}
 
 		this->update(pressedKeys);
-			AffineTransform at;
-			this->draw(at);
-			// this->children[1]->draw(at);
+		AffineTransform at;
+		this->draw(at);
 
-		kiss_textbox_draw(&textbox1, renderer);
+		kiss_window_draw(&window, renderer);
+		scene_window.draw(renderer);
+		// kiss_textbox_draw(&textbox1, renderer);
 		// this->children[0]->draw(at);
 
 		SDL_RenderPresent(renderer);
