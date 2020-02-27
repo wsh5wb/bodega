@@ -14,6 +14,7 @@
 #include "Sprite.h"
 #include "kiss_sdl.h"
 #include "ItemBar.h"
+#include "ResourceBar.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -29,6 +30,7 @@ public:
 private:
 	DisplayObject* draggable = NULL;
 	DisplayObjectContainer* child;
+	ResourceBar *resourceBar;
 };
 
 #endif

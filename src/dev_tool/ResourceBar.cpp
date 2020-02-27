@@ -14,10 +14,10 @@ bool checkExt(const string& filename)
     return false;
 }
 
-ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject &draggable) : DisplayObjectContainer(){
+ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable) : DisplayObjectContainer(){
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
-	this->drag = &draggable;
+	this->drag = draggable;
 	cout << windowWidth << windowHeight << endl;
 	menu = new DisplayObjectContainer();
 	int base_height = (int) (windowHeight * (4.0/7.0));
@@ -47,7 +47,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject &dragg
 }
 
 ResourceBar::~ResourceBar(){
-
+	delete menu;
 }
 
 void ResourceBar::addChild(DisplayObject* obj){
@@ -112,7 +112,7 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 			//menu->translateRight();
 		}
 	}
-
+	
 	if(this->mouseListener->leftClick){
 		cout << "making new obj" << endl;
 		for(DisplayObject* child : menu->children){
@@ -127,6 +127,7 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 			}
 		}
 	}
+
 	SDL_Event sdlevent;
     sdlevent.type = SDL_KEYDOWN;
     sdlevent.key.keysym.sym = SDLK_1;
