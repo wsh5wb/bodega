@@ -233,9 +233,9 @@ void DisplayObject::draw(AffineTransform &at){
 		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
 
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
-		angle = 0;
+
 		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
-		
+		// SDL_RenderCopy(Game::renderer, curTexture, NULL, &dstrect);
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);
 

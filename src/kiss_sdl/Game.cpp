@@ -90,31 +90,34 @@ void Game::start(){
 
 	window.visible = 1;
 
-	int ms_per_frame = (1.0/(double)this->frames_per_sec)*1000;
-	std::clock_t start = std::clock();
-
 	bool quit = false;
 	SDL_Event event;
 
+	int ms_per_frame = (1.0/(double)this->frames_per_sec)*1000;
+	std::clock_t start = std::clock();
+
 	while(!quit){
 
-		SDL_PollEvent(&event);
-		kiss_window_event(&window, &event, &draw);
-		kiss_entry_event(&entry, &event, &draw);
-		switch (event.type)
-		{
-			case SDL_QUIT:
-				quit = true;
-				break;
-			case SDL_KEYDOWN:
-				pressedKeys.insert(event.key.keysym.scancode);
-				break;
-			case SDL_KEYUP:
-				pressedKeys.erase(event.key.keysym.scancode);
-				break;
-		}
+		while(SDL_PollEvent(&event)){
 
-		mouse->setState(event.type, event);
+			switch (event.type)
+			{
+				case SDL_QUIT:
+					quit = true;
+					break;
+				case SDL_KEYDOWN:
+					pressedKeys.insert(event.key.keysym.scancode);
+					break;
+				case SDL_KEYUP:
+					pressedKeys.erase(event.key.keysym.scancode);
+					break;
+			}
+
+			kiss_window_event(&window, &event, &draw);
+			kiss_entry_event(&entry, &event, &draw);
+
+			mouse->setState(event.type, event);
+		}
 
 		SDL_RenderClear(renderer);
 
@@ -123,14 +126,19 @@ void Game::start(){
 
 		if(duration > ms_per_frame){
 			start = end;
-			this->update(pressedKeys);
-			AffineTransform at;
-			this->draw(at);
+
 		}
 
+		this->update(pressedKeys);
+			AffineTransform at;
+			this->draw(at);
+			// this->children[1]->draw(at);
+
 		kiss_textbox_draw(&textbox1, renderer);
+		// this->children[0]->draw(at);
 
 		SDL_RenderPresent(renderer);
+
 	}
 }
 

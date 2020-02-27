@@ -22,9 +22,9 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 
 void DevTool::draw(AffineTransform &at){
 	Game::draw(at);
-	SDL_RenderClear(Game::renderer);
+
 	DisplayObjectContainer::draw(at);
-	SDL_RenderPresent(Game::renderer);
+
 
 }
 
