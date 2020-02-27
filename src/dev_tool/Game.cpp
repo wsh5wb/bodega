@@ -86,10 +86,10 @@ void Game::start(){
 	// kiss_window_new(&window, NULL, 1, 0, 0, kiss_screen_width,
 	// 	kiss_screen_height);
 	SDL_Color darkGrey = {64,64,64};
-	kiss_window_new(&sprite_bar, NULL, 1, 0,kiss_screen_height*3/4, kiss_screen_width, 
-		kiss_screen_height/4);
+	//kiss_window_new(&sprite_bar, NULL, 1, 0,kiss_screen_height*3/4, kiss_screen_width, 
+	//	kiss_screen_height/4);
 	kiss_window_new(&char_attributes_bar, NULL, 1, kiss_screen_width*4/5, 0, kiss_screen_width/5, 
-		kiss_screen_height*3/4);
+		kiss_screen_height);
 
 	//kiss_entry_new(&xPosEntry,&char_attributes_bar,0,"xPos:",kiss_screen_width*4/5 + 20,20,60);
 	
@@ -100,7 +100,7 @@ void Game::start(){
 	editor_window.bg = kiss_black;
 	SceneWindow scene_window(kiss_screen_width, kiss_screen_height, &editor_window, this);
 
-	sprite_bar.visible = 1;
+	//sprite_bar.visible = 1;
 	char_attributes_bar.visible = 1;
 	editor_window.visible = 1;
 
@@ -127,7 +127,7 @@ void Game::start(){
 					break;
 			}
 
-			kiss_window_event(&sprite_bar, &event, &draw);
+			//kiss_window_event(&sprite_bar, &event, &draw);
 			kiss_window_event(&char_attributes_bar, &event, &draw);
 
 			infoBar.event(&event,&draw);
@@ -157,7 +157,7 @@ void Game::start(){
 		kiss_window_draw(&editor_window, renderer);
 		this->draw(at);
 
-		kiss_window_draw(&sprite_bar, renderer);
+		//kiss_window_draw(&sprite_bar, renderer);
 		kiss_window_draw(&char_attributes_bar, renderer);
 
 		infoBar.draw(renderer);

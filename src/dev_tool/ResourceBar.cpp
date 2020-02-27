@@ -14,18 +14,19 @@ bool checkExt(const string& filename)
     return false;
 }
 
-ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable) : DisplayObjectContainer(){
+ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer *mainwindow) : DisplayObjectContainer(){
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
 	this->drag = draggable;
-	this->id = "resourcebar";
-	cout << windowWidth << windowHeight << endl;
+
+	this->mainWindow = mainwindow;
+	this->baseHeight = (int) (windowHeight * (3.0/4.0));
+
 	menu = new DisplayObjectContainer();
-	int base_height = (int) (windowHeight * (4.0/7.0));
-	cout << base_height << std::endl;
+	cout << baseHeight << std::endl;
 	int x = 0;
 	int y = 0;
-	menu->moveTo(0, base_height);
+	menu->moveTo(0, baseHeight);
 	
 	for (const auto& dirEntry : std::filesystem::recursive_directory_iterator("./resources")){
 		std::filesystem::path path = dirEntry.path();
@@ -38,7 +39,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 			temp->scale(.1);
 			temp->moveTo(x,y);
 			x += 30;
-			if(x > windowWidth* 3){
+			if(x > windowWidth* 2){
 			 	y += 40;
 			 	x = 0;
 			}
@@ -116,19 +117,33 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 		}
 	}
 	
-	if(this->mouseListener->leftClick){
-		cout << "making new obj" << endl;
-		for(DisplayObject* child : menu->children){
-			cout << "checking " << child->id << endl;
-			auto child_coords = child->getPosition();
-			auto click_coords = this->mouseListener->getPosition();
-			if (dist(child_coords, click_coords) < 30){
-				this->drag = new DisplayObject(child->id, child->imgPath);
-				auto point = this->mouseListener->getPosition();
-				this->drag->moveTo(point.x, point.y);
-				break;
+	if (drag != NULL and this->mouseListener->leftClick){
+		auto point = this->mouseListener->getCoordinates();
+		drag->moveTo(point.x, point.y);
+	}
+	else if(this->mouseListener->leftClick){ //handle resourcebar left clicks
+		cout << "click" << endl;
+		auto click_coords = this->mouseListener->getCoordinates();
+		if (click_coords.y < baseHeight){
+
+		} // if the click is outside of the resourcebar
+		else{
+			for(DisplayObject* child : menu->children){
+				auto child_coords = child->getWorldCenter();
+				//cout << "child x: " << child_coords.x << " child y: " << child_coords.y << endl;
+				if (dist(child_coords, click_coords) < 30){
+					cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
+					this->drag = new DisplayObject(child->id, child->imgPath);
+					this->drag->isCopy = true;
+					break;
+				}
 			}
 		}
+	}
+	else if (drag != NULL and drag->isCopy){
+		drag->isCopy = false;
+		mainWindow->addChild(drag);
+		drag = NULL;
 	}
 
 	SDL_Event sdlevent;

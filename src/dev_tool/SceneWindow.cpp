@@ -54,7 +54,7 @@ void SceneWindow::load_scene_from_path(){
 	if(i.good()){
 		Scene *scene = new Scene();
 		scene->loadScene(scene_path_entry.text);
-		running_dev_tool->removeChild(SCENE_DOC_INDEX);
+		delete running_dev_tool->children[SCENE_DOC_INDEX];
 		running_dev_tool->children[SCENE_DOC_INDEX] = scene;
 		scene_dialogue_window.visible = 0;
 		strcpy(scene_path_entry.text, "");
