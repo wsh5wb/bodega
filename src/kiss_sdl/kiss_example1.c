@@ -23,7 +23,9 @@
 */
 
 #include "kiss_sdl.h"
-#include "AnimatedSprite.h"
+#include "DisplayObject.h"
+#include "AffineTransform.h"
+#include "Game.h"
 
 static void text_reset(kiss_textbox *textbox, kiss_vscrollbar *vscrollbar)
 {
@@ -189,7 +191,7 @@ static void button_ok2_event(kiss_button *button, SDL_Event *e,
 	}
 }
 
-// int main(int argc, char **argv)
+// int main(int argc, char **argv) : Game(12,12)
 // {
 // 	SDL_Renderer *renderer;
 // 	SDL_Event e;
@@ -204,7 +206,7 @@ static void button_ok2_event(kiss_button *button, SDL_Event *e,
 // 	kiss_entry entry = {0};
 // 	int textbox_width, textbox_height, window2_width, window2_height,
 // 		draw, quit;
-// 	AnimatedSprite apple;
+
 // 	quit = 0;
 // 	draw = 1;
 // 	textbox_width = 250;
@@ -265,7 +267,7 @@ static void button_ok2_event(kiss_button *button, SDL_Event *e,
 // 		&label_sel);
 // 	/* Do that, and all widgets associated with the window will show */
 // 	window1.visible = 1;
-
+// 	DisplayObject character("girl", "./resources/character/Idle_1.png");
 // 	while (!quit) {
 
 // 		/* Some code may be written here */
@@ -299,7 +301,8 @@ static void button_ok2_event(kiss_button *button, SDL_Event *e,
 
 // 		if (!draw) continue;
 // 		SDL_RenderClear(renderer);
-
+// 		AffineTransform at;
+// 		character.draw(at);
 // 		kiss_window_draw(&window1, renderer);
 // 		kiss_label_draw(&label1, renderer);
 // 		kiss_label_draw(&label2, renderer);

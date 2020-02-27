@@ -22,9 +22,12 @@ public:
 	int frames_per_sec = 60;
 	int windowWidth, windowHeight;
 
-	//SDL_Window * window;
-	static kiss_window* window;
+	// SDL_Window * window;
+
 	static SDL_Renderer* renderer;
+
+	kiss_array objects, a1;
+	kiss_window window;
 
 	//Global frame counter
 	static unsigned int frameCounter;
@@ -36,12 +39,12 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 	Mouse* mouse;
-	kiss_array objects;
 private:
 
 	void initSDL();
 	void quitSDL();
 	set<SDL_Scancode> pressedKeys;
+
 
 };
 

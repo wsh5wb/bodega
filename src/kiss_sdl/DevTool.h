@@ -28,6 +28,7 @@ public:
 	virtual void draw(AffineTransform &at);
 private:
 	DisplayObject* draggable = NULL;
+	DisplayObjectContainer* child;
 };
 
 #endif

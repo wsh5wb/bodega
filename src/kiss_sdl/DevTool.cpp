@@ -3,8 +3,9 @@
 using namespace std;
 
 DevTool::DevTool() : Game(1200, 1000){
+	child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
 	this->addChild(mouse);
-	
+	this->addChild(child);
 
 }
 
