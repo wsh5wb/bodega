@@ -15,7 +15,7 @@ MyGame::MyGame() :
 	myCamera = Camera::getCamera();
 	character = new Scene();
 	myCamera->addScene(character);
-	this->scene = "./resources/scenes/test.txt";
+	this->scene = "./resources/scenes/testSave1.txt";
 
 	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
@@ -23,6 +23,7 @@ MyGame::MyGame() :
 }
 
 MyGame::~MyGame() {
+	character->saveScene("./resources/scenes/testSave2.txt");
 //	std::ofstream o("./resources/scenes/test.txt");
 //	o << "2 1" << std::endl;
 //	o << "0 " << "Scene" << " "<< "0" << " " << "0" << " "<< "0" << " "<< "0" << " "<< "true" << " "<< "false"  << " "<< "0" << " "<< "0" << std::endl;

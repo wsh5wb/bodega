@@ -52,3 +52,23 @@ void DemoSprite::update(set<SDL_Scancode> pressedKeys) {
 void DemoSprite::draw(AffineTransform &at) {
 	Sprite::draw(at);
 }
+
+void DemoSprite::saveSelf(vector<string> &objects,
+		vector<string> &dependencies) {
+	string desc;
+	stringstream sstm;
+	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = pivot.y;
+	sstm << "5 " << id << " " << imgPath << " " << red << " " << green << " "
+			<< blue << " " << std::boolalpha << vis << " " << std::boolalpha
+			<< isRGB << " " << w << " " << h << " " << speed << " " << scaleX
+			<< " " << scaleY << " " << rotation << " " << rotationAmount << " "
+			<< alpha << " " << px0 << " " << py0 << " " << px1 + " " << py1
+			<< "\n";
+	desc = sstm.str();
+	objects.push_back(desc);
+	for (DisplayObject *child : children) {
+		string dep = id + " " + child->id + "\n";
+		dependencies.push_back(dep);
+		child->saveSelf(objects, dependencies);
+	}
+}

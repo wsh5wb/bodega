@@ -1,5 +1,7 @@
 #include "Scene.h"
 #include <iostream>
+#include <sstream>
+
 //#include "json.hpp"
 //#include "jsonConversions.h"
 // for convenience
@@ -241,10 +243,33 @@ void Scene::loadScene(string sceneFilePath) {
 }
 
 void Scene::saveScene(string sceneFilePath) {
-	//code retrieved from https://github.com/nlohmann/json
-//	json j = this;
-//	std::ofstream o(sceneFilePath);
-//	o << std::setw(4) << j << std::endl;
+
+	vector < string > objects;
+	vector < string > dependencies;
+	string desc;
+	stringstream sstm;
+	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = pivot.y;
+	sstm << "0 " << id << " " << imgPath << " " << red << " " << green << " "
+			<< blue << " " << std::boolalpha<< vis << " " << std::boolalpha << isRGB << " " << w << " " << h << " " << speed
+			<< " " << scaleX << " " << scaleY << " " << rotation << " "
+			<< rotationAmount << " " << alpha << " " << px0 << " " << py0 << " "
+			<< px1 + " " << py1 << "\n";
+	desc = sstm.str();
+	objects.push_back(desc);
+	for (DisplayObject * child : children) {
+		string dep = id + " " + child->id + "\n";
+		dependencies.push_back(dep);
+		child->saveSelf(objects, dependencies);
+	}
+	std::ofstream o(sceneFilePath);
+	o << objects.size() << " " << dependencies.size() << std::endl;
+	for (string object : objects) {
+		o << object;
+	}
+	for (string dependency : dependencies) {
+		o << dependency;
+	}
+
 }
 
 void Scene::update(set<SDL_Scancode> pressedKeys) {
