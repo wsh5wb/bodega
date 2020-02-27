@@ -91,7 +91,7 @@ void Game::start(){
 	kiss_window_new(&char_attributes_bar, NULL, 1, kiss_screen_width*4/5, 0, kiss_screen_width/5, 
 		kiss_screen_height*3/4);
 
-		//kiss_entry_new(&xPosEntry,&char_attributes_bar,0,"xPos:",kiss_screen_width*4/5 + 20,20,60);
+	//kiss_entry_new(&xPosEntry,&char_attributes_bar,0,"xPos:",kiss_screen_width*4/5 + 20,20,60);
 	
 	char_attributes_bar.bg = darkGrey; sprite_bar.bg = darkGrey;
 	infoBar = ItemBar(&char_attributes_bar);

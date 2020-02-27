@@ -21,8 +21,8 @@ public:
 	kiss_window * window = {0};
 private:
 	//DisplayObject* draggable = NULL;
-	kiss_entry xPosEntry = {0};
-	kiss_label xPosLabel = {0};
+	kiss_entry idEntry = {0}; kiss_entry xPosEntry = {0}; kiss_entry yPosEntry = {0};
+	kiss_label idLabel = {0}; kiss_label xPosLabel = {0}; kiss_label yPosLabel = {0};
 
 };
 

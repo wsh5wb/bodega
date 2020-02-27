@@ -2,7 +2,7 @@
 
 using namespace std;
 
-DevTool::DevTool() : Game(1200, 800){
+DevTool::DevTool() : Game(1280, 720){
 	child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
 	Scene* scene = new Scene();
 	scene->loadScene("./resources/scenes/test.txt");
