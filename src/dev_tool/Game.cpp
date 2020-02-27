@@ -25,7 +25,7 @@ Game::Game(int windowWidth, int windowHeight){
 	// initSDL();
 	// TTF_Init();
 
-	SDL_Renderer * renderer = kiss_init("dev_tool", &objects, 1200, 800);
+	SDL_Renderer * renderer = kiss_init("dev_tool", &objects, 1280, 720);
 
 	if(!renderer){
 		cout << "renderer failed to init" << endl;

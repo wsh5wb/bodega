@@ -6,14 +6,17 @@ DevTool::DevTool() : Game(1200, 800){
 	child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
 	Scene* scene = new Scene();
 	scene->loadScene("./resources/scenes/test.txt");
-	resourceBar = new ResourceBar(1200, 800, draggable);
+
+	resourceBar = new ResourceBar(1280, 720, draggable);
+	resourceBar->setMouseListener(mouse);
+
 	//this->addChild(resourceBar);
 	this->addChild(scene);
 	this->addChild(mouse);
 }
 
 DevTool::~DevTool(){
-	delete resourceBar;
+	//delete resourceBar;
 }
 
 

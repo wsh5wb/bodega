@@ -103,3 +103,4 @@ imgui.ini
 
 #executables
 bitchin-dev-tool
+src/dev_tool/build/*
