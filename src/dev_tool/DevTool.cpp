@@ -3,11 +3,10 @@
 using namespace std;
 
 DevTool::DevTool() : Game(1280, 720){
-	child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
+
 	Scene* scene = new Scene();
 	scene->loadScene("./resources/scenes/test.txt");
-
-	resourceBar = new ResourceBar(1280, 720, draggable);
+	resourceBar = new ResourceBar(1280, 720, draggable, this);
 	resourceBar->setMouseListener(mouse);
 
 	//this->addChild(resourceBar);
@@ -16,7 +15,7 @@ DevTool::DevTool() : Game(1280, 720){
 }
 
 DevTool::~DevTool(){
-	//delete resourceBar;
+	delete resourceBar;
 }
 
 

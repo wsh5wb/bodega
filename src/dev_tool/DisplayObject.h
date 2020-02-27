@@ -65,6 +65,8 @@ public:
 	void reverseTransformations(AffineTransform &at);
 	SDL_Point getPivot();
 	SDL_Point getPosition();
+	SDL_Point getWorld();
+
 	void setSpeed(int s);//added
 
 private:
@@ -78,7 +80,7 @@ protected:
 	double rotation = 0;
 	double rotationAmount = 0.05;
 	int alpha;
-	SDL_Point pivot, position;
+	SDL_Point pivot, position, world;
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;
 	/* Texture currently being drawn. Equal to texture for normal DO */

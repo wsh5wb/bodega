@@ -14,13 +14,14 @@
 
 class ResourceBar : public DisplayObjectContainer{
 public:
-	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable);
+	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer* mainwindow);
 	~ResourceBar();
 	void addChild(DisplayObject* child);
 	void setMouseListener(Mouse* mouse);
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 private:
+	DisplayObjectContainer* mainWindow;
 	DisplayObjectContainer* menu;
 	DisplayObject* drag;
 	double windowHeight;

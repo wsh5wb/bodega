@@ -14,13 +14,14 @@ bool checkExt(const string& filename)
     return false;
 }
 
-ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable) : DisplayObjectContainer(){
+ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer *mainwindow) : DisplayObjectContainer(){
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
 	this->drag = draggable;
+	this->mainWindow = mainwindow;
 	cout << windowWidth << windowHeight << endl;
 	menu = new DisplayObjectContainer();
-	int base_height = (int) (windowHeight * (4.0/7.0));
+	int base_height = (int) (windowHeight * (3.0/4.0));
 	cout << base_height << std::endl;
 	int x = 0;
 	int y = 0;
@@ -36,7 +37,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 			temp->scale(.1);
 			temp->moveTo(x,y);
 			x += 30;
-			if(x > windowWidth* 3){
+			if(x > windowWidth* 2){
 			 	y += 40;
 			 	x = 0;
 			}
@@ -113,19 +114,27 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 		}
 	}
 	
-	if(this->mouseListener->leftClick){
-		cout << "making new obj" << endl;
+	if (drag != NULL and this->mouseListener->leftClick){
+		auto point = this->mouseListener->getCoordinates();
+		drag->moveTo(point.x, point.y);
+	}
+	else if(this->mouseListener->leftClick){ //handle resourcebar left clicks
+		cout << "click" << endl;
 		for(DisplayObject* child : menu->children){
-			cout << "checking " << child->id << endl;
-			auto child_coords = child->getPosition();
-			auto click_coords = this->mouseListener->getPosition();
+			auto child_coords = child->getWorld();
+			auto click_coords = this->mouseListener->getCoordinates();
+			//cout << "child x: " << child_coords.x << " child y: " << child_coords.y << endl;
 			if (dist(child_coords, click_coords) < 30){
+				cout << "making new obj" << endl;
+				cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
 				this->drag = new DisplayObject(child->id, child->imgPath);
-				auto point = this->mouseListener->getPosition();
-				this->drag->moveTo(point.x, point.y);
 				break;
 			}
 		}
+	}
+	else if (drag != NULL){
+		mainWindow->addChild(drag);
+		drag = NULL;
 	}
 
 	SDL_Event sdlevent;
