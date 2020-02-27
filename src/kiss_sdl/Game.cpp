@@ -83,7 +83,6 @@ void Game::start(){
 
 	// kiss_window_new(&window, NULL, 1, 0, 0, kiss_screen_width,
 	// 	kiss_screen_height);
-	kiss_window_new(&window1, NULL, 1, 0,0, kiss_screen_width/5, kiss_screen_height*3/4);
 	kiss_window_new(&sprite_bar, NULL, 1, 0,kiss_screen_height*3/4, kiss_screen_width, 
 		kiss_screen_height/4);
 	kiss_window_new(&char_attributes_bar, NULL, 1, kiss_screen_width*4/5, 0, kiss_screen_width/5, 
@@ -95,7 +94,6 @@ void Game::start(){
 
 	SceneWindow scene_window(kiss_screen_width, kiss_screen_height);
 
-	window1.visible = 1;
 	sprite_bar.visible = 1;
 	char_attributes_bar.visible = 1;
 	dir_window.visible = 0;
@@ -123,7 +121,6 @@ void Game::start(){
 					break;
 			}
 
-			kiss_window_event(&window1, &event, &draw);
 			kiss_window_event(&sprite_bar, &event, &draw);
 			kiss_window_event(&char_attributes_bar, &event, &draw);
 			kiss_window_event(&dir_window, &event, &draw);
@@ -149,7 +146,6 @@ void Game::start(){
 		AffineTransform at;
 		this->draw(at);
 
-		kiss_window_draw(&window1, renderer);
 		kiss_window_draw(&sprite_bar, renderer);
 		kiss_window_draw(&char_attributes_bar, renderer);
 		kiss_window_draw(&dir_window, renderer);
