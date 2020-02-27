@@ -7,6 +7,7 @@ DevTool::DevTool() : Game(1280, 720){
 	scene->loadScene("./resources/scenes/test.txt");
 	resourceBar = new ResourceBar(1280, 720, draggable, this);
 	resourceBar->setMouseListener(mouse);
+
 	//this->addChild(resourceBar);
 	this->addChild(scene);
 	this->addChild(mouse);

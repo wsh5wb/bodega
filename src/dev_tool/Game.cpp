@@ -21,10 +21,12 @@ Game::Game(int windowWidth, int windowHeight){
 	
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
-
+	int windowH = 800;
 	// initSDL();
 	// TTF_Init();
+
 	SDL_Renderer * renderer = kiss_init("dev_tool", &objects, 1280, 720);
+
 	if(!renderer){
 		cout << "renderer failed to init" << endl;
 		return; 
@@ -69,7 +71,7 @@ void Game::initSDL(){
 	// SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
 
 	//SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
-	SDL_Renderer * renderer = kiss_init("My Game",&objects,1200,1000);
+	//SDL_Renderer * renderer = kiss_init("My Game",&objects,1200,1000);
 	Game::renderer = renderer;
 	
 }
@@ -83,10 +85,16 @@ void Game::start(){
 
 	// kiss_window_new(&window, NULL, 1, 0, 0, kiss_screen_width,
 	// 	kiss_screen_height);
+	SDL_Color darkGrey = {64,64,64};
 	//kiss_window_new(&sprite_bar, NULL, 1, 0,kiss_screen_height*3/4, kiss_screen_width, 
 	//	kiss_screen_height/4);
 	kiss_window_new(&char_attributes_bar, NULL, 1, kiss_screen_width*4/5, 0, kiss_screen_width/5, 
 		kiss_screen_height*3/4);
+
+		//kiss_entry_new(&xPosEntry,&char_attributes_bar,0,"xPos:",kiss_screen_width*4/5 + 20,20,60);
+	
+	char_attributes_bar.bg = darkGrey; sprite_bar.bg = darkGrey;
+	infoBar = ItemBar(&char_attributes_bar);
 
 	kiss_window_new(&dir_window, NULL, 1, 
 		kiss_screen_width / 2 - 300 / 2, 
@@ -124,6 +132,9 @@ void Game::start(){
 			//kiss_window_event(&sprite_bar, &event, &draw);
 			kiss_window_event(&char_attributes_bar, &event, &draw);
 			kiss_window_event(&dir_window, &event, &draw);
+			infoBar.event(&event,&draw);
+			//kiss_entry_event(&xPosEntry,&event,&draw);
+
 			scene_window.event(&event, &draw, window1, dir_window);
 
 			mouse->setState(event.type, event);
@@ -141,6 +152,7 @@ void Game::start(){
 		
 		scene_window.draw(renderer);
 
+
 		// Do all scene drawing between the above renderer and next kiss_draws
 		this->update(pressedKeys);
 		AffineTransform at;
@@ -149,6 +161,8 @@ void Game::start(){
 		//kiss_window_draw(&sprite_bar, renderer);
 		kiss_window_draw(&char_attributes_bar, renderer);
 		kiss_window_draw(&dir_window, renderer);
+		infoBar.draw(renderer);
+		//kiss_entry_draw(&xPosEntry,renderer);
 		
 		SDL_RenderPresent(renderer);
 
