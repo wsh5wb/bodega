@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "DisplayObjectContainer.h"
+#include "ItemBar.h"
 #include "Mouse.h"
 #include "kiss_sdl.h"
 #include <vector>
@@ -28,6 +29,8 @@ public:
 
 	kiss_array objects, a1;
 	kiss_window window1, sprite_bar, char_attributes_bar, dir_window;
+	kiss_entry xPosEntry = {0};
+	ItemBar infoBar;
 
 	//Global frame counter
 	static unsigned int frameCounter;
