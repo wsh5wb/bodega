@@ -11,21 +11,25 @@
 using namespace std;
 
 SDL_Renderer* Game::renderer;
+kiss_window* Game::window;
 Game* Game::instance;
 unsigned int Game::frameCounter = 0;
 
 Game::Game(int windowWidth, int windowHeight){
 	Game::instance = this;
 	
-	this->windowWidth = windowWidth;
-	this->windowHeight = windowHeight;
-
+	//this->windowWidth = windowWidth;
+	//this->windowHeight = windowHeight;
+	
+	kiss_window_new(window,NULL,1,0,0,1200,1000);
+	window->visible = 1;
 	initSDL();
 	TTF_Init();
 	// cout << Game::renderer << endl;
 	mouse = new Mouse("Mouse",100,100,100);
 	mouse->makeInvisible();
 	mouse->setAlpha(80);
+	Game::window = window;
 }
 
 Game::~Game(){
@@ -35,8 +39,9 @@ Game::~Game(){
 
 void Game::quitSDL(){
 	cout << "Quitting sdl" << endl;
+	kiss_clean(&objects);
 	SDL_DestroyRenderer(Game::renderer);
-	SDL_DestroyWindow(window);
+	//SDL_DestroyWindow(window);
 
 	IMG_Quit();
 	SDL_Quit();
@@ -46,12 +51,13 @@ void Game::initSDL(){
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 
-	window = SDL_CreateWindow("myGame",
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->windowWidth, this->windowHeight, 0);
+	//window = SDL_CreateWindow("myGame",
+		//SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->windowWidth, this->windowHeight, 0);
 
-	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
-
+	//SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
+	SDL_Renderer * renderer = kiss_init("My Game",&objects,1200,1000);
 	Game::renderer = renderer;
+	
 }
 
 void Game::start(){

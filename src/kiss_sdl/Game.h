@@ -6,6 +6,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "DisplayObjectContainer.h"
 #include "Mouse.h"
+#include "kiss_sdl.h"
 #include <vector>
 #include <set>
 
@@ -21,7 +22,8 @@ public:
 	int frames_per_sec = 60;
 	int windowWidth, windowHeight;
 
-	SDL_Window * window;
+	//SDL_Window * window;
+	static kiss_window* window;
 	static SDL_Renderer* renderer;
 
 	//Global frame counter
@@ -34,6 +36,7 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 	Mouse* mouse;
+	kiss_array objects;
 private:
 
 	void initSDL();

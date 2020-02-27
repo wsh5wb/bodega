@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/nicholas/Documents/School/4th Year/Spring/Game Design/bodega/src/dev-tool"
+CMAKE_SOURCE_DIR = "/home/student/Game Design/starterCode/starterCode/src/dev-tool"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/nicholas/Documents/School/4th Year/Spring/Game Design/bodega/src/dev-tool"
+CMAKE_BINARY_DIR = "/home/student/Game Design/starterCode/starterCode/src/dev-tool"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/nicholas/Documents/School/4th Year/Spring/Game Design/bodega/src/dev-tool/CMakeFiles" "/home/nicholas/Documents/School/4th Year/Spring/Game Design/bodega/src/dev-tool/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/student/Game Design/starterCode/starterCode/src/dev-tool/CMakeFiles" "/home/student/Game Design/starterCode/starterCode/src/dev-tool/CMakeFiles/progress.marks"
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/nicholas/Documents/School/4th Year/Spring/Game Design/bodega/src/dev-tool/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/student/Game Design/starterCode/starterCode/src/dev-tool/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target

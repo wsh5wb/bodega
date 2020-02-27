@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "Sprite.h"
 #include "kiss_sdl.h"
+#include "ItemBar.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

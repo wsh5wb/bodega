@@ -70,9 +70,10 @@ void Game::initSDL(){
 #elif __linux__
     // GL 3.2 Core + GLSL 150
     glsl_version = "#version 150";
+    cout << "Linux";
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0); 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 #elif _WIN32
     // GL 3.0 + GLSL 130
     glsl_version = "#version 130";
@@ -96,8 +97,9 @@ void Game::initSDL(){
         );
     // limit to which minimum size user can resize the window
     SDL_SetWindowMinimumSize(window, 500, 300);
-
+    cout << window;
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+    cout << gl_context;
     SDL_GL_MakeCurrent(window, gl_context);
 
     // enable VSync
