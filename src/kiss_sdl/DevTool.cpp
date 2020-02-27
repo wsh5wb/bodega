@@ -4,9 +4,11 @@ using namespace std;
 
 DevTool::DevTool() : Game(1200, 1000){
 	child = new DisplayObjectContainer("girl", "./resources/character/Idle_1.png");
+	Scene* scene = new Scene();
+	scene->loadScene("./resources/scenes/test.txt");
 	this->addChild(mouse);
-	this->addChild(child);
-
+	// this->addChild(child);
+	this->addChild(scene);
 }
 
 DevTool::~DevTool(){

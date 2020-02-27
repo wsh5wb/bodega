@@ -1,4 +1,5 @@
 #include "SceneWindow.h"
+#include <iostream>
 
 SceneWindow::SceneWindow(int parent_width, int parent_height){
 	int window_height = parent_height*3/4;
@@ -16,4 +17,17 @@ SceneWindow::SceneWindow(int parent_width, int parent_height){
 void SceneWindow::draw(SDL_Renderer *renderer){
 	kiss_window_draw(&window, renderer);
 	kiss_button_draw(&load_scene_button, renderer);
+}
+
+void SceneWindow::event(SDL_Event *event, int* draw, kiss_window& wdw, kiss_window& dir_wdw){
+	if(kiss_button_event(&load_scene_button, event, draw)){
+		load_scene_event(wdw, dir_wdw);
+	}
+	kiss_window_event(&window, event, draw);
+}
+
+void SceneWindow::load_scene_event(kiss_window& wdw, kiss_window& dir_wdw){
+	dir_wdw.visible = 1;
+	dir_wdw.focus = 1;
+	wdw.focus = 0;
 }

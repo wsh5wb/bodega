@@ -76,22 +76,29 @@ void Game::initSDL(){
 
 void Game::start(){
 
-	kiss_textbox textbox1 = {0};
-	kiss_entry entry = {0};
 	int textbox_width, textbox_height, draw;
 	draw = 1;
 	textbox_width = 200;
 	textbox_height = 100;
 
-	kiss_window_new(&window, NULL, 1, 0, 0, kiss_screen_width,
-		kiss_screen_height);
-	kiss_textbox_new(&textbox1, &window, 1, &a1, kiss_screen_width / 2 -
-		(2 * textbox_width + 2 * kiss_up.w - kiss_edge) / 2,
-		3 * kiss_normal.h, textbox_width, textbox_height);
+	// kiss_window_new(&window, NULL, 1, 0, 0, kiss_screen_width,
+	// 	kiss_screen_height);
+	kiss_window_new(&window1, NULL, 1, 0,0, kiss_screen_width/5, kiss_screen_height*3/4);
+	kiss_window_new(&sprite_bar, NULL, 1, 0,kiss_screen_height*3/4, kiss_screen_width, 
+		kiss_screen_height/4);
+	kiss_window_new(&char_attributes_bar, NULL, 1, kiss_screen_width*4/5, 0, kiss_screen_width/5, 
+		kiss_screen_height*3/4);
+
+	kiss_window_new(&dir_window, NULL, 1, 
+		kiss_screen_width / 2 - 300 / 2, 
+		kiss_screen_height / 2- 300 / 2, 300, 300);
 
 	SceneWindow scene_window(kiss_screen_width, kiss_screen_height);
 
-	window.visible = 1;
+	window1.visible = 1;
+	sprite_bar.visible = 1;
+	char_attributes_bar.visible = 1;
+	dir_window.visible = 0;
 
 	bool quit = false;
 	SDL_Event event;
@@ -116,10 +123,11 @@ void Game::start(){
 					break;
 			}
 
-			kiss_window_event(&window, &event, &draw);
-			kiss_window_event(&scene_window.window, &event, &draw);
-
-			kiss_entry_event(&entry, &event, &draw);
+			kiss_window_event(&window1, &event, &draw);
+			kiss_window_event(&sprite_bar, &event, &draw);
+			kiss_window_event(&char_attributes_bar, &event, &draw);
+			kiss_window_event(&dir_window, &event, &draw);
+			scene_window.event(&event, &draw, window1, dir_window);
 
 			mouse->setState(event.type, event);
 		}
@@ -131,18 +139,21 @@ void Game::start(){
 
 		if(duration > ms_per_frame){
 			start = end;
-
 		}
 
+		
+		scene_window.draw(renderer);
+
+		// Do all scene drawing between the above renderer and next kiss_draws
 		this->update(pressedKeys);
 		AffineTransform at;
 		this->draw(at);
 
-		kiss_window_draw(&window, renderer);
-		scene_window.draw(renderer);
-		// kiss_textbox_draw(&textbox1, renderer);
-		// this->children[0]->draw(at);
-
+		kiss_window_draw(&window1, renderer);
+		kiss_window_draw(&sprite_bar, renderer);
+		kiss_window_draw(&char_attributes_bar, renderer);
+		kiss_window_draw(&dir_window, renderer);
+		
 		SDL_RenderPresent(renderer);
 
 	}

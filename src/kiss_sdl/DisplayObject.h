@@ -17,7 +17,7 @@ class DisplayObject{
 public:
 	string id = "DEFAULT_ID";
 	string imgPath = "";
-	int red,green,blue,alpha;
+	int red,green,blue;
 	string type = "DisplayObject";
 	bool vis;
 	bool isRGB = false;
@@ -37,7 +37,7 @@ public:
 	void setImage(SDL_Surface* img);
 	void decreaseAlpha();
 	void increaseAlpha();
-	void setAlpha(int alpha);
+	void setAlpha(int a);//added
 	void toggleVisibility();
 	void makeVisible();
 	void makeInvisible();
@@ -54,16 +54,18 @@ public:
 	void scaleIn();
 	void scaleOut();
 	void scale(double s);
+	void setScale(double x, double y);//added
 	void setRotation(double angle);
+	void setRotationValue(double angle);//added
 	double getRotation();
 	void rotateCW();
 	void rotateCCW();
 	double dist(SDL_Point &a, SDL_Point &b);
 	void applyTransformations(AffineTransform &at);
 	void reverseTransformations(AffineTransform &at);
-	SDL_Texture* getCurTexture();
 	SDL_Point getPivot();
 	SDL_Point getPosition();
+	void setSpeed(int s);//added
 
 private:
 	
@@ -75,12 +77,12 @@ protected:
 	double scaleY = 1;
 	double rotation = 0;
 	double rotationAmount = 0.05;
+	int alpha;
 	SDL_Point pivot, position;
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;
 	/* Texture currently being drawn. Equal to texture for normal DO */
 	SDL_Texture* curTexture;
-
 };
 
 #endif

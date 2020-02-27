@@ -12,10 +12,11 @@ class SceneWindow{
 public:
 	SceneWindow(int parent_width, int parent_height);
 	void draw(SDL_Renderer *renderer);
-	kiss_window window;
+	void event(SDL_Event *event, int* draw, kiss_window& wdw, kiss_window& dir_wdw);
+	kiss_window window = {0};
 	kiss_button load_scene_button = {0};
 private:
-
+	void load_scene_event(kiss_window& wdw, kiss_window& dir_wdw);
 };
 
 #endif

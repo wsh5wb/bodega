@@ -1,4 +1,4 @@
 2 1
-0 Scene ./resources/scenes/background_1.png 0 0 0 true false 0 0
-3 character ./resources/character/Idle_1.png 0 0 0 true false 416 454
+0 Scene ./resources/scenes/background.png 0 0 0 true false 0 0 5 1.2 1.2 0 0 255 0 0 0 0
+5 character ./resources/character/Idle_1.png 0 0 0 true false 416 454 1 .4 .4 0 0 255 0 0 400 400
 Scene character

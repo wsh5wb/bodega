@@ -90,8 +90,8 @@ void DisplayObject::increaseAlpha(){
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
-void DisplayObject::setAlpha(int alpha){
-	this->alpha = alpha;
+void DisplayObject::setAlpha(int a){
+	alpha = a;
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
@@ -164,8 +164,17 @@ void DisplayObject::scale(double s){
 	scaleY *= s;
 }
 
+void DisplayObject::setScale(double x, double y){
+	scaleX = x;
+	scaleY = y;
+}
+
 void DisplayObject::setRotation(double angle){
 	rotationAmount = angle*PI/180;
+}
+
+void DisplayObject::setRotationValue(double angle){
+	rotation = angle*PI/180;
 }
 
 double DisplayObject::getRotation(){
@@ -192,8 +201,8 @@ SDL_Point DisplayObject::getPosition(){
 	return this->position;
 }
 
-SDL_Texture* DisplayObject::getCurTexture(){
-	return this->curTexture;
+void DisplayObject::setSpeed(int s){
+	speed = s;
 }
 
 void DisplayObject::applyTransformations(AffineTransform &at){
@@ -229,13 +238,12 @@ void DisplayObject::draw(AffineTransform &at){
 		
 		int distAdj = dist(topL,topR);
 		int distOpp = dist(topR,bottomR);
-
 		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
 
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
 
 		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
-		// SDL_RenderCopy(Game::renderer, curTexture, NULL, &dstrect);
+		
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);
 
