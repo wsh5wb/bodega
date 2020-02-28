@@ -58,16 +58,15 @@ void SceneWindow::display_dialogue_window(){
 
 void SceneWindow::load_scene_from_path(){
 	ifstream i(scene_path_entry.text);
-	string s = "Enter valid path!";
 
 	if(i.good()){
-		Camera* camera = running_dev_tool->camera;
+		// Camera* camera = running_dev_tool->camera;
 		Scene *scene = new Scene();
 		scene->loadScene(scene_path_entry.text);
-		// delete running_dev_tool->children[SCENE_DOC_INDEX];
-		// running_dev_tool->children[SCENE_DOC_INDEX] = scene;
-		camera->removeScene(current_scene);
-		camera->addScene(scene);
+		delete running_dev_tool->children[SCENE_DOC_INDEX];
+		running_dev_tool->children[SCENE_DOC_INDEX] = scene;
+		// camera->removeScene(current_scene);
+		// camera->addScene(scene);
 		current_scene_path = scene_path_entry.text;
 		current_scene = scene;
 		scene_dialogue_window.visible = 0;
@@ -75,7 +74,7 @@ void SceneWindow::load_scene_from_path(){
 		running_dev_tool->disable_camera = false;
 	}
 	else
-		strcpy(scene_path_entry.text, "Enter valid path!");
+		scene_dialogue_window.bg = {220,20,60};// strcpy(scene_path_entry.text, "Enter valid path!");
 }
 
 void SceneWindow::save_scene_from_path(){

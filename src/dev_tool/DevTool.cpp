@@ -9,8 +9,8 @@ DevTool::DevTool() : Game(1280, 720){
 	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar);
 	resourceBar->setMouseListener(mouse);
 
-	// this->addChild(scene);
-	camera->addScene(scene);
+	this->addChild(scene);
+	// camera->addScene(scene);
 	this->addChild(mouse);
 }
 
@@ -21,8 +21,7 @@ DevTool::~DevTool(){
 
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	Game::update(pressedKeys);
-	DisplayObjectContainer::update(pressedKeys);
-	if(!disable_camera) camera->update(pressedKeys);
+	if(!disable_camera) DisplayObjectContainer::update(pressedKeys);
 
 	if (draggable != NULL and mouse->leftClick){
 		auto point = mouse->getCoordinates();

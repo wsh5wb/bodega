@@ -274,6 +274,28 @@ void DisplayObject::reverseTransformations(AffineTransform &at){
 }
 
 void DisplayObject::update(set<SDL_Scancode> pressedKeys){
+	for (SDL_Scancode code : pressedKeys){
+		switch(code){
+			case SDL_SCANCODE_W:
+				translateDown();
+				break;
+			case SDL_SCANCODE_A:
+				translateRight();
+				break;
+			case SDL_SCANCODE_S:
+				translateUp();
+				break;
+			case SDL_SCANCODE_D:
+				translateLeft();
+				break;
+			case SDL_SCANCODE_Z:
+				scale(1.05);
+				break;
+			case SDL_SCANCODE_X:
+				scale(.95);
+				break;
+		}
+	}
 }
 
 void DisplayObject::draw(AffineTransform &at){
