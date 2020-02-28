@@ -49,7 +49,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	mouse->update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
 
-	//if(infoBar->isEditing()){disable_camera = true;}
+	if(infoBar->isEditing()){disable_camera = true;}
 
 	if(!disable_camera) {
 		for(SDL_Scancode code : pressedKeys){

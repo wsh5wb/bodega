@@ -87,10 +87,10 @@ void ItemBar::copyFields(DisplayObject * oldObj, DisplayObject * newObj){
 	newObj->numCopies = curObj->numCopies;
 }
 
-/*bool ItemBar::isEditing(){
+bool ItemBar::isEditing(){
 	return idEntry.active || xPosEntry.active || yPosEntry.active || xPivEntry.active || yPivEntry.active || xScaleEntry.active || yScaleEntry.active ||
 		rotEntry.active || alphaEntry.active;
-} */
+} 
 
 void ItemBar::event(SDL_Event *event, int* draw){
 	//cout << "Event";
@@ -166,7 +166,7 @@ void ItemBar::event(SDL_Event *event, int* draw){
 	// Y Scale
 	if(kiss_entry_event(&yScaleEntry,event,draw)){
 		if(curObj != NULL){
-			if(isdigit(yScaleEntry.text[0]) || isdigit(xScaleEntry.text[1]) && xScaleEntry.text[0] == '.'){
+			if(isdigit(yScaleEntry.text[0]) || isdigit(yScaleEntry.text[1]) && yScaleEntry.text[0] == '.'){
 				float newVal = atof(yScaleEntry.text);
 				curObj->setScaleY(newVal);
 			}

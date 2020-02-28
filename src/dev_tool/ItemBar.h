@@ -18,7 +18,7 @@ public:
 	void initThisWindow(DisplayObjectContainer * win);
 	void updateObjectFields();
 	void copyFields(DisplayObject * oldObj, DisplayObject * newObj);
-	//bool isEditing();
+	bool isEditing();
 	void event(SDL_Event *event, int* draw);
 	void draw(SDL_Renderer *renderer);
 	kiss_window * window = {0};
