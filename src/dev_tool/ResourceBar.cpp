@@ -145,7 +145,7 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	}
 	else if (drag != NULL and drag->isCopy){
 		drag->isCopy = false;
-		mainWindow->addChild(drag);
+		((DisplayObjectContainer*) mainWindow->children[SCENE_DOC_INDEX])->addChild(drag);
 		infoBar->setObj(drag);
 		drag = NULL;
 	}

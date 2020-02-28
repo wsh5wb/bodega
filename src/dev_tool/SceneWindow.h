@@ -13,8 +13,10 @@ public:
 	SceneWindow(int parent_width, int parent_height, kiss_window* window, Game* running_tool);
 	void draw(SDL_Renderer *renderer);
 	void event(SDL_Event *event, int* draw);
+
 	kiss_window* window;
 	kiss_window scene_dialogue_window;
+
 	kiss_entry scene_path_entry;
 
 	kiss_button save_scene_button = {0};
@@ -27,6 +29,7 @@ private:
 	static Game * running_dev_tool;
 	Scene* current_scene;
 	string current_scene_path;
+	bool load;
 };
 
 #endif
