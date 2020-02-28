@@ -22,12 +22,14 @@ SceneWindow::SceneWindow(int parent_width, int parent_height, kiss_window* windo
 
 	kiss_button_new(&load_scene_button, window, "Load Scene", 5, 5);
 	kiss_button_new(&save_scene_button, window, "Save Scene", 15 + load_scene_button.rect.w, 5);
+
 	kiss_entry_new(&scene_path_entry, &scene_dialogue_window, 1, "Enter Scene Path",
 		entry_start_x, entry_start_y, entry_width);
 
 	running_dev_tool = running_tool;
 	current_scene_path = "";
 	current_scene = NULL;
+	load = false;
 }
 
 void SceneWindow::draw(SDL_Renderer *renderer){
@@ -39,14 +41,17 @@ void SceneWindow::draw(SDL_Renderer *renderer){
 
 void SceneWindow::event(SDL_Event *event, int* draw){
 	if(kiss_button_event(&load_scene_button, event, draw)){
+		load = true;
 		display_dialogue_window();
 	}
 	if(kiss_button_event(&save_scene_button, event, draw)){
-
+		load = false;
+		display_dialogue_window();
 	}
 	kiss_window_event(&scene_dialogue_window, event, draw);
 	if(kiss_entry_event(&scene_path_entry, event, draw)){
-		load_scene_from_path();
+		if(load)	load_scene_from_path();
+		else 		save_scene_from_path();
 	}
 
 }
@@ -57,6 +62,7 @@ void SceneWindow::display_dialogue_window(){
 }
 
 void SceneWindow::load_scene_from_path(){
+
 	ifstream i(scene_path_entry.text);
 
 	if(i.good()){
@@ -78,5 +84,12 @@ void SceneWindow::load_scene_from_path(){
 }
 
 void SceneWindow::save_scene_from_path(){
-	((Scene*) running_dev_tool->children[SCENE_DOC_INDEX])->saveScene(current_scene_path);
+	current_scene_path = scene_path_entry.text;
+	current_scene = ((Scene*)running_dev_tool->children[SCENE_DOC_INDEX]);
+	cout << "BITCH ID: " << current_scene << endl;
+	current_scene->saveScene(current_scene_path);
+	scene_dialogue_window.visible = 0;
+	strcpy(scene_path_entry.text, "");
+	running_dev_tool->disable_camera = false;
+	// ((Scene*) running_dev_tool->children[SCENE_DOC_INDEX])->saveScene(current_scene_path);
 }

@@ -13,6 +13,8 @@
 #include "ItemBar.h"
 #include "Mouse.h"
 
+#define SCENE_DOC_INDEX 0
+
 class ResourceBar : public DisplayObjectContainer{
 public:
 	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer* mainwindow, ItemBar * bar);
