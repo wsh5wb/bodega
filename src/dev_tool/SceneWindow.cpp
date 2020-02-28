@@ -18,23 +18,30 @@ SceneWindow::SceneWindow(int parent_width, int parent_height, kiss_window* windo
 	kiss_window_new(&scene_dialogue_window, NULL, 1, window_start_x, window_start_y,
 		dialogue_width, dialogue_height);
 	scene_dialogue_window.visible = 0;
+	scene_dialogue_window.bg = {64,64,64};
 
 	kiss_button_new(&load_scene_button, window, "Load Scene", 5, 5);
+	kiss_button_new(&save_scene_button, window, "Save Scene", 15 + load_scene_button.rect.w, 5);
 	kiss_entry_new(&scene_path_entry, &scene_dialogue_window, 1, "Enter Scene Path",
 		entry_start_x, entry_start_y, entry_width);
 
 	running_dev_tool = running_tool;
+	current_scene_path = "";
 }
 
 void SceneWindow::draw(SDL_Renderer *renderer){
 	kiss_window_draw(&scene_dialogue_window, renderer);
 	kiss_button_draw(&load_scene_button, renderer);
+	kiss_button_draw(&save_scene_button, renderer);
 	kiss_entry_draw(&scene_path_entry, renderer);
 }
 
 void SceneWindow::event(SDL_Event *event, int* draw){
 	if(kiss_button_event(&load_scene_button, event, draw)){
 		display_dialogue_window();
+	}
+	if(kiss_button_event(&save_scene_button, event, draw)){
+
 	}
 	kiss_window_event(&scene_dialogue_window, event, draw);
 	if(kiss_entry_event(&scene_path_entry, event, draw)){
@@ -56,9 +63,14 @@ void SceneWindow::load_scene_from_path(){
 		scene->loadScene(scene_path_entry.text);
 		delete running_dev_tool->children[SCENE_DOC_INDEX];
 		running_dev_tool->children[SCENE_DOC_INDEX] = scene;
+		current_scene_path = scene_path_entry.text;
 		scene_dialogue_window.visible = 0;
 		strcpy(scene_path_entry.text, "");
 	}
 	else
 		strcpy(scene_path_entry.text, "Enter valid path!");
+}
+
+void SceneWindow::save_scene_from_path(){
+	((Scene*) running_dev_tool->children[SCENE_DOC_INDEX])->saveScene(current_scene_path);
 }

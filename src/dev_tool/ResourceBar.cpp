@@ -122,7 +122,7 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 		drag->moveTo(point.x, point.y);
 	}
 	else if(this->mouseListener->leftClick){ //handle resourcebar left clicks
-		cout << "click" << endl;
+		// cout << "click" << endl;
 		auto click_coords = this->mouseListener->getCoordinates();
 		if (click_coords.y < baseHeight){
 
@@ -132,7 +132,7 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 				auto child_coords = child->getWorldCenter();
 				//cout << "child x: " << child_coords.x << " child y: " << child_coords.y << endl;
 				if (dist(child_coords, click_coords) < 30){
-					cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
+					// cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
 					this->drag = new DisplayObject(child->id, child->imgPath);
 					this->drag->isCopy = true;
 					break;

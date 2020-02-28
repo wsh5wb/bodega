@@ -16,11 +16,16 @@ public:
 	kiss_window* window;
 	kiss_window scene_dialogue_window;
 	kiss_entry scene_path_entry;
+
+	kiss_button save_scene_button = {0};
 	kiss_button load_scene_button = {0};
 private:
 	void display_dialogue_window();
 	void load_scene_from_path();
+	void save_scene_from_path();
+
 	static Game * running_dev_tool;
+	string current_scene_path;
 };
 
 #endif
