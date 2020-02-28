@@ -22,6 +22,10 @@ SceneWindow::SceneWindow(int parent_width, int parent_height, kiss_window* windo
 
 	kiss_button_new(&load_scene_button, window, "Load Scene", 5, 5);
 	kiss_button_new(&save_scene_button, window, "Save Scene", 15 + load_scene_button.rect.w, 5);
+	kiss_button_new(&set_background_button, &scene_dialogue_window, "Load BG",
+		30 + save_scene_button.rect.w, 5);
+	kiss_button_new(&close_screen_button, &scene_dialogue_window, "X", 
+		window_start_x+5, window_start_y+5);
 
 	kiss_entry_new(&scene_path_entry, &scene_dialogue_window, 1, "Enter Scene Path",
 		entry_start_x, entry_start_y, entry_width);
@@ -30,13 +34,17 @@ SceneWindow::SceneWindow(int parent_width, int parent_height, kiss_window* windo
 	current_scene_path = "";
 	current_scene = NULL;
 	load = false;
+	add_bg = false;
 }
 
 void SceneWindow::draw(SDL_Renderer *renderer){
 	kiss_window_draw(&scene_dialogue_window, renderer);
-	kiss_button_draw(&load_scene_button, renderer);
-	kiss_button_draw(&save_scene_button, renderer);
 	kiss_entry_draw(&scene_path_entry, renderer);
+
+	kiss_button_draw(&save_scene_button, renderer);
+	kiss_button_draw(&load_scene_button, renderer);
+	kiss_button_draw(&close_screen_button, renderer);
+	// kiss_button_draw(&set_background_button, renderer);
 }
 
 void SceneWindow::event(SDL_Event *event, int* draw){
@@ -51,14 +59,26 @@ void SceneWindow::event(SDL_Event *event, int* draw){
 	kiss_window_event(&scene_dialogue_window, event, draw);
 	if(kiss_entry_event(&scene_path_entry, event, draw)){
 		if(load)	load_scene_from_path();
-		else 		save_scene_from_path();
+		else		save_scene_from_path();
+		// else if(add_bg)					set_bg_from_path();
 	}
+	if(kiss_button_event(&close_screen_button, event, draw)){
+		close_dialogue_window();
+	}
+	// if(kiss_button_event(&set_background_button, event, draw)){
+	// 	display_dialogue_window();
+	// }
 
 }
 
 void SceneWindow::display_dialogue_window(){
 	scene_dialogue_window.visible = 1;
 	running_dev_tool->disable_camera = true;
+}
+
+void SceneWindow::close_dialogue_window(){
+	scene_dialogue_window.visible = 0;
+	running_dev_tool->disable_camera = false;
 }
 
 void SceneWindow::load_scene_from_path(){
@@ -75,7 +95,7 @@ void SceneWindow::load_scene_from_path(){
 		current_scene_path = scene_path_entry.text;
 		current_scene = scene;
 		scene_dialogue_window.visible = 0;
-		strcpy(scene_path_entry.text, "");
+		strcpy(scene_path_entry.text, "Enter Scene Path");
 		running_dev_tool->disable_camera = false;
 	}
 	else
@@ -87,7 +107,11 @@ void SceneWindow::save_scene_from_path(){
 	current_scene = ((Scene*)running_dev_tool->children[SCENE_DOC_INDEX]);
 	current_scene->saveScene(current_scene_path);
 	scene_dialogue_window.visible = 0;
-	strcpy(scene_path_entry.text, "");
+	strcpy(scene_path_entry.text, "Enter Scene Path");
 	running_dev_tool->disable_camera = false;
 	// ((Scene*) running_dev_tool->children[SCENE_DOC_INDEX])->saveScene(current_scene_path);
+}
+
+void SceneWindow::set_bg_from_path(){
+	// current_scene->filepath
 }

@@ -56,7 +56,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 			switch(code){
 				case SDL_SCANCODE_W:
 				{
-					children[SCENE_DOC_INDEX]->translateUp();
+					children[SCENE_DOC_INDEX]->translateDown();
 					break;
 				}
 				case SDL_SCANCODE_A:
@@ -66,7 +66,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 				}
 				case SDL_SCANCODE_S:
 				{
-					children[SCENE_DOC_INDEX]->translateDown();
+					children[SCENE_DOC_INDEX]->translateUp();
 					break;
 				}
 				case SDL_SCANCODE_D:
