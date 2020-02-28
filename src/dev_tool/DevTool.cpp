@@ -9,7 +9,7 @@ DevTool::DevTool() : Game(1280, 720){
 
 	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar);
 	resourceBar->setMouseListener(mouse);
-	gridSize = 100.0; //in pixels
+	gridSize = 50.0; //in pixels
 	//infoBar = this->infoBar;
 	this->addChild(scene);
 	this->infoBar->initThisWindow((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX));
@@ -29,13 +29,13 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 		x = gridSize * (((int) (x/gridSize)) + 1);
 	}
 	else{
-		x = gridSize * (int) x/gridSize;
+		x = gridSize * (int) (x/gridSize);
 	}
 	if(y % (int) gridSize > gridSize / 2.){
 		y = gridSize * (((int) (y/gridSize)) + 1);
 	}
 	else{
-		y = gridSize * (int) y/gridSize;
+		y = gridSize * (int) (y/gridSize);
 	}
 	cout << "snapping to: " << x << " " << y << endl;
 	return {x,y};
@@ -75,7 +75,9 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 
 
 	if (draggable != NULL and mouse->leftClick){
+		infoBar->updateObjectFields();
 		auto point = mouse->getCoordinates();
+		point = snapToGrid(point);
 		draggable->moveTo(point.x, point.y);
 	}
 	else if(mouse->leftClick){
@@ -93,7 +95,6 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	}
 	else if(draggable != NULL){
 		infoBar->updateObjectFields();
-
 		// auto point = draggable->getWorld();
 		// point = snapToGrid(point);
 		// draggable->moveTo(point.x, point.y);
