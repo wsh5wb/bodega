@@ -145,6 +145,5 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	SDL_Event sdlevent;
     sdlevent.type = SDL_KEYDOWN;
     sdlevent.key.keysym.sym = SDLK_1;
-
  	SDL_PushEvent(&sdlevent);
 }

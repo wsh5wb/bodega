@@ -28,11 +28,12 @@ public:
 	virtual ~DevTool();
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
+	SDL_Point snapToGrid(SDL_Point coords);
 
 private:
 	DisplayObject* draggable = NULL;
 	ResourceBar *resourceBar;
-	//ItemBar * infoBar;
+	double gridSize;
 };
 
 #endif
