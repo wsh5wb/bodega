@@ -37,11 +37,13 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 		if (std::filesystem::is_regular_file(path, ec) and checkExt(string_path)){
 			std::cout << path << std::endl;
 			DisplayObject* temp = new DisplayObject(string_path, string_path);
-			temp->scale(.1);
+			//scale to fixed pixel width  1/15 of total display width 
+			double scaleFactor = (windowWidth/25.0) / temp->w;
+			temp->scale(scaleFactor);
 			temp->moveTo(x,y);
-			x += 30;
-			if(x > windowWidth* 2){
-			 	y += 40;
+			x += temp->w*scaleFactor + 2.;
+			if(x > windowWidth* 2.75){
+			 	y += temp->h*scaleFactor + 2.;//60;
 			 	x = 0;
 			}
 	    	menu->addChild(temp);
