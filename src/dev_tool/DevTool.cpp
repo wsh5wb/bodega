@@ -5,7 +5,7 @@ using namespace std;
 DevTool::DevTool() : Game(1280, 720){
 	camera = Camera::getCamera();
 	Scene* scene = new Scene();
-	this->infoBar->initThisWindow(this);
+	this->infoBar->initThisWindow(this->getChild((DisplayObjectContainer) * SCENE_DOC_INDEX));
 	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar);
 	resourceBar->setMouseListener(mouse);
 	//infoBar = this->infoBar;
@@ -29,11 +29,13 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	}
 	else if(mouse->leftClick){
 		auto click_coords = mouse->getCoordinates();
+
 		for(DisplayObject* child : this->children){
 			auto child_coords = child->getWorld();
 			if (dist(child_coords, click_coords) < 30){
 				cout << "Main checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
 				draggable = child;
+				infoBar->setObj(draggable);
 				break;
 			}
 		}
