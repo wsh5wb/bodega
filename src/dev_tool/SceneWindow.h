@@ -5,6 +5,7 @@
 #include "DisplayObjectContainer.h"
 #include "Game.h"
 #include "Scene.h"
+#include "definitions.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 

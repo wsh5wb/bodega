@@ -5,6 +5,7 @@ using namespace std;
 DevTool::DevTool() : Game(1280, 720){
 	camera = Camera::getCamera();
 	Scene* scene = new Scene();
+	scene->id = "Scene";
 	this->infoBar->initThisWindow(this);
 	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar);
 	resourceBar->setMouseListener(mouse);

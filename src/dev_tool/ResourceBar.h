@@ -12,8 +12,7 @@
 #include "Scene.h"
 #include "ItemBar.h"
 #include "Mouse.h"
-
-#define SCENE_DOC_INDEX 0
+#include "definitions.h"
 
 class ResourceBar : public DisplayObjectContainer{
 public:
