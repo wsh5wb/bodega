@@ -157,11 +157,13 @@ void ItemBar::event(SDL_Event *event, int* draw){
 	if(kiss_entry_event(&xScaleEntry,event,draw)){
 		if(curObj != NULL){
 			if(isdigit(xScaleEntry.text[0])){
-				//double newVal = strtod(xScaleEntry.text,NULL);
+				float newVal = atof(xScaleEntry.text);
+				curObj->setScaleX(newVal);
+			}else if(isdigit(xScaleEntry.text[1]) && xScaleEntry.text[0] == '.'){
+				cout << '0' + xScaleEntry.text << endl;
 				float newVal = atof(xScaleEntry.text);
 
 				curObj->setScaleX(newVal);
-				//strncpy(xScaleEntry.text,to_string(newVal).c_str(),sizeof(xPosEntry.text));
 			}
 			strncpy(xScaleEntry.text,to_string(curObj->getScaleX()).substr(0,4).c_str(),sizeof(xScaleEntry.text));
 			
@@ -187,7 +189,6 @@ void ItemBar::event(SDL_Event *event, int* draw){
 	if(kiss_entry_event(&rotEntry,event,draw)){
 		if(curObj != NULL){
 			if(isdigit(rotEntry.text[0]) || (isdigit(rotEntry.text[1]) && rotEntry.text[0] == '-')){
-				//double newVal = strtod(xScaleEntry.text,NULL);
 				float newVal = atof(rotEntry.text);
 				curObj->setRotationValue(newVal);
 			}
@@ -200,11 +201,8 @@ void ItemBar::event(SDL_Event *event, int* draw){
 	if(kiss_entry_event(&alphaEntry,event,draw)){
 		if(curObj != NULL){
 			if(isdigit(alphaEntry.text[0])){
-				//double newVal = strtod(xScaleEntry.text,NULL);
 				int newVal = atoi(alphaEntry.text);
-
 				curObj->setAlpha(newVal);
-				//strncpy(xScaleEntry.text,to_string(newVal).c_str(),sizeof(xPosEntry.text));
 			}
 			strncpy(alphaEntry.text,to_string(curObj->getAlpha()).substr(0,3).c_str(),sizeof(alphaEntry.text));
 			

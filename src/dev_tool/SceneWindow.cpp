@@ -86,7 +86,6 @@ void SceneWindow::load_scene_from_path(){
 void SceneWindow::save_scene_from_path(){
 	current_scene_path = scene_path_entry.text;
 	current_scene = ((Scene*)running_dev_tool->children[SCENE_DOC_INDEX]);
-	cout << "BITCH ID: " << current_scene << endl;
 	current_scene->saveScene(current_scene_path);
 	scene_dialogue_window.visible = 0;
 	strcpy(scene_path_entry.text, "");

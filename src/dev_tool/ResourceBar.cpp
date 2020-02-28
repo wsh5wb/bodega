@@ -24,7 +24,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 	this->infoBar = bar;
 
 	menu = new DisplayObjectContainer();
-	cout << baseHeight << std::endl;
+	//cout << baseHeight << std::endl;
 	int x = 0;
 	int y = 0;
 	count = 0;
@@ -42,15 +42,13 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 			//scale to fixed pixel width  1/15 of total display width 
 			double scaleFactor = (windowWidth/25.0) / temp->w;
 			temp->scale(scaleFactor);
-
 			temp->moveTo(x,y);
 			x += temp->w*scaleFactor + 2.;
 			if(x > windowWidth* 2.75){
-			 	y += temp->h*scaleFactor + 2.;//60;
+			 	y += temp->h*scaleFactor + 2.;
 			 	x = 0;
 			}
 	    	menu->addChild(temp);
-	    	//std::cout << dirEntry << std::endl;
 		}
 
 	}
@@ -69,7 +67,7 @@ void ResourceBar::setMouseListener(Mouse* mouse){
 }
 
 void ResourceBar::draw(AffineTransform &at){
-	DisplayObjectContainer::draw(at);
+	if(!vis){return;}
 	menu->draw(at);
 	if(drag != NULL)
 		drag->draw(at);
@@ -78,30 +76,20 @@ void ResourceBar::draw(AffineTransform &at){
 void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
 
-	// // keyboard actions
-	// for(SDL_Scancode code : pressedKeys){
-	// 	switch(code){
+	// keyboard actions
+	for(SDL_Scancode code : pressedKeys){
+		switch(code){
+			case SDL_SCANCODE_H:
+			{
+				//cout << "Do stuff" << menu->vis<< endl;
+				this->toggleVisibility();
+				SDL_Delay(150);
+				break;
+			}
+		}
+	}
+	if(!vis){return;}
 
-	// 		case SDL_SCANCODE_DOWN:
-	// 		{
-	// 			menu->translateDown();
-	// 			break;
-	// 		}case SDL_SCANCODE_UP:
-	// 		{
-	// 			menu->translateUp();
-	// 			break;
-	// 		}case SDL_SCANCODE_LEFT:
-	// 		{
-	// 			menu->translateLeft();
-	// 			break;
-	// 		}case SDL_SCANCODE_RIGHT:
-	// 		{
-	// 			menu->translateRight();
-	// 			break;
-	// 		}
-	// 	}
-	// }
-	
 	if(this->mouseListener == NULL)	return;
 
 	// mouse actions

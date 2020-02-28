@@ -45,7 +45,6 @@ public:
 	virtual void draw(AffineTransform &at);
 
 	Mouse* mouse;
-	Camera* camera;
 	bool disable_camera;
 
 private:
