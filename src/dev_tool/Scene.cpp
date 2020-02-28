@@ -25,7 +25,7 @@ void Scene::loadScene(string sceneFilePath) {
 	while (numObjects--) {
 		int type;
 		i >> type;
-		cout << type << endl;
+
 		switch (type) {
 
 		case 0: { //Scene
@@ -42,6 +42,7 @@ void Scene::loadScene(string sceneFilePath) {
 					>> std::boolalpha >> isRGB >> w >> h >> speed >> scaleX
 					>> scaleY >> rotation >> rotationAmount >> alpha >> pivot.x
 					>> pivot.y >> position.x >> position.y;
+			// cout << "hello" << endl;
 			temp->setSpeed(speed);
 			temp->setScale(scaleX, scaleY);
 			temp->setRotationValue(rotation);
@@ -55,6 +56,7 @@ void Scene::loadScene(string sceneFilePath) {
 			} else if (temp->imgPath != "0") {
 				temp->loadTexture(temp->imgPath);
 			}
+
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
 			break;
@@ -146,7 +148,7 @@ void Scene::loadScene(string sceneFilePath) {
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
-			} else if (temp->imgPath != "") {
+			} else if (temp->imgPath != "0") {
 				temp->loadTexture(temp->imgPath);
 			}
 			temp->moveTo(position.x, position.y);
@@ -251,6 +253,7 @@ void Scene::saveScene(string sceneFilePath) {
 	string desc;
 	stringstream sstm;
 	long px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
+
 	sstm << "0 " << id << " " << imgPath << " " << red << " " << green << " "
 			<< blue << " " << std::boolalpha<< vis << " " << std::boolalpha << isRGB << " " << w << " " << h << " " << speed
 			<< " " << scaleX << " " << scaleY << " " << rotation << " "

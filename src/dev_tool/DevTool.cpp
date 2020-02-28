@@ -45,30 +45,43 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	Game::update(pressedKeys);
-	mouse->update(pressedKeys);
-	if(!disable_camera) DisplayObjectContainer::update(pressedKeys);
 
-	for(SDL_Scancode code : pressedKeys){
-		switch(code){
-			case SDL_SCANCODE_W:
-			{
-				children[SCENE_DOC_INDEX]->translateUp();
-				break;
-			}
-			case SDL_SCANCODE_A:
-			{
-				children[SCENE_DOC_INDEX]->translateLeft();
-				break;
-			}
-			case SDL_SCANCODE_S:
-			{
-				children[SCENE_DOC_INDEX]->translateDown();
-				break;
-			}
-			case SDL_SCANCODE_D:
-			{
-				children[SCENE_DOC_INDEX]->translateRight();
-				break;
+	mouse->update(pressedKeys);
+	DisplayObjectContainer::update(pressedKeys);
+
+	if(!disable_camera) {
+		for(SDL_Scancode code : pressedKeys){
+			switch(code){
+				case SDL_SCANCODE_W:
+				{
+					children[SCENE_DOC_INDEX]->translateUp();
+					break;
+				}
+				case SDL_SCANCODE_A:
+				{
+					children[SCENE_DOC_INDEX]->translateLeft();
+					break;
+				}
+				case SDL_SCANCODE_S:
+				{
+					children[SCENE_DOC_INDEX]->translateDown();
+					break;
+				}
+				case SDL_SCANCODE_D:
+				{
+					children[SCENE_DOC_INDEX]->translateRight();
+					break;
+				}
+				case SDL_SCANCODE_Z:
+				{
+					children[SCENE_DOC_INDEX]->scale(1.05);
+					break;
+				}
+				case SDL_SCANCODE_X:
+				{
+					children[SCENE_DOC_INDEX]->scale(.95);
+					break;
+				}
 			}
 		}
 	}
@@ -108,7 +121,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 void DevTool::draw(AffineTransform &at){
 	Game::draw(at);
 	DisplayObjectContainer::draw(at);
-	mouse->draw(at);
+	// mouse->draw(at);
 	resourceBar->draw(at);
 }
 

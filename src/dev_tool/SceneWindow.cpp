@@ -62,7 +62,6 @@ void SceneWindow::display_dialogue_window(){
 }
 
 void SceneWindow::load_scene_from_path(){
-
 	ifstream i(scene_path_entry.text);
 
 	if(i.good()){
