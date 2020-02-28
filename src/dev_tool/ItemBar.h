@@ -4,13 +4,12 @@
 #include "kiss_sdl.h"
 #include "DisplayObject.h"
 #include "DisplayObjectContainer.h"
-//#include "Game.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 using namespace std;
 
-class ItemBar {//public DisplayObjectContainer {
+class ItemBar {
 public:
 	ItemBar();
 	ItemBar(kiss_window * wdw);
@@ -19,14 +18,13 @@ public:
 	void initThisWindow(DisplayObjectContainer * win);
 	void updateObjectFields();
 	void copyFields(DisplayObject * oldObj, DisplayObject * newObj);
-	//virtual void update(set<SDL_Scancode> pressedKeys);
-	//virtual void draw(AffineTransform &at);
+
 	void event(SDL_Event *event, int* draw);
 	void draw(SDL_Renderer *renderer);
 	kiss_window * window = {0};
 private:
 	DisplayObjectContainer * thisWindow;
-	//DisplayObject* draggable = NULL;
+	
 	DisplayObject * curObj;
 	kiss_entry idEntry = {0}; kiss_entry xPosEntry = {0}; kiss_entry yPosEntry = {0}; kiss_entry xPivEntry = {0}; kiss_entry yPivEntry = {0}; 
 	kiss_entry xScaleEntry = {0}; kiss_entry yScaleEntry = {0}; kiss_entry rotEntry = {0}; kiss_entry alphaEntry = {0};

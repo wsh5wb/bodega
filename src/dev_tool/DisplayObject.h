@@ -23,7 +23,7 @@ public:
 	bool vis;
 	bool isRGB = false;
 	int w, h;
-	//int numCopies = 0;
+	int numCopies = 0;
 
 	DisplayObject();
 	DisplayObject(string id, string path);

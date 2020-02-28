@@ -9,8 +9,7 @@ ItemBar::ItemBar(){
 ItemBar::ItemBar(kiss_window * wdw){
 	window = wdw;
 	curObj = NULL;
-	//kiss_entry_new(&xPosEntry,Game::window,0,"0",20,20,30);
-	SDL_Color lightGrey = {180,180,180};
+
 	int infoW = kiss_screen_width*4/5;
 
 	//Labels
@@ -41,11 +40,9 @@ ItemBar::ItemBar(kiss_window * wdw){
 	kiss_button_new(&delBut,wdw,"Delete",infoW + 170,650);
 	kiss_button_new(&copyBut,wdw,"Copy",infoW + 90,650);
 
-	//xPosEntry.bg = lightGrey; //xPosLabel.bg = lightGrey;
 	idLabel.textcolor = kiss_white; xPosLabel.textcolor = kiss_white; yPosLabel.textcolor = kiss_white;
 	xPivLabel.textcolor = kiss_white; yPivLabel.textcolor = kiss_white; rotLabel.textcolor = kiss_white; alphaLabel.textcolor = kiss_white;
 	yScaleLabel.textcolor = kiss_white; xScaleLabel.textcolor = kiss_white; widthLabel.textcolor = kiss_white; heightLabel.textcolor = kiss_white;
-	//cout << infoW << xPosEntry.visible << " " << xPosEntry.textx << endl;
 }
 
 ItemBar::~ItemBar(){
@@ -65,7 +62,6 @@ void ItemBar::setObj(DisplayObject *& obj){
 	updateObjectFields();
 }
 
-//static void ItemBar::xPositionEvent()
 void ItemBar::updateObjectFields(){
 	if(curObj == NULL) {return;}
 	strncpy(idEntry.text,curObj->getID().c_str(),sizeof(idEntry.text));
@@ -88,7 +84,7 @@ void ItemBar::copyFields(DisplayObject * oldObj, DisplayObject * newObj){
 	newObj->setRotationValue(oldObj->getRotationDegrees());
 	newObj->setPivot(oldObj->getPosition());
 	newObj->setAlpha(oldObj->getAlpha());
-	//newObj->numCopies = curObj->numCopies;
+	newObj->numCopies = curObj->numCopies;
 }
 
 void ItemBar::event(SDL_Event *event, int* draw){
@@ -97,7 +93,6 @@ void ItemBar::event(SDL_Event *event, int* draw){
 	if(kiss_entry_event(&idEntry,event,draw)){
 		if(curObj != NULL){
 			curObj->setID(idEntry.text);
-			//strncpy(xPosEntry.text,to_string(newV).c_str(),sizeof(xPosEntry.text));
 		}
 	}
 
@@ -156,32 +151,21 @@ void ItemBar::event(SDL_Event *event, int* draw){
 	// X Scale
 	if(kiss_entry_event(&xScaleEntry,event,draw)){
 		if(curObj != NULL){
-			if(isdigit(xScaleEntry.text[0])){
+			if(isdigit(xScaleEntry.text[0]) || isdigit(xScaleEntry.text[1]) && xScaleEntry.text[0] == '.'){
 				float newVal = atof(xScaleEntry.text);
 				curObj->setScaleX(newVal);
-			}else if(isdigit(xScaleEntry.text[1]) && xScaleEntry.text[0] == '.'){
-				cout << '0' + xScaleEntry.text << endl;
-				float newVal = atof(xScaleEntry.text);
-
-				curObj->setScaleX(newVal);
-			}
-			strncpy(xScaleEntry.text,to_string(curObj->getScaleX()).substr(0,4).c_str(),sizeof(xScaleEntry.text));
-			
+			}strncpy(xScaleEntry.text,to_string(curObj->getScaleX()).substr(0,4).c_str(),sizeof(xScaleEntry.text));
 		}
 	}
 
 	// Y Scale
 	if(kiss_entry_event(&yScaleEntry,event,draw)){
 		if(curObj != NULL){
-			if(isdigit(yScaleEntry.text[0])){
-				//double newVal = strtod(xScaleEntry.text,NULL);
+			if(isdigit(yScaleEntry.text[0]) || isdigit(xScaleEntry.text[1]) && xScaleEntry.text[0] == '.'){
 				float newVal = atof(yScaleEntry.text);
-
 				curObj->setScaleY(newVal);
-				//strncpy(xScaleEntry.text,to_string(newVal).c_str(),sizeof(xPosEntry.text));
 			}
 			strncpy(yScaleEntry.text,to_string(curObj->getScaleY()).substr(0,4).c_str(),sizeof(yScaleEntry.text));
-			
 		}
 	}
 
@@ -214,11 +198,11 @@ void ItemBar::event(SDL_Event *event, int* draw){
 		if(curObj != NULL){
 			DisplayObject * newObj;
 			if(curObj->id.find("_cpy")){
-				newObj = new DisplayObject(curObj->id, curObj->imgPath);
+				newObj = new DisplayObject(curObj->id.substr(0,curObj->id.find("_cpy"))+ "_cpy" + to_string(curObj->numCopies), curObj->imgPath);
 			}else{
 				newObj = new DisplayObject(curObj->id + "_cpy", curObj->imgPath);
 			}
-			//curObj->numCopies++;
+			curObj->numCopies++;
 			thisWindow->addChild(newObj);
 			copyFields(curObj,newObj);
 			setObj(newObj);
