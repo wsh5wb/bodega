@@ -12,16 +12,31 @@ DisplayObject::DisplayObject(){
 	curTexture = NULL;
 	vis = true;
 	alpha = 255;
+	this->red = 0;
+	this->green = 0;
+	this->blue = 0;
 	position.x = 0;
 	position.y = 0;
 	pivot.x = 0; pivot.y = 0;
 	world = {0, 0};
+	this->imgPath = "0";
 }
 
 DisplayObject::DisplayObject(string id, string filepath){
 	this->id = id;
 	this->imgPath = filepath;
-
+	image = NULL;
+	texture = NULL;
+	curTexture = NULL;
+	vis = true;
+	alpha = 255;
+	this->red = 0;
+	this->green = 0;
+	this->blue = 0;
+	position.x = 0;
+	position.y = 0;
+	pivot.x = 0; pivot.y = 0;
+	world = {0, 0};
 	loadTexture(filepath);
 }
 
@@ -32,6 +47,17 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue){
 	this->red = red;
 	this->blue = blue;
 	this->green = green;
+
+	image = NULL;
+	texture = NULL;
+	curTexture = NULL;
+	vis = true;
+	alpha = 255;
+	position.x = 0;
+	position.y = 0;
+	pivot.x = 0; pivot.y = 0;
+	world = {0, 0};
+	this->imgPath = "0";
 
 	this->loadRGBTexture(red, green, blue);
 }
@@ -289,28 +315,7 @@ void DisplayObject::reverseTransformations(AffineTransform &at){
 }
 
 void DisplayObject::update(set<SDL_Scancode> pressedKeys){
-	for (SDL_Scancode code : pressedKeys){
-		switch(code){
-			case SDL_SCANCODE_W:
-				translateDown();
-				break;
-			case SDL_SCANCODE_A:
-				translateRight();
-				break;
-			case SDL_SCANCODE_S:
-				translateUp();
-				break;
-			case SDL_SCANCODE_D:
-				translateLeft();
-				break;
-			case SDL_SCANCODE_Z:
-				scale(1.05);
-				break;
-			case SDL_SCANCODE_X:
-				scale(.95);
-				break;
-		}
-	}
+
 }
 
 void DisplayObject::draw(AffineTransform &at){
