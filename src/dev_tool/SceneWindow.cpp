@@ -58,7 +58,6 @@ void SceneWindow::display_dialogue_window(){
 
 void SceneWindow::load_scene_from_path(){
 	ifstream i(scene_path_entry.text);
-	string s = "Enter valid path!";
 
 	if(i.good()){
 		// Camera* camera = running_dev_tool->camera;
@@ -75,7 +74,7 @@ void SceneWindow::load_scene_from_path(){
 		running_dev_tool->disable_camera = false;
 	}
 	else
-		strcpy(scene_path_entry.text, "Enter valid path!");
+		scene_dialogue_window.bg = {220,20,60};// strcpy(scene_path_entry.text, "Enter valid path!");
 }
 
 void SceneWindow::save_scene_from_path(){
