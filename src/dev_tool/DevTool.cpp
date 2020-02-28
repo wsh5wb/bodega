@@ -59,7 +59,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 				}
 				case SDL_SCANCODE_A:
 				{
-					children[SCENE_DOC_INDEX]->translateLeft();
+					children[SCENE_DOC_INDEX]->translateRight();
 					break;
 				}
 				case SDL_SCANCODE_S:
@@ -69,7 +69,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 				}
 				case SDL_SCANCODE_D:
 				{
-					children[SCENE_DOC_INDEX]->translateRight();
+					children[SCENE_DOC_INDEX]->translateLeft();
 					break;
 				}
 				case SDL_SCANCODE_Z:
