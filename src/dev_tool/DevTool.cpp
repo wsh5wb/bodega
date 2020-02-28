@@ -117,7 +117,6 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	resourceBar->update(pressedKeys);
 }
 
-
 void DevTool::draw(AffineTransform &at){
 	Game::draw(at);
 	DisplayObjectContainer::draw(at);
