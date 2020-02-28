@@ -30,7 +30,7 @@ public:
 
 	kiss_array objects, a1;
 	kiss_entry xPosEntry = {0};
-	ItemBar infoBar;
+	ItemBar* infoBar;
 
 	kiss_window window1, sprite_bar, char_attributes_bar, editor_window;
 

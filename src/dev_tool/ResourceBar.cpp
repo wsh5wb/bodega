@@ -14,13 +14,14 @@ bool checkExt(const string& filename)
     return false;
 }
 
-ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer *mainwindow) : DisplayObjectContainer(){
+ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer *mainwindow, ItemBar * bar) : DisplayObjectContainer(){
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
 	this->drag = draggable;
 
 	this->mainWindow = mainwindow;
 	this->baseHeight = (int) (windowHeight * (3.0/4.0));
+	this->infoBar = bar;
 
 	menu = new DisplayObjectContainer();
 	cout << baseHeight << std::endl;
@@ -143,6 +144,7 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	else if (drag != NULL and drag->isCopy){
 		drag->isCopy = false;
 		mainWindow->addChild(drag);
+		infoBar->setObj(drag);
 		drag = NULL;
 	}
 

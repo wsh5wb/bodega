@@ -36,7 +36,7 @@ Game::Game(int windowWidth, int windowHeight){
 
 	kiss_array_new(&a1);
 	kiss_array_append(&objects, ARRAY_TYPE, &a1);
-
+	infoBar = new ItemBar(&char_attributes_bar);
 	// cout << Game::renderer << endl;
 	mouse = new Mouse("Mouse",100,100,100);
 	mouse->makeInvisible();
@@ -94,7 +94,7 @@ void Game::start(){
 	//kiss_entry_new(&xPosEntry,&char_attributes_bar,0,"xPos:",kiss_screen_width*4/5 + 20,20,60);
 	
 	char_attributes_bar.bg = darkGrey; sprite_bar.bg = darkGrey;
-	infoBar = ItemBar(&char_attributes_bar);
+	
 
 	kiss_window_new(&editor_window,NULL,1, 0,0, kiss_screen_width, kiss_screen_height);
 	editor_window.bg = kiss_black;
@@ -130,7 +130,7 @@ void Game::start(){
 			//kiss_window_event(&sprite_bar, &event, &draw);
 			kiss_window_event(&char_attributes_bar, &event, &draw);
 
-			infoBar.event(&event,&draw);
+			infoBar->event(&event,&draw);
 			//kiss_entry_event(&xPosEntry,&event,&draw);
 
 			// scene_window.event(&event, &draw, window1, dir_window);
@@ -160,7 +160,7 @@ void Game::start(){
 		//kiss_window_draw(&sprite_bar, renderer);
 		kiss_window_draw(&char_attributes_bar, renderer);
 
-		infoBar.draw(renderer);
+		infoBar->draw(renderer);
 		//kiss_entry_draw(&xPosEntry,renderer);
 
 		scene_window.draw(renderer);

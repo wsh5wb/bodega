@@ -79,6 +79,14 @@ void DisplayObject::setTexture(SDL_Texture* t){
 	this->curTexture = t;
 }
 
+void DisplayObject::setID(string newId){
+	id = newId;
+}
+
+string DisplayObject::getID(){
+	return id;
+}
+
 void DisplayObject::decreaseAlpha(){
 	alpha -= 10;
 	alpha = alpha < 0 ? 0 : alpha;
@@ -145,6 +153,14 @@ void DisplayObject::moveTo(int x, int y){
 	position.y = y;
 }
 
+void DisplayObject::moveX(int x){
+	position.x = x;
+}
+
+void DisplayObject::moveY(int y){
+	position.y = y;
+}
+
 void DisplayObject::movePivot(int x, int y){
 	pivot.x = x;
 	pivot.y = y;
@@ -170,24 +186,55 @@ void DisplayObject::setScale(double x, double y){
 	scaleY = y;
 }
 
+void DisplayObject::setScaleX(double x){
+	scaleX = x;
+}
+
+void DisplayObject::setScaleY(double y){
+	scaleY = y;
+}
+
+double DisplayObject::getScaleX(){
+	return scaleX;
+}
+
+double DisplayObject::getScaleY(){
+	return scaleY;
+}
+
 void DisplayObject::setRotation(double angle){
 	rotationAmount = angle*PI/180;
 }
 
 void DisplayObject::setRotationValue(double angle){
 	rotation = angle*PI/180;
+	while(rotation >= 2*PI){
+		rotation -= 2*PI;
+	}while(rotation < 0){
+		rotation += 2*PI;
+	}
 }
 
 double DisplayObject::getRotation(){
-	return rotationAmount;
+	return rotation;
+}
+
+double DisplayObject::getRotationDegrees(){
+	return rotation * 180/PI;
 }
 
 void DisplayObject::rotateCW(){
 	rotation += rotationAmount;
+	while(rotation >= 2*PI){
+		rotation -= 2*PI;
+	}
 }
 
 void DisplayObject::rotateCCW(){
 	rotation -= rotationAmount;
+	while(rotation < 0){
+		rotation += 2*PI;
+	}
 }
 
 double DisplayObject::dist(SDL_Point &a, SDL_Point &b){

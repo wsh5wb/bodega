@@ -10,11 +10,12 @@
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "ItemBar.h"
 #include "Mouse.h"
 
 class ResourceBar : public DisplayObjectContainer{
 public:
-	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer* mainwindow);
+	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer* mainwindow, ItemBar * bar);
 	~ResourceBar();
 	void addChild(DisplayObject* child);
 	void setMouseListener(Mouse* mouse);
@@ -24,6 +25,7 @@ private:
 	DisplayObjectContainer* mainWindow;
 	DisplayObjectContainer* menu;
 	DisplayObject* drag;
+	ItemBar * infoBar;
 	int baseHeight;
 	double windowHeight;
 	double windowWidth;
