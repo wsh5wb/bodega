@@ -15,7 +15,7 @@ MyGame::MyGame() :
 	myCamera = Camera::getCamera();
 	character = new Scene();
 	myCamera->addScene(character);
-	this->scene = "./resources/scenes/testSave1.txt";
+	this->scene = "./resources/scenes/testSave2.txt";
 
 	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");

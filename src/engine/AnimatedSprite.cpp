@@ -101,12 +101,12 @@ void AnimatedSprite::draw(AffineTransform &at){
 void AnimatedSprite::saveSelf(vector<string> &objects, vector<string> &dependencies) {
 	string desc;
 	stringstream sstm;
-	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = pivot.y;
+	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
 	sstm << "4 " << id << " " << imgPath << " " << red << " " << green << " "
 			<< blue << " " << std::boolalpha << vis << " " << std::boolalpha
 			<< isRGB << " " << w << " " << h << " " << speed << " " << scaleX
 			<< " " << scaleY << " " << rotation << " " << rotationAmount << " "
-			<< alpha << " " << px0 << " " << py0 << " " << px1 + " " << py1
+			<< alpha << " " << px0 << " " << py0 << " " << px1 << " " << py1
 			<< "\n";
 	desc = sstm.str();
 	objects.push_back(desc);
