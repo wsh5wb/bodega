@@ -27,6 +27,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 	cout << baseHeight << std::endl;
 	int x = 0;
 	int y = 0;
+	count = 0;
 	menu->moveTo(0, baseHeight);
 	
 	for (const auto& dirEntry : std::filesystem::recursive_directory_iterator("./resources")){
@@ -36,7 +37,9 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 
 		if (std::filesystem::is_regular_file(path, ec) and checkExt(string_path)){
 			std::cout << path << std::endl;
-			DisplayObject* temp = new DisplayObject(string_path, string_path);
+			//DisplayObject* temp = new DisplayObject(string_path, string_path);
+			DisplayObject* temp = new DisplayObject("Default", string_path);
+			//count++;
 			temp->scale(.1);
 			temp->moveTo(x,y);
 			x += 30;
@@ -134,7 +137,8 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 				//cout << "child x: " << child_coords.x << " child y: " << child_coords.y << endl;
 				if (dist(child_coords, click_coords) < 30){
 					// cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
-					this->drag = new DisplayObject(child->id, child->imgPath);
+					this->drag = new DisplayObject(child->id + to_string(count), child->imgPath);
+					count++;
 					this->drag->isCopy = true;
 					break;
 				}

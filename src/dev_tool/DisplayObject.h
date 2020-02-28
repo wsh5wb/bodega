@@ -23,6 +23,7 @@ public:
 	bool vis;
 	bool isRGB = false;
 	int w, h;
+	//int numCopies = 0;
 
 	DisplayObject();
 	DisplayObject(string id, string path);
@@ -42,6 +43,7 @@ public:
 	void decreaseAlpha();
 	void increaseAlpha();
 	void setAlpha(int a);//added
+	int getAlpha();
 	void toggleVisibility();
 	void makeVisible();
 	void makeInvisible();
@@ -66,7 +68,7 @@ public:
 	double getScaleX();
 	double getScaleY();
 	void setRotation(double angle);
-	void setRotationValue(double angle);//added
+	void setRotationValue(double degrees);//added
 	double getRotation();
 	double getRotationDegrees();
 	void rotateCW();
@@ -76,6 +78,8 @@ public:
 	void reverseTransformations(AffineTransform &at);
 	SDL_Point getPivot();
 	SDL_Point getPosition();
+	void setPosition(SDL_Point p);
+	void setPivot(SDL_Point p);
 	SDL_Point getWorld();
 	SDL_Point getWorldCenter();
 	bool isCopy;

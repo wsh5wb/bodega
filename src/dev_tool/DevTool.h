@@ -33,6 +33,7 @@ public:
 private:
 	DisplayObject* draggable = NULL;
 	ResourceBar *resourceBar;
+	//ItemBar * infoBar;
 };
 
 #endif

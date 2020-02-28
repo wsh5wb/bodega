@@ -30,6 +30,7 @@ private:
 	double windowHeight;
 	double windowWidth;
 	Mouse* mouseListener;
+	int count;
 };
 
 

@@ -18,6 +18,7 @@ public:
 	void setObj(DisplayObject *& obj);
 	void initThisWindow(DisplayObjectContainer * win);
 	void updateObjectFields();
+	void copyFields(DisplayObject * oldObj, DisplayObject * newObj);
 	//virtual void update(set<SDL_Scancode> pressedKeys);
 	//virtual void draw(AffineTransform &at);
 	void event(SDL_Event *event, int* draw);
@@ -28,10 +29,11 @@ private:
 	//DisplayObject* draggable = NULL;
 	DisplayObject * curObj;
 	kiss_entry idEntry = {0}; kiss_entry xPosEntry = {0}; kiss_entry yPosEntry = {0}; kiss_entry xPivEntry = {0}; kiss_entry yPivEntry = {0}; 
-	kiss_entry xScaleEntry = {0}; kiss_entry yScaleEntry = {0}; kiss_entry rotEntry = {0};
+	kiss_entry xScaleEntry = {0}; kiss_entry yScaleEntry = {0}; kiss_entry rotEntry = {0}; kiss_entry alphaEntry = {0};
 
 	kiss_label idLabel = {0}; kiss_label xPosLabel = {0}; kiss_label yPosLabel = {0}; kiss_label xPivLabel = {0}; kiss_label yPivLabel = {0}; 
-	kiss_label xScaleLabel = {0}; kiss_label yScaleLabel = {0}; kiss_label rotLabel = {0};
+	kiss_label xScaleLabel = {0}; kiss_label yScaleLabel = {0}; kiss_label rotLabel = {0}; kiss_label widthLabel = {0}; kiss_label heightLabel = {0};
+	kiss_label alphaLabel = {0};
 
 	kiss_button delBut = {0}; kiss_button copyBut = {0};
 

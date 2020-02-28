@@ -8,7 +8,7 @@ DevTool::DevTool() : Game(1280, 720){
 	this->infoBar->initThisWindow(this);
 	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar);
 	resourceBar->setMouseListener(mouse);
-
+	//infoBar = this->infoBar;
 	this->addChild(scene);
 	// camera->addScene(scene);
 	this->addChild(mouse);

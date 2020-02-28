@@ -101,7 +101,14 @@ void DisplayObject::increaseAlpha(){
 
 void DisplayObject::setAlpha(int a){
 	alpha = a;
+	if(a > 255){alpha = 255;}
+	else if(a < 0){alpha = 0;}
+	
 	SDL_SetTextureAlphaMod(curTexture,alpha);
+}
+
+int DisplayObject::getAlpha(){
+	return alpha;
 }
 
 void DisplayObject::toggleVisibility(){
@@ -206,8 +213,8 @@ void DisplayObject::setRotation(double angle){
 	rotationAmount = angle*PI/180;
 }
 
-void DisplayObject::setRotationValue(double angle){
-	rotation = angle*PI/180;
+void DisplayObject::setRotationValue(double degrees){
+	rotation = degrees*PI/180;
 	while(rotation >= 2*PI){
 		rotation -= 2*PI;
 	}while(rotation < 0){
@@ -247,6 +254,14 @@ SDL_Point DisplayObject::getPivot(){
 
 SDL_Point DisplayObject::getPosition(){
 	return this->position;
+}
+
+void DisplayObject::setPosition(SDL_Point p){
+	position = p;
+}
+
+void DisplayObject::setPivot(SDL_Point p){
+	pivot = p;
 }
 
 SDL_Point DisplayObject::getWorld(){
@@ -329,7 +344,7 @@ void DisplayObject::draw(AffineTransform &at){
 }
 
 void DisplayObject::saveSelf(vector<string> &objects,
-		vector<string> &dependencies) {
+	vector<string> &dependencies) {
 	string desc;
 	stringstream sstm;
 	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
