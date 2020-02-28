@@ -41,7 +41,7 @@ Game::Game(int windowWidth, int windowHeight){
 	mouse = new Mouse("Mouse",100,100,100);
 	mouse->makeInvisible();
 	mouse->setAlpha(80);
-	disable_camera = false;
+	disable_camera = true;
 }
 
 Game::~Game(){

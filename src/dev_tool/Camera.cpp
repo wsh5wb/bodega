@@ -46,7 +46,7 @@ void Camera::setZoom(double w, double h) {
 }
 
 void Camera::update(set<SDL_Scancode> pressedKeys) {
-
+	cout << x << " " << y << endl;
 	for (SDL_Scancode code : pressedKeys){
 		switch(code){
 			case SDL_SCANCODE_W:
