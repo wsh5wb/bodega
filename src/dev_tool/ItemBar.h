@@ -18,13 +18,13 @@ public:
 	void initThisWindow(DisplayObjectContainer * win);
 	void updateObjectFields();
 	void copyFields(DisplayObject * oldObj, DisplayObject * newObj);
-
+	//bool isEditing();
 	void event(SDL_Event *event, int* draw);
 	void draw(SDL_Renderer *renderer);
 	kiss_window * window = {0};
 private:
 	DisplayObjectContainer * thisWindow;
-	
+
 	DisplayObject * curObj;
 	kiss_entry idEntry = {0}; kiss_entry xPosEntry = {0}; kiss_entry yPosEntry = {0}; kiss_entry xPivEntry = {0}; kiss_entry yPivEntry = {0}; 
 	kiss_entry xScaleEntry = {0}; kiss_entry yScaleEntry = {0}; kiss_entry rotEntry = {0}; kiss_entry alphaEntry = {0};

@@ -87,8 +87,13 @@ void ItemBar::copyFields(DisplayObject * oldObj, DisplayObject * newObj){
 	newObj->numCopies = curObj->numCopies;
 }
 
-void ItemBar::event(SDL_Event *event, int* draw){
+/*bool ItemBar::isEditing(){
+	return idEntry.active || xPosEntry.active || yPosEntry.active || xPivEntry.active || yPivEntry.active || xScaleEntry.active || yScaleEntry.active ||
+		rotEntry.active || alphaEntry.active;
+} */
 
+void ItemBar::event(SDL_Event *event, int* draw){
+	//cout << "Event";
 	// ID
 	if(kiss_entry_event(&idEntry,event,draw)){
 		if(curObj != NULL){
