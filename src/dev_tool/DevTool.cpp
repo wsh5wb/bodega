@@ -3,13 +3,14 @@
 using namespace std;
 
 DevTool::DevTool() : Game(1280, 720){
-
+	camera = Camera::getCamera();
 	Scene* scene = new Scene();
 
 	resourceBar = new ResourceBar(1280, 720, draggable, this);
 	resourceBar->setMouseListener(mouse);
 
-	this->addChild(scene);
+	// this->addChild(scene);
+	camera->addScene(scene);
 	this->addChild(mouse);
 }
 
@@ -21,6 +22,7 @@ DevTool::~DevTool(){
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
+	if(!disable_camera) camera->update(pressedKeys);
 
 	if (draggable != NULL and mouse->leftClick){
 		auto point = mouse->getCoordinates();
@@ -46,6 +48,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 
 void DevTool::draw(AffineTransform &at){
 	Game::draw(at);
+	camera->draw(at);
 	DisplayObjectContainer::draw(at);
 	resourceBar->draw(at);
 }

@@ -72,29 +72,29 @@ void ResourceBar::draw(AffineTransform &at){
 void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
 
-	// keyboard actions
-	for(SDL_Scancode code : pressedKeys){
-		switch(code){
+	// // keyboard actions
+	// for(SDL_Scancode code : pressedKeys){
+	// 	switch(code){
 
-			case SDL_SCANCODE_DOWN:
-			{
-				menu->translateDown();
-				break;
-			}case SDL_SCANCODE_UP:
-			{
-				menu->translateUp();
-				break;
-			}case SDL_SCANCODE_LEFT:
-			{
-				menu->translateLeft();
-				break;
-			}case SDL_SCANCODE_RIGHT:
-			{
-				menu->translateRight();
-				break;
-			}
-		}
-	}
+	// 		case SDL_SCANCODE_DOWN:
+	// 		{
+	// 			menu->translateDown();
+	// 			break;
+	// 		}case SDL_SCANCODE_UP:
+	// 		{
+	// 			menu->translateUp();
+	// 			break;
+	// 		}case SDL_SCANCODE_LEFT:
+	// 		{
+	// 			menu->translateLeft();
+	// 			break;
+	// 		}case SDL_SCANCODE_RIGHT:
+	// 		{
+	// 			menu->translateRight();
+	// 			break;
+	// 		}
+	// 	}
+	// }
 	
 	if(this->mouseListener == NULL)	return;
 

@@ -8,6 +8,7 @@
 #include "ItemBar.h"
 #include "Mouse.h"
 #include "kiss_sdl.h"
+#include "Camera.h"
 #include <vector>
 #include <set>
 
@@ -42,13 +43,16 @@ public:
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
+
 	Mouse* mouse;
+	Camera* camera;
+	bool disable_camera;
+
 private:
 
 	void initSDL();
 	void quitSDL();
 	set<SDL_Scancode> pressedKeys;
-
 
 };
 

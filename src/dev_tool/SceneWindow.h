@@ -25,6 +25,7 @@ private:
 	void save_scene_from_path();
 
 	static Game * running_dev_tool;
+	Scene* current_scene;
 	string current_scene_path;
 };
 

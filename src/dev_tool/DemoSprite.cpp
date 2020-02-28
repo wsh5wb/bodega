@@ -16,35 +16,35 @@ DemoSprite::DemoSprite(string id, int red, int green, int blue) :
 
 void DemoSprite::update(set<SDL_Scancode> pressedKeys) {
 
-	for (SDL_Scancode code : pressedKeys) {
-		switch (code) {
+	// for (SDL_Scancode code : pressedKeys) {
+	// 	switch (code) {
 
-		case SDL_SCANCODE_DOWN: {
-			Sprite::translateDown();
-			break;
-		}
-		case SDL_SCANCODE_UP: {
-			Sprite::translateUp();
-			break;
-		}
-		case SDL_SCANCODE_LEFT: {
-			Sprite::translateLeft();
-			break;
-		}
-		case SDL_SCANCODE_RIGHT: {
-			Sprite::translateRight();
-			break;
-		}
-		case SDL_SCANCODE_Q: {
-			Sprite::scaleOut();
-			break;
-		}
-		case SDL_SCANCODE_W: {
-			Sprite::scaleIn();
-			break;
-		}
-		}
-	}
+	// 	case SDL_SCANCODE_DOWN: {
+	// 		Sprite::translateDown();
+	// 		break;
+	// 	}
+	// 	case SDL_SCANCODE_UP: {
+	// 		Sprite::translateUp();
+	// 		break;
+	// 	}
+	// 	case SDL_SCANCODE_LEFT: {
+	// 		Sprite::translateLeft();
+	// 		break;
+	// 	}
+	// 	case SDL_SCANCODE_RIGHT: {
+	// 		Sprite::translateRight();
+	// 		break;
+	// 	}
+	// 	case SDL_SCANCODE_Q: {
+	// 		Sprite::scaleOut();
+	// 		break;
+	// 	}
+	// 	case SDL_SCANCODE_W: {
+	// 		Sprite::scaleIn();
+	// 		break;
+	// 	}
+	// 	}
+	// }
 	Sprite::update(pressedKeys);
 
 }
