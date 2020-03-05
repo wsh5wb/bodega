@@ -205,6 +205,18 @@ SDL_Point DisplayObject::getPosition() {
 	return this->position;
 }
 
+int DisplayObject::getAlpha() {
+	return this->alpha;
+}
+
+double DisplayObject::getScaleX() {
+	return this->scaleX;
+}
+
+double DisplayObject::getScaleY() {
+	return this->scaleY;
+}
+
 void DisplayObject::setSpeed(int s) {
 	speed = s;
 }

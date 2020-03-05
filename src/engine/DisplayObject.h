@@ -69,6 +69,9 @@ public:
 	SDL_Point getPivot();
 	SDL_Point getPosition();
 	void setSpeed(int s);//added
+	int getAlpha();
+	double getScaleX();
+	double getScaleY();
 
 private:
 	SDL_Texture* texture = NULL;

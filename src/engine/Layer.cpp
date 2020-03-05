@@ -15,7 +15,7 @@ double Layer::setScale(double s){
 }
 
 
-void Sprite::saveSelf(vector<string> &objects, vector<string> &dependencies) {
+void Layer::saveSelf(vector<string> &objects, vector<string> &dependencies) {
     string desc;
     stringstream sstm;
     int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
