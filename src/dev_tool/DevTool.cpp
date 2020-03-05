@@ -12,7 +12,7 @@ DevTool::DevTool() : Game(1280, 720){
 	gridSize = 50.0; //in pixels
 	//infoBar = this->infoBar;
 	this->addChild(scene);
-	this->infoBar->initThisWindow((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX));
+	this->infoBar->initThisWindow((DisplayObjectContainer *) this);
 	// camera->addScene(scene);
 	//this->addChild(mouse);
 }

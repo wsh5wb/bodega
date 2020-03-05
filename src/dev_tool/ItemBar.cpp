@@ -208,7 +208,7 @@ void ItemBar::event(SDL_Event *event, int* draw){
 				newObj = new DisplayObject(curObj->id + "_cpy", curObj->imgPath);
 			}
 			curObj->numCopies++;
-			thisWindow->addChild(newObj);
+			((DisplayObjectContainer *)(thisWindow->getChild(SCENE_DOC_INDEX)))->addChild(newObj);
 			copyFields(curObj,newObj);
 			setObj(newObj);
 		}
@@ -217,7 +217,7 @@ void ItemBar::event(SDL_Event *event, int* draw){
 	// Delete Button
 	if(kiss_button_event(&delBut,event,draw)){
 		if(curObj != NULL){
-			thisWindow->removeImmediateChild(curObj);
+			((DisplayObjectContainer *)thisWindow->getChild(SCENE_DOC_INDEX))->removeImmediateChild(curObj);
 			curObj = NULL;
 		}
 	}
