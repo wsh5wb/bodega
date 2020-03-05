@@ -2,7 +2,7 @@
 
 using namespace std;
 
-DevTool::DevTool() : Game(1280, 720){
+DevTool::DevTool() : DevLoop(1280, 720){
 	Scene* scene = new Scene();
 
 	scene->id = "Scene";
@@ -44,7 +44,7 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 }
 
 void DevTool::update(set<SDL_Scancode> pressedKeys){
-	Game::update(pressedKeys);
+	DevLoop::update(pressedKeys);
 
 	mouse->update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
@@ -120,7 +120,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 }
 
 void DevTool::draw(AffineTransform &at){
-	Game::draw(at);
+	DevLoop::draw(at);
 	DisplayObjectContainer::draw(at);
 	// mouse->draw(at);
 	resourceBar->draw(at);

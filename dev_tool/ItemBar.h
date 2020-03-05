@@ -1,7 +1,7 @@
 #ifndef ITEMBAR_H
 #define ITEMBAR_H
 
-#include "kiss_sdl.h"
+#include "kiss/kiss_sdl.h"
 #include "DisplayObject.h"
 #include "DisplayObjectContainer.h"
 #include <SDL2/SDL.h>

@@ -2,9 +2,9 @@
 #include "DevTool.h"
 #include <iostream>
 
-Game* SceneWindow::running_dev_tool;
+DevLoop* SceneWindow::running_dev_tool;
 
-SceneWindow::SceneWindow(int parent_width, int parent_height, kiss_window* window, Game* running_tool){
+SceneWindow::SceneWindow(int parent_width, int parent_height, kiss_window* window, DevLoop* running_tool){
 	int dialogue_height = parent_height/5;
 	int dialogue_width = parent_width/3;
 	int window_start_x = parent_width/2 - dialogue_width/2;

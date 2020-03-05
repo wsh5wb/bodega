@@ -5,7 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <unordered_map>
-#include <Animations.h>
+#include "Animations.h"
 #include <ctime>
 #include <iostream>
 
@@ -31,6 +31,7 @@ public:
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
+	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	bool playing = false;
 	int curFrame = 0;

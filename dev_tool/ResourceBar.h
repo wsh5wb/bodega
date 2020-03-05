@@ -5,14 +5,14 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <filesystem>
-#include "AnimatedSprite.h"
-#include "DisplayObject.h"
-#include "DisplayObjectContainer.h"
-#include "Sprite.h"
-#include "Scene.h"
-#include "ItemBar.h"
-#include "Mouse.h"
 #include "definitions.h"
+#include "ItemBar.h"
+#include "../src/engine/AnimatedSprite.h"
+#include "../src/engine/DisplayObject.h"
+#include "../src/engine/DisplayObjectContainer.h"
+#include "../src/engine/Sprite.h"
+#include "../src/engine/Scene.h"
+#include "../src/engine/Mouse.h"
 
 class ResourceBar : public DisplayObjectContainer{
 public:

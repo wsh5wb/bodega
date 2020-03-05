@@ -1,17 +1,17 @@
 #ifndef SCENEWINDOW_H
 #define SCENEWINDOW_H
 
-#include "kiss_sdl.h"
-#include "DisplayObjectContainer.h"
-#include "Game.h"
-#include "Scene.h"
-#include "definitions.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "definitions.h"
+#include "kiss/kiss_sdl.h"
+#include "../src/engine/DisplayObjectContainer.h"
+#include "../src/engine/DevLoop.h"
+#include "../src/engine/Scene.h"
 
 class SceneWindow{
 public:
-	SceneWindow(int parent_width, int parent_height, kiss_window* window, Game* running_tool);
+	SceneWindow(int parent_width, int parent_height, kiss_window* window, DevLoop* running_tool);
 	void draw(SDL_Renderer *renderer);
 	void event(SDL_Event *event, int* draw);
 
@@ -33,7 +33,7 @@ private:
 
 	void set_bg_from_path();
 
-	static Game * running_dev_tool;
+	static DevLoop * running_dev_tool;
 	Scene* current_scene;
 	string current_scene_path;
 	

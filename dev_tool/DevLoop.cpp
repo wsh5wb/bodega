@@ -1,29 +1,28 @@
-#include <iostream>
-#include "Game.h"
-#include <string>
-#include <ctime>
-#include "DisplayObject.h"
-#include "SceneWindow.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <typeinfo>
+#include <iostream>
+#include <string>
+#include <ctime>
+#include "DevLoop.h"
+#include "../src/engine/DisplayObject.h"
+#include "../src/engine/SceneWindow.h"
+
 
 using namespace std;
 
-SDL_Renderer* Game::renderer;
+SDL_Renderer* DevLoop::renderer;
 
-Game* Game::instance;
-unsigned int Game::frameCounter = 0;
+DevLoop* DevLoop::instance;
+unsigned int DevLoop::frameCounter = 0;
 
-Game::Game(int windowWidth, int windowHeight){
-	Game::instance = this;
+DevLoop::DevLoop(int windowWidth, int windowHeight){
+	DevLoop::instance = this;
 	
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
 	int windowH = 800;
-	// initSDL();
-	// TTF_Init();
 
 	SDL_Renderer * renderer = kiss_init("dev_tool", &objects, 1280, 720);
 
@@ -32,27 +31,27 @@ Game::Game(int windowWidth, int windowHeight){
 		return; 
 	}
 
-	Game::renderer = renderer; 
+	DevLoop::renderer = renderer; 
 
 	kiss_array_new(&a1);
 	kiss_array_append(&objects, ARRAY_TYPE, &a1);
 	infoBar = new ItemBar(&char_attributes_bar);
-	// cout << Game::renderer << endl;
+	// cout << DevLoop::renderer << endl;
 	mouse = new Mouse("Mouse",100,100,100);
 	mouse->makeInvisible();
 	mouse->setAlpha(80);
 	disable_camera = false;
 }
 
-Game::~Game(){
+DevLoop::~DevLoop(){
 	// delete mouse;
 	quitSDL();
 }
 
-void Game::quitSDL(){
+void DevLoop::quitSDL(){
 	cout << "Quitting sdl" << endl;
 	kiss_clean(&objects);
-	SDL_DestroyRenderer(Game::renderer);
+	SDL_DestroyRenderer(DevLoop::renderer);
 
 	// SDL_DestroyWindow(window);
 
@@ -61,22 +60,22 @@ void Game::quitSDL(){
 	SDL_Quit();
 }
 
-void Game::initSDL(){
+void DevLoop::initSDL(){
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 
-	// window = SDL_CreateWindow("myGame",
+	// window = SDL_CreateWindow("myDevLoop",
 	// 	SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->windowWidth, this->windowHeight, 0);
 
 	// SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
 
 	//SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
-	//SDL_Renderer * renderer = kiss_init("My Game",&objects,1200,1000);
-	Game::renderer = renderer;
+	//SDL_Renderer * renderer = kiss_init("My DevLoop",&objects,1200,1000);
+	DevLoop::renderer = renderer;
 	
 }
 
-void Game::start(){
+void DevLoop::start(){
 
 	int textbox_width, textbox_height, draw;
 	draw = 1;
@@ -170,8 +169,8 @@ void Game::start(){
 	}
 }
 
-void Game::update(set<SDL_Scancode> pressedKeys){
+void DevLoop::update(set<SDL_Scancode> pressedKeys){
 	frameCounter++;
 }
-void Game::draw(AffineTransform &at){
+void DevLoop::draw(AffineTransform &at){
 }

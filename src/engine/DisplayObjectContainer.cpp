@@ -1,4 +1,4 @@
-#include <DisplayObjectContainer.h>
+#include "DisplayObjectContainer.h"
 #include <iostream>
 
 using namespace std;
@@ -74,6 +74,7 @@ DisplayObject* DisplayObjectContainer::getChild(string id){
 
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
 	DisplayObject::update(pressedKeys);
+
 	for(DisplayObject* child : children){
 		child->update(pressedKeys);
 	}
@@ -88,4 +89,19 @@ void DisplayObjectContainer::draw(AffineTransform &at){
 	}
 	
 	DisplayObject::reverseTransformations(at);	
+}
+
+void DisplayObjectContainer::saveSelf(vector<string> &objects,
+		vector<string> &dependencies) {
+	string desc;
+	stringstream sstm;
+	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
+	sstm << "1 " << id << " " << imgPath << " " << red << " " << green << " "
+			<< blue << " " << std::boolalpha << vis << " " << std::boolalpha
+			<< isRGB << " " << w << " " << h << " " << speed << " " << scaleX
+			<< " " << scaleY << " " << rotation << " " << rotationAmount << " "
+			<< alpha << " " << px0 << " " << py0 << " " << px1 << " " << py1
+			<< "\n";
+	desc = sstm.str();
+	objects.push_back(desc);
 }
