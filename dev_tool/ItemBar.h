@@ -4,6 +4,7 @@
 #include "kiss/kiss_sdl.h"
 #include "DisplayObject.h"
 #include "DisplayObjectContainer.h"
+#include "definitions.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -18,11 +19,12 @@ public:
 	void initThisWindow(DisplayObjectContainer * win);
 	void updateObjectFields();
 	void copyFields(DisplayObject * oldObj, DisplayObject * newObj);
-	//bool isEditing();
+	bool isEditing();
 	void event(SDL_Event *event, int* draw);
 	void draw(SDL_Renderer *renderer);
 	kiss_window * window = {0};
 private:
+	//DevTool * tool;
 	DisplayObjectContainer * thisWindow;
 
 	DisplayObject * curObj;
