@@ -208,7 +208,15 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
 			break;
-		}
+		}case 6: { //Layer
+
+		    Layer *temp = new Layer();
+		    double s;
+            i >> temp->id >> s ;
+            temp->setScale(s);
+            objects.push_back(temp);
+            break;
+        }
 		default: {
 			cerr << "ERROR: Object type not recognized!\n";
 			break;
