@@ -69,6 +69,8 @@ void DisplayObject::setImage(SDL_Surface* img){
 }
 
 void DisplayObject::setRect(SDL_Rect s){
+	w = s.w;
+	h = s.h;
 	srcrect = s;
 }
 

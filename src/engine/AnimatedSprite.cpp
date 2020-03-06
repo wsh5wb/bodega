@@ -42,7 +42,7 @@ void AnimatedSprite::addAnimation(string basepath, string animName, int numFrame
 	Animation * a = new Animation(basepath,images.size(),numFrames,frameRate,loop);
 	cout << "created" << images.size();
 	animationMap.emplace(animName,a);
-	
+
 	for(int i=1; i<numFrames+1;i++){
 		SDL_Surface* image = IMG_Load((basepath + "_" + to_string(i) + ".png").c_str());
 		images.push_back(image);
@@ -51,13 +51,13 @@ void AnimatedSprite::addAnimation(string basepath, string animName, int numFrame
 }
 
 void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animName, int numFrames, int frameRate, bool loop){
-	/*ifstream in(xmlpath);
+	ifstream in(xmlpath);
 	if(!in){
 		cout << "XML File not found";
 		return;
-	}*/
+	}
 
-	string buffer; 
+	/*string buffer; 
 		char c;
 		ifstream in(xmlpath);
 		if(!in){
@@ -101,6 +101,8 @@ void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animN
 			SDL_Rect r = {x, y, w, h}; 
 			locations.push_back(r);
 		}
+	*/
+
 	
 	Animation * a = new Animation(sheetpath,xmlpath,images.size(),frameRate,loop);
 	animationMap.emplace(animName,a);
@@ -108,11 +110,11 @@ void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animN
 	SDL_Surface* image = IMG_Load((sheetpath).c_str());
 	images.push_back(image);
 
-	//Delete these three for actual thing
+	/*//Delete these three for actual thing
 	DisplayObject::setImage(image);
 
-	SDL_Rect r = {0, 0, 601, 500}; 
-	DisplayObject::setRect(r);
+	SDL_Rect r = {0, 0, 601, 502}; 
+	DisplayObject::setRect(r);*/
 }
 
 Animation* AnimatedSprite::getAnimation(string animName){
