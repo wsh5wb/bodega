@@ -1,7 +1,10 @@
 #include "Tween.h"
+#include <iostream>
 
-Tween::Tween(DisplayObject *object) {
-	this.object = object;
+using namespace std;
+
+Tween::Tween(DisplayObject *obj) {
+	object = obj;
 }
 
 //Tween(DisplayObject* object, TweenTransitions transition); //this is covered by the flags

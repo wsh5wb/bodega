@@ -17,11 +17,9 @@ TweenJuggler* TweenJuggler::getInstance() {
 }
 
 void TweenJuggler::add(Tween* tween) {
-	tweens->push_back(tween);
+	this->tweens.push_back(tween);
 }
 
 void TweenJuggler::nextFrame() {
 	//TODO: do the things and clear the done things
 }
-
-
