@@ -124,7 +124,7 @@ void AnimatedSprite::play(string animName){
 			int w = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
 			start = s.find("h=\"");
 			int h = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			SDL_Rect r = {x, y, w, h}; 
+			SDL_Rect r = {x, y, w, h};
 			locations.push_back(r);
 		}
 		curFrame = 0;
@@ -141,6 +141,7 @@ void AnimatedSprite::play(string animName){
 
 	start = std::clock();
 	playing = true;
+	currAnimation = animName;
 }
 
 void AnimatedSprite::replay(){
@@ -153,6 +154,7 @@ void AnimatedSprite::replay(){
 
 void AnimatedSprite::stop(){
 	playing = false;
+	currAnimation = "";
 	curFrame = 0;
 	if(usesSheet){
 		DisplayObject::setImage(images[startIndex]);

@@ -35,6 +35,7 @@ public:
 	virtual void draw(AffineTransform &at);
 
 	bool playing = false;
+	string currAnimation = "";
 	int curFrame = 0;
 	int frameRate, startIndex, endIndex, numFrames;
 	std::clock_t start;
