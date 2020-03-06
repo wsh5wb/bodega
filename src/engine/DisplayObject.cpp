@@ -50,6 +50,7 @@ void DisplayObject::loadTexture(string filepath){
 	setTexture(texture);
 	w = image->w;
 	h = image->h;
+	srcrect = {0,0,w,h};
 	vis = true;
 	alpha = 255;
 	position.x = 0;
@@ -64,6 +65,11 @@ void DisplayObject::setImage(SDL_Surface* img){
 	setTexture(texture);
 	w = image->w;
 	h = image->h;
+	srcrect = {0,0,w,h};
+}
+
+void DisplayObject::setRect(SDL_Rect s){
+	srcrect = s;
 }
 
 void DisplayObject::loadRGBTexture(int red, int green, int blue){
@@ -224,7 +230,7 @@ void DisplayObject::draw(AffineTransform &at){
 
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
 
-		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
+		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
 		
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);

@@ -35,6 +35,7 @@ public:
 	void loadRGBTexture(int red, int green, int blue);
 	void setTexture(SDL_Texture* t);
 	void setImage(SDL_Surface* img);
+	void setRect(SDL_Rect s);
 	void decreaseAlpha();
 	void increaseAlpha();
 	void toggleVisibility();
@@ -70,7 +71,7 @@ private:
 	SDL_Texture* curTexture;
 
 protected:
-	
+	SDL_Rect srcrect;
 	int speed = 5;
 	double scaleX = 1;
 	double scaleY = 1;

@@ -24,8 +24,8 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
-	
-	Scene* character;
+	AnimatedSprite *character;
+	//Scene* character;
 	string scene;
 	bool changed;
 	Coin* myCoin;

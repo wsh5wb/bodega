@@ -8,8 +8,9 @@ class Animation{
 public:
 	Animation();
 	Animation(string basepath, int startIndex, int numFrames, int frameRate,bool loop);
-	string basepath;
-	bool loop;
+	Animation(string sheetpath, string xmlpath, int startIndex, int frameRate, bool loop);
+	string basepath, xmlpath;
+	bool loop, usesSheet;
 	int numFrames, frameRate, startIndex, endIndex;
 private:
 
