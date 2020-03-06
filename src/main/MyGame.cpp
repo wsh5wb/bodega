@@ -17,6 +17,8 @@ MyGame::MyGame() : Game(1200, 1000){
 	character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,true);
 	character->addAnimation("./resources/character/jumpsprites.png","./resources/character/jumpSheet.xml","Jump",1,60,false);
 	character->addAnimation("./resources/character/runSprite.png","./resources/character/runSheet.xml","Run",1,60,true);
+	character->addAnimation("./resources/character/idleSprite.png","./resources/character/idleSheet.xml","Idle",1,75,true);
+	character->play("Idle");
 	// character->play("Dead");
 	// character = new Scene();
 	// character->loadScene("./resources/scenes/test.txt");
@@ -37,7 +39,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
-	cout << "KEYPRESSED WAITING TO BE SERVED: " << pressedKeys.size() << endl;
 	for(SDL_Scancode code : pressedKeys){
 		switch(code){
 
@@ -70,7 +71,12 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 	if(pressedKeys.count(SDL_SCANCODE_A) == 0 && pressedKeys.count(SDL_SCANCODE_D) == 0){
 		if (character->playing && character->currAnimation == "Run"){
 			character->stop();
+			character->play("Idle");
 		}
+	}
+	if(!character->playing && character->currAnimation == "Jump"){
+		character->stop();
+		character->play("Idle");
 	}
 
 }
