@@ -14,8 +14,10 @@ MyGame::MyGame() : Game(1200, 1000){
 	character = new AnimatedSprite("girl","./resources/character/Dead_1.png");
 	//character->addAnimation("./resources/character/Dead","Dead",30,60,true);
 	//cout << "play";
-	character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,false);
-	character->play("Dead");
+	character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,true);
+	character->addAnimation("./resources/character/jumpsprites.png","./resources/character/jumpSheet.xml","Jump",1,60,false);
+	character->addAnimation("./resources/character/runSprite.png","./resources/character/runSheet.xml","Run",1,60,true);
+	// character->play("Dead");
 	// character = new Scene();
 	// character->loadScene("./resources/scenes/test.txt");
 	this->addChild(character);
@@ -35,75 +37,39 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
-
+	cout << "KEYPRESSED WAITING TO BE SERVED: " << pressedKeys.size() << endl;
 	for(SDL_Scancode code : pressedKeys){
 		switch(code){
 
-			case SDL_SCANCODE_DOWN:
+			case SDL_SCANCODE_S:
 			{
 				character->translateDown();
 				break;
-			}case SDL_SCANCODE_UP:
+			}case SDL_SCANCODE_SPACE:
 			{
+				if(character->currAnimation != "Jump")
+					character->play("Jump");
 				character->translateUp();
 				break;
-			}case SDL_SCANCODE_LEFT:
+			}case SDL_SCANCODE_A:
 			{
+				if(character->currAnimation != "Run")
+					character->play("Run");
 				character->translateLeft();
 				break;
-			}case SDL_SCANCODE_RIGHT:
+			}case SDL_SCANCODE_D:
 			{
+				if(character->currAnimation != "Run")
+					character->play("Run");
 				character->translateRight();
 				break;
 			}
-			//case SDL_SCANCODE_Q:
-			// {
-			// 	character->scaleOut();
-			// 	break;
-			// }case SDL_SCANCODE_W:
-			// {
-			// 	character->scaleIn();
-			// 	break;
-			// }case SDL_SCANCODE_A:
-			// {
-			// 	character->rotateCW();
-			// 	break;
-			// }case SDL_SCANCODE_S:
-			// {
-			// 	character->rotateCCW();
-			// 	break;
-			// }
-			// case SDL_SCANCODE_I: 
-			// {
-			// 	character->movePivotUp();
-			// 	break;
-			// }case SDL_SCANCODE_J:
-			// {
-			// 	character->movePivotLeft();
-			// 	break;
-			// }case SDL_SCANCODE_K:
-			// {
-			// 	character->movePivotDown();
-			// 	break;
-			// }case SDL_SCANCODE_L:
-			// {
-			// 	character->movePivotRight();
-			// 	break;
-
-			// }case SDL_SCANCODE_Z:
-			// {
-			// 	character->increaseAlpha();
-			// 	break;
-			// }case SDL_SCANCODE_X:
-			// {
-			// 	character->decreaseAlpha();
-			// 	break;
-			// }
-
-			// case SDL_SCANCODE_P:
-			// {
-			// 	break;
-			// }
+		}
+			
+	}
+	if(pressedKeys.count(SDL_SCANCODE_A) == 0 && pressedKeys.count(SDL_SCANCODE_D) == 0){
+		if (character->playing && character->currAnimation == "Run"){
+			character->stop();
 		}
 	}
 

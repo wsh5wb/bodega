@@ -102,14 +102,22 @@ void Game::start(){
 					if(event.jaxis.axis == 0){
 						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)	
 							pressedKeys.insert(SDL_SCANCODE_A);
+						else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
+							pressedKeys.erase(SDL_SCANCODE_A);
 						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
 							pressedKeys.insert(SDL_SCANCODE_D);
+						else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+							pressedKeys.erase(SDL_SCANCODE_D);
 					}
 					if(event.jaxis.axis == 1){
 						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
 							pressedKeys.insert(SDL_SCANCODE_S);
+						else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
+							pressedKeys.erase(SDL_SCANCODE_S);
 						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
 							pressedKeys.insert(SDL_SCANCODE_W);
+						else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+							pressedKeys.erase(SDL_SCANCODE_W);
 					}
 				}
 				break;
@@ -127,6 +135,9 @@ void Game::start(){
 					case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 						pressedKeys.insert(SDL_SCANCODE_A);
 						break;
+					case SDL_CONTROLLER_BUTTON_A:
+						pressedKeys.insert(SDL_SCANCODE_SPACE);
+						break;
 				}
 				break;
 			case SDL_CONTROLLERBUTTONUP:
@@ -142,6 +153,9 @@ void Game::start(){
 						break;
 					case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 						pressedKeys.erase(SDL_SCANCODE_A);
+						break;
+					case SDL_CONTROLLER_BUTTON_A:
+						pressedKeys.erase(SDL_SCANCODE_SPACE);
 						break;
 				}
 				break;

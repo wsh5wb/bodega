@@ -12,7 +12,6 @@ AnimatedSprite::AnimatedSprite(string id){
 AnimatedSprite::AnimatedSprite(string id, string filepath){
 	SDL_Surface* image = IMG_Load(filepath.c_str());
 	images.push_back(image);
-	//cout << "here";
 	this->id = id;
 	loop = false;
 	curFrame = 0;
@@ -27,9 +26,9 @@ AnimatedSprite::AnimatedSprite(string id, string filepath){
 AnimatedSprite::~AnimatedSprite(){
 	int i = 0;
 	for(vector<SDL_Surface*>::iterator it = images.begin(); it != images.end(); it++){
-		if(i == curFrame){
+		if(i == curFrame && !usesSheet){
 			continue;
-		}
+		}if(usesSheet && i == startIndex){continue;}
 		i++;
 		SDL_FreeSurface(*it);
 	}images.clear();
@@ -40,7 +39,6 @@ AnimatedSprite::~AnimatedSprite(){
 
 void AnimatedSprite::addAnimation(string basepath, string animName, int numFrames, int frameRate, bool loop){
 	Animation * a = new Animation(basepath,images.size(),numFrames,frameRate,loop);
-	cout << "created" << images.size();
 	animationMap.emplace(animName,a);
 
 	for(int i=1; i<numFrames+1;i++){
@@ -57,64 +55,12 @@ void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animN
 		return;
 	}
 
-	/*string buffer; 
-		char c;
-		ifstream in(xmlpath);
-		if(!in){
-			cout << "XML File not found";
-			return;
-		}while(in.get(c)){
-			buffer += c;
-		}in.close();
-		vector<string> positions;
-		unsigned int pos = 0;
-		unsigned int start;
-		while(true){
-			start = buffer.find ("<TextureAtlas",pos);
-			if(start == string::npos) {break;}
-			start = buffer.find(">",start);
-			start++;
-			pos = buffer.find("</TextureAtlas",start);
-			if(pos == string::npos) {break;}
-			buffer = buffer.substr(start,pos-start);
-			break;
-		}
-		pos = 0, start =0;
-		while(buffer.find("<",start) != string::npos){
-			start = buffer.find("<",start);
-			if(start == string::npos){break;}
-			pos = buffer.find(">",start);
-			if(pos == string::npos){break;}
-			positions.push_back(buffer.substr(start,pos-start+1));
-			buffer.erase(start,pos-start+1);
-		}
-		start = 0;
-		for(string s : positions){
-			start = s.find("x=\"");
-			int x = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			start = s.find("y=\"");
-			int y = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			start = s.find("w=\"");
-			int w = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			start = s.find("h=\"");
-			int h = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			SDL_Rect r = {x, y, w, h}; 
-			locations.push_back(r);
-		}
-	*/
-
-	
 	Animation * a = new Animation(sheetpath,xmlpath,images.size(),frameRate,loop);
 	animationMap.emplace(animName,a);
 
 	SDL_Surface* image = IMG_Load((sheetpath).c_str());
 	images.push_back(image);
 
-	/*//Delete these three for actual thing
-	DisplayObject::setImage(image);
-
-	SDL_Rect r = {0, 0, 601, 502}; 
-	DisplayObject::setRect(r);*/
 }
 
 Animation* AnimatedSprite::getAnimation(string animName){
@@ -177,26 +123,31 @@ void AnimatedSprite::play(string animName){
 			int w = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
 			start = s.find("h=\"");
 			int h = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			SDL_Rect r = {x, y, w, h}; 
+			SDL_Rect r = {x, y, w, h};
 			locations.push_back(r);
 		}
 		curFrame = 0;
 		numFrames = locations.size();
-		endIndex = numFrames;
-
+		endIndex = numFrames - 1;
+		DisplayObject::setImage(images[startIndex]);
+		DisplayObject::setRect(locations[curFrame]);
 	}else{
 		curFrame = startIndex;
 		numFrames = a->numFrames;
 		endIndex = a->endIndex;
+		DisplayObject::setImage(images[startIndex]);
 	}
 
 	start = std::clock();
 	playing = true;
+	currAnimation = animName;
 }
 
 void AnimatedSprite::replay(){
 	if(usesSheet){
-		curFrame = 0;
+		curFrame = -1;
+		DisplayObject::setImage(images[startIndex]);
+		DisplayObject::setRect(locations[0]);
 	}else{
 		curFrame = startIndex;
 	}
@@ -204,6 +155,7 @@ void AnimatedSprite::replay(){
 
 void AnimatedSprite::stop(){
 	playing = false;
+	currAnimation = "";
 	curFrame = 0;
 	if(usesSheet){
 		DisplayObject::setImage(images[startIndex]);
