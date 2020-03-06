@@ -7,3 +7,10 @@ Two running options:
 * Without sanitizer: `make`
 
 Once compiled, use `make run` to run game
+
+
+# FOR CONTROLLER DEMO
+
+* Jump is A
+
+* Run is left and right joystick or dpad
