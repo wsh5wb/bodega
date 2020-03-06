@@ -14,7 +14,7 @@ MyGame::MyGame() : Game(1200, 1000){
 	character = new AnimatedSprite("girl","./resources/character/Dead_1.png");
 	//character->addAnimation("./resources/character/Dead","Dead",30,60,true);
 	//cout << "play";
-	character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,false);
+	character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,true);
 	character->play("Dead");
 	// character = new Scene();
 	// character->loadScene("./resources/scenes/test.txt");
