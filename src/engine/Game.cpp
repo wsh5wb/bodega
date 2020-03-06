@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -21,14 +22,21 @@ Game::Game(int windowWidth, int windowHeight){
 
 	initSDL();
 	TTF_Init();
+	// cout << Game::renderer << endl;
 }
 
 Game::~Game(){
+	// delete mouse;
 	quitSDL();
 }
 
 void Game::quitSDL(){
 	cout << "Quitting sdl" << endl;
+
+	//Close game controller
+    SDL_JoystickClose( gGameController );
+    gGameController = NULL;
+
 	SDL_DestroyRenderer(Game::renderer);
 	SDL_DestroyWindow(window);
 
@@ -37,8 +45,18 @@ void Game::quitSDL(){
 }
 
 void Game::initSDL(){
-	SDL_Init(SDL_INIT_VIDEO);
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0)
+		cout << "Failed to init SDL, Error: " << SDL_GetError() << endl;
+
 	IMG_Init(IMG_INIT_PNG);
+
+	 //Check for joysticks
+    if( SDL_NumJoysticks() >= 1 ){
+        //Load joystick
+        gGameController = SDL_JoystickOpen( 0 );
+        if( gGameController == NULL )
+        	cout << "Could not initialize controller" << endl;
+    }
 
 	window = SDL_CreateWindow("myGame",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->windowWidth, this->windowHeight, 0);
@@ -77,6 +95,55 @@ void Game::start(){
 				break;
 			case SDL_KEYUP:
 				pressedKeys.erase(event.key.keysym.scancode);
+				break;
+			case SDL_JOYAXISMOTION:
+				if(event.jaxis.which == 0){
+					//x axis motion
+					if(event.jaxis.axis == 0){
+						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)	
+							pressedKeys.insert(SDL_SCANCODE_A);
+						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
+							pressedKeys.insert(SDL_SCANCODE_D);
+					}
+					if(event.jaxis.axis == 1){
+						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
+							pressedKeys.insert(SDL_SCANCODE_S);
+						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
+							pressedKeys.insert(SDL_SCANCODE_W);
+					}
+				}
+				break;
+			case SDL_CONTROLLERBUTTONDOWN:
+				switch(event.cbutton.button){
+					case SDL_CONTROLLER_BUTTON_DPAD_UP:
+						pressedKeys.insert(SDL_SCANCODE_W);
+						break;
+					case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+						pressedKeys.insert(SDL_SCANCODE_S);
+						break;
+					case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+						pressedKeys.insert(SDL_SCANCODE_D);
+						break;
+					case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+						pressedKeys.insert(SDL_SCANCODE_A);
+						break;
+				}
+				break;
+			case SDL_CONTROLLERBUTTONUP:
+				switch(event.cbutton.button){
+					case SDL_CONTROLLER_BUTTON_DPAD_UP:
+						pressedKeys.erase(SDL_SCANCODE_W);
+						break;
+					case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+						pressedKeys.erase(SDL_SCANCODE_S);
+						break;
+					case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+						pressedKeys.erase(SDL_SCANCODE_D);
+						break;
+					case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+						pressedKeys.erase(SDL_SCANCODE_A);
+						break;
+				}
 				break;
 		}
 	

@@ -38,7 +38,9 @@ private:
 	void initSDL();
 	void quitSDL();
 	set<SDL_Scancode> pressedKeys;
-	
+
+	const int JOYSTICK_DEAD_ZONE = 8000;
+	SDL_Joystick* gGameController = NULL;
 };
 
 #endif
