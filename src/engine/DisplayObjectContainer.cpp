@@ -11,6 +11,16 @@ DisplayObjectContainer::DisplayObjectContainer(string id, string filepath) : Dis
 	
 }
 
+DisplayObjectContainer::DisplayObjectContainer(string id, string filepath, SDL_Renderer* renderer) : 
+	DisplayObject(id,filepath,renderer){
+	
+}
+
+DisplayObjectContainer::DisplayObjectContainer(string id, int red, int green, int blue, SDL_Renderer* renderer) :
+	DisplayObject(id,red,green,blue,renderer){
+
+}
+
 DisplayObjectContainer::DisplayObjectContainer(string id, int red, int green, int blue) : DisplayObject(id,red,green,blue){
 
 }

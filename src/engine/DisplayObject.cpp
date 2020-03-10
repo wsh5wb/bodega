@@ -20,6 +20,7 @@ DisplayObject::DisplayObject(){
 	pivot.x = 0; pivot.y = 0;
 	world = {0, 0};
 	this->imgPath = "0";
+	renderer = NULL;
 }
 
 DisplayObject::DisplayObject(string id, string filepath){
@@ -37,6 +38,26 @@ DisplayObject::DisplayObject(string id, string filepath){
 	position.y = 0;
 	pivot.x = 0; pivot.y = 0;
 	world = {0, 0};
+	renderer = NULL;
+	loadTexture(filepath);
+}
+
+DisplayObject::DisplayObject(string id, string filepath, SDL_Renderer* renderer){
+	this->id = id;
+	this->imgPath = filepath;
+	image = NULL;
+	texture = NULL;
+	curTexture = NULL;
+	vis = true;
+	alpha = 255;
+	this->red = 0;
+	this->green = 0;
+	this->blue = 0;
+	position.x = 0;
+	position.y = 0;
+	pivot.x = 0; pivot.y = 0;
+	world = {0, 0};
+	setRenderer(renderer);
 	loadTexture(filepath);
 }
 
@@ -58,6 +79,30 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue){
 	pivot.x = 0; pivot.y = 0;
 	world = {0, 0};
 	this->imgPath = "0";
+	renderer = NULL;
+
+	this->loadRGBTexture(red, green, blue);
+}
+
+DisplayObject::DisplayObject(string id, int red, int green, int blue, SDL_Renderer* renderer){
+	isRGB = true;
+	this->id = id;
+
+	this->red = red;
+	this->blue = blue;
+	this->green = green;
+
+	image = NULL;
+	texture = NULL;
+	curTexture = NULL;
+	vis = true;
+	alpha = 255;
+	position.x = 0;
+	position.y = 0;
+	pivot.x = 0; pivot.y = 0;
+	world = {0, 0};
+	this->imgPath = "0";
+	setRenderer(renderer);
 
 	this->loadRGBTexture(red, green, blue);
 }
@@ -73,7 +118,11 @@ void DisplayObject::loadTexture(string filepath){
 	if (image == NULL){
 		printf("Bruh you done fucked up with the filepath. \n");
 	}
-	texture = SDL_CreateTextureFromSurface(Game::renderer, image);
+	if(this->renderer == NULL)
+		texture = SDL_CreateTextureFromSurface(Game::renderer, image);
+	else
+		texture = SDL_CreateTextureFromSurface(renderer, image);
+
 	setTexture(texture);
 	w = image->w;
 	h = image->h;
@@ -87,7 +136,12 @@ void DisplayObject::loadTexture(string filepath){
 void DisplayObject::setImage(SDL_Surface* img){
 	image = img;
 	if(texture != NULL) SDL_DestroyTexture(texture);
-	texture = SDL_CreateTextureFromSurface(Game::renderer, image);
+
+	if(this->renderer == NULL)
+		texture = SDL_CreateTextureFromSurface(Game::renderer, image);
+	else
+		texture = SDL_CreateTextureFromSurface(renderer, image);
+
 	setTexture(texture);
 	w = image->w;
 	h = image->h;
@@ -96,7 +150,12 @@ void DisplayObject::setImage(SDL_Surface* img){
 void DisplayObject::loadRGBTexture(int red, int green, int blue){
 	image = SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0x000000ff);
 	SDL_FillRect(image, NULL, SDL_MapRGB(image->format, red, green, blue));
-	texture = SDL_CreateTextureFromSurface(Game::renderer, image);
+
+	if(this->renderer == NULL)
+		texture = SDL_CreateTextureFromSurface(Game::renderer, image);
+	else
+		texture = SDL_CreateTextureFromSurface(renderer, image);
+
 	SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
 	setTexture(texture);
 }
@@ -302,6 +361,15 @@ void DisplayObject::setSpeed(int s){
 	speed = s;
 }
 
+void DisplayObject::setRenderer(SDL_Renderer* renderer){
+	this->renderer = renderer;
+}
+
+SDL_Renderer* DisplayObject::getRenderer(){
+	return this->renderer;
+}
+
+
 void DisplayObject::applyTransformations(AffineTransform &at){
 	at.translate(position.x,position.y);
 	at.rotate(rotation);
@@ -340,8 +408,10 @@ void DisplayObject::draw(AffineTransform &at){
 		world_center = {topL.x + distAdj/2, topL.y + distOpp/2};
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
 
-		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
-		
+		if(this->renderer == NULL)
+			SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
+		else
+			SDL_RenderCopyEx(this->renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);
 

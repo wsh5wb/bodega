@@ -1,9 +1,9 @@
 #ifndef ITEMBAR_H
 #define ITEMBAR_H
 
-#include "kiss/kiss_sdl.h"
-#include "DisplayObject.h"
-#include "DisplayObjectContainer.h"
+#include "../kiss/kiss_sdl.h"
+#include "../../src/engine/DisplayObject.h"
+#include "../../src/engine/DisplayObjectContainer.h"
 #include "definitions.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -36,6 +36,7 @@ private:
 	kiss_label alphaLabel = {0};
 
 	kiss_button delBut = {0}; kiss_button copyBut = {0};
+	SDL_Renderer* renderer;
 
 };
 

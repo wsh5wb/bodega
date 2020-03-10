@@ -27,7 +27,9 @@ public:
 
 	DisplayObject();
 	DisplayObject(string id, string path);
+	DisplayObject(string id, string path, SDL_Renderer* renderer);
 	DisplayObject(string id, int red, int green, int blue);
+	DisplayObject(string id, int red, int green, int blue, SDL_Renderer* renderer);
 	virtual ~DisplayObject();
 	
 	virtual void update(set<SDL_Scancode> pressedKeys);
@@ -84,6 +86,8 @@ public:
 	SDL_Point getWorldCenter();
 	bool isCopy;
 	void setSpeed(int s);//added
+	void setRenderer(SDL_Renderer* renderer);
+	SDL_Renderer* getRenderer();
 
 private:
 	
@@ -101,6 +105,7 @@ protected:
 	SDL_Surface* image = NULL;
 	/* Texture currently being drawn. Equal to texture for normal DO */
 	SDL_Texture* curTexture;
+	SDL_Renderer* renderer;
 };
 
 #endif

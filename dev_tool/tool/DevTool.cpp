@@ -3,18 +3,20 @@
 using namespace std;
 
 DevTool::DevTool() : DevLoop(1280, 720){
+	DisplayObject* character = new DisplayObject("character", "./resources/character/Idle_1.png");
 	Scene* scene = new Scene();
 
 	scene->id = "Scene";
 
-	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar);
+	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar, DevLoop::renderer);
 	resourceBar->setMouseListener(mouse);
 	gridSize = 50.0; //in pixels
 	//infoBar = this->infoBar;
 	this->addChild(scene);
 	this->infoBar->initThisWindow((DisplayObjectContainer *) this);
 	// camera->addScene(scene);
-	//this->addChild(mouse);
+	// this->addChild(mouse);
+	this->addChild(character);
 }
 
 DevTool::~DevTool(){
@@ -46,12 +48,13 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	DevLoop::update(pressedKeys);
 
+	// cout << *pressedKeys.begin() << endl;
 	mouse->update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
 
-	if(infoBar->isEditing()){disable_camera = true;}
+	if(infoBar->isEditing()){disable_input = true;}
 
-	if(!disable_camera) {
+	if(!disable_input) {
 		for(SDL_Scancode code : pressedKeys){
 			switch(code){
 				case SDL_SCANCODE_W:
@@ -82,6 +85,13 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 				case SDL_SCANCODE_X:
 				{
 					children[SCENE_DOC_INDEX]->scale(.95);
+					break;
+				}
+				case SDL_SCANCODE_H:
+				{
+					//cout << "Do stuff" << menu->vis<< endl;
+					resourceBar->toggleVisibility();
+					SDL_Delay(150);
 					break;
 				}
 			}

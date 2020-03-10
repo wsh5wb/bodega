@@ -4,21 +4,21 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "kiss/kiss_sdl.h"
 #include "ItemBar.h"
 #include "DevLoop.h"
 #include "ResourceBar.h"
 #include "definitions.h"
-#include "../src/engine/AffineTransform.h"
-#include "../src/engine/AnimatedSprite.h"
-#include "../src/engine/Animations.h"
-#include "../src/engine/DisplayObjectContainer.h"
-#include "../src/engine/DisplayObject.h"
-#include "../src/engine/jsonConversions.h"
-#include "../src/engine/json.hpp"
-#include "../src/engine/Mouse.h"
-#include "../src/engine/Scene.h"
-#include "../src/engine/Sprite.h"
+#include "../kiss/kiss_sdl.h"
+#include "../../src/engine/AffineTransform.h"
+#include "../../src/engine/AnimatedSprite.h"
+#include "../../src/engine/Animations.h"
+#include "../../src/engine/DisplayObjectContainer.h"
+#include "../../src/engine/DisplayObject.h"
+#include "../../src/engine/jsonConversions.h"
+#include "../../src/engine/json.hpp"
+#include "../../src/engine/Mouse.h"
+#include "../../src/engine/Scene.h"
+#include "../../src/engine/Sprite.h"
 
 using std::set;
 

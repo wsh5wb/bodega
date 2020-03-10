@@ -73,12 +73,12 @@ void SceneWindow::event(SDL_Event *event, int* draw){
 
 void SceneWindow::display_dialogue_window(){
 	scene_dialogue_window.visible = 1;
-	running_dev_tool->disable_camera = true;
+	running_dev_tool->disable_input = true;
 }
 
 void SceneWindow::close_dialogue_window(){
 	scene_dialogue_window.visible = 0;
-	running_dev_tool->disable_camera = false;
+	running_dev_tool->disable_input = false;
 }
 
 void SceneWindow::load_scene_from_path(){
@@ -87,6 +87,7 @@ void SceneWindow::load_scene_from_path(){
 	if(i.good()){
 		// Camera* camera = running_dev_tool->camera;
 		Scene *scene = new Scene();
+		scene->setRenderer(running_dev_tool->renderer);
 		scene->loadScene(scene_path_entry.text);
 		delete running_dev_tool->children[SCENE_DOC_INDEX];
 		running_dev_tool->children[SCENE_DOC_INDEX] = scene;
@@ -96,7 +97,7 @@ void SceneWindow::load_scene_from_path(){
 		current_scene = scene;
 		scene_dialogue_window.visible = 0;
 		strcpy(scene_path_entry.text, "Enter Scene Path");
-		running_dev_tool->disable_camera = false;
+		running_dev_tool->disable_input = false;
 	}
 	else
 		scene_dialogue_window.bg = {220,20,60};// strcpy(scene_path_entry.text, "Enter valid path!");
@@ -108,7 +109,7 @@ void SceneWindow::save_scene_from_path(){
 	current_scene->saveScene(current_scene_path);
 	scene_dialogue_window.visible = 0;
 	strcpy(scene_path_entry.text, "Enter Scene Path");
-	running_dev_tool->disable_camera = false;
+	running_dev_tool->disable_input = false;
 	// ((Scene*) running_dev_tool->children[SCENE_DOC_INDEX])->saveScene(current_scene_path);
 }
 

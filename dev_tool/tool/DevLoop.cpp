@@ -6,9 +6,8 @@
 #include <string>
 #include <ctime>
 #include "DevLoop.h"
-#include "../src/engine/DisplayObject.h"
-#include "../src/engine/SceneWindow.h"
-
+#include "SceneWindow.h"
+#include "../../src/engine/DisplayObject.h"
 
 using namespace std;
 
@@ -31,7 +30,8 @@ DevLoop::DevLoop(int windowWidth, int windowHeight){
 		return; 
 	}
 
-	DevLoop::renderer = renderer; 
+	DevLoop::renderer = renderer;
+	this->renderer = renderer;
 
 	kiss_array_new(&a1);
 	kiss_array_append(&objects, ARRAY_TYPE, &a1);
@@ -40,7 +40,8 @@ DevLoop::DevLoop(int windowWidth, int windowHeight){
 	mouse = new Mouse("Mouse",100,100,100);
 	mouse->makeInvisible();
 	mouse->setAlpha(80);
-	disable_camera = false;
+	mouse->setRenderer(DevLoop::renderer);
+	disable_input = false;
 }
 
 DevLoop::~DevLoop(){
@@ -172,5 +173,6 @@ void DevLoop::start(){
 void DevLoop::update(set<SDL_Scancode> pressedKeys){
 	frameCounter++;
 }
+
 void DevLoop::draw(AffineTransform &at){
 }

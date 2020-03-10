@@ -51,6 +51,7 @@ ItemBar::~ItemBar(){
 
 void ItemBar::initThisWindow(DisplayObjectContainer * win){
 	thisWindow = win;
+	this->renderer = win->getRenderer();
 }
 
 void ItemBar::setObj(DisplayObject *& obj){
@@ -203,9 +204,9 @@ void ItemBar::event(SDL_Event *event, int* draw){
 		if(curObj != NULL){
 			DisplayObject * newObj;
 			if(curObj->id.find("_cpy")){
-				newObj = new DisplayObject(curObj->id.substr(0,curObj->id.find("_cpy"))+ "_cpy" + to_string(curObj->numCopies), curObj->imgPath);
+				newObj = new DisplayObject(curObj->id.substr(0,curObj->id.find("_cpy"))+ "_cpy" + to_string(curObj->numCopies), curObj->imgPath, this->renderer);
 			}else{
-				newObj = new DisplayObject(curObj->id + "_cpy", curObj->imgPath);
+				newObj = new DisplayObject(curObj->id + "_cpy", curObj->imgPath, this->renderer);
 			}
 			curObj->numCopies++;
 			((DisplayObjectContainer *)(thisWindow->getChild(SCENE_DOC_INDEX)))->addChild(newObj);

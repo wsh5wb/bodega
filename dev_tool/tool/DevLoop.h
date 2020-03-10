@@ -6,11 +6,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "kiss/kiss_sdl.h"
-#include "../src/engine/DisplayObjectContainer.h"
-#include "../src/engine/ItemBar.h"
-#include "../src/engine/Mouse.h"
-#include "../src/engine/Camera.h"
+#include "ItemBar.h"
+#include "definitions.h"
+#include "../kiss/kiss_sdl.h"
+#include "../../src/engine/DisplayObjectContainer.h"
+#include "../../src/engine/Mouse.h"
+#include "../../src/engine/Camera.h"
 
 using namespace std;
 
@@ -45,7 +46,7 @@ public:
 	virtual void draw(AffineTransform &at);
 
 	Mouse* mouse;
-	bool disable_camera;
+	bool disable_input;	
 
 private:
 

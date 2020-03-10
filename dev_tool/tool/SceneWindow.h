@@ -4,10 +4,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "definitions.h"
-#include "kiss/kiss_sdl.h"
-#include "../src/engine/DisplayObjectContainer.h"
-#include "../src/engine/DevLoop.h"
-#include "../src/engine/Scene.h"
+#include "DevLoop.h"
+#include "../kiss/kiss_sdl.h"
+#include "../../src/engine/DisplayObjectContainer.h"
+#include "../../src/engine/Scene.h"
 
 class SceneWindow{
 public:
