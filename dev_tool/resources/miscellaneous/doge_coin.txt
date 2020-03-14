@@ -1,0 +1,6 @@
+3 2
+0 Scene 0 0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 0 0
+1 Default0 ./resources/character/Idle_5.png 0 0 0 true false 416 454 5 1 1 0 0.05 255 0 0 220 24
+1 Default1 ./resources/miscellaneous/Dogecoin_Logo.png 0 0 0 true false 300 300 5 1 1 0 0.05 255 0 0 687 153
+Scene Default0
+Scene Default1

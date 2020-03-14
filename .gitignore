@@ -84,4 +84,16 @@ flycheck_*.el
 *.out
 *.app
 
+### Backup ###
+*.bak
+*.gho
+*.ori
+*.orig
+*.tmp
+
+.DS_Store
+
+# Builds
 bin/*
+dev_tool/build/*
+

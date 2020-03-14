@@ -7,6 +7,7 @@
 //#include "Event.h"
 #include <string>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -16,7 +17,9 @@ public:
 	
 	DisplayObjectContainer();
 	DisplayObjectContainer(string id, string filepath);
+	DisplayObjectContainer(string id, string filepath, SDL_Renderer* renderer);
 	DisplayObjectContainer(string id, int red, int green, int blue);
+	DisplayObjectContainer(string id, int red, int green, int blue, SDL_Renderer* renderer);
 	virtual ~DisplayObjectContainer();
 
 	void addChild(DisplayObject* child);
@@ -31,6 +34,7 @@ public:
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
+	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	vector<DisplayObject*> children;
 private:
