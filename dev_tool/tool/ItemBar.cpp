@@ -24,6 +24,7 @@ ItemBar::ItemBar(kiss_window * wdw){
 	kiss_label_new(&widthLabel,wdw,"Width: 0" ,infoW + 20,245);
 	kiss_label_new(&heightLabel,wdw,"Height: 0",infoW + 140,245);
 	kiss_label_new(&alphaLabel,wdw,"Alpha:", infoW + 20,205);
+	kiss_label_new(&scaleLockLabel,wdw,"Lock Scale Ratio", infoW + 45,285);
 
 	// Text Entries
 	kiss_entry_new(&idEntry,wdw,0,"0", infoW + 55,5,185);
@@ -39,8 +40,9 @@ ItemBar::ItemBar(kiss_window * wdw){
 	// Buttons
 	kiss_button_new(&delBut,wdw,"Delete",infoW + 170,650);
 	kiss_button_new(&copyBut,wdw,"Copy",infoW + 90,650);
+	kiss_selectbutton_new(&scaleLock,wdw,infoW + 20,285);
 
-	idLabel.textcolor = kiss_white; xPosLabel.textcolor = kiss_white; yPosLabel.textcolor = kiss_white;
+	idLabel.textcolor = kiss_white; xPosLabel.textcolor = kiss_white; yPosLabel.textcolor = kiss_white; scaleLockLabel.textcolor = kiss_white;
 	xPivLabel.textcolor = kiss_white; yPivLabel.textcolor = kiss_white; rotLabel.textcolor = kiss_white; alphaLabel.textcolor = kiss_white;
 	yScaleLabel.textcolor = kiss_white; xScaleLabel.textcolor = kiss_white; widthLabel.textcolor = kiss_white; heightLabel.textcolor = kiss_white;
 }
@@ -65,6 +67,7 @@ void ItemBar::setObj(DisplayObject *& obj){
 
 void ItemBar::updateObjectFields(){
 	if(curObj == NULL) {return;}
+	scale = curObj->getScaleX()/curObj->getScaleY();
 	strncpy(idEntry.text,curObj->getID().c_str(),sizeof(idEntry.text));
 	strncpy(xPosEntry.text,to_string(curObj->getPosition().x).c_str(),sizeof(xPosEntry.text));
 	strncpy(yPosEntry.text,to_string(curObj->getPosition().y).c_str(),sizeof(yPosEntry.text));
@@ -160,6 +163,10 @@ void ItemBar::event(SDL_Event *event, int* draw){
 			if(isdigit(xScaleEntry.text[0]) || isdigit(xScaleEntry.text[1]) && xScaleEntry.text[0] == '.'){
 				float newVal = atof(xScaleEntry.text);
 				curObj->setScaleX(newVal);
+				if(scaleLocked){
+					curObj->setScaleY(newVal/scale);
+					strncpy(yScaleEntry.text,to_string(curObj->getScaleY()).substr(0,4).c_str(),sizeof(yScaleEntry.text));
+				}
 			}strncpy(xScaleEntry.text,to_string(curObj->getScaleX()).substr(0,4).c_str(),sizeof(xScaleEntry.text));
 		}
 	}
@@ -170,6 +177,10 @@ void ItemBar::event(SDL_Event *event, int* draw){
 			if(isdigit(yScaleEntry.text[0]) || isdigit(yScaleEntry.text[1]) && yScaleEntry.text[0] == '.'){
 				float newVal = atof(yScaleEntry.text);
 				curObj->setScaleY(newVal);
+				if(scaleLocked){
+					curObj->setScaleX(scale*newVal);
+					strncpy(xScaleEntry.text,to_string(curObj->getScaleX()).substr(0,4).c_str(),sizeof(xScaleEntry.text));
+				}
 			}
 			strncpy(yScaleEntry.text,to_string(curObj->getScaleY()).substr(0,4).c_str(),sizeof(yScaleEntry.text));
 		}
@@ -199,7 +210,17 @@ void ItemBar::event(SDL_Event *event, int* draw){
 		}
 	}
 	
-	// Copy Button - add implememtation
+	// Scale Lock Button
+	if(kiss_selectbutton_event(&scaleLock,event,draw)){
+		if(curObj != NULL){
+				if(scaleLock.selected){
+				scale = curObj->getScaleX()/curObj->getScaleY();
+				scaleLocked = true;
+			}else{scaleLocked = false;}
+		}
+	}
+	
+	// Copy Button
 	if(kiss_button_event(&copyBut,event,draw)){
 		if(curObj != NULL){
 			DisplayObject * newObj;
@@ -236,6 +257,7 @@ void ItemBar::draw(SDL_Renderer *renderer){
 	kiss_label_draw(&widthLabel,renderer);
 	kiss_label_draw(&heightLabel,renderer);
 	kiss_label_draw(&alphaLabel,renderer);
+	kiss_label_draw(&scaleLockLabel,renderer);
 
 	kiss_entry_draw(&idEntry,renderer);
 	kiss_entry_draw(&xPosEntry,renderer);
@@ -249,4 +271,5 @@ void ItemBar::draw(SDL_Renderer *renderer){
 
 	kiss_button_draw(&copyBut,renderer);
 	kiss_button_draw(&delBut,renderer);
+	kiss_selectbutton_draw(&scaleLock,renderer);
 }
