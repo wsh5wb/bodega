@@ -89,6 +89,8 @@ public:
 	void setSpeed(int s);//added
 	void setRenderer(SDL_Renderer* renderer);
 	SDL_Renderer* getRenderer();
+	SDL_Point* getGlobalHitbox();
+	void drawHitbox();
 
 private:
 	

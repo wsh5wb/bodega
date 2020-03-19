@@ -201,6 +201,15 @@ void DisplayObject::setAlpha(int a){
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
+SDL_Point* DisplayObject::getGlobalHitbox(){
+	//SDL_Point p = {1,1};
+	return NULL;
+}
+
+void DisplayObject::drawHitbox(){
+
+}
+
 int DisplayObject::getAlpha(){
 	return alpha;
 }
