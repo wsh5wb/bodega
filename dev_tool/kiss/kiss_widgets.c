@@ -128,6 +128,9 @@ int kiss_button_new(kiss_button *button, kiss_window *wdw, char *text,
 
 int kiss_button_event(kiss_button *button, SDL_Event *event, int *draw)
 {
+	// printf("(%d,%d) ----",event->motion.x, event->motion.y);
+	// printf("(%d,%d) to (%d,%d)\n",button->rect.x,button->rect.y,button->rect.w+button->rect.x,
+		// button->rect.h+button->rect.y);
 	if (!button || !button->visible || !event) return 0;
 	if (event->type == SDL_WINDOWEVENT &&
 		event->window.event == SDL_WINDOWEVENT_EXPOSED)

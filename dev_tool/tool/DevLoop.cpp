@@ -6,7 +6,7 @@
 #include <string>
 #include <ctime>
 #include "DevLoop.h"
-#include "SceneWindow.h"
+#include "FileBrowser.h"
 #include "../../src/engine/DisplayObject.h"
 
 using namespace std;
@@ -33,8 +33,6 @@ DevLoop::DevLoop(int windowWidth, int windowHeight){
 	DevLoop::renderer = renderer;
 	this->renderer = renderer;
 
-	kiss_array_new(&a1);
-	kiss_array_append(&objects, ARRAY_TYPE, &a1);
 	infoBar = new ItemBar(&char_attributes_bar);
 	// cout << DevLoop::renderer << endl;
 	mouse = new Mouse("Mouse",100,100,100);
@@ -98,7 +96,8 @@ void DevLoop::start(){
 
 	kiss_window_new(&editor_window,NULL,1, 0,0, kiss_screen_width, kiss_screen_height);
 	editor_window.bg = kiss_black;
-	SceneWindow scene_window(kiss_screen_width, kiss_screen_height, &editor_window, this);
+	FileBrowser scene_window(objects, 640, 480, kiss_screen_width, kiss_screen_height, 
+		&editor_window, this);
 
 	//sprite_bar.visible = 1;
 	char_attributes_bar.visible = 1;
@@ -163,7 +162,7 @@ void DevLoop::start(){
 		infoBar->draw(renderer);
 		//kiss_entry_draw(&xPosEntry,renderer);
 
-		scene_window.draw(renderer);
+		scene_window.draw_items(renderer);
 		
 		SDL_RenderPresent(renderer);
 

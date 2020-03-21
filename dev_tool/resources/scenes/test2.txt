@@ -1,4 +1,10 @@
-2 1
-0 Scene ./resources/planets/planet/jupiter.png 0 0 0 true false 0 0
-3 character ./resources/planets/planet/saturne.png 0 0 0 true false 416 454
-Scene character
+5 4
+0 Scene /home/nicholas/Documents/School/4th Year/Spring/Game Design/bodega/dev_tool/resources/scenes/background_1.png 0 0 0 true false 1920 717 5 1 1 0 0.05 255 0 0 0 0
+1 Default0 ./resources/character/Run_16.png 0 0 0 true false -922218489 1756504665 5 1 1 0 0.05 255 0 0 748 547
+1 Default1 ./resources/character/Run_16.png 0 0 0 true false 416 454 5 1 1 0 0.05 255 0 0 200 50
+1 Default2 ./resources/planets/planet/soleil.png 0 0 0 true false 43 43 5 1 1 0 0.05 255 0 0 900 100
+1 Default3 ./resources/character/Run_16.png 0 0 0 true false 416 454 5 1 1 0 0.05 255 0 0 600 100
+Scene Default0
+Scene Default1
+Scene Default2
+Scene Default3

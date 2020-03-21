@@ -22,6 +22,7 @@ void Scene::loadScene(string sceneFilePath) {
 
 	vector<DisplayObject*> objects;
 	objects.clear();
+
 	while (numObjects--) {
 		int type;
 		i >> type;
@@ -63,6 +64,7 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 1: { //DisplayObject
 			DisplayObject *temp = new DisplayObject();
+			temp->setRenderer(this->renderer);
 			int speed;
 			double scaleX;
 			double scaleY;
@@ -94,6 +96,7 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 2: { //DisplayObjectContainer
 			DisplayObjectContainer *temp = new DisplayObjectContainer();
+			temp->setRenderer(this->renderer);
 			int speed;
 			double scaleX;
 			double scaleY;
@@ -126,6 +129,7 @@ void Scene::loadScene(string sceneFilePath) {
 		case 3: { //Sprite
 			cout << "Sprite" << endl;
 			Sprite *temp = new Sprite();
+			temp->setRenderer(this->renderer);
 			int speed;
 			double scaleX;
 			double scaleY;
@@ -157,6 +161,7 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 4: { //AnimatedSprite (haven't added some fields yet - needs to be finished). 
 			Sprite *temp = new Sprite();
+			temp->setRenderer(this->renderer);
 			int speed;
 			double scaleX;
 			double scaleY;
@@ -183,6 +188,7 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 5: { //DemoSprite
 			DemoSprite *temp = new DemoSprite();
+			temp->setRenderer(this->renderer);
 			int speed;
 			double scaleX;
 			double scaleY;

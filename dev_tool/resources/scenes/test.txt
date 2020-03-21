@@ -1,4 +1,10 @@
-2 1
-0 Scene ./resources/scenes/background.png 0 0 0 true false 0 0 5 1.2 1.2 0 0 255 0 0 0 0
-5 character ./resources/character/Idle_1.png 0 0 0 true false 416 454 1 .4 .4 0 0 255 0 0 400 400
+5 4
+0 Scene ./resources/scenes/background.png 0 0 0 true false 1280 400 5 0.961613 0.961613 0 0 255 0 0 -20 55
+5 character ./resources/character/Idle_1.png 0 0 0 true false 416 454 1 0.4 0.4 0 0 255 0 0 400 400
+1 Default0 ./resources/miscellaneous/Dogecoin_Logo.png 0 0 0 true false 300 300 5 0.5 0.5 0 0.05 255 0 0 600 100
+1 Default1 ./resources/character/Walk_14.png 0 0 0 true false 416 454 5 1 1 0 0.05 255 0 0 881 547
+1 Default2 ./resources/character/Walk_14.png 0 0 0 true false 416 454 5 1 1 0 0.05 255 0 0 866 549
 Scene character
+Scene Default0
+Scene Default1
+Scene Default2

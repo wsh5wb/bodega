@@ -6,7 +6,6 @@ DevTool::DevTool() : DevLoop(1280, 720){
 	DisplayObject* character = new DisplayObject("character", "./resources/character/Idle_1.png");
 	Scene* scene = new Scene();
 	scene->setRenderer(DevLoop::renderer);
-
 	scene->id = "Scene";
 
 	resourceBar = new ResourceBar(1280, 720, draggable, this,this->infoBar, DevLoop::renderer);
