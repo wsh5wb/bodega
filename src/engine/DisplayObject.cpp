@@ -111,10 +111,6 @@ SDL_Point* DisplayObject::getGlobalHitbox(){
 	return NULL;
 }
 
-void DisplayObject::drawHitbox(){
-
-}
-
 int DisplayObject::getAlpha(){
 	return alpha;
 }
@@ -258,9 +254,32 @@ void DisplayObject::draw(AffineTransform &at){
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);
 
+		this->drawHitbox(at);
 	}
 }
 
+void DisplayObject::drawHitbox(AffineTransform &at){
+	if(curTexture != NULL){
+		if(!vis){return;}
 
+		applyTransformations(at);
+		at.translate(-pivot.x,-pivot.y);
 
+		SDL_Point topL = at.transformPoint(0,0);
+		SDL_Point topR = at.transformPoint(w,0);
+		SDL_Point bottomR = at.transformPoint(w,h);
+		
+		int distAdj = dist(topL,topR);
+		int distOpp = dist(topR,bottomR);
 
+		SDL_Rect dstrect = { topL.x, topL.y, w, h};
+
+		SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);
+		SDL_RenderDrawRect(Game::renderer, &dstrect);
+		SDL_SetRenderDrawColor(Game::renderer,0,0,0,255);
+
+		at.translate(pivot.x,pivot.y);
+		reverseTransformations(at);
+
+	}
+}

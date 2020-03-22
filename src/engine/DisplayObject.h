@@ -75,7 +75,7 @@ public:
 	void setRenderer(SDL_Renderer* renderer);
 	SDL_Renderer* getRenderer();
 	SDL_Point* getGlobalHitbox();
-	void drawHitbox();
+	void drawHitbox(AffineTransform &at);
 
 private:
 	SDL_Texture* texture = NULL;
