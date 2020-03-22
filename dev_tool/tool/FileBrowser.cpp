@@ -329,7 +329,7 @@ void FileBrowser::load_scene_from_path(){
 		// camera->addScene(scene);
 		current_scene_path = string(curr_dir) + entry.text;
 		current_scene = scene;
-		strcpy(entry.text, "Enter Scene Path");
+		strcpy(entry.text, "Enter Path");
 
 		close();
 	}
@@ -343,13 +343,16 @@ void FileBrowser::save_scene_from_path(){
 	current_scene_path = string(curr_dir) + "/" + string(entry.text);
 	current_scene = ((Scene*)running_dev_tool->children[SCENE_DOC_INDEX]);
 	current_scene->saveScene(current_scene_path);
-	strcpy(entry.text, "Enter Scene Path");
+	strcpy(entry.text, "Enter Path");
 	// ((Scene*) running_dev_tool->children[SCENE_DOC_INDEX])->saveScene(current_scene_path);
 	close();
 }
 
 void FileBrowser::set_bg_from_path(){
 	string tmp = string(curr_dir) + "/" + string(entry.text);
+	string s(home_dir);
+	tmp.replace(0,s.length(), ".");
+
 	char* path = (char*) tmp.c_str();
 	SDL_Surface* img = IMG_Load(path);
 
@@ -360,7 +363,7 @@ void FileBrowser::set_bg_from_path(){
 
 	current_scene->setImage(img);
 	current_scene->imgPath = tmp;
-	strcpy(entry.text, "Enter Scene Path");
+	strcpy(entry.text, "Enter Path");
 	// running_dev_tool->children[SCENE_DOC_INDEX]->setImage(img);
 
 	close();
