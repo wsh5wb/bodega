@@ -53,6 +53,7 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
 
 	if(infoBar->isEditing()){disable_input = true;}
+	else					 disable_input = false;
 
 	if(!disable_input) {
 		for(SDL_Scancode code : pressedKeys){
