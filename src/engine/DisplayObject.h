@@ -64,6 +64,19 @@ public:
 	SDL_Point getPivot();
 	SDL_Point getPosition();
 
+	int getAlpha();
+	void setAlpha(int a);
+	void setPosition(SDL_Point p);
+	void setPivot(SDL_Point p);
+	SDL_Point getWorld();
+	SDL_Point getWorldCenter();
+	bool isCopy;
+	void setSpeed(int s);//added
+	void setRenderer(SDL_Renderer* renderer);
+	SDL_Renderer* getRenderer();
+	SDL_Point* getGlobalHitbox();
+	void drawHitbox();
+
 private:
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;

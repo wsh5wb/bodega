@@ -98,6 +98,27 @@ void DisplayObject::increaseAlpha(){
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
+void DisplayObject::setAlpha(int a){
+	alpha = a;
+	if(a > 255){alpha = 255;}
+	else if(a < 0){alpha = 0;}
+	
+	SDL_SetTextureAlphaMod(curTexture,alpha);
+}
+
+SDL_Point* DisplayObject::getGlobalHitbox(){
+	//SDL_Point p = {1,1};
+	return NULL;
+}
+
+void DisplayObject::drawHitbox(){
+
+}
+
+int DisplayObject::getAlpha(){
+	return alpha;
+}
+
 void DisplayObject::toggleVisibility(){
 	vis = !vis;
 }
