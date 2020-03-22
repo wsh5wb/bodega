@@ -23,10 +23,6 @@ Game::Game(int windowWidth, int windowHeight){
 	initSDL();
 	TTF_Init();
 	// cout << Game::renderer << endl;
-
-	mouse = new Mouse("Mouse",100,100,100);
-	mouse->makeInvisible();
-	mouse->setAlpha(80);
 }
 
 Game::~Game(){
@@ -112,8 +108,6 @@ void Game::start(){
 							pressedKeys.insert(SDL_SCANCODE_D);
 						else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
 							pressedKeys.erase(SDL_SCANCODE_D);
-						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
-							pressedKeys.insert(SDL_SCANCODE_D);
 					}
 					if(event.jaxis.axis == 1){
 						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
@@ -124,8 +118,6 @@ void Game::start(){
 							pressedKeys.insert(SDL_SCANCODE_W);
 						else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
 							pressedKeys.erase(SDL_SCANCODE_W);
-						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
-							pressedKeys.insert(SDL_SCANCODE_W);
 					}
 				}
 				break;
@@ -168,8 +160,6 @@ void Game::start(){
 				}
 				break;
 		}
-
-		mouse->setState(event.type, event);
 	
 	}
 }

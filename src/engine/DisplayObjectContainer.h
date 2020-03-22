@@ -7,7 +7,6 @@
 //#include "Event.h"
 #include <string>
 #include <fstream>
-#include <sstream>
 
 using namespace std;
 
@@ -32,7 +31,6 @@ public:
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
-	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	vector<DisplayObject*> children;
 private:
