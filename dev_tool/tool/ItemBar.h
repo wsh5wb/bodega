@@ -33,13 +33,10 @@ private:
 
 	kiss_label idLabel = {0}; kiss_label xPosLabel = {0}; kiss_label yPosLabel = {0}; kiss_label xPivLabel = {0}; kiss_label yPivLabel = {0}; 
 	kiss_label xScaleLabel = {0}; kiss_label yScaleLabel = {0}; kiss_label rotLabel = {0}; kiss_label widthLabel = {0}; kiss_label heightLabel = {0};
-	kiss_label alphaLabel = {0}; kiss_label scaleLockLabel = {0};
+	kiss_label alphaLabel = {0};
 
-	kiss_button delBut = {0}; kiss_button copyBut = {0}; kiss_selectbutton scaleLock = {0};
+	kiss_button delBut = {0}; kiss_button copyBut = {0};
 	SDL_Renderer* renderer;
-
-	bool scaleLocked = false;
-	double scale;
 
 };
 
