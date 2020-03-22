@@ -155,6 +155,7 @@ void AnimatedSprite::replay(){
 
 void AnimatedSprite::stop(){
 	playing = false;
+	currAnimation = "";
 	curFrame = 0;
 	if(usesSheet){
 		DisplayObject::setImage(images[startIndex]);
