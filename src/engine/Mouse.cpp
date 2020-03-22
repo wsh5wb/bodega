@@ -113,6 +113,5 @@ void Mouse::draw(AffineTransform &at){
 	SDL_Rect dstrect = {tl.x, tl.y, w, h};
 
 	// cout << getCurTexture() << endl;
-
 	SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, 0, &pOrigin, SDL_FLIP_NONE);
 }

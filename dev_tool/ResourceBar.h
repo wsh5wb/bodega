@@ -7,16 +7,16 @@
 #include <filesystem>
 #include "definitions.h"
 #include "ItemBar.h"
-#include "../../src/engine/AnimatedSprite.h"
-#include "../../src/engine/DisplayObject.h"
-#include "../../src/engine/DisplayObjectContainer.h"
-#include "../../src/engine/Sprite.h"
-#include "../../src/engine/Scene.h"
-#include "../../src/engine/Mouse.h"
+#include "../src/engine/AnimatedSprite.h"
+#include "../src/engine/DisplayObject.h"
+#include "../src/engine/DisplayObjectContainer.h"
+#include "../src/engine/Sprite.h"
+#include "../src/engine/Scene.h"
+#include "../src/engine/Mouse.h"
 
 class ResourceBar : public DisplayObjectContainer{
 public:
-	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer* mainwindow, ItemBar * bar, SDL_Renderer * renderer);
+	ResourceBar(int windowWidth, int windowHeight, DisplayObject *draggable, DisplayObjectContainer* mainwindow, ItemBar * bar);
 	~ResourceBar();
 	void addChild(DisplayObject* child);
 	void setMouseListener(Mouse* mouse);
@@ -32,7 +32,6 @@ private:
 	double windowWidth;
 	Mouse* mouseListener;
 	int count;
-	SDL_Renderer* renderer;
 };
 
 
