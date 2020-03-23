@@ -38,7 +38,7 @@ public:
 	//xDelta2 and yDelta2 are the amount other moved before causing the collision.
 	void resolveCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2);
 
-	AffineTransform globalTransform(DisplayObject* o);
+	AffineTransform* globalTransform(DisplayObject* o);
 	
 private:
 

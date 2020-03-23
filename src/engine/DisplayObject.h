@@ -76,6 +76,7 @@ public:
 	SDL_Renderer* getRenderer();
 	SDL_Point* getGlobalHitbox();
 	void drawHitbox(AffineTransform &at);
+	void drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR);
 	DisplayObject * parent = NULL;
 private:
 	SDL_Texture* texture = NULL;
@@ -92,7 +93,7 @@ protected:
 	double rotationAmount = 0.05;
 	int alpha;
 	SDL_Point pivot, position;
-	
+
 };
 
 #endif

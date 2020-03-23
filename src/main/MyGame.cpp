@@ -80,7 +80,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 				break;
 			}
 
-			//charactter
+			//character
 			case SDL_SCANCODE_I:
 			{
 				character->translateUp();
@@ -149,8 +149,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 				coin->scaleOut();
 				break;
 			}
-
-
 		}
 			
 	}
@@ -171,5 +169,6 @@ void MyGame::draw(AffineTransform &at){
 	Game::draw(at);
 	SDL_RenderClear(Game::renderer);
 	DisplayObjectContainer::draw(at);
+	cs.collidesWith(character,coin);
 	SDL_RenderPresent(Game::renderer);
 }

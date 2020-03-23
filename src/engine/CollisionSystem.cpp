@@ -31,18 +31,25 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 //returns true iff obj1 hitbox and obj2 hitbox overlap. Uses the following method from DO:
 //SDL_Point* DisplayObject::getGlobalHitbox();
 bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
-	AffineTransform at1 = globalTransform(obj1);
-	AffineTransform at2 = globalTransform(obj2);
+	//cout << "collide";
+	AffineTransform at1 = *globalTransform(obj1);
+	AffineTransform at2 = *globalTransform(obj2);
 
-	SDL_Point topL1 = at1.rotatePoint(0,0);
-	SDL_Point topR1 = at1.rotatePoint(obj1->w,0);
-	SDL_Point botL1 = at1.rotatePoint(0,obj1->h);
-	SDL_Point botR1 = at1.rotatePoint(obj1->w,obj1->h);
+	/*SDL_Point topL1 = at1.transformPoint(0,0);
+	SDL_Point topR1 = at1.transformPoint(obj1->w,0);
+	SDL_Point botL1 = at1.transformPoint(0,obj1->h);
+	SDL_Point botR1 = at1.transformPoint(obj1->w,obj1->h);*/
 
-	SDL_Point topL2 = at2.rotatePoint(0,0);
-	SDL_Point topR2 = at2.rotatePoint(obj2->w,0);
-	SDL_Point botL2 = at2.rotatePoint(0,obj2->h);
-	SDL_Point botR2 = at2.rotatePoint(obj2->w,obj2->h);
+	SDL_Point topL1 = at1.transformPoint(obj1->w*0.15,obj1->h*.15);
+	SDL_Point topR1 = at1.transformPoint(obj1->w*.85,obj1->h*.15);
+	SDL_Point botL1 = at1.transformPoint(obj1->w*.15,obj1->h*.85);
+	SDL_Point botR1 = at1.transformPoint(obj1->w*.85,obj1->h*.85);
+
+
+	SDL_Point topL2 = at2.transformPoint(0,0);
+	SDL_Point topR2 = at2.transformPoint(obj2->w,0);
+	SDL_Point botL2 = at2.transformPoint(0,obj2->h);
+	SDL_Point botR2 = at2.transformPoint(obj2->w,obj2->h);
 
 	/*SDL_Rect * r1 = obj1->getGlobalHitbox();
 	SDL_Rect * r2 = obj2->getGlobalHitbox();
@@ -59,8 +66,9 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	int bottom2 = r2.y + r2.h;*/
 
 
-
-	cout << "collision" << endl;
+	obj1->drawHitbox(topL1,topR1,botL1,botR1);
+	obj2->drawHitbox(topL2,topR2,botL2,botR2);
+	//cout << "collision" << endl;
 	return true;
 }
 
@@ -71,11 +79,11 @@ void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, i
 
 }
 
-AffineTransform CollisionSystem::globalTransform(DisplayObject* o){
+AffineTransform* CollisionSystem::globalTransform(DisplayObject* o){
 	//check references
-	AffineTransform at;
+	AffineTransform *at = new AffineTransform();
 	if(o->parent != NULL){
 		at = globalTransform(o->parent);
-	}o->applyTransformations(at);
+	}o->applyTransformations(*at);
 	return at;
 }
