@@ -25,6 +25,7 @@ public:
 
 private:
 	AnimatedSprite *character;
+	AnimatedSprite *coin;
 	//Scene* character;
 	string scene;
 	bool changed;

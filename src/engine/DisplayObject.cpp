@@ -106,11 +106,6 @@ void DisplayObject::setAlpha(int a){
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
-SDL_Point* DisplayObject::getGlobalHitbox(){
-	//SDL_Point p = {1,1};
-	return NULL;
-}
-
 int DisplayObject::getAlpha(){
 	return alpha;
 }
@@ -282,4 +277,9 @@ void DisplayObject::drawHitbox(AffineTransform &at){
 		reverseTransformations(at);
 
 	}
+}
+
+SDL_Point* DisplayObject::getGlobalHitbox(){
+	//SDL_Point p = {1,1};
+	return NULL;
 }

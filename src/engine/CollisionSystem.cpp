@@ -1,4 +1,5 @@
 #include "CollisionSystem.h"
+#include <iostream>
 
 CollisionSystem::CollisionSystem(){
 
@@ -30,7 +31,36 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 //returns true iff obj1 hitbox and obj2 hitbox overlap. Uses the following method from DO:
 //SDL_Point* DisplayObject::getGlobalHitbox();
 bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
+	AffineTransform at1 = globalTransform(obj1);
+	AffineTransform at2 = globalTransform(obj2);
 
+	SDL_Point topL1 = at1.rotatePoint(0,0);
+	SDL_Point topR1 = at1.rotatePoint(obj1->w,0);
+	SDL_Point botL1 = at1.rotatePoint(0,obj1->h);
+	SDL_Point botR1 = at1.rotatePoint(obj1->w,obj1->h);
+
+	SDL_Point topL2 = at2.rotatePoint(0,0);
+	SDL_Point topR2 = at2.rotatePoint(obj2->w,0);
+	SDL_Point botL2 = at2.rotatePoint(0,obj2->h);
+	SDL_Point botR2 = at2.rotatePoint(obj2->w,obj2->h);
+
+	/*SDL_Rect * r1 = obj1->getGlobalHitbox();
+	SDL_Rect * r2 = obj2->getGlobalHitbox();
+	// Sides of rect 1
+	int left1 = r1.x;
+	int right1 = r1.x + r1.w;
+	int top1 = r1.y;
+	int bottom1 = r1.y + r1.h;
+
+	// Sides of rect 2
+	int left2 = r2.x;
+	int right2 = r2.x + r2.w;
+	int top2 = r2.y;
+	int bottom2 = r2.y + r2.h;*/
+
+
+
+	cout << "collision" << endl;
 	return true;
 }
 
@@ -39,4 +69,13 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 //xDelta2 and yDelta2 are the amount other moved before causing the collision.
 void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2){
 
+}
+
+AffineTransform CollisionSystem::globalTransform(DisplayObject* o){
+	//check references
+	AffineTransform at;
+	if(o->parent != NULL){
+		at = globalTransform(o->parent);
+	}o->applyTransformations(at);
+	return at;
 }
