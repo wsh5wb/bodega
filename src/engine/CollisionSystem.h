@@ -39,6 +39,9 @@ public:
 	void resolveCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2);
 
 	AffineTransform* globalTransform(DisplayObject* o);
+	bool intersect(SDL_Point p1, SDL_Point q1, SDL_Point p2, SDL_Point q2);
+	int orientation(SDL_Point p1, SDL_Point p2, SDL_Point p3);
+	bool onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3);
 	
 private:
 

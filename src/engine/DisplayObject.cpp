@@ -279,10 +279,11 @@ void DisplayObject::drawHitbox(AffineTransform &at){
 	}
 }
 
-void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR){
+void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col){
 	if(curTexture != NULL){
 		if(!vis){return;}
-		SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);
+		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}
+		else{ SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);}
 		SDL_RenderDrawLine(Game::renderer,topL.x,topL.y,topR.x,topR.y);
 		SDL_RenderDrawLine(Game::renderer,topL.x,topL.y,bottomL.x,bottomL.y);
 		SDL_RenderDrawLine(Game::renderer,bottomL.x,bottomL.y,bottomR.x,bottomR.y);
