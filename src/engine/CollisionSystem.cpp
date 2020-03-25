@@ -1,6 +1,10 @@
 #include "CollisionSystem.h"
 #include <iostream>
 
+double dist(SDL_Point &a, SDL_Point &b){
+	return sqrt((b.y-a.y)*(b.y-a.y) + (b.x-a.x)*(b.x-a.x));
+}
+
 CollisionSystem::CollisionSystem(){
 
 }
@@ -28,48 +32,92 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 
 }
 
+/* Return:
+	0 - Colinear
+	1 - Right turn
+	-1 - Left turn
+*/
+int CollisionSystem::orientation(SDL_Point p1, SDL_Point q1, SDL_Point p2){
+	int val = (q1.y - p1.y) * (p2.x - q1.x) - (q1.x - p1.x) * (p2.y - q1.y); 
+
+    if(val < 0){ return -1;}
+	if(val > 0){ return 1;}
+	return 0;
+}
+
+bool CollisionSystem::onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3){
+	return (p2.x <= max(p1.x, p3.x) && p2.x >= min(p1.x, p3.x) && p2.y <= max(p1.y, p3.y) && p2.y >= min(p1.y, p3.y)); 
+}
+
+
+bool CollisionSystem::intersect(SDL_Point p1, SDL_Point q1, SDL_Point p2, SDL_Point q2){
+	int o1 = orientation(p1,q1,p2);
+	int o2 = orientation(p1,q1,q2);
+	int o3 = orientation(p2,q2,p1);
+	int o4 = orientation(p2,q2,q1);
+
+	if((o1 != o2) && (o3 != o4)){ return true;}
+
+	if(o1 == 0 && onSeg(p1,p2,q1)) {return true;}
+	if(o2 == 0 && onSeg(p1,q2,q1)) {return true;}
+	if(o3 == 0 && onSeg(p2,p1,q2)) {return true;}
+	if(o4 == 0 && onSeg(p2,q1,q2)) {return true;}
+	return false;
+	// Special case
+}
+
+double triangleArea(double s1, double s2, double s3){
+	double p = (s1 + s2 + s3)/2;
+	return sqrt(p*(p-s1)*(p-s2)*(p-s3));
+}
+
+bool checkArea(SDL_Point p, SDL_Point topL, SDL_Point topR, SDL_Point botL, SDL_Point botR, double w, double h){
+	double area = 0;
+	area += triangleArea(h,dist(p,topL),dist(p,botL));
+	area += triangleArea(w,dist(p,topL),dist(p,topR));
+	area += triangleArea(h,dist(p,topR),dist(p,botR));
+	area += triangleArea(w,dist(p,botL),dist(p,botR));
+	return area < ((w*h)+.0000001);
+}
+
+
 //returns true iff obj1 hitbox and obj2 hitbox overlap. Uses the following method from DO:
 //SDL_Point* DisplayObject::getGlobalHitbox();
 bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
-	//cout << "collide";
-	AffineTransform at1 = *globalTransform(obj1);
-	AffineTransform at2 = *globalTransform(obj2);
+	bool ret = true;
+	AffineTransform *at1 = globalTransform(obj1);
+	AffineTransform *at2 = globalTransform(obj2);
 
-	/*SDL_Point topL1 = at1.transformPoint(0,0);
-	SDL_Point topR1 = at1.transformPoint(obj1->w,0);
-	SDL_Point botL1 = at1.transformPoint(0,obj1->h);
-	SDL_Point botR1 = at1.transformPoint(obj1->w,obj1->h);*/
+	double boundLow = 0.15;
+	double boundHigh = 1 - boundLow;
 
-	SDL_Point topL1 = at1.transformPoint(obj1->w*0.15,obj1->h*.15);
-	SDL_Point topR1 = at1.transformPoint(obj1->w*.85,obj1->h*.15);
-	SDL_Point botL1 = at1.transformPoint(obj1->w*.15,obj1->h*.85);
-	SDL_Point botR1 = at1.transformPoint(obj1->w*.85,obj1->h*.85);
+	SDL_Point topL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundLow);
+	SDL_Point topR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundLow);
+	SDL_Point botL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundHigh);
+	SDL_Point botR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundHigh);
 
 
-	SDL_Point topL2 = at2.transformPoint(0,0);
-	SDL_Point topR2 = at2.transformPoint(obj2->w,0);
-	SDL_Point botL2 = at2.transformPoint(0,obj2->h);
-	SDL_Point botR2 = at2.transformPoint(obj2->w,obj2->h);
+	SDL_Point topL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundLow);
+	SDL_Point topR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundLow);
+	SDL_Point botL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundHigh);
+	SDL_Point botR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundHigh);
 
-	/*SDL_Rect * r1 = obj1->getGlobalHitbox();
-	SDL_Rect * r2 = obj2->getGlobalHitbox();
-	// Sides of rect 1
-	int left1 = r1.x;
-	int right1 = r1.x + r1.w;
-	int top1 = r1.y;
-	int bottom1 = r1.y + r1.h;
+	if((intersect(topL1,topR1,topL2,topR2) || intersect(topL1,topR1,topL2,botL2) || intersect(topL1,topR1,botR2,topR2) || intersect(topL1,topR1,botL2,botR2))){}
+	else if((intersect(topR1,botR1,topL2,topR2) || intersect(topR1,botR1,topL2,botL2) || intersect(topR1,botR1,botR2,topR2) || intersect(topR1,botR1,botL2,botR2))){}
+	else if((intersect(topL1,botL1,topL2,topR2) || intersect(topL1,botL1,topL2,botL2) || intersect(topL1,botL1,botR2,topR2) || intersect(topL1,botL1,botL2,botR2))){}
+	else if((intersect(botL1,botR1,topL2,topR2) || intersect(botL1,botR1,topL2,botL2) || intersect(botL1,botR1,botR2,topR2) || intersect(botL1,botR1,botL2,botR2))){}
+	else{ ret = false;}
+	
+	if(!ret){
+		ret = checkArea(botR1,topL2,topR2,botL2,botR2,dist(topL2,topR2),dist(topL2,botL2)) || checkArea(botR2,topL1,topR1,botL1,botR1,dist(topL1,topR1),dist(topL1,botL1));
+	}
 
-	// Sides of rect 2
-	int left2 = r2.x;
-	int right2 = r2.x + r2.w;
-	int top2 = r2.y;
-	int bottom2 = r2.y + r2.h;*/
+	obj1->drawHitbox(topL1,topR1,botL1,botR1,ret);
+	obj2->drawHitbox(topL2,topR2,botL2,botR2,ret);
 
-
-	obj1->drawHitbox(topL1,topR1,botL1,botR1);
-	obj2->drawHitbox(topL2,topR2,botL2,botR2);
-	//cout << "collision" << endl;
-	return true;
+	delete at1;
+	delete at2;
+	return ret;
 }
 
 //Resolves the collision that occurred between d and other
@@ -81,9 +129,11 @@ void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, i
 
 AffineTransform* CollisionSystem::globalTransform(DisplayObject* o){
 	//check references
-	AffineTransform *at = new AffineTransform();
+	AffineTransform *at;
 	if(o->parent != NULL){
 		at = globalTransform(o->parent);
+	}else{
+		at = new AffineTransform();
 	}o->applyTransformations(*at);
 	return at;
 }
