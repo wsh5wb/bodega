@@ -24,3 +24,5 @@ Camera Controls:
 
 Other controls:
 	H - Toggle Resource Bar visibility
+	P - the next object you click will become the parent of the currently selected object
+	O - Cancel out the next parent operation
