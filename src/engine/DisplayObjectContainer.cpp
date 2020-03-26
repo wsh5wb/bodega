@@ -7,12 +7,12 @@ DisplayObjectContainer::DisplayObjectContainer() : DisplayObject(){
 	
 }
 
-DisplayObjectContainer::DisplayObjectContainer(string id, string filepath) : DisplayObject(id,filepath){
+DisplayObjectContainer::DisplayObjectContainer(string id, string filepath) : DisplayObject(id,filepath,false){
 	
 }
 
 DisplayObjectContainer::DisplayObjectContainer(string id, string filepath, SDL_Renderer* renderer) : 
-	DisplayObject(id,filepath,renderer){
+	DisplayObject(id,filepath,renderer,false){
 	
 }
 
@@ -33,6 +33,7 @@ DisplayObjectContainer::~DisplayObjectContainer(){
 
 void DisplayObjectContainer::addChild(DisplayObject* child){
 	children.push_back(child);
+	child->parent = this;
 }
 
 void DisplayObjectContainer::removeImmediateChild(DisplayObject* child){
@@ -49,6 +50,16 @@ void DisplayObjectContainer::removeImmediateChild(string id){
 	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
 		if(id == (*it)->id){
 			delete *it;
+			children.erase(it);
+			break;
+		}
+	}
+}
+
+
+void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
+	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
+		if(child == *it){
 			children.erase(it);
 			break;
 		}
@@ -91,11 +102,19 @@ void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
 }
 
 void DisplayObjectContainer::draw(AffineTransform &at){
+	if(this == NULL){
+		cout << "NULL";
+		return;
+	}
 	DisplayObject::draw(at);
 	DisplayObject::applyTransformations(at);
 
 	for(DisplayObject* child : children){
-		child->draw(at);
+		if(child != NULL){
+			child->draw(at);
+
+		}
+		
 	}
 	
 	DisplayObject::reverseTransformations(at);	

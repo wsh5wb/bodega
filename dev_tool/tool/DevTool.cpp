@@ -3,7 +3,7 @@
 using namespace std;
 
 DevTool::DevTool() : DevLoop(1280, 720){
-	DisplayObject* character = new DisplayObject("character", "./resources/character/Idle_1.png");
+	DisplayObject* character = new DisplayObject("character", "./resources/character/Idle_1.png",true);
 	Scene* scene = new Scene();
 	scene->setRenderer(DevLoop::renderer);
 	scene->id = "Scene";
@@ -95,6 +95,18 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 					SDL_Delay(150);
 					break;
 				}
+				case SDL_SCANCODE_P:
+				{
+					//  changeParent
+					makeParent = true;
+					break;
+				}case SDL_SCANCODE_O:
+				{
+					//  changeParent
+					makeParent = false;
+					cout << makeParent << endl;
+					break;
+				}
 			}
 		}
 	}
@@ -108,16 +120,30 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	}
 	else if(mouse->leftClick){
 		auto click_coords = mouse->getCoordinates();
-
-		for(DisplayObject* child : ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX))->children){
+		draggable = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
+			/*for(DisplayObject* child : ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX))->children){
 			auto child_coords = child->getWorld();
 			if (dist(child_coords, click_coords) < 30){
 				cout << "Main checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
-				draggable = child;
-				infoBar->setObj(draggable);
+				if(makeParent){
+					if(infoBar->curObj != child){
+						infoBar->curObj->parent = child;
+						makeParent = false;
+					}
+				}else{
+					draggable = child;
+					infoBar->setObj(draggable);
+				}
+				infoBar->updateObjectFields();
 				break;
 			}
-		}
+
+			if(dynamic_cast<DisplayObjectContainer*> child != nullptr){
+				for()
+			}
+
+
+		}*/
 	}
 	else if(draggable != NULL){
 		infoBar->updateObjectFields();
@@ -130,11 +156,49 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	resourceBar->update(pressedKeys);
 }
 
+DisplayObject* DevTool::leftClick(SDL_Point click_coords, DisplayObjectContainer * c){
+	for(DisplayObject* child : c->children){
+		auto child_coords = child->getWorld();
+		if (dist(child_coords, click_coords) < 30){
+			cout << "Main checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
+			if(makeParent){
+				draggable = infoBar->curObj;
+				if((dynamic_cast<DisplayObjectContainer*> (child)) == nullptr){
+					continue;
+				}
+				cout << "Swap parents";
+
+				if(infoBar->curObj != child){
+
+					((DisplayObjectContainer*) infoBar->curObj->parent)->removeImmediateChildNoDelete(infoBar->curObj);
+					infoBar->curObj->parent = child;
+					makeParent = false;
+					((DisplayObjectContainer*) child)->addChild(infoBar->curObj);
+
+				}
+			}else{
+				draggable = child;
+				infoBar->setObj(draggable);
+			}
+			infoBar->updateObjectFields();
+			return draggable;
+		}
+		if((dynamic_cast<DisplayObjectContainer*> (child)) != nullptr){
+			DisplayObject* ret = leftClick(click_coords,(DisplayObjectContainer *) child);
+			if(ret != NULL){
+				return ret;
+			}
+		}
+
+	}return NULL;
+}
+
 void DevTool::draw(AffineTransform &at){
 	DevLoop::draw(at);
 	DisplayObjectContainer::draw(at);
 	// mouse->draw(at);
 	resourceBar->draw(at);
+
 }
 
 

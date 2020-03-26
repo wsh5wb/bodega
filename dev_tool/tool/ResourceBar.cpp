@@ -40,7 +40,7 @@ ResourceBar::ResourceBar(int windowWidth, int windowHeight, DisplayObject *dragg
 		if (std::filesystem::is_regular_file(path, ec) and checkExt(string_path)){
 			std::cout << path << std::endl;
 
-			DisplayObject* temp = new DisplayObject("Default", string_path, this->renderer);
+			DisplayObject* temp = new DisplayObject("Default", string_path, this->renderer,false);
 
 			//scale to fixed pixel width  1/15 of total display width 
 			double scaleFactor = (windowWidth/25.0) / temp->w;
@@ -130,7 +130,8 @@ void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 				//cout << "child x: " << child_coords.x << " child y: " << child_coords.y << endl;
 				if (dist(child_coords, click_coords) < 30){
 					// cout << "checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
-					this->drag = new DisplayObject(child->id + to_string(count), child->imgPath, this->renderer);
+					this->drag = new DisplayObjectContainer(child->id + to_string(count), child->imgPath, this->renderer);
+					this->drag->inGame = true;
 					count++;
 					this->drag->isCopy = true;
 					break;

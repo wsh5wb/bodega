@@ -84,6 +84,7 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->setAlpha(alpha);
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
+			temp->inGame = true;
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
@@ -116,6 +117,7 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->setAlpha(alpha);
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
+			temp->inGame = true;
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
@@ -149,6 +151,7 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->setAlpha(alpha);
 			temp->moveTo(x2, y2);
 			temp->movePivot(x1, y1);
+			temp->inGame = true;
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
@@ -184,6 +187,7 @@ void Scene::loadScene(string sceneFilePath) {
 			objects.push_back(temp);
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
+			temp->inGame = true;
 			break;
 		}
 		case 5: { //DemoSprite
@@ -209,6 +213,7 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->moveTo(position.x, position.y);
 			cerr << "Position:" << position.x << ", " << position.y << "\n";
 			temp->movePivot(pivot.x, pivot.y);
+			temp->inGame = true;
 			objects.push_back(temp);
 			if (temp->isRGB) {
 				temp->loadRGBTexture(red, green, blue);
