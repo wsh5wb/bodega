@@ -90,6 +90,7 @@ void Mouse::update(set<SDL_Scancode> pressedKeys){
 }
 
 void Mouse::draw(AffineTransform &at){
+	DisplayObject::applyTransformations(at);
 	if(!vis)	return;
 
 	w = this->mouseCoords.x - this->leftClickCoords.x;

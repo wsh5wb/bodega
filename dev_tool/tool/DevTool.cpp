@@ -48,7 +48,6 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	DevLoop::update(pressedKeys);
 
-	// cout << *pressedKeys.begin() << endl;
 	mouse->update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
 
@@ -90,7 +89,6 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 				}
 				case SDL_SCANCODE_H:
 				{
-					//cout << "Do stuff" << menu->vis<< endl;
 					resourceBar->toggleVisibility();
 					SDL_Delay(150);
 					break;
@@ -115,6 +113,8 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	if (draggable != NULL and mouse->leftClick){
 		infoBar->updateObjectFields();
 		auto point = mouse->getCoordinates();
+		auto offset = children[SCENE_DOC_INDEX]->getPosition(); // this is hacky, we should be using affinetransforms but changes to how mouse updates it's own coordinates are needed
+		point = {point.x - offset.x, point.y - offset.y};
 		point = snapToGrid(point);
 		draggable->moveTo(point.x, point.y);
 	}
@@ -167,7 +167,7 @@ DisplayObject* DevTool::leftClick(SDL_Point click_coords, DisplayObjectContainer
 void DevTool::draw(AffineTransform &at){
 	DevLoop::draw(at);
 	DisplayObjectContainer::draw(at);
-	// mouse->draw(at);
+	mouse->draw(at);
 	resourceBar->draw(at);
 
 }
