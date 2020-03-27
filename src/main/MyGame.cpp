@@ -12,12 +12,13 @@
 using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
-	character = new AnimatedSprite("PLAYER_GIRL","./resources/character/floryan_head.png");
+	character = new AnimatedSprite("ENEMY_GIRL","./resources/character/floryan_head.png");
 	character->showHitbox = true;
 	coin = new AnimatedSprite("ENEMY_COIN","./resources/miscellaneous/Dogecoin_Logo.png");
 	coin->moveTo(200,200);
 	coin->showHitbox = true;
 	me = new Player();
+	me->showHitbox = true;
 
 
 	double boundLow = 0.15;
@@ -46,6 +47,8 @@ MyGame::MyGame() : Game(1200, 1000){
 	//character->play("Idle");
 	// character->play("Dead");
 	// character = new Scene();
+	//bg = new Scene();
+	//bg->loadScene("./resources/scenes/test3.txt");
 	// character->loadScene("./resources/scenes/test.txt");
 
 	charHit[0] = {me->w*boundLow, me->h*boundLow};
@@ -59,8 +62,12 @@ MyGame::MyGame() : Game(1200, 1000){
 	this->addChild(coin);
 	//cout << "Getting here." << endl;
 	this->addChild(me);
+	//this->addChild(bg);
 
 	Game::cs.watchForCollisions("ENEMY", "PLAYER");
+	//cout << me->type << endl;
+	//cout << character->type << endl;
+	//cout << coin->type << endl;
 }
 
 MyGame::~MyGame(){
