@@ -135,5 +135,6 @@ AffineTransform* CollisionSystem::globalTransform(DisplayObject* o){
 	}else{
 		at = new AffineTransform();
 	}o->applyTransformations(*at);
+	o->translate(-pivot.x,-pivot.y);
 	return at;
 }
