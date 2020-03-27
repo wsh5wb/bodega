@@ -11,9 +11,11 @@
 using namespace std;
 
 MyGame::MyGame() : Game(1200, 1000){
-	character = new AnimatedSprite("girl","./resources/character/floryan_head.png");
-	coin = new AnimatedSprite("coin","./resources/miscellaneous/Dogecoin_Logo.png");
+	character = new AnimatedSprite("PLAYER_GIRL","./resources/character/floryan_head.png");
+	character->showHitbox = true;
+	coin = new AnimatedSprite("ENEMY_COIN","./resources/miscellaneous/Dogecoin_Logo.png");
 	coin->moveTo(200,200);
+	coin->showHitbox = true;
 
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
@@ -45,6 +47,8 @@ MyGame::MyGame() : Game(1200, 1000){
 	// character->loadScene("./resources/scenes/test.txt");
 	this->addChild(character);
 	this->addChild(coin);
+
+	Game::cs.watchForCollisions("ENEMY", "PLAYER");
 }
 
 MyGame::~MyGame(){
@@ -171,6 +175,9 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 		}
 			
 	}
+	// I think the cs update should be here to keep from rendering frames
+	// where objects are overlapping one another.
+	Game::cs.update();
 	/*if(pressedKeys.count(SDL_SCANCODE_A) == 0 && pressedKeys.count(SDL_SCANCODE_D) == 0){
 		if (character->playing && character->currAnimation == "Run"){
 			character->stop();
@@ -188,6 +195,6 @@ void MyGame::draw(AffineTransform &at){
 	Game::draw(at);
 	SDL_RenderClear(Game::renderer);
 	DisplayObjectContainer::draw(at);
-	Game::cs.collidesWith(character,coin);
+	// Game::cs.collidesWith(character,coin);
 	SDL_RenderPresent(Game::renderer);
 }

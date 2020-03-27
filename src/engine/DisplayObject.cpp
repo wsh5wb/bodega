@@ -311,11 +311,11 @@ void DisplayObject::draw(AffineTransform &at){
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);
 
-		//this->drawHitbox(at);
+		if(showHitbox)	drawHitbox(isCollided);
 	}
 }
 
-void DisplayObject::drawHitbox(AffineTransform &at, bool col){
+void DisplayObject::drawHitbox(bool col){
 	if(curTexture != NULL){
 		if(!vis){return;}
 		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}

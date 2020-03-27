@@ -84,7 +84,7 @@ public:
 	SDL_Renderer* getRenderer();
 	SDL_Point* getGlobalHitbox();
 	void setHitbox(SDL_Point* points);
-	void drawHitbox(AffineTransform &at, bool col);
+	void drawHitbox(bool col);
 	void drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col);
 	void updateDelta(int x, int y, double scaleX, double scaleY, double rot);
 	DisplayObject * parent = NULL;
@@ -92,13 +92,15 @@ public:
 	int deltaY = 0;
 	double deltaRot = 0;
 	double deltaScaleX = 0; double deltaScaleY = 0;
-	
+	bool showHitbox = false;
+	bool isCollided = false;
 	SDL_Point* hitbox;
 private:
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;
 	/* Texture currently being drawn. Equal to texture for normal DO */
 	SDL_Texture* curTexture;
+	
 
 protected:
 	SDL_Rect srcrect;

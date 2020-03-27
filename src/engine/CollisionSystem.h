@@ -6,9 +6,19 @@
 #include "Sprite.h"
 #include "EventListener.h"
 #include "Event.h"
-#include <list>
+#include <vector>
+#include <map>
+#include <string>
+#include <algorithm>
 
 using namespace std;
+
+// might be helpful for implementing line sweep
+struct DORange{
+	DisplayObject* object;
+	int x1;
+	int x2;
+}; typedef struct DORange DORange_t;
 
 class CollisionSystem : public EventListener{
 
@@ -45,7 +55,8 @@ public:
 	bool onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3);
 	
 private:
-	list<DisplayObject*> objects;
+	map<string,vector<DORange_t> > objects;
+	vector<string> pairs;
 	
 };
 

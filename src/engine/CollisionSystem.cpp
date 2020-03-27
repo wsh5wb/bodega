@@ -2,6 +2,15 @@
 #include "DTEvent.h"
 #include <iostream>
 
+bool compare_xval(DORange_t do1, DORange_t do2){
+	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
+	do1.x1 = do1.object->getGlobalHitbox()[0].x;
+	do1.x2 = do1.object->getGlobalHitbox()[1].x;
+	do2.x1 = do2.object->getGlobalHitbox()[0].x;
+	do2.x2 = do2.object->getGlobalHitbox()[1].x;
+	return (do1.x1 < do2.x2);
+}
+
 double dist(SDL_Point &a, SDL_Point &b){
 	return sqrt((b.y-a.y)*(b.y-a.y) + (b.x-a.x)*(b.x-a.x));
 }
@@ -12,13 +21,6 @@ CollisionSystem::CollisionSystem(){
 
 CollisionSystem::~CollisionSystem(){
 
-}
-
-bool compare_xval(DisplayObject* do1, DisplayObject* do2){
-	if(!do1 || !do2)
-		return -1;
-	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
-	return (do1->getGlobalHitbox()[0].x < do2->getGlobalHitbox()[0].x);
 }
 
 //checks collisions between pairs of DOs where the corresponding types have been requested
@@ -34,25 +36,60 @@ void CollisionSystem::update(){
 						resolveCollision()
 					...
 	*/	
+
+	// TODO: come up with a better system for this later. It's trash right now
+	for(string pair : pairs){
+		size_t split = pair.find("-");
+		string type1 = pair.substr(0,split);
+		string type2 = pair.substr(split+1);
+		
+		vector vec1 = objects[type1];
+		vector vec2 = objects[type2];
+		// sort(vec1.begin(), vec1.end(), compare_xval);
+		// sort(vec2.begin(), vec2.end(), compare_xval);
+
+		for(DORange obj1 : vec1){
+			for(DORange obj2 : vec2){
+				bool collision;
+				if((collision= collidesWith(obj1.object, obj2.object))){
+					resolveCollision(obj1.object, obj2.object,
+						obj1.object->deltaX, obj1.object->deltaY,
+						obj2.object->deltaX, obj2.object->deltaY);
+					
+					obj1.object->updateDelta(0,0,0,0,0);
+					obj2.object->updateDelta(0,0,0,0,0);
+				}
+				// you can turn this into an event dispatch. Definitely would be a good idea.
+				obj1.object->isCollided = collision;
+				obj2.object->isCollided = collision;
+			}
+		}
+
+	}
 }
 
 //This system watches the game's display tree and is notified whenever a display object is placed onto
 //or taken off of the tree. Thus, the collision system always knows what DOs are in the game at any moment automatically.
 void CollisionSystem::handleEvent(Event* e){
-	objects.push_back(((DTEvent*) e)->getAddedObject());
-	objects.sort(compare_xval);
-	cout << "list is: ";
-	for(auto it = objects.begin(); it != objects.end(); ++it){
-		cout << (*it)->id << " ";
-	}
-	cout << "\n";
+	// objects.push_back(((DTEvent*) e)->getAddedObject());
+	// objects.sort(compare_xval);
+	DisplayObject* child = ((DTEvent*) e)->getAddedObject();
+	DORange_t object;
+	object.object = child;
+	object.x1 = child->getGlobalHitbox()[0].x; object.x2 = child->getGlobalHitbox()[1].x;
+	if(child->id.find("ENEMY") != string::npos)			objects["ENEMY"].push_back(object);
+	else if(child->id.find("PLAYER") != string::npos)	objects["PLAYER"].push_back(object);
+
 }
 
 //This function asks the collision system to start checking for collisions between all pairs
 //of DOs of a given type (e.g., player vs platform). The system will begin to check all player objects
 //against all platform objects that are in the current scene.
 void CollisionSystem::watchForCollisions(string type1, string type2){
+	string pair = type1 + "-" + type2;
+	if(find(pairs.begin(), pairs.end(), pair) != pairs.end())	return;
 
+	pairs.push_back(pair);
 }
 
 /* Return:
@@ -114,18 +151,6 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
 
-	// SDL_Point topL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundLow);
-	// SDL_Point topR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundLow);
-	// SDL_Point botL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundHigh);
-	// SDL_Point botR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundHigh);
-
-
-	// SDL_Point topL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundLow);
-	// SDL_Point topR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundLow);
-	// SDL_Point botL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundHigh);
-	// SDL_Point botR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundHigh);
-
-
 	SDL_Point* p1 = obj1->getGlobalHitbox();
 	SDL_Point topL1 = p1[0];
 	SDL_Point topR1 = p1[1];
@@ -148,17 +173,15 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 		ret = checkArea(botR1,topL2,topR2,botL2,botR2,dist(topL2,topR2),dist(topL2,botL2)) || checkArea(botR2,topL1,topR1,botL1,botR1,dist(topL1,topR1),dist(topL1,botL1));
 	}
 
-	if(ret){
-		//cout << obj1->deltaX << " " << obj1->deltaY << " " << obj2->deltaX << " " << obj2->deltaY << endl;
-		resolveCollision(obj1,obj2,obj1->deltaX,obj1->deltaY,obj2->deltaX,obj2->deltaY);
-		obj1->updateDelta(0,0,0,0,0);
-		obj2->updateDelta(0,0,0,0,0);
-	}
+	// if(ret){
+	// 	//cout << obj1->deltaX << " " << obj1->deltaY << " " << obj2->deltaX << " " << obj2->deltaY << endl;
+	// 	resolveCollision(obj1,obj2,obj1->deltaX,obj1->deltaY,obj2->deltaX,obj2->deltaY);
+	// 	obj1->updateDelta(0,0,0,0,0);
+	// 	obj2->updateDelta(0,0,0,0,0);
+	// }
 
-	obj1->drawHitbox(*at1, ret);
-	obj2->drawHitbox(*at2, ret);
-	// obj1->drawHitbox(topL1,topR1,botL1,botR1,ret);
-	// obj2->drawHitbox(topL2,topR2,botL2,botR2,ret);
+	// obj1->drawHitbox(*at1, ret);
+	// obj2->drawHitbox(*at2, ret);
 
 	delete at1;
 	delete at2;
@@ -210,5 +233,6 @@ AffineTransform* CollisionSystem::globalTransform(DisplayObject* o){
 		at = new AffineTransform();
 	}o->applyTransformations(*at);
 	at->translate(-o->getPivot().x,-o->getPivot().y);
+
 	return at;
 }
