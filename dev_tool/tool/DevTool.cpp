@@ -39,7 +39,7 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 	else{
 		y = gridSize * (int) (y/gridSize);
 	}
-	cout << "snapping to: " << x << " " << y << endl;
+	//cout << "snapping to: " << x << " " << y << endl;
 	return {x,y};
 
 
@@ -121,36 +121,9 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	else if(mouse->leftClick){
 		auto click_coords = mouse->getCoordinates();
 		draggable = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
-			/*for(DisplayObject* child : ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX))->children){
-			auto child_coords = child->getWorld();
-			if (dist(child_coords, click_coords) < 30){
-				cout << "Main checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
-				if(makeParent){
-					if(infoBar->curObj != child){
-						infoBar->curObj->parent = child;
-						makeParent = false;
-					}
-				}else{
-					draggable = child;
-					infoBar->setObj(draggable);
-				}
-				infoBar->updateObjectFields();
-				break;
-			}
-
-			if(dynamic_cast<DisplayObjectContainer*> child != nullptr){
-				for()
-			}
-
-
-		}*/
 	}
 	else if(draggable != NULL){
 		infoBar->updateObjectFields();
-		// auto point = draggable->getWorld();
-		// point = snapToGrid(point);
-		// draggable->moveTo(point.x, point.y);
-
 		draggable = NULL;
 	}
 	resourceBar->update(pressedKeys);

@@ -79,18 +79,6 @@ void ResourceBar::draw(AffineTransform &at){
 void ResourceBar::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
 
-	// keyboard actions
-	// for(SDL_Scancode code : pressedKeys){
-	// 	switch(code){
-	// 		case SDL_SCANCODE_H:
-	// 		{
-	// 			//cout << "Do stuff" << menu->vis<< endl;
-	// 			this->toggleVisibility();
-	// 			SDL_Delay(150);
-	// 			break;
-	// 		}
-	// 	}
-	// }
 	if(!vis){return;}
 
 	if(this->mouseListener == NULL)	return;
