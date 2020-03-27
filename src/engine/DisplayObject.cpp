@@ -143,18 +143,37 @@ void DisplayObject::movePivotDown(){
 
 void DisplayObject::translateRight(){
 	position.x += speed;
+	deltaX = speed;
 }
 
 void DisplayObject::translateLeft(){
 	position.x -= speed;
+	deltaX = -speed;
 }
 
 void DisplayObject::translateUp(){
 	position.y -= speed;
+	deltaY = -speed;
 }
 
 void DisplayObject::translateDown(){
 	position.y += speed;
+	deltaY = speed;
+}
+
+void DisplayObject::translate(int x, int y){
+	position.x += x;
+	position.y += y;
+	deltaX = x;
+	deltaY = y;
+}
+
+void DisplayObject::updateDelta(int x, int y, double scaleX, double scaleY, double rot){
+	deltaX = x;
+	deltaY = y;
+	deltaScaleX = scaleX;
+	deltaScaleY = scaleY;
+	deltaRot = rot;
 }
 
 void DisplayObject::moveTo(int x, int y){
@@ -170,20 +189,53 @@ void DisplayObject::movePivot(int x, int y){
 void DisplayObject::scaleIn(){
 	scaleX *= .9;
 	scaleY *= .9;
+	deltaScaleX = .9;
+	deltaScaleY = .9;
 }
 
 void DisplayObject::scaleOut(){
 	scaleX *= 1.1;
 	scaleY *= 1.1;
+	deltaScaleX = 1.1;
+	deltaScaleY = 1.1;
 }
 
 void DisplayObject::scale(double s){
 	scaleX *= s;
 	scaleY *= s;
+	deltaScaleX = s;
+	deltaScaleY = s;
+}
+
+void DisplayObject::setScale(double x, double y){
+	deltaScaleX = x/scaleX;
+	deltaScaleY = y/scaleY;
+	scaleX = x;
+	scaleY = y;
+}
+
+void DisplayObject::setScaleX(double x){
+	deltaScaleX = x/scaleX;
+	scaleX = x;
+	//deltaScaleX = x;
+}
+	
+void DisplayObject::setScaleY(double y){
+	deltaScaleY = y/scaleY;
+	scaleY = y;
 }
 
 void DisplayObject::setRotation(double angle){
 	rotationAmount = angle*PI/180;
+}
+
+void DisplayObject::setRotationValue(double degrees){
+	rotationAmount = degrees*PI/180;
+	while(rotation >= 2*PI){
+		rotation -= 2*PI;
+	}while(rotation < 0){
+		rotation += 2*PI;
+	}
 }
 
 double DisplayObject::getRotation(){
@@ -192,10 +244,17 @@ double DisplayObject::getRotation(){
 
 void DisplayObject::rotateCW(){
 	rotation += rotationAmount;
+	deltaRot = rotationAmount;
 }
 
 void DisplayObject::rotateCCW(){
 	rotation -= rotationAmount;
+	deltaRot = -rotationAmount;
+}
+
+void DisplayObject::rotate(double amount){
+	rotation += amount;
+	deltaRot = amount;
 }
 
 double DisplayObject::dist(SDL_Point &a, SDL_Point &b){

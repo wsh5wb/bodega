@@ -52,21 +52,26 @@ public:
 	void translateLeft();
 	void translateUp();
 	void translateDown();
+	void translate(int x, int y);
 	void moveTo(int x, int y);
 	void movePivot(int x, int y);
 	void scaleIn();
 	void scaleOut();
 	void scale(double s);
+	void setScale(double x, double y);
+	void setScaleX(double x);
+	void setScaleY(double y);
 	void setRotation(double angle);
+	void setRotationValue(double degrees);
 	double getRotation();
 	void rotateCW();
 	void rotateCCW();
+	void rotate(double amount);
 	double dist(SDL_Point &a, SDL_Point &b);
 	void applyTransformations(AffineTransform &at);
 	void reverseTransformations(AffineTransform &at);
 	SDL_Point getPivot();
 	SDL_Point getPosition();
-
 	int getAlpha();
 	void setAlpha(int a);
 	void setPosition(SDL_Point p);
@@ -81,7 +86,12 @@ public:
 	void setHitbox(SDL_Point* points);
 	void drawHitbox(AffineTransform &at, bool col);
 	void drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col);
+	void updateDelta(int x, int y, double scaleX, double scaleY, double rot);
 	DisplayObject * parent = NULL;
+	int deltaX = 0;
+	int deltaY = 0;
+	double deltaRot = 0;
+	double deltaScaleX = 0; double deltaScaleY = 0;
 	
 	SDL_Point* hitbox;
 private:

@@ -148,6 +148,13 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 		ret = checkArea(botR1,topL2,topR2,botL2,botR2,dist(topL2,topR2),dist(topL2,botL2)) || checkArea(botR2,topL1,topR1,botL1,botR1,dist(topL1,topR1),dist(topL1,botL1));
 	}
 
+	if(ret){
+		//cout << obj1->deltaX << " " << obj1->deltaY << " " << obj2->deltaX << " " << obj2->deltaY << endl;
+		resolveCollision(obj1,obj2,obj1->deltaX,obj1->deltaY,obj2->deltaX,obj2->deltaY);
+		obj1->updateDelta(0,0,0,0,0);
+		obj2->updateDelta(0,0,0,0,0);
+	}
+
 	obj1->drawHitbox(*at1, ret);
 	obj2->drawHitbox(*at2, ret);
 	// obj1->drawHitbox(topL1,topR1,botL1,botR1,ret);
@@ -162,7 +169,36 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 //xDelta1 and yDelta1 are the amount d moved before causing the collision.
 //xDelta2 and yDelta2 are the amount other moved before causing the collision.
 void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2){
+	if(xDelta1 != 0){
+		d->translate(-xDelta1,0);
+	}else if(xDelta2 != 0){
+		other->translate(-xDelta2,0);
+	}
 
+	if(yDelta1 != 0){
+		d->translate(0,-yDelta1);
+	}else if(yDelta2 != 0){
+		//cout << "before" << other->getPosition().x << " " << other->getPosition().y << endl;
+		other->translate(0,-yDelta2);
+		//cout << other->getPosition().x << " " << other->getPosition().y << endl;
+
+	}
+
+	if(d->deltaScaleX != 0){
+		d->setScaleX(1/d->deltaScaleX);
+	}else if(other->deltaScaleX != 0){
+		other->setScaleX(1/other->deltaScaleX);
+	}if(d->deltaScaleY != 0){
+		d->setScaleY(1/d->deltaScaleY);
+	}else if(other->deltaScaleY != 0){
+		other->setScaleY(1/other->deltaScaleY);
+	}
+
+	if(d->deltaRot != 0){
+		d->rotate(-d->deltaRot);
+	}else if(other->deltaRot != 0){
+		other->rotate(-other->deltaRot);
+	}
 }
 
 AffineTransform* CollisionSystem::globalTransform(DisplayObject* o){
@@ -173,6 +209,6 @@ AffineTransform* CollisionSystem::globalTransform(DisplayObject* o){
 	}else{
 		at = new AffineTransform();
 	}o->applyTransformations(*at);
-	o->translate(-pivot.x,-pivot.y);
+	at->translate(-o->getPivot().x,-o->getPivot().y);
 	return at;
 }
