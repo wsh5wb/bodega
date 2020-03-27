@@ -15,7 +15,7 @@ MyGame::MyGame() :
 	myCamera = Camera::getCamera();
 	character = new Scene();
 	myCamera->addScene(character);
-	this->scene = "./resources/scenes/hades?/basic_room.txt";
+	this->scene = "./resources/scenes/hades?/start.txt";
 
 	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
