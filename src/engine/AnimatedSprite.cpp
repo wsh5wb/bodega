@@ -13,6 +13,7 @@ AnimatedSprite::AnimatedSprite(string id, string filepath){
 	SDL_Surface* image = IMG_Load(filepath.c_str());
 	images.push_back(image);
 	this->id = id;
+	this->imgPath = filepath;
 	loop = false;
 	curFrame = 0;
 	DisplayObject::setImage(image);

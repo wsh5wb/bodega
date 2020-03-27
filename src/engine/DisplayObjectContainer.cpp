@@ -1,18 +1,23 @@
-#include <DisplayObjectContainer.h>
+#include "DisplayObjectContainer.h"
+#include "DTEvent.h"
+#include "Game.h"
 #include <iostream>
 
 using namespace std;
 
 DisplayObjectContainer::DisplayObjectContainer() : DisplayObject(){
-	
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
 DisplayObjectContainer::DisplayObjectContainer(string id, string filepath) : DisplayObject(id,filepath){
-	
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
 DisplayObjectContainer::DisplayObjectContainer(string id, int red, int green, int blue) : DisplayObject(id,red,green,blue){
-
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
 DisplayObjectContainer::~DisplayObjectContainer(){
@@ -24,11 +29,15 @@ DisplayObjectContainer::~DisplayObjectContainer(){
 void DisplayObjectContainer::addChild(DisplayObject* child){
 	children.push_back(child);
 	child->parent = this;
+	DTEvent e("OBJ_ADD", this, child);
+	this->dispatchEvent(&e);
 }
 
 void DisplayObjectContainer::removeImmediateChild(DisplayObject* child){
 	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
 		if(child == *it){
+			DTEvent e("OBJ_RM", this, child);
+			this->dispatchEvent(&e);
 			delete *it;
 			children.erase(it);
 			break;
@@ -39,6 +48,8 @@ void DisplayObjectContainer::removeImmediateChild(DisplayObject* child){
 void DisplayObjectContainer::removeImmediateChild(string id){
 	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
 		if(id == (*it)->id){
+			DTEvent e("OBJ_RM", this, *it);
+			this->dispatchEvent(&e);
 			delete *it;
 			children.erase(it);
 			break;

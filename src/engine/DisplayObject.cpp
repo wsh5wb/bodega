@@ -15,11 +15,13 @@ DisplayObject::DisplayObject(){
 	position.x = 0;
 	position.y = 0;
 	pivot.x = 0; pivot.y = 0;
+	globalHitbox = new SDL_Point[4];
 }
 
 DisplayObject::DisplayObject(string id, string filepath){
 	this->id = id;
 	this->imgPath = filepath;
+	globalHitbox = new SDL_Point[4];
 
 	loadTexture(filepath);
 }
@@ -31,6 +33,7 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue){
 	this->red = red;
 	this->blue = blue;
 	this->green = green;
+	globalHitbox = new SDL_Point[4];
 
 	this->loadRGBTexture(red, green, blue);
 }
@@ -253,30 +256,46 @@ void DisplayObject::draw(AffineTransform &at){
 	}
 }
 
-void DisplayObject::drawHitbox(AffineTransform &at){
+void DisplayObject::drawHitbox(AffineTransform &at, bool col){
 	if(curTexture != NULL){
 		if(!vis){return;}
-
-		applyTransformations(at);
-		at.translate(-pivot.x,-pivot.y);
-
-		SDL_Point topL = at.transformPoint(0,0);
-		SDL_Point topR = at.transformPoint(w,0);
-		SDL_Point bottomR = at.transformPoint(w,h);
-		
-		int distAdj = dist(topL,topR);
-		int distOpp = dist(topR,bottomR);
-
-		SDL_Rect dstrect = { topL.x, topL.y, w, h};
-
-		SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);
-		SDL_RenderDrawRect(Game::renderer, &dstrect);
+		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}
+		else{ SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);}
+		globalHitbox = getGlobalHitbox();
+		SDL_RenderDrawLine(Game::renderer,globalHitbox[0].x,globalHitbox[0].y,globalHitbox[1].x,globalHitbox[1].y);
+		SDL_RenderDrawLine(Game::renderer,globalHitbox[0].x,globalHitbox[0].y,globalHitbox[3].x,globalHitbox[3].y);
+		SDL_RenderDrawLine(Game::renderer,globalHitbox[3].x,globalHitbox[3].y,globalHitbox[2].x,globalHitbox[2].y);
+		SDL_RenderDrawLine(Game::renderer,globalHitbox[2].x,globalHitbox[2].y,globalHitbox[1].x,globalHitbox[1].y);
 		SDL_SetRenderDrawColor(Game::renderer,0,0,0,255);
 
-		at.translate(pivot.x,pivot.y);
-		reverseTransformations(at);
-
+		// this->globalHitbox[0] = hitbox[0];
+		// this->globalHitbox[1] = hitbox[1];
+		// this->globalHitbox[2] = hitbox[2];
+		// this->globalHitbox[3] = hitbox[3];
 	}
+	// if(curTexture != NULL){
+	// 	if(!vis){return;}
+
+	// 	applyTransformations(at);
+	// 	at.translate(-pivot.x,-pivot.y);
+
+	// 	SDL_Point topL = at.transformPoint(0,0);
+	// 	SDL_Point topR = at.transformPoint(w,0);
+	// 	SDL_Point bottomR = at.transformPoint(w,h);
+		
+	// 	int distAdj = dist(topL,topR);
+	// 	int distOpp = dist(topR,bottomR);
+
+	// 	SDL_Rect dstrect = { topL.x, topL.y, w, h};
+
+	// 	SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);
+	// 	SDL_RenderDrawRect(Game::renderer, &dstrect);
+	// 	SDL_SetRenderDrawColor(Game::renderer,0,0,0,255);
+
+	// 	at.translate(pivot.x,pivot.y);
+	// 	reverseTransformations(at);
+
+	// }
 }
 
 void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col){
@@ -293,8 +312,36 @@ void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL
 	}
 }
 
+void DisplayObject::setHitbox(SDL_Point* points){
+	if(!this->hitbox)
+		delete [] this->hitbox;
+
+	this->hitbox = new SDL_Point[4];
+	for(int i = 0; i < 4; i ++)
+		this->hitbox[i] = points[i];
+}
+
 
 SDL_Point* DisplayObject::getGlobalHitbox(){
-	//SDL_Point p = {1,1};
-	return NULL;
+	if(!this->hitbox)
+		return NULL;
+
+	AffineTransform* at = getGlobalTransform(this);
+	globalHitbox[0] = at->transformPoint(hitbox[0].x, hitbox[0].y);
+	globalHitbox[1] = at->transformPoint(hitbox[1].x, hitbox[1].y);
+	globalHitbox[2] = at->transformPoint(hitbox[2].x, hitbox[2].y);
+	globalHitbox[3] = at->transformPoint(hitbox[3].x, hitbox[3].y);
+	delete at;
+	return globalHitbox;
+}
+
+AffineTransform* DisplayObject::getGlobalTransform(DisplayObject* o){
+	AffineTransform *at;
+	if(o->parent != NULL){
+		at = getGlobalTransform(o->parent);
+	} else{
+		at = new AffineTransform();
+	}
+	o->applyTransformations(*at);
+	return at;
 }

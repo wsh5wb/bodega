@@ -1,4 +1,5 @@
 #include "CollisionSystem.h"
+#include "DTEvent.h"
 #include <iostream>
 
 double dist(SDL_Point &a, SDL_Point &b){
@@ -13,16 +14,38 @@ CollisionSystem::~CollisionSystem(){
 
 }
 
+bool compare_xval(DisplayObject* do1, DisplayObject* do2){
+	if(!do1 || !do2)
+		return -1;
+	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
+	return (do1->getGlobalHitbox()[0].x < do2->getGlobalHitbox()[0].x);
+}
+
 //checks collisions between pairs of DOs where the corresponding types have been requested
 //to be checked (via a single call to watchForCollisions) below.
 void CollisionSystem::update(){
-
+	/*
+		Possible pseudocode:
+			iterate through display objects:
+				if collidesWith(DO1, DO2):
+					if DO1 is Player and DO2 is Enemy:
+						Dispatch event (to take damage or something)?
+					if DO1 is Player and DO2 is Platform:
+						resolveCollision()
+					...
+	*/	
 }
 
 //This system watches the game's display tree and is notified whenever a display object is placed onto
 //or taken off of the tree. Thus, the collision system always knows what DOs are in the game at any moment automatically.
 void CollisionSystem::handleEvent(Event* e){
-
+	objects.push_back(((DTEvent*) e)->getAddedObject());
+	objects.sort(compare_xval);
+	cout << "list is: ";
+	for(auto it = objects.begin(); it != objects.end(); ++it){
+		cout << (*it)->id << " ";
+	}
+	cout << "\n";
 }
 
 //This function asks the collision system to start checking for collisions between all pairs
@@ -34,7 +57,7 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 
 /* Return:
 	0 - Colinear
-	1 - Right turn
+	1 - Right turn																																		
 	-1 - Left turn
 */
 int CollisionSystem::orientation(SDL_Point p1, SDL_Point q1, SDL_Point p2){
@@ -91,16 +114,29 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
 
-	SDL_Point topL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundLow);
-	SDL_Point topR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundLow);
-	SDL_Point botL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundHigh);
-	SDL_Point botR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundHigh);
+	// SDL_Point topL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundLow);
+	// SDL_Point topR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundLow);
+	// SDL_Point botL1 = at1->transformPoint(obj1->w*boundLow,obj1->h*boundHigh);
+	// SDL_Point botR1 = at1->transformPoint(obj1->w*boundHigh,obj1->h*boundHigh);
 
 
-	SDL_Point topL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundLow);
-	SDL_Point topR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundLow);
-	SDL_Point botL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundHigh);
-	SDL_Point botR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundHigh);
+	// SDL_Point topL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundLow);
+	// SDL_Point topR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundLow);
+	// SDL_Point botL2 = at2->transformPoint(obj2->w*boundLow,obj2->h*boundHigh);
+	// SDL_Point botR2 = at2->transformPoint(obj2->w*boundHigh,obj2->h*boundHigh);
+
+
+	SDL_Point* p1 = obj1->getGlobalHitbox();
+	SDL_Point topL1 = p1[0];
+	SDL_Point topR1 = p1[1];
+	SDL_Point botL1 = p1[3];
+	SDL_Point botR1 = p1[2];
+
+	SDL_Point* p2 = obj2->getGlobalHitbox();
+	SDL_Point topL2 = p2[0];
+	SDL_Point topR2 = p2[1];
+	SDL_Point botL2 = p2[3];
+	SDL_Point botR2 = p2[2];
 
 	if((intersect(topL1,topR1,topL2,topR2) || intersect(topL1,topR1,topL2,botL2) || intersect(topL1,topR1,botR2,topR2) || intersect(topL1,topR1,botL2,botR2))){}
 	else if((intersect(topR1,botR1,topL2,topR2) || intersect(topR1,botR1,topL2,botL2) || intersect(topR1,botR1,botR2,topR2) || intersect(topR1,botR1,botL2,botR2))){}
@@ -112,8 +148,10 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 		ret = checkArea(botR1,topL2,topR2,botL2,botR2,dist(topL2,topR2),dist(topL2,botL2)) || checkArea(botR2,topL1,topR1,botL1,botR1,dist(topL1,topR1),dist(topL1,botL1));
 	}
 
-	obj1->drawHitbox(topL1,topR1,botL1,botR1,ret);
-	obj2->drawHitbox(topL2,topR2,botL2,botR2,ret);
+	obj1->drawHitbox(*at1, ret);
+	obj2->drawHitbox(*at2, ret);
+	// obj1->drawHitbox(topL1,topR1,botL1,botR1,ret);
+	// obj2->drawHitbox(topL2,topR2,botL2,botR2,ret);
 
 	delete at1;
 	delete at2;

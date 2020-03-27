@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include "EventListener.h"
 #include "Event.h"
+#include <list>
 
 using namespace std;
 
@@ -44,7 +45,7 @@ public:
 	bool onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3);
 	
 private:
-
+	list<DisplayObject*> objects;
 	
 };
 

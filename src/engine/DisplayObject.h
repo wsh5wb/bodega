@@ -7,12 +7,13 @@
 #include <SDL2/SDL_image.h>
 #include <set>
 #include "AffineTransform.h"
+#include "EventDispatcher.h"
 #include <string>
 #include <fstream>
 
 using namespace std;
 
-class DisplayObject{
+class DisplayObject: public EventDispatcher{
 
 public:
 	string id = "DEFAULT_ID";
@@ -28,6 +29,8 @@ public:
 	DisplayObject(string id, int red, int green, int blue);
 	virtual ~DisplayObject();
 	
+	AffineTransform* getGlobalTransform(DisplayObject* o);
+
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
@@ -75,9 +78,12 @@ public:
 	void setRenderer(SDL_Renderer* renderer);
 	SDL_Renderer* getRenderer();
 	SDL_Point* getGlobalHitbox();
-	void drawHitbox(AffineTransform &at);
+	void setHitbox(SDL_Point* points);
+	void drawHitbox(AffineTransform &at, bool col);
 	void drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col);
 	DisplayObject * parent = NULL;
+	
+	SDL_Point* hitbox;
 private:
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;
@@ -93,7 +99,7 @@ protected:
 	double rotationAmount = 0.05;
 	int alpha;
 	SDL_Point pivot, position;
-
+	SDL_Point* globalHitbox;
 };
 
 #endif

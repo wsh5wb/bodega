@@ -14,6 +14,25 @@ MyGame::MyGame() : Game(1200, 1000){
 	character = new AnimatedSprite("girl","./resources/character/floryan_head.png");
 	coin = new AnimatedSprite("coin","./resources/miscellaneous/Dogecoin_Logo.png");
 	coin->moveTo(200,200);
+
+	double boundLow = 0.15;
+	double boundHigh = 1 - boundLow;
+
+	SDL_Point charHit[4];
+	charHit[0] = {character->w*boundLow,character->h*boundLow};
+	charHit[1] = {character->w*boundHigh,character->h*boundLow};
+	charHit[3] = {character->w*boundLow,character->h*boundHigh};
+	charHit[2] = {character->w*boundHigh,character->h*boundHigh};
+
+	character->setHitbox(charHit);
+
+	charHit[0] = {coin->w*boundLow,coin->h*boundLow};
+	charHit[1] = {coin->w*boundHigh,coin->h*boundLow};
+	charHit[3] = {coin->w*boundLow,coin->h*boundHigh};
+	charHit[2] = {coin->w*boundHigh,coin->h*boundHigh};
+
+	coin->setHitbox(charHit);
+
 	//character->addAnimation("./resources/character/Dead","Dead",30,60,true);
 	//cout << "play";
 	/*character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,true);
@@ -169,6 +188,6 @@ void MyGame::draw(AffineTransform &at){
 	Game::draw(at);
 	SDL_RenderClear(Game::renderer);
 	DisplayObjectContainer::draw(at);
-	cs.collidesWith(character,coin);
+	Game::cs.collidesWith(character,coin);
 	SDL_RenderPresent(Game::renderer);
 }

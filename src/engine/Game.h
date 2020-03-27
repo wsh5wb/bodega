@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "DisplayObjectContainer.h"
+#include "CollisionSystem.h"
 #include <vector>
 #include <set>
 
@@ -25,6 +26,8 @@ public:
 
 	//Global frame counter
 	static unsigned int frameCounter;
+
+	static CollisionSystem cs;
 
 	Game(int windowWidth, int windowHeight);
 	virtual ~Game();
