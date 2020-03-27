@@ -166,8 +166,6 @@ DisplayObject* DevTool::leftClick(SDL_Point click_coords, DisplayObjectContainer
 				if((dynamic_cast<DisplayObjectContainer*> (child)) == nullptr){
 					continue;
 				}
-				cout << "Swap parents";
-
 				if(infoBar->curObj != child){
 
 					((DisplayObjectContainer*) infoBar->curObj->parent)->removeImmediateChildNoDelete(infoBar->curObj);

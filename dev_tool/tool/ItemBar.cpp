@@ -93,6 +93,8 @@ void ItemBar::copyFields(DisplayObject * oldObj, DisplayObject * newObj){
 	newObj->setPivot(oldObj->getPosition());
 	newObj->setAlpha(oldObj->getAlpha());
 	newObj->numCopies = curObj->numCopies;
+	newObj->inGame = curObj->inGame;
+	newObj->parent = curObj->parent;
 }
 
 bool ItemBar::isEditing(){
@@ -232,12 +234,13 @@ void ItemBar::event(SDL_Event *event, int* draw){
 		if(curObj != NULL){
 			DisplayObject * newObj;
 			if(curObj->id.find("_cpy")){
-				newObj = new DisplayObject(curObj->id.substr(0,curObj->id.find("_cpy"))+ "_cpy" + to_string(curObj->numCopies), curObj->imgPath, this->renderer);
+				newObj = new DisplayObjectContainer(curObj->id.substr(0,curObj->id.find("_cpy"))+ "_cpy" + to_string(curObj->numCopies), curObj->imgPath, curObj->getRenderer());
 			}else{
-				newObj = new DisplayObject(curObj->id + "_cpy", curObj->imgPath, this->renderer);
+				newObj = new DisplayObjectContainer(curObj->id + "_cpy", curObj->imgPath, curObj->getRenderer());
 			}
+
 			curObj->numCopies++;
-			((DisplayObjectContainer *)(thisWindow->getChild(SCENE_DOC_INDEX)))->addChild(newObj);
+			((DisplayObjectContainer*)curObj->parent)->addChild(newObj);
 			copyFields(curObj,newObj);
 			setObj(newObj);
 		}

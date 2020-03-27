@@ -394,6 +394,7 @@ AffineTransform* DisplayObject::globalTransform(){
 	}else{
 		at = new AffineTransform();
 	}applyTransformations(*at);
+	at->translate(-pivot.x,-pivot.y);
 	return at;
 }
 

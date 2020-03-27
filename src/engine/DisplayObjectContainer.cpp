@@ -102,10 +102,6 @@ void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
 }
 
 void DisplayObjectContainer::draw(AffineTransform &at){
-	if(this == NULL){
-		cout << "NULL";
-		return;
-	}
 	DisplayObject::draw(at);
 	DisplayObject::applyTransformations(at);
 
@@ -121,7 +117,7 @@ void DisplayObjectContainer::draw(AffineTransform &at){
 }
 
 void DisplayObjectContainer::saveSelf(vector<string> &objects,
-		vector<string> &dependencies) {
+	vector<string> &dependencies) {
 	string desc;
 	stringstream sstm;
 	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
