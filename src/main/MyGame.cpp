@@ -11,11 +11,11 @@
 using namespace std;
 
 MyGame::MyGame() :
-		Game(1200, 1000) {
+		Game(1300, 900) {
 	myCamera = Camera::getCamera();
 	character = new Scene();
 	myCamera->addScene(character);
-	this->scene = "./resources/scenes/testSave2.txt";
+	this->scene = "./resources/scenes/hades?/basic_room.txt";
 
 	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
@@ -41,28 +41,28 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 	int x = myCamera->x;
 	int y = myCamera->y;
 
-	int cs = 15;
+	int cs = 0;
 
 	//these need to be set
 	int xmin = 0;
 	int ymin = 0;
-	int xmax = 1500;
-	int ymax = 4200;
+	int xmax = 0;
+	int ymax = 0;
 
 	int xmax2 = 0;
-	int ymin2 = 4120;
+	int ymin2 = 0;
 
 	//these need to be set
-	int xminZ = 1200;
-	int yminZ = 3900;
-	int xmaxZ = 1500;
-	int ymaxZ = 4200;
+	int xminZ = 0;
+	int yminZ = 0;
+	int xmaxZ = 0;
+	int ymaxZ = 0;
 
 	//bounds can also be done like this
 	if (x >= xminZ && x <= xmaxZ && y > yminZ && y <= ymaxZ) {
-		myCamera->setZoom(490, 490);
+		myCamera->setZoom(600, 600);
 	} else {
-		myCamera->setZoom(500, 500);
+		myCamera->setZoom(600, 600);
 	}
 
 	for (SDL_Scancode code : pressedKeys) {
