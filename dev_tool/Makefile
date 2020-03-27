@@ -20,7 +20,7 @@ INC_DIRS := $(shell find $(SRC_DIR) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -std=c++17 -g -w
-CFLAGS ?= $(INC_FLAGS) -MMD -MP -g -w
+CFLAGS ?= $(INC_FLAGS) -MMD -MP -g -w -fPIC
 CXX := g++-8
 
 #LINKER_FLAGS specifies the libraries we're linking against
