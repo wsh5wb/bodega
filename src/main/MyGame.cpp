@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "AnimatedSprite.h"
 #include "MyGame.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -16,6 +17,8 @@ MyGame::MyGame() : Game(1200, 1000){
 	coin = new AnimatedSprite("ENEMY_COIN","./resources/miscellaneous/Dogecoin_Logo.png");
 	coin->moveTo(200,200);
 	coin->showHitbox = true;
+	me = new Player();
+
 
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
@@ -34,19 +37,28 @@ MyGame::MyGame() : Game(1200, 1000){
 	charHit[2] = {coin->w*boundHigh,coin->h*boundHigh};
 
 	coin->setHitbox(charHit);
-
 	//character->addAnimation("./resources/character/Dead","Dead",30,60,true);
 	//cout << "play";
-	/*character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,true);
-	character->addAnimation("./resources/character/jumpsprites.png","./resources/character/jumpSheet.xml","Jump",1,60,false);
-	character->addAnimation("./resources/character/runSprite.png","./resources/character/runSheet.xml","Run",1,60,true);
-	character->addAnimation("./resources/character/idleSprite.png","./resources/character/idleSheet.xml","Idle",1,75,true);
-	character->play("Idle");*/
+	//character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,true);
+	//character->addAnimation("./resources/character/jumpsprites.png","./resources/character/jumpSheet.xml","Jump",1,60,false);
+	//character->addAnimation("./resources/character/runSprite.png","./resources/character/runSheet.xml","Run",1,60,true);
+	//character->addAnimation("./resources/character/idleSprite.png","./resources/character/idleSheet.xml","Idle",1,75,true);
+	//character->play("Idle");
 	// character->play("Dead");
 	// character = new Scene();
 	// character->loadScene("./resources/scenes/test.txt");
+
+	charHit[0] = {me->w*boundLow, me->h*boundLow};
+	charHit[1] = {me->w*boundHigh, me->h*boundLow};
+	charHit[3] = {me->w*boundLow,me->h*boundHigh};
+	charHit[2] = {me->w*boundHigh,me->h*boundHigh};
+
+	me->setHitbox(charHit);
+
 	this->addChild(character);
 	this->addChild(coin);
+	//cout << "Getting here." << endl;
+	this->addChild(me);
 
 	Game::cs.watchForCollisions("ENEMY", "PLAYER");
 }
@@ -173,7 +185,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 				break;
 			}
 		}
-			
+
 	}
 	// I think the cs update should be here to keep from rendering frames
 	// where objects are overlapping one another.

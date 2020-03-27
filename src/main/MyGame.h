@@ -12,6 +12,7 @@
 #include "myCoin.h"
 #include "QuestManager.h"
 #include "CollisionSystem.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ public:
 private:
 	AnimatedSprite *character;
 	AnimatedSprite *coin;
+	Player *me;
 	CollisionSystem cs;
 	//Scene* character;
 	string scene;
