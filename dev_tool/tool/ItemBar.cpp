@@ -25,6 +25,7 @@ ItemBar::ItemBar(kiss_window * wdw){
 	kiss_label_new(&heightLabel,wdw,"Height: 0",infoW + 140,245);
 	kiss_label_new(&alphaLabel,wdw,"Alpha:", infoW + 20,205);
 	kiss_label_new(&scaleLockLabel,wdw,"Lock Scale Ratio", infoW + 45,285);
+	kiss_label_new(&parentLabel,wdw,"Parent: NULL", infoW + 20,325);
 
 	// Text Entries
 	kiss_entry_new(&idEntry,wdw,0,"0", infoW + 55,5,185);
@@ -36,6 +37,7 @@ ItemBar::ItemBar(kiss_window * wdw){
 	kiss_entry_new(&yScaleEntry,wdw,0,"0", infoW + 190,120,50);
 	kiss_entry_new(&rotEntry,wdw,0,"0", infoW + 125,160,80);
 	kiss_entry_new(&alphaEntry,wdw,0,"255",infoW +100,200,50);
+	//kiss_entry_new(&parentEntry,wdw,0,"NULL",infoW +110,240,80);
 
 	// Buttons
 	kiss_button_new(&delBut,wdw,"Delete",infoW + 170,650);
@@ -45,6 +47,7 @@ ItemBar::ItemBar(kiss_window * wdw){
 	idLabel.textcolor = kiss_white; xPosLabel.textcolor = kiss_white; yPosLabel.textcolor = kiss_white; scaleLockLabel.textcolor = kiss_white;
 	xPivLabel.textcolor = kiss_white; yPivLabel.textcolor = kiss_white; rotLabel.textcolor = kiss_white; alphaLabel.textcolor = kiss_white;
 	yScaleLabel.textcolor = kiss_white; xScaleLabel.textcolor = kiss_white; widthLabel.textcolor = kiss_white; heightLabel.textcolor = kiss_white;
+	parentLabel.textcolor = kiss_white;
 }
 
 ItemBar::~ItemBar(){
@@ -57,11 +60,14 @@ void ItemBar::initThisWindow(DisplayObjectContainer * win){
 }
 
 void ItemBar::setObj(DisplayObject *& obj){
-	if(this == NULL){
+	if(this == NULL ){
 		cout << "Item Bar is null";
 		return;
+	}if(curObj != NULL){
+		curObj->selected = false;
 	}
 	curObj = obj;
+	obj->selected = true;
 	updateObjectFields();
 }
 
@@ -79,6 +85,7 @@ void ItemBar::updateObjectFields(){
 	strncpy(rotEntry.text,to_string(curObj->getRotationDegrees()).substr(0,5).c_str(),sizeof(rotEntry.text));
 	strncpy(widthLabel.text,("Width: " + to_string(curObj->w)).c_str(),sizeof(widthLabel.text));
 	strncpy(heightLabel.text,("Height: " + to_string(curObj->h)).c_str(),sizeof(heightLabel.text));
+	strncpy(parentLabel.text,("Parent: " + curObj->parent->id).c_str(),sizeof(parentLabel.text));
 }
 
 void ItemBar::copyFields(DisplayObject * oldObj, DisplayObject * newObj){
@@ -89,6 +96,8 @@ void ItemBar::copyFields(DisplayObject * oldObj, DisplayObject * newObj){
 	newObj->setPivot(oldObj->getPosition());
 	newObj->setAlpha(oldObj->getAlpha());
 	newObj->numCopies = curObj->numCopies;
+	newObj->inGame = curObj->inGame;
+	newObj->parent = curObj->parent;
 }
 
 bool ItemBar::isEditing(){
@@ -209,6 +218,9 @@ void ItemBar::event(SDL_Event *event, int* draw){
 			
 		}
 	}
+
+	//Parent
+
 	
 	// Scale Lock Button
 	if(kiss_selectbutton_event(&scaleLock,event,draw)){
@@ -225,12 +237,13 @@ void ItemBar::event(SDL_Event *event, int* draw){
 		if(curObj != NULL){
 			DisplayObject * newObj;
 			if(curObj->id.find("_cpy")){
-				newObj = new DisplayObject(curObj->id.substr(0,curObj->id.find("_cpy"))+ "_cpy" + to_string(curObj->numCopies), curObj->imgPath, this->renderer);
+				newObj = new DisplayObjectContainer(curObj->id.substr(0,curObj->id.find("_cpy"))+ "_cpy" + to_string(curObj->numCopies), curObj->imgPath, curObj->getRenderer());
 			}else{
-				newObj = new DisplayObject(curObj->id + "_cpy", curObj->imgPath, this->renderer);
+				newObj = new DisplayObjectContainer(curObj->id + "_cpy", curObj->imgPath, curObj->getRenderer());
 			}
+
 			curObj->numCopies++;
-			((DisplayObjectContainer *)(thisWindow->getChild(SCENE_DOC_INDEX)))->addChild(newObj);
+			((DisplayObjectContainer*)curObj->parent)->addChild(newObj);
 			copyFields(curObj,newObj);
 			setObj(newObj);
 		}
@@ -258,6 +271,7 @@ void ItemBar::draw(SDL_Renderer *renderer){
 	kiss_label_draw(&heightLabel,renderer);
 	kiss_label_draw(&alphaLabel,renderer);
 	kiss_label_draw(&scaleLockLabel,renderer);
+	kiss_label_draw(&parentLabel,renderer);
 
 	kiss_entry_draw(&idEntry,renderer);
 	kiss_entry_draw(&xPosEntry,renderer);
@@ -268,6 +282,7 @@ void ItemBar::draw(SDL_Renderer *renderer){
 	kiss_entry_draw(&yScaleEntry,renderer);
 	kiss_entry_draw(&rotEntry,renderer);
 	kiss_entry_draw(&alphaEntry,renderer);
+	kiss_entry_draw(&parentEntry,renderer);
 
 	kiss_button_draw(&copyBut,renderer);
 	kiss_button_draw(&delBut,renderer);

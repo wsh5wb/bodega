@@ -24,6 +24,7 @@ public:
 
 	void addChild(DisplayObject* child);
 	void removeImmediateChild(DisplayObject* child);
+	void removeImmediateChildNoDelete(DisplayObject* child);
 	void removeImmediateChild(string id);
 	void removeChild(int index);
 	void removeThis();

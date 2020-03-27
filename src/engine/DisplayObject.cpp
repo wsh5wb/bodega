@@ -23,7 +23,7 @@ DisplayObject::DisplayObject(){
 	renderer = NULL;
 }
 
-DisplayObject::DisplayObject(string id, string filepath){
+DisplayObject::DisplayObject(string id, string filepath,bool inGame){
 	this->id = id;
 	this->imgPath = filepath;
 	image = NULL;
@@ -39,10 +39,11 @@ DisplayObject::DisplayObject(string id, string filepath){
 	pivot.x = 0; pivot.y = 0;
 	world = {0, 0};
 	renderer = NULL;
+	this->inGame = inGame;
 	loadTexture(filepath);
 }
 
-DisplayObject::DisplayObject(string id, string filepath, SDL_Renderer* renderer){
+DisplayObject::DisplayObject(string id, string filepath, SDL_Renderer* renderer,bool inGame){
 	this->id = id;
 	this->imgPath = filepath;
 	image = NULL;
@@ -57,6 +58,7 @@ DisplayObject::DisplayObject(string id, string filepath, SDL_Renderer* renderer)
 	position.y = 0;
 	pivot.x = 0; pivot.y = 0;
 	world = {0, 0};
+	this->inGame = inGame;
 	setRenderer(renderer);
 	loadTexture(filepath);
 }
@@ -384,6 +386,18 @@ void DisplayObject::reverseTransformations(AffineTransform &at){
 	at.translate(-position.x,-position.y);
 }
 
+AffineTransform* DisplayObject::globalTransform(){
+	//check references
+	AffineTransform *at;
+	if(parent != NULL){
+		at = parent->globalTransform();
+	}else{
+		at = new AffineTransform();
+	}applyTransformations(*at);
+	at->translate(-pivot.x,-pivot.y);
+	return at;
+}
+
 void DisplayObject::update(set<SDL_Scancode> pressedKeys){
 
 }
@@ -413,7 +427,9 @@ void DisplayObject::draw(AffineTransform &at){
 		if(this->renderer == NULL)
 			SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
 		else
-			SDL_RenderCopyEx(this->renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
+			SDL_RenderCopyEx(this->renderer, curTexture, NULL, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);
+		
+		if(inGame){drawHitbox();}	
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);
 
@@ -433,4 +449,27 @@ void DisplayObject::saveSelf(vector<string> &objects,
 			<< "\n";
 	desc = sstm.str();
 	objects.push_back(desc);
+}
+
+void DisplayObject::drawHitbox(){
+	AffineTransform *at1 = globalTransform();
+	SDL_Point topL = at1->transformPoint(0,0);
+	SDL_Point topR = at1->transformPoint(w,0);
+	SDL_Point bottomL = at1->transformPoint(0,h);
+	SDL_Point bottomR = at1->transformPoint(w,h);
+	delete at1;
+	if(curTexture != NULL){
+		if(!vis){return;}
+		if(selected){
+			SDL_SetRenderDrawColor(renderer,0,255,0,255);
+		}else{
+			SDL_SetRenderDrawColor(renderer,255,0,0,255);
+		}
+		SDL_RenderDrawLine(renderer,topL.x,topL.y,topR.x,topR.y);
+		SDL_RenderDrawLine(renderer,topL.x,topL.y,bottomL.x,bottomL.y);
+		SDL_RenderDrawLine(renderer,bottomL.x,bottomL.y,bottomR.x,bottomR.y);
+		SDL_RenderDrawLine(renderer,bottomR.x,bottomR.y,topR.x,topR.y);
+		SDL_SetRenderDrawColor(renderer,0,0,0,255);
+
+	}
 }

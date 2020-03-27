@@ -26,8 +26,8 @@ public:
 	int numCopies = 0;
 
 	DisplayObject();
-	DisplayObject(string id, string path);
-	DisplayObject(string id, string path, SDL_Renderer* renderer);
+	DisplayObject(string id, string path,bool inGame);
+	DisplayObject(string id, string path, SDL_Renderer* renderer,bool inGame);
 	DisplayObject(string id, int red, int green, int blue);
 	DisplayObject(string id, int red, int green, int blue, SDL_Renderer* renderer);
 	virtual ~DisplayObject();
@@ -88,6 +88,11 @@ public:
 	void setSpeed(int s);//added
 	void setRenderer(SDL_Renderer* renderer);
 	SDL_Renderer* getRenderer();
+	void drawHitbox();
+	DisplayObject * parent = NULL;
+	AffineTransform* globalTransform();
+	bool inGame = false;
+	bool selected = false;
 
 private:
 	

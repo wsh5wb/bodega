@@ -3,7 +3,7 @@
 using namespace std;
 
 DevTool::DevTool() : DevLoop(1280, 720){
-	DisplayObject* character = new DisplayObject("character", "./resources/character/Idle_1.png");
+	DisplayObject* character = new DisplayObject("character", "./resources/character/Idle_1.png",true);
 	Scene* scene = new Scene();
 	scene->setRenderer(DevLoop::renderer);
 	scene->id = "Scene";
@@ -39,7 +39,7 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 	else{
 		y = gridSize * (int) (y/gridSize);
 	}
-	cout << "snapping to: " << x << " " << y << endl;
+	//cout << "snapping to: " << x << " " << y << endl;
 	return {x,y};
 
 
@@ -48,7 +48,6 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 void DevTool::update(set<SDL_Scancode> pressedKeys){
 	DevLoop::update(pressedKeys);
 
-	// cout << *pressedKeys.begin() << endl;
 	mouse->update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
 
@@ -90,9 +89,20 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 				}
 				case SDL_SCANCODE_H:
 				{
-					//cout << "Do stuff" << menu->vis<< endl;
 					resourceBar->toggleVisibility();
 					SDL_Delay(150);
+					break;
+				}
+				case SDL_SCANCODE_P:
+				{
+					//  changeParent
+					makeParent = true;
+					break;
+				}case SDL_SCANCODE_O:
+				{
+					//  changeParent
+					makeParent = false;
+					cout << makeParent << endl;
 					break;
 				}
 			}
@@ -103,38 +113,63 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 	if (draggable != NULL and mouse->leftClick){
 		infoBar->updateObjectFields();
 		auto point = mouse->getCoordinates();
+		auto offset = children[SCENE_DOC_INDEX]->getPosition(); // this is hacky, we should be using affinetransforms but changes to how mouse updates it's own coordinates are needed
+		point = {point.x - offset.x, point.y - offset.y};
 		point = snapToGrid(point);
 		draggable->moveTo(point.x, point.y);
 	}
 	else if(mouse->leftClick){
 		auto click_coords = mouse->getCoordinates();
-
-		for(DisplayObject* child : ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX))->children){
-			auto child_coords = child->getWorld();
-			if (dist(child_coords, click_coords) < 30){
-				cout << "Main checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
-				draggable = child;
-				infoBar->setObj(draggable);
-				break;
-			}
-		}
+		draggable = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
 	}
 	else if(draggable != NULL){
 		infoBar->updateObjectFields();
-		// auto point = draggable->getWorld();
-		// point = snapToGrid(point);
-		// draggable->moveTo(point.x, point.y);
-
 		draggable = NULL;
 	}
 	resourceBar->update(pressedKeys);
 }
 
+DisplayObject* DevTool::leftClick(SDL_Point click_coords, DisplayObjectContainer * c){
+	for(DisplayObject* child : c->children){
+		auto child_coords = child->getWorld();
+		if (dist(child_coords, click_coords) < 30){
+			cout << "Main checking " << child->id << " " << dist(child_coords, click_coords) <<  endl;
+			if(makeParent){
+				draggable = infoBar->curObj;
+				if((dynamic_cast<DisplayObjectContainer*> (child)) == nullptr){
+					continue;
+				}
+				if(infoBar->curObj != child){
+
+					((DisplayObjectContainer*) infoBar->curObj->parent)->removeImmediateChildNoDelete(infoBar->curObj);
+					infoBar->curObj->parent = child;
+					makeParent = false;
+					((DisplayObjectContainer*) child)->addChild(infoBar->curObj);
+
+				}
+			}else{
+				draggable = child;
+				infoBar->setObj(draggable);
+			}
+			infoBar->updateObjectFields();
+			return draggable;
+		}
+		if((dynamic_cast<DisplayObjectContainer*> (child)) != nullptr){
+			DisplayObject* ret = leftClick(click_coords,(DisplayObjectContainer *) child);
+			if(ret != NULL){
+				return ret;
+			}
+		}
+
+	}return NULL;
+}
+
 void DevTool::draw(AffineTransform &at){
 	DevLoop::draw(at);
 	DisplayObjectContainer::draw(at);
-	// mouse->draw(at);
+	mouse->draw(at);
 	resourceBar->draw(at);
+
 }
 
 
