@@ -460,7 +460,11 @@ void DisplayObject::drawHitbox(){
 	delete at1;
 	if(curTexture != NULL){
 		if(!vis){return;}
-		SDL_SetRenderDrawColor(renderer,255,0,0,255);
+		if(selected){
+			SDL_SetRenderDrawColor(renderer,0,0,255,255);
+		}else{
+			SDL_SetRenderDrawColor(renderer,255,0,0,255);
+		}
 		SDL_RenderDrawLine(renderer,topL.x,topL.y,topR.x,topR.y);
 		SDL_RenderDrawLine(renderer,topL.x,topL.y,bottomL.x,bottomL.y);
 		SDL_RenderDrawLine(renderer,bottomL.x,bottomL.y,bottomR.x,bottomR.y);

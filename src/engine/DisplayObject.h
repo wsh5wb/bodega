@@ -92,7 +92,7 @@ public:
 	DisplayObject * parent = NULL;
 	AffineTransform* globalTransform();
 	bool inGame = false;
-
+	bool selected = false;
 
 private:
 	

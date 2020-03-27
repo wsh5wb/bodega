@@ -60,11 +60,14 @@ void ItemBar::initThisWindow(DisplayObjectContainer * win){
 }
 
 void ItemBar::setObj(DisplayObject *& obj){
-	if(this == NULL){
+	if(this == NULL ){
 		cout << "Item Bar is null";
 		return;
+	}if(curObj != NULL){
+		curObj->selected = false;
 	}
 	curObj = obj;
+	obj->selected = true;
 	updateObjectFields();
 }
 
