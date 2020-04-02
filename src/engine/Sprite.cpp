@@ -4,6 +4,10 @@ Sprite::Sprite() {
 
 }
 
+Sprite::Sprite(string id, string filepath) : DisplayObjectContainer(id,filepath){
+
+}
+
 
 Sprite::Sprite(string id, string filepath, bool particle) : DisplayObjectContainer(id,filepath,particle){
 

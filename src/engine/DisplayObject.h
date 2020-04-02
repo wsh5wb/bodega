@@ -27,6 +27,7 @@ public:
 	int w, h;
 
 	DisplayObject();
+	DisplayObject(string id, string path);
 	DisplayObject(string id, string path, bool particle);
 	DisplayObject(string id, int red, int green, int blue);
 	virtual ~DisplayObject();
@@ -45,7 +46,6 @@ public:
 	void setRect(SDL_Rect s);
 	void decreaseAlpha();
 	void increaseAlpha();
-	void setAlpha(int a);//added
 	void toggleVisibility();
 	void makeVisible();
 	void makeInvisible();

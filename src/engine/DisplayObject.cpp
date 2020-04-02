@@ -20,6 +20,12 @@ DisplayObject::DisplayObject() {
 	globalHitbox = new SDL_Point[4];
 }
 
+DisplayObject::DisplayObject(string id, string filepath){
+	this->id = id;
+	this->imgPath = filepath;
+	loadTexture(filepath);
+}
+
 DisplayObject::DisplayObject(string id, string filepath, bool particle){
 	this->id = id;
 	this->imgPath = filepath;
@@ -116,21 +122,12 @@ void DisplayObject::increaseAlpha() {
 	SDL_SetTextureAlphaMod(curTexture, alpha);
 }
 
-void DisplayObject::setAlpha(int a) {
-	alpha = a;
-}
-
-
 void DisplayObject::setAlpha(int a){
 	alpha = a;
 	if(a > 255){alpha = 255;}
 	else if(a < 0){alpha = 0;}
 
 	SDL_SetTextureAlphaMod(curTexture,alpha);
-}
-
-int DisplayObject::getAlpha(){
-	return alpha;
 }
 
 void DisplayObject::toggleVisibility(){
@@ -245,17 +242,8 @@ void DisplayObject::setScaleY(double y){
 	scaleY = y;
 }
 
-void DisplayObject::setScale(double x, double y) {
-	scaleX = x;
-	scaleY = y;
-}
-
 void DisplayObject::setRotation(double angle) {
 	rotationAmount = angle * PI / 180;
-}
-
-void DisplayObject::setRotationValue(double angle) {
-	rotation = angle * PI / 180;
 }
 
 void DisplayObject::setRotationValue(double degrees){
