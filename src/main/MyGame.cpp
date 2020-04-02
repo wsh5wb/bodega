@@ -16,25 +16,41 @@ MyGame::MyGame() : Game(1200, 1000){
 	coin = new AnimatedSprite("ENEMY_COIN","./resources/miscellaneous/Dogecoin_Logo.png");
 	coin->moveTo(200,200);
 	coin->showHitbox = true;
-
+	
+	//p->showHitbox = true;
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
 
-	SDL_Point charHit[4];
+	/*SDL_Point charHit[4];
 	charHit[0] = {character->w*boundLow,character->h*boundLow};
 	charHit[1] = {character->w*boundHigh,character->h*boundLow};
 	charHit[3] = {character->w*boundLow,character->h*boundHigh};
-	charHit[2] = {character->w*boundHigh,character->h*boundHigh};
+	charHit[2] = {character->w*boundHigh,character->h*boundHigh};*/
 
-	character->setHitbox(charHit);
+	character->setHitbox(boundLow,boundHigh);
 
-	charHit[0] = {coin->w*boundLow,coin->h*boundLow};
+	/*charHit[0] = {coin->w*boundLow,coin->h*boundLow};
 	charHit[1] = {coin->w*boundHigh,coin->h*boundLow};
 	charHit[3] = {coin->w*boundLow,coin->h*boundHigh};
-	charHit[2] = {coin->w*boundHigh,coin->h*boundHigh};
+	charHit[2] = {coin->w*boundHigh,coin->h*boundHigh};*/
 
-	coin->setHitbox(charHit);
+	coin->setHitbox(boundLow, boundHigh);
 
+// PARTICLE STUFF
+	/*em = new Emitter(1200,20,false);
+	Emitter * fire = new Emitter("fire","./resources/miscellaneous/fire.png",true);
+	fire->moveTo(300,610);
+	fire->scale(7);
+	//em->addParticle("./resources/miscellaneous/snow.png",0,4,4000,50,.01,.01);
+	fire->addRandParticle("./resources/miscellaneous/snow.png",-3,3,-4,-1,100,100,.002,.002);
+	//p = new Particle("snow","./resources/miscellaneous/snow.png");
+	//p->scale(0.1);
+	em->showHitbox = true;
+	em->setHitbox(0, 1);
+	fire->setHitbox(0, 1);
+	em->id = "SETTING1";*/
+
+	//p->setHitbox(0, 1);
 	//character->addAnimation("./resources/character/Dead","Dead",30,60,true);
 	//cout << "play";
 	/*character->addAnimation("./resources/character/spritesheet.png","./resources/character/deadSheet.xml","Dead",1,60,true);
@@ -48,7 +64,12 @@ MyGame::MyGame() : Game(1200, 1000){
 	this->addChild(character);
 	this->addChild(coin);
 
+//PARTICLE STUFF
+	/*this->addChild(em);
+	this->addChild(fire);*/
+
 	Game::cs.watchForCollisions("ENEMY", "PLAYER");
+	Game::cs.watchForCollisions("SETTING", "PLAYER");
 }
 
 MyGame::~MyGame(){
@@ -192,9 +213,10 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 }
 
 void MyGame::draw(AffineTransform &at){
+
 	Game::draw(at);
 	SDL_RenderClear(Game::renderer);
-	DisplayObjectContainer::draw(at);
+	DisplayObjectContainer::draw(at);	
 	// Game::cs.collidesWith(character,coin);
 	SDL_RenderPresent(Game::renderer);
 }

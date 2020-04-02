@@ -18,10 +18,10 @@ DisplayObject::DisplayObject(){
 	globalHitbox = new SDL_Point[4];
 }
 
-DisplayObject::DisplayObject(string id, string filepath){
+DisplayObject::DisplayObject(string id, string filepath, bool particle){
 	this->id = id;
 	this->imgPath = filepath;
-	globalHitbox = new SDL_Point[4];
+	if(!particle){ globalHitbox = new SDL_Point[4];}
 
 	loadTexture(filepath);
 }
@@ -79,6 +79,16 @@ void DisplayObject::setRect(SDL_Rect s){
 
 void DisplayObject::loadRGBTexture(int red, int green, int blue){
 	image = SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0x000000ff);
+	SDL_FillRect(image, NULL, SDL_MapRGB(image->format, red, green, blue));
+	texture = SDL_CreateTextureFromSurface(Game::renderer, image);
+	SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
+	setTexture(texture);
+}
+
+void DisplayObject::loadRGBTexture(int red, int green, int blue, int w, int h){
+	//cout << blue;
+	isRGB = true;
+	image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 	SDL_FillRect(image, NULL, SDL_MapRGB(image->format, red, green, blue));
 	texture = SDL_CreateTextureFromSurface(Game::renderer, image);
 	SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
@@ -292,6 +302,7 @@ void DisplayObject::draw(AffineTransform &at){
 
 		applyTransformations(at);
 		at.translate(-pivot.x,-pivot.y);
+
 		
 		SDL_Point topL = at.transformPoint(0,0);
 		SDL_Point topR = at.transformPoint(w,0);
@@ -321,6 +332,7 @@ void DisplayObject::drawHitbox(bool col){
 		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}
 		else{ SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);}
 		globalHitbox = getGlobalHitbox();
+		//cout << id << " " << globalHitbox[0].x << " " << globalHitbox[1].x  << " " << w << endl;
 		SDL_RenderDrawLine(Game::renderer,globalHitbox[0].x,globalHitbox[0].y,globalHitbox[1].x,globalHitbox[1].y);
 		SDL_RenderDrawLine(Game::renderer,globalHitbox[0].x,globalHitbox[0].y,globalHitbox[3].x,globalHitbox[3].y);
 		SDL_RenderDrawLine(Game::renderer,globalHitbox[3].x,globalHitbox[3].y,globalHitbox[2].x,globalHitbox[2].y);
@@ -378,6 +390,17 @@ void DisplayObject::setHitbox(SDL_Point* points){
 	this->hitbox = new SDL_Point[4];
 	for(int i = 0; i < 4; i ++)
 		this->hitbox[i] = points[i];
+}
+
+void DisplayObject::setHitbox(double boundLow, double boundHigh){
+	SDL_Point charHit[4];
+	charHit[0] = {(int)(w*boundLow),(int)(h*boundLow)};
+	charHit[1] = {(int)(w*boundHigh),(int)(h*boundLow)};
+	charHit[3] = {(int)(w*boundLow),(int)(h*boundHigh)};
+	charHit[2] = {(int)(w*boundHigh),(int)(h*boundHigh)};
+
+	setHitbox(charHit);
+
 }
 
 

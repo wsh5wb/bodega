@@ -79,7 +79,7 @@ void CollisionSystem::handleEvent(Event* e){
 	object.x1 = child->getGlobalHitbox()[0].x; object.x2 = child->getGlobalHitbox()[1].x;
 	if(child->id.find("ENEMY") != string::npos)			objects["ENEMY"].push_back(object);
 	else if(child->id.find("PLAYER") != string::npos)	objects["PLAYER"].push_back(object);
-
+	else if(child->id.find("SETTING") != string::npos)	objects["SETTING"].push_back(object);
 }
 
 //This function asks the collision system to start checking for collisions between all pairs
@@ -144,9 +144,10 @@ bool checkArea(SDL_Point p, SDL_Point topL, SDL_Point topR, SDL_Point botL, SDL_
 //returns true iff obj1 hitbox and obj2 hitbox overlap. Uses the following method from DO:
 //SDL_Point* DisplayObject::getGlobalHitbox();
 bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
+	//cout << obj1->id << " " << obj2->id << endl;
 	bool ret = true;
-	AffineTransform *at1 = globalTransform(obj1);
-	AffineTransform *at2 = globalTransform(obj2);
+	//AffineTransform *at1 = globalTransform(obj1);
+	//AffineTransform *at2 = globalTransform(obj2);
 
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
@@ -183,8 +184,8 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	// obj1->drawHitbox(*at1, ret);
 	// obj2->drawHitbox(*at2, ret);
 
-	delete at1;
-	delete at2;
+	//delete at1;
+	//delete at2;
 	return ret;
 }
 

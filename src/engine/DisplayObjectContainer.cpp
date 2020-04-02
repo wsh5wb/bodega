@@ -10,7 +10,8 @@ DisplayObjectContainer::DisplayObjectContainer() : DisplayObject(){
 	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
-DisplayObjectContainer::DisplayObjectContainer(string id, string filepath) : DisplayObject(id,filepath){
+DisplayObjectContainer::DisplayObjectContainer(string id, string filepath, bool particle) : DisplayObject(id,filepath,particle){
+	if(particle) {return;}
 	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
 	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
