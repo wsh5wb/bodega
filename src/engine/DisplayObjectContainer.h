@@ -4,10 +4,9 @@
 #include <vector>
 #include "DisplayObject.h"
 #include "AffineTransform.h"
-//#include "Event.h"
 #include <string>
 #include <fstream>
-
+																					
 using namespace std;
 
 class DisplayObjectContainer : public DisplayObject{
@@ -15,7 +14,7 @@ class DisplayObjectContainer : public DisplayObject{
 public:
 	
 	DisplayObjectContainer();
-	DisplayObjectContainer(string id, string filepath);
+	DisplayObjectContainer(string id, string filepath, bool particle);
 	DisplayObjectContainer(string id, int red, int green, int blue);
 	virtual ~DisplayObjectContainer();
 

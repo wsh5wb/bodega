@@ -10,7 +10,7 @@ class Sprite : public DisplayObjectContainer{
 public:
 	
 	Sprite();
-	Sprite(string id, string filepath);
+	Sprite(string id, string filepath, bool particle);
 	Sprite(string id, int red, int green, int blue);
 
 	virtual void update(set<SDL_Scancode> pressedKeys);

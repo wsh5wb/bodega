@@ -5,6 +5,7 @@ Event::Event(string type, EventDispatcher* source){
 	source = source;
 }
 
+
 string Event::getType(){
 	return eventType;
 }

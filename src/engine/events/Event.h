@@ -17,10 +17,11 @@ public:
 
 	string getType();
 	EventDispatcher* getSource();
-
+	
 private:
 	string eventType = "";
 	EventDispatcher* source;
+
 	
 };
 

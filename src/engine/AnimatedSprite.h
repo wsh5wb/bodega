@@ -18,9 +18,11 @@ public:
 	AnimatedSprite();
 	AnimatedSprite(string id);
 	AnimatedSprite(string id, string filepath);
+	//AnimatedSprite(string id, string sheetpath, string xmlpath);
 	~AnimatedSprite();
 
 	void addAnimation(string basepath, string animName, int numFrames, int frameRate, bool loop);
+	void addAnimation(string sheetpath, string xmlpath, string animName, int numFrames, int frameRate, bool loop);
 	Animation* getAnimation(string animName);
 
 	void play(string animName);
@@ -34,14 +36,16 @@ public:
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	bool playing = false;
+	string currAnimation = "";
 	int curFrame = 0;
 	int frameRate, startIndex, endIndex, numFrames;
 	std::clock_t start;
-	bool loop;
+	bool loop, usesSheet;
 
 private:
 	unordered_map<string,Animation*> animationMap;
 	vector<SDL_Surface*> images;
+	vector<SDL_Rect> locations;
 };
 
 #endif
