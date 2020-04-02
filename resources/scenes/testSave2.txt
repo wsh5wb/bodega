@@ -43,7 +43,7 @@
 1 Statue2 ./resources/art/hades_statue1.png 0 0 0 true false 63 95 5 1.57 1.57 0 0.000872665 255 0 0 500 50
 1 Statue3 ./resources/art/hades_statue1.png 0 0 0 true false 63 95 5 1.57 1.57 0 0.000872665 255 0 0 200 250
 1 Statue4 ./resources/art/hades_statue1.png 0 0 0 true false 63 95 5 1.57 1.57 0 0.000872665 255 0 0 500 250
-5 Char ./resources/character/Idle_10.png 0 0 0 true false 416 454 5 0.2 0.2 0 0.000872665 255 0 0 360 190
+5 Char ./resources/character/Idle_10.png 0 0 0 true false 416 454 5 0.2 0.2 0 0.000872665 255 0 0 185 200
 Scene Default0
 Scene Default1
 Scene Default2
