@@ -95,4 +95,4 @@ flycheck_*.el
 
 # Builds
 bin/*
-src/dev_tool/build/*
+dev_tool/build/*
