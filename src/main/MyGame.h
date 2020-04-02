@@ -11,6 +11,8 @@
 #include "Scene.h"
 #include "myCoin.h"
 #include "QuestManager.h"
+#include "CollisionSystem.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -24,8 +26,12 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
-	
-	Scene* character;
+	AnimatedSprite *character;
+	AnimatedSprite *coin;
+	Player *me;
+	//Scene *bg;
+	CollisionSystem cs;
+	//Scene* character;
 	string scene;
 	bool changed;
 	Coin* myCoin;

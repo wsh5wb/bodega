@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "DisplayObjectContainer.h"
+#include "CollisionSystem.h"
 #include <vector>
 #include <set>
 
@@ -26,6 +27,8 @@ public:
 	//Global frame counter
 	static unsigned int frameCounter;
 
+	static CollisionSystem cs;
+
 	Game(int windowWidth, int windowHeight);
 	virtual ~Game();
 	void start();
@@ -38,7 +41,9 @@ private:
 	void initSDL();
 	void quitSDL();
 	set<SDL_Scancode> pressedKeys;
-	
+
+	const int JOYSTICK_DEAD_ZONE = 8000;
+	SDL_Joystick* gGameController = NULL;
 };
 
 #endif
