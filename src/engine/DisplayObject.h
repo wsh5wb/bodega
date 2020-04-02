@@ -25,7 +25,7 @@ public:
 	int w, h;
 
 	DisplayObject();
-	DisplayObject(string id, string path);
+	DisplayObject(string id, string path, bool particle);
 	DisplayObject(string id, int red, int green, int blue);
 	virtual ~DisplayObject();
 
@@ -36,6 +36,7 @@ public:
 
 	void loadTexture(string filepath);
 	void loadRGBTexture(int red, int green, int blue);
+	void loadRGBTexture(int red, int green, int blue, int w, int h);
 	void setTexture(SDL_Texture* t);
 	void setImage(SDL_Surface* img);
 	void setRect(SDL_Rect s);
@@ -84,6 +85,7 @@ public:
 	SDL_Renderer* getRenderer();
 	SDL_Point* getGlobalHitbox();
 	void setHitbox(SDL_Point* points);
+	void setHitbox(double boundLow, double boundHigh);
 	void drawHitbox(bool col);
 	void drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col);
 	void updateDelta(int x, int y, double scaleX, double scaleY, double rot);
@@ -95,6 +97,10 @@ public:
 	bool showHitbox = false;
 	bool isCollided = false;
 	SDL_Point* hitbox;
+
+	double scaleX = 1;
+	double scaleY = 1;
+
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 private:
 	SDL_Texture* texture = NULL;
@@ -106,8 +112,7 @@ private:
 protected:
 	SDL_Rect srcrect;
 	int speed = 5;
-	double scaleX = 1;
-	double scaleY = 1;
+
 	double rotation = 0;
 	double rotationAmount = 0.05;
 	int alpha;

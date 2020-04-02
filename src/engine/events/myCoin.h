@@ -4,7 +4,7 @@ class Sprite;
 class EventDispatcher;
 class Coin : public Sprite{
 public:
-  Coin(string id, string filepath) : Sprite(id, filepath){
+  Coin(string id, string filepath) : Sprite(id, filepath,false){
     // this->pickedUp = new Event("COIN_PICKED_UP", this);
 
   }
