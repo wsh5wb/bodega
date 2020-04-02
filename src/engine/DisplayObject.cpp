@@ -41,7 +41,7 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue){
 DisplayObject::~DisplayObject(){
 	if(image != NULL) SDL_FreeSurface(image);
 	if(texture != NULL) SDL_DestroyTexture(texture);
-	
+
 }
 
 void DisplayObject::loadTexture(string filepath){
@@ -115,7 +115,7 @@ void DisplayObject::setAlpha(int a){
 	alpha = a;
 	if(a > 255){alpha = 255;}
 	else if(a < 0){alpha = 0;}
-	
+
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
@@ -229,7 +229,7 @@ void DisplayObject::setScaleX(double x){
 	scaleX = x;
 	//deltaScaleX = x;
 }
-	
+
 void DisplayObject::setScaleY(double y){
 	deltaScaleY = y/scaleY;
 	scaleY = y;
@@ -303,22 +303,21 @@ void DisplayObject::draw(AffineTransform &at){
 		applyTransformations(at);
 		at.translate(-pivot.x,-pivot.y);
 
-		
 		SDL_Point topL = at.transformPoint(0,0);
 		SDL_Point topR = at.transformPoint(w,0);
 		SDL_Point bottomR = at.transformPoint(w,h);
 
 		SDL_Point pOrigin;
 		pOrigin.x = 0; pOrigin.y = 0;
-		
+
 		int distAdj = dist(topL,topR);
 		int distOpp = dist(topR,bottomR);
 		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
 
 		double angle = atan2(topR.y-topL.y,topR.x-topL.x)*180/PI;
 
-		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle, &pOrigin, SDL_FLIP_NONE);	
-		
+		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle, &pOrigin, flip);	
+
 		at.translate(pivot.x,pivot.y);
 		reverseTransformations(at);
 
@@ -353,7 +352,7 @@ void DisplayObject::drawHitbox(bool col){
 	// 	SDL_Point topL = at.transformPoint(0,0);
 	// 	SDL_Point topR = at.transformPoint(w,0);
 	// 	SDL_Point bottomR = at.transformPoint(w,h);
-		
+
 	// 	int distAdj = dist(topL,topR);
 	// 	int distOpp = dist(topR,bottomR);
 

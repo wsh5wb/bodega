@@ -17,7 +17,7 @@ CollisionSystem Game::cs;
 
 Game::Game(int windowWidth, int windowHeight){
 	Game::instance = this;
-	
+
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
 
@@ -101,7 +101,7 @@ void Game::start(){
 				if(event.jaxis.which == 0){
 					//x axis motion
 					if(event.jaxis.axis == 0){
-						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)	
+						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
 							pressedKeys.insert(SDL_SCANCODE_A);
 						else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
 							pressedKeys.erase(SDL_SCANCODE_A);
@@ -161,7 +161,7 @@ void Game::start(){
 				}
 				break;
 		}
-	
+
 	}
 }
 

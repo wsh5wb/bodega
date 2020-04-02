@@ -28,7 +28,7 @@ public:
 	DisplayObject(string id, string path, bool particle);
 	DisplayObject(string id, int red, int green, int blue);
 	virtual ~DisplayObject();
-	
+
 	AffineTransform* getGlobalTransform(DisplayObject* o);
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
@@ -97,14 +97,17 @@ public:
 	bool showHitbox = false;
 	bool isCollided = false;
 	SDL_Point* hitbox;
+
 	double scaleX = 1;
 	double scaleY = 1;
+
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
 private:
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;
 	/* Texture currently being drawn. Equal to texture for normal DO */
 	SDL_Texture* curTexture;
-	
+
 
 protected:
 	SDL_Rect srcrect;
