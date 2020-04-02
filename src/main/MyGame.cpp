@@ -149,8 +149,10 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 void MyGame::draw(AffineTransform &at){
 
 	Game::draw(at);
+//	myCamera->draw(at);
 	SDL_RenderClear(Game::renderer);
 	DisplayObjectContainer::draw(at);	
 	// Game::cs.collidesWith(character,coin);
+
 	SDL_RenderPresent(Game::renderer);
 }

@@ -10,6 +10,8 @@
 #include "EventDispatcher.h"
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -25,6 +27,7 @@ public:
 	int w, h;
 
 	DisplayObject();
+	DisplayObject(string id, string path);
 	DisplayObject(string id, string path, bool particle);
 	DisplayObject(string id, int red, int green, int blue);
 	virtual ~DisplayObject();
@@ -33,6 +36,7 @@ public:
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
+	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	void loadTexture(string filepath);
 	void loadRGBTexture(int red, int green, int blue);
@@ -59,11 +63,13 @@ public:
 	void scaleIn();
 	void scaleOut();
 	void scale(double s);
+
 	void setScale(double x, double y);
 	void setScaleX(double x);
 	void setScaleY(double y);
 	void setRotation(double angle);
 	void setRotationValue(double degrees);
+
 	double getRotation();
 	void rotateCW();
 	void rotateCCW();
@@ -73,6 +79,10 @@ public:
 	void reverseTransformations(AffineTransform &at);
 	SDL_Point getPivot();
 	SDL_Point getPosition();
+
+	double getScaleX();
+	double getScaleY();
+
 	int getAlpha();
 	void setAlpha(int a);
 	void setPosition(SDL_Point p);

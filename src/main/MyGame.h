@@ -9,6 +9,8 @@
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "Sound.h"
+#include "Camera.h"
 #include "myCoin.h"
 #include "QuestManager.h"
 #include "CollisionSystem.h"
@@ -38,11 +40,9 @@ private:
 
 	CollisionSystem cs;
 	//Scene* character;
-	string scene;
-	bool changed;
-	Coin* myCoin;
-	bool isQuestDone;
 
+	string scene;
+	Sound effect;
 };
 
 #endif

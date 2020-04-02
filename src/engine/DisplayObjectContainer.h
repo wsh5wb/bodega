@@ -14,6 +14,7 @@ class DisplayObjectContainer : public DisplayObject{
 public:
 	
 	DisplayObjectContainer();
+	DisplayObjectContainer(string id, string filepath);
 	DisplayObjectContainer(string id, string filepath, bool particle);
 	DisplayObjectContainer(string id, int red, int green, int blue);
 	virtual ~DisplayObjectContainer();
@@ -30,6 +31,7 @@ public:
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
+	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	vector<DisplayObject*> children;
 private:

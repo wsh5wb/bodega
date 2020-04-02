@@ -10,6 +10,11 @@ DisplayObjectContainer::DisplayObjectContainer() : DisplayObject(){
 	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
+DisplayObjectContainer::DisplayObjectContainer(string id, string filepath) : DisplayObject(id,filepath){
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
+}
+
 DisplayObjectContainer::DisplayObjectContainer(string id, string filepath, bool particle) : DisplayObject(id,filepath,particle){
 	if(particle) {return;}
 	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
@@ -100,4 +105,23 @@ void DisplayObjectContainer::draw(AffineTransform &at){
 	}
 	
 	DisplayObject::reverseTransformations(at);	
+}
+
+void DisplayObjectContainer::saveSelf(vector<string> &objects, vector<string> &dependencies) {
+	string desc;
+	stringstream sstm;
+	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
+	sstm << "2 " << id << " " << imgPath << " " << red << " " << green << " "
+			<< blue << " " << std::boolalpha << vis << " " << std::boolalpha
+			<< isRGB << " " << w << " " << h << " " << speed << " " << scaleX
+			<< " " << scaleY << " " << rotation << " " << rotationAmount << " "
+			<< alpha << " " << px0 << " " << py0 << " " << px1 << " " << py1
+			<< "\n";
+	desc = sstm.str();
+	objects.push_back(desc);
+	for (DisplayObject * child : children) {
+			string dep = id + " " + child->id + "\n";
+			dependencies.push_back(dep);
+			child->saveSelf(objects, dependencies);
+		}
 }
