@@ -23,7 +23,7 @@ MyGame::MyGame() :
 }
 
 MyGame::~MyGame() {
-	character->saveScene("./resources/scenes/testSave2.txt");
+//	character->saveScene("./resources/scenes/testSave2.txt");
 //	std::ofstream o("./resources/scenes/test.txt");
 //	o << "2 1" << std::endl;
 //	o << "0 " << "Scene" << " "<< "0" << " " << "0" << " "<< "0" << " "<< "0" << " "<< "true" << " "<< "false"  << " "<< "0" << " "<< "0" << std::endl;
