@@ -8,10 +8,15 @@ using namespace std;
 Enemy::Enemy(Player* player) : Sprite("ENEMY", "resources/enemies/enemyFloating_1.png"){
 	this->type = "ENEMY";
 	this->player = player;
-	this->width = 42; this->height = 40;
-	this->pivotX = this->width/2;
-	this->pivotY = this->height/2;
+	this->w = 42; this->h = 40;
+	this->pivot.x = this->w/2;
+	this->pivot.y = this->h/2;
 	this->state = 0;
+	this->position.x=0;
+	this->position.y=0;
+	this->rotVel=0;
+	this->rotAcc=0.007;
+	this->maxRotVel=0.35;
 }
 
 void Enemy::update(set<SDL_Scancode> pressedKeys){
@@ -67,32 +72,33 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 	}
 	else if(this->state == 1){
 		//if player is close, start to prepare charge
-		int dist = std::max(std::abs(this->x-this->player->position.x),std::abs(this->y-this->player->position.y));
-
+		int dist = std::max(std::abs(this->position.x-this->player->position.x),std::abs(this->position.y-this->player->position.y));
+		//cout<<dist<<endl;
 		if(dist<500){
 			this->state = 2;
 			this->vel = 0;
 			this->maxVel = 12;
 			this->acc = 0.5;
 			this->rotVel = 0;
-			this->rotAcc = 0.4;
-			this->maxRotVel = 20;
+			this->rotAcc = 0.007;
+			this->maxRotVel = 0.35;
 		}
 	}
 	else if(this->state == 2){
-		if(std::abs(this->rotVel - this->maxRotVel) < 0.0001){
+		if(std::abs(this->rotVel) - this->maxRotVel > -0.0001){
 			this->state = 3;
 			this->targX = this->player->position.x;
 			this->targY = this->player->position.y;
 		}
 	}
 	else if(this->state == 3){
+		//cout<<pivot.x<<endl;
 		if(isTargetReached()){
 			this->state = 4;
 			this->rotation = 0;
 			this->rotVel = 0;
-			this->targX = this->x;
-			this->targY = this->y - 350;
+			this->targX = this->position.x;
+			this->targY = this->position.y - 350;
 		}
 	}
 	else if(this->state == 4){
@@ -104,6 +110,7 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 	if(this->shield == 0){
 		this->state = 5;
 	}
+	cout<<this->state<<endl;
 }
 
 void Enemy::onMeleeStrike(){
@@ -149,10 +156,10 @@ void Enemy::prepareCharge(){
 }
 
 void Enemy::setPatrolRange(){
-	this->minPatX = this->x-120;
-	this->maxPatX = this->x+120;
-	this->minPatY = this->y-120;
-	this->maxPatY = this->y+120;
+	this->minPatX = this->position.x-120;
+	this->maxPatX = this->position.x+120;
+	this->minPatY = this->position.y-120;
+	this->maxPatY = this->position.y+120;
 }
 
 void Enemy::patrol(){
@@ -180,16 +187,16 @@ void Enemy::moveToTarget(){
 	this->vel = std::min(this->vel+this->acc, this->maxVel);
 
 	//use unit vector to determine percent that goes into x and y
-	double theta = std::atan2(std::abs(this->targY - this->y),std::abs(this->targX - this->x));
+	double theta = std::atan2(std::abs(this->targY - this->position.y),std::abs(this->targX - this->position.x));
 	double xComp = this->vel*std::cos(theta);
 	double yComp = this->vel*std::sin(theta);
-	if(this->targX - this->x < 0) xComp *= -1;
-	if(this->targY - this->y < 0) yComp *= -1;
+	if(this->targX - this->position.x < 0) xComp *= -1;
+	if(this->targY - this->position.y < 0) yComp *= -1;
 
-	this->x += xComp;
-	this->y += yComp;
+	this->position.x += xComp;
+	this->position.y += yComp;
 }
 
 bool Enemy::isTargetReached(){
-	return std::abs(this->x-this->targX) <= 6 && std::abs(this->y-this->targY) <= 6;
+	return std::abs(this->position.x-this->targX) <= 6 && std::abs(this->position.y-this->targY) <= 6;
 }

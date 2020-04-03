@@ -18,8 +18,8 @@ Player::Player() : AnimatedSprite("PLAYER_YOU"){
 	this->h = 454;
 	this->scaleX = 0.15;
 	this->scaleY = 0.15;
-	this->pivot.x = 0;//this->w / 2;
-	this->pivot.y = 0;//this->h / 2;
+	this->pivot.x = this->w / 2;
+	this->pivot.y = this->h / 2;
 	this->addAnimation("resources/PlayerSprites/idleSprite.png", "resources/PlayerSprites/idleSheet.xml", "Idle", 1, 60, true);
 	this->addAnimation("resources/PlayerSprites/runSprite.png", "resources/PlayerSprites/runSheet.xml", "Run", 1, 60, true);
 	this->addAnimation("resources/PlayerSprites/jumpsprites.png", "resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);

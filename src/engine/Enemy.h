@@ -45,8 +45,8 @@ public:
 	int numIFrames = 0;
 
 	//variables
-	int x, y, targX, targY, width, height;
-	int pivotX, pivotY;
+	int targX, targY;
+	//int pivotX, pivotY;
 	bool clean;
 	int state;
 	double vel;

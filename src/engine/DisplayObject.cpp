@@ -270,13 +270,17 @@ SDL_Point DisplayObject::getPosition(){
 
 void DisplayObject::applyTransformations(AffineTransform &at){
 	at.translate(position.x,position.y);
+	//at.translate(pivotX,pivotY);
 	at.rotate(rotation);
 	at.scale(scaleX,scaleY);
+	//at.translate(-pivotX,-pivotY);
 }
 
 void DisplayObject::reverseTransformations(AffineTransform &at){
+	//at.translate(pivotX, pivotY);
 	at.scale(1/scaleX,1/scaleY);
 	at.rotate(-rotation);
+	//at.translate(-pivotX,-pivotY);
 	at.translate(-position.x,-position.y);
 }
 
@@ -288,7 +292,7 @@ void DisplayObject::draw(AffineTransform &at){
 
 	if(curTexture != NULL){
 		if(!vis){return;}
-
+		//cout<<pivot.x<<endl;
 		applyTransformations(at);
 		at.translate(-pivot.x,-pivot.y);
 
