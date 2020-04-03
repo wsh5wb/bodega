@@ -19,6 +19,8 @@ MyGame::MyGame() : Game(1200, 1000){
 	coin->showHitbox = true;
 	me = new Player();
 	me->showHitbox = true;
+	en = new Enemy(me);
+	en->showHitbox = true;
 
 
 	double boundLow = 0.15;
@@ -57,10 +59,18 @@ MyGame::MyGame() : Game(1200, 1000){
 
 	me->setHitbox(charHit);
 
+	charHit[0] = {en->w*boundLow, en->h*boundLow};
+	charHit[1] = {en->w*boundHigh, en->h*boundLow};
+	charHit[3] = {en->w*boundLow,en->h*boundHigh};
+	charHit[2] = {en->w*boundHigh,en->h*boundHigh};
+
+	en->setHitbox(charHit);
+
 	this->addChild(character);
 	this->addChild(coin);
 	//cout << "Getting here." << endl;
 	this->addChild(me);
+	this->addChild(en);
 	//this->addChild(bg);
 
 	Game::cs.watchForCollisions("ENEMY", "PLAYER");

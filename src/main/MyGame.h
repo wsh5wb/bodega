@@ -13,6 +13,7 @@
 #include "QuestManager.h"
 #include "CollisionSystem.h"
 #include "Player.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ private:
 	AnimatedSprite *coin;
 	Player *me;
 	Scene *bg;
+	Enemy *en;
 	CollisionSystem cs;
 	//Scene* character;
 	string scene;

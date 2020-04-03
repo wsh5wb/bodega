@@ -4,10 +4,10 @@
 
 using namespace std;
 
-//Here, "Sayu" is the player character
-Enemy::Enemy(Sayu* sayu) : Sprite("Enemy", "resources/enemies/enemyFloating_1.png"){
-	this->type = "Enemy";
-	this->sayu = sayu;
+//Here, "Player" is the player character
+Enemy::Enemy(Player* player) : Sprite("ENEMY", "resources/enemies/enemyFloating_1.png"){
+	this->type = "ENEMY";
+	this->player = player;
 	this->width = 42; this->height = 40;
 	this->pivotX = this->width/2;
 	this->pivotY = this->height/2;
@@ -16,7 +16,7 @@ Enemy::Enemy(Sayu* sayu) : Sprite("Enemy", "resources/enemies/enemyFloating_1.pn
 void Enemy::update(set<SDL_Scancode> pressedKeys){
 	Sprite::update(pressedKeys);
 
-	
+
 	//enemy is dead so clean it up
 	if(this->health == 0){
 		this->clean = true; //scene will clean it up
@@ -34,7 +34,7 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 	//state 3 = charging
 	//state 4 = post-charge movement
 	//state 5 = stunned
-	
+
 	if(this->state == 0){
 		setPatrolRange();
 	}
@@ -45,14 +45,14 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 		prepareCharge();
 	}
 	else if(this->state == 3){
-		// this->targX = sayu->x;
-		// this->targY = sayu->y;
+		// this->targX = player->position.x;
+		// this->targY = player->position.y;
 		charge();
 	}
 	else if(this->state == 4){
 		moveToTarget();
 	}
-	else if(this->state == 5){	
+	else if(this->state == 5){
 		this->rotation -= 1;
 	}
 
@@ -66,8 +66,8 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 	}
 	else if(this->state == 1){
 		//if player is close, start to prepare charge
-		int dist = std::max(std::abs(this->x-this->sayu->x),std::abs(this->y-this->sayu->y));
-		
+		int dist = std::max(std::abs(this->x-this->player->position.x),std::abs(this->y-this->player->position.y));
+
 		if(dist<500){
 			this->state = 2;
 			this->vel = 0;
@@ -81,8 +81,8 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 	else if(this->state == 2){
 		if(std::abs(this->rotVel - this->maxRotVel) < 0.0001){
 			this->state = 3;
-			this->targX = this->sayu->x;
-			this->targY = this->sayu->y;
+			this->targX = this->player->position.x;
+			this->targY = this->player->position.y;
 		}
 	}
 	else if(this->state == 3){
@@ -110,32 +110,32 @@ void Enemy::onMeleeStrike(){
 	if(this->shield < 0) this->shield = 0;
 }
 
-void Enemy::onEssenceStrike(Weapon* w){
+//void Enemy::onEssenceStrike(Weapon* w){
+//
+//	if(this->shield <= 0) this->health -= w->damage;
+//	if(this->health < 0) this->health = 0;
+//}
 
-	if(this->shield <= 0) this->health -= w->damage;
-	if(this->health < 0) this->health = 0;
-}
-
-void Enemy::onCollision(DisplayObject* other){
-	if(other->type == "Weapon"){
-		if(controls::pressSpecial()) 
-			onEssenceStrike((Weapon*)other);
-	}
-	else if(other->type == "Blast"){
-		if(controls::pressAttack())
-			onMeleeStrike();
-	}
-}
+//void Enemy::onCollision(DisplayObject* other){
+//	if(other->type == "Weapon"){
+//		if(controls::pressSpecial())
+//			onEssenceStrike((Weapon*)other);
+//	}
+//	else if(other->type == "Blast"){
+//		if(controls::pressAttack())
+//			onMeleeStrike();
+//	}
+//}
 
 void Enemy::draw(AffineTransform &at){
 	Sprite::draw(at);
 	//this->drawHitbox();
 }
 
-void Enemy::save(ofstream &out){
-	Sprite::save(out);
-	//TODO: ADD THIS TO SAVE ENEMY DATA
-}
+//void Enemy::save(ofstream &out){
+//	Sprite::save(out);
+//	//TODO: ADD THIS TO SAVE ENEMY DATA
+//}
 
 void Enemy::charge(){
 	this->rotation += this->rotVel;
@@ -156,7 +156,7 @@ void Enemy::setPatrolRange(){
 
 void Enemy::patrol(){
 	//if close to target, set a new one
-	
+
 	if(isTargetReached() && pauseCount == 119){
 		this->targX = std::rand()%(this->maxPatX-this->minPatX) + this->minPatX;
 		this->targY = std::rand()%(this->maxPatY-this->minPatY) + this->minPatY;
@@ -174,11 +174,11 @@ void Enemy::patrol(){
 }
 
 void Enemy::moveToTarget(){
-	
+
 	//increase velocity by accel
 	this->vel = std::min(this->vel+this->acc, this->maxVel);
 
-	//use unit vector to determine percent that goes into x and y 
+	//use unit vector to determine percent that goes into x and y
 	double theta = std::atan2(std::abs(this->targY - this->y),std::abs(this->targX - this->x));
 	double xComp = this->vel*std::cos(theta);
 	double yComp = this->vel*std::sin(theta);
@@ -192,7 +192,3 @@ void Enemy::moveToTarget(){
 bool Enemy::isTargetReached(){
 	return std::abs(this->x-this->targX) <= 6 && std::abs(this->y-this->targY) <= 6;
 }
-
-
-
-
