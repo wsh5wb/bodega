@@ -46,6 +46,7 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 }
 
 void DevTool::update(set<SDL_Scancode> pressedKeys){
+	cout << gridSize << endl;
 	DevLoop::update(pressedKeys);
 
 	mouse->update(pressedKeys);

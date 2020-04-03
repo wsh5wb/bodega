@@ -42,6 +42,8 @@ FileBrowser::FileBrowser(kiss_array &objects, int width, int height,
 	kiss_button_new(&save_scene_button, window, "Save Scene", 15 + load_scene_button.rect.w, 5);
 	kiss_button_new(&set_background_button, window, "Load BG",
 		85 + save_scene_button.rect.w, 5);
+	// kiss_button_new(&set_grid_size, window, "Set Grid", 
+		// 95 + save_scene_button.rect.w + set_background_button.rect.w, 5);
 
 	// renderer = kiss_init("browser", &objects, 640, 480);
 	this->objects=&objects;
@@ -74,6 +76,8 @@ FileBrowser::FileBrowser(kiss_array &objects, int width, int height,
 	kiss_entry_new(&entry, &window1, 1, "kiss", textbox1.rect.x,
 		label_sel.rect.y + kiss_textfont.lineheight,
 		2 * textbox_width + 2 * kiss_up.w + kiss_edge);
+	kiss_entry_new(&grid_size_entry, window, 1, "grid size", 
+		95 + save_scene_button.rect.w + set_background_button.rect.w, 2, 100);
 	kiss_button_new(&button_cancel, &window1, "Cancel",
 		entry.rect.x + entry.rect.w - kiss_edge - kiss_normal.w,
 		entry.rect.y + entry.rect.h + kiss_normal.h);
@@ -82,8 +86,10 @@ FileBrowser::FileBrowser(kiss_array &objects, int width, int height,
 
 	dirent_read(&textbox1, &vscrollbar1, &textbox2, &vscrollbar2,
 		&label_sel);
+
 	/* Do that, and all widgets associated with the window will show */
 	window1.visible = 0;
+	grid_size_entry.visible = 0;
 
 	running_dev_tool = running_tool;
 	current_scene_path = "";
@@ -264,6 +270,15 @@ void FileBrowser::event(SDL_Event *event, int *draw){
 		add_bg = true;
 		open();
 	}
+	if(kiss_entry_event(&grid_size_entry, event, draw)){
+		running_dev_tool->disable_input = true;
+		string sz(grid_size_entry.text);
+		int size;
+		if((size = atoi(grid_size_entry.text)) == 0)
+			strcpy(grid_size_entry.text, "Invalid");
+		else
+			running_dev_tool->gridSize = size;
+	}
 	kiss_window_event(&window1, event, draw);
 	textbox1_event(&textbox1, event, &vscrollbar1, &textbox2, &vscrollbar2, &label_sel, draw);
 	vscrollbar1_event(&vscrollbar1, event, &textbox1, draw);
@@ -289,11 +304,13 @@ void FileBrowser::draw_items(SDL_Renderer *renderer){
 	kiss_vscrollbar_draw(&vscrollbar2, renderer);
 	kiss_label_draw(&label_sel, renderer);
 	kiss_entry_draw(&entry, renderer);
+	kiss_entry_draw(&grid_size_entry, renderer);
 	kiss_button_draw(&button_ok1, renderer);
 	kiss_button_draw(&button_cancel, renderer);
 	kiss_button_draw(&save_scene_button, renderer);
 	kiss_button_draw(&load_scene_button, renderer);
 	kiss_button_draw(&set_background_button, renderer);
+	// kiss_button_draw(&set_grid_size, renderer);
 }
 
 void FileBrowser::open(){

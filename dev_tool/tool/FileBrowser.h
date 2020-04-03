@@ -2,6 +2,7 @@
 #define FILEBROWSER_H
 
 #include <string>
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
@@ -63,9 +64,11 @@ private:
 	kiss_button save_scene_button = {0};
 	kiss_button load_scene_button = {0};
 	kiss_button set_background_button = {0};
+	kiss_button set_grid_size = {0};
 	kiss_textbox textbox1 = {0}, textbox2 = {0};
 	kiss_vscrollbar vscrollbar1 = {0}, vscrollbar2 = {0};
 	kiss_entry entry = {0};
+	kiss_entry grid_size_entry = {0};
 	int textbox_width, textbox_height, draw, quit,
 	width, height;
 

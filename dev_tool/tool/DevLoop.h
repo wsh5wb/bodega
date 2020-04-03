@@ -47,7 +47,8 @@ public:
 
 	Mouse* mouse;
 	bool disable_input;	
-
+	
+	double gridSize;
 private:
 
 	void initSDL();
