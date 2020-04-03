@@ -11,7 +11,7 @@
 using namespace std;
 
 MyGame::MyGame() :
-		Game(1024, 768) {
+		Game(1200, 900) {
 	myCamera = Camera::getCamera();
 	character = new Scene();
 	myCamera->addScene(character);
@@ -92,16 +92,16 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 				myCamera->pan(cs, 0);
 			break;
 		}
-		case SDL_SCANCODE_Q: {
-			//character->scaleOut();
-			myCamera->zoom(2, 2);
-			break;
-		}
-		case SDL_SCANCODE_W: {
-			//character->scaleIn();
-			myCamera->zoom(.5, .5);
-			break;
-		}
+//		case SDL_SCANCODE_Q: {
+//			//character->scaleOut();
+//			myCamera->zoom(2, 2);
+//			break;
+//		}
+//		case SDL_SCANCODE_W: {
+//			//character->scaleIn();
+//			myCamera->zoom(.5, .5);
+//			break;
+//		}
 			//case SDL_SCANCODE_A:
 			// {
 			// 	character->rotateCW();

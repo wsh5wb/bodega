@@ -42,6 +42,13 @@ void DemoSprite::update(set<SDL_Scancode> pressedKeys) {
 		case SDL_SCANCODE_W: {
 			Sprite::scaleIn();
 			break;
+		}case SDL_SCANCODE_Z: {
+			Sprite::rotate(.05);
+			break;
+		}
+		case SDL_SCANCODE_X: {
+			Sprite::rotate(-.05);
+			break;
 		}
 		}
 	}

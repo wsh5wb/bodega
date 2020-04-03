@@ -41,6 +41,8 @@ void Player::onCollision(DisplayObject *other) {
 		if (!this->iFrames) {
 			//this->onEnemyCollision((Enemy*)other);
 		}
+	}else if (other->type == "door") {
+		cerr << "colliding with " << other->id <<"\n";
 	}
 
 }

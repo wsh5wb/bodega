@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "DemoSprite.h"
 #include "Layer.h"
+#include "Door.h"
 #include <string>
 #include <vector>
 #include <fstream>
