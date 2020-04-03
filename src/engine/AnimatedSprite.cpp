@@ -1,16 +1,16 @@
 #include "AnimatedSprite.h"
 #include <fstream>
 
-AnimatedSprite::AnimatedSprite(){
+AnimatedSprite::AnimatedSprite() {
 
 }
 
-AnimatedSprite::AnimatedSprite(string id){
+AnimatedSprite::AnimatedSprite(string id) {
 	this->id = id;
 }
 
-AnimatedSprite::AnimatedSprite(string id, string filepath){
-	SDL_Surface* image = IMG_Load(filepath.c_str());
+AnimatedSprite::AnimatedSprite(string id, string filepath) {
+	SDL_Surface *image = IMG_Load(filepath.c_str());
 	images.push_back(image);
 	this->id = id;
 	this->imgPath = filepath;
@@ -24,107 +24,140 @@ AnimatedSprite::AnimatedSprite(string id, string filepath){
 // 	usesSheet = true;
 // }
 
-AnimatedSprite::~AnimatedSprite(){
+AnimatedSprite::~AnimatedSprite() {
 	int i = 0;
-	for(vector<SDL_Surface*>::iterator it = images.begin(); it != images.end(); it++){
-		if(i == curFrame && !usesSheet){
+	for (vector<SDL_Surface*>::iterator it = images.begin(); it != images.end();
+			it++) {
+		if (i == curFrame && !usesSheet) {
 			continue;
-		}if(usesSheet && i == startIndex){continue;}
+		}
+		if (usesSheet && i == startIndex) {
+			continue;
+		}
 		i++;
 		SDL_FreeSurface(*it);
-	}images.clear();
-	for(unordered_map<string,Animation*>::iterator it2 = animationMap.begin(); it2 != animationMap.end();it2++){
+	}
+	images.clear();
+	for (unordered_map<string, Animation*>::iterator it2 = animationMap.begin();
+			it2 != animationMap.end(); it2++) {
 		delete it2->second;
 	}
 }
 
-void AnimatedSprite::addAnimation(string basepath, string animName, int numFrames, int frameRate, bool loop){
-	Animation * a = new Animation(basepath,images.size(),numFrames,frameRate,loop);
-	animationMap.emplace(animName,a);
+void AnimatedSprite::addAnimation(string basepath, string animName,
+		int numFrames, int frameRate, bool loop) {
+	Animation *a = new Animation(basepath, images.size(), numFrames, frameRate,
+			loop);
+	animationMap.emplace(animName, a);
 
-	for(int i=1; i<numFrames+1;i++){
-		SDL_Surface* image = IMG_Load((basepath + "_" + to_string(i) + ".png").c_str());
+	for (int i = 1; i < numFrames + 1; i++) {
+		SDL_Surface *image = IMG_Load(
+				(basepath + "_" + to_string(i) + ".png").c_str());
 		images.push_back(image);
 		cout << basepath + "_" + to_string(i) + ".png" << endl;
 	}
 }
 
-void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animName, int numFrames, int frameRate, bool loop){
+void AnimatedSprite::addAnimation(string sheetpath, string xmlpath,
+		string animName, int numFrames, int frameRate, bool loop) {
 	ifstream in(xmlpath);
-	if(!in){
+	if (!in) {
 		cout << "XML File not found";
 		return;
 	}
 
-	Animation * a = new Animation(sheetpath,xmlpath,images.size(),frameRate,loop);
-	animationMap.emplace(animName,a);
+	Animation *a = new Animation(sheetpath, xmlpath, images.size(), frameRate,
+			loop);
+	animationMap.emplace(animName, a);
 
-	SDL_Surface* image = IMG_Load((sheetpath).c_str());
+	SDL_Surface *image = IMG_Load((sheetpath).c_str());
 	images.push_back(image);
 
 }
 
-Animation* AnimatedSprite::getAnimation(string animName){
-	if(animationMap.find(animName) == animationMap.end()){
+Animation* AnimatedSprite::getAnimation(string animName) {
+	if (animationMap.find(animName) == animationMap.end()) {
 		cout << "Animation not in map";
 		return NULL;
 	}
 	return animationMap[animName];
 }
 
-void AnimatedSprite::play(string animName){
-	
-	Animation* a = getAnimation(animName);
+void AnimatedSprite::play(string animName) {
+
+	Animation *a = getAnimation(animName);
 
 	usesSheet = a->usesSheet;
 	loop = a->loop;
 	startIndex = a->startIndex;
 	frameRate = a->frameRate;
 
-	if(usesSheet){
-		string buffer; 
+	if (usesSheet) {
+		string buffer;
 		char c;
 		ifstream in(a->xmlpath);
-		if(!in){
+		if (!in) {
 			cout << "XML File not found";
 			return;
-		}while(in.get(c)){
+		}
+		while (in.get(c)) {
 			buffer += c;
-		}in.close();
-		vector<string> positions;
+		}
+		in.close();
+		vector < string > positions;
 		unsigned int pos = 0;
 		unsigned int start;
-		while(true){
-			start = buffer.find ("<TextureAtlas",pos);
-			if(start == string::npos) {break;}
-			start = buffer.find(">",start);
+		while (true) {
+			start = buffer.find("<TextureAtlas", pos);
+			if (start == string::npos) {
+				break;
+			}
+			start = buffer.find(">", start);
 			start++;
-			pos = buffer.find("</TextureAtlas",start);
-			if(pos == string::npos) {break;}
-			buffer = buffer.substr(start,pos-start);
+			pos = buffer.find("</TextureAtlas", start);
+			if (pos == string::npos) {
+				break;
+			}
+			buffer = buffer.substr(start, pos - start);
 			break;
 		}
-		pos = 0, start =0;
-		while(buffer.find("<",start) != string::npos){
-			start = buffer.find("<",start);
-			if(start == string::npos){break;}
-			pos = buffer.find(">",start);
-			if(pos == string::npos){break;}
-			positions.push_back(buffer.substr(start,pos-start+1));
-			buffer.erase(start,pos-start+1);
+		pos = 0, start = 0;
+		while (buffer.find("<", start) != string::npos) {
+			start = buffer.find("<", start);
+			if (start == string::npos) {
+				break;
+			}
+			pos = buffer.find(">", start);
+			if (pos == string::npos) {
+				break;
+			}
+			positions.push_back(buffer.substr(start, pos - start + 1));
+			buffer.erase(start, pos - start + 1);
 		}
 		start = 0;
 		locations.clear();
-		for(string s : positions){
+		for (string s : positions) {
 			start = s.find("x=\"");
-			int x = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
+			int x =
+					atoi(
+							s.substr(start + 3,
+									s.find("\" ", start) - start - 3).c_str());
 			start = s.find("y=\"");
-			int y = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
+			int y =
+					atoi(
+							s.substr(start + 3,
+									s.find("\" ", start) - start - 3).c_str());
 			start = s.find("w=\"");
-			int w = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
+			int w =
+					atoi(
+							s.substr(start + 3,
+									s.find("\" ", start) - start - 3).c_str());
 			start = s.find("h=\"");
-			int h = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			SDL_Rect r = {x, y, w, h};
+			int h =
+					atoi(
+							s.substr(start + 3,
+									s.find("\" ", start) - start - 3).c_str());
+			SDL_Rect r = { x, y, w, h };
 			locations.push_back(r);
 		}
 		curFrame = 0;
@@ -132,7 +165,7 @@ void AnimatedSprite::play(string animName){
 		endIndex = numFrames - 1;
 		DisplayObject::setImage(images[startIndex]);
 		DisplayObject::setRect(locations[curFrame]);
-	}else{
+	} else {
 		curFrame = startIndex;
 		numFrames = a->numFrames;
 		endIndex = a->endIndex;
@@ -144,74 +177,92 @@ void AnimatedSprite::play(string animName){
 	currAnimation = animName;
 }
 
-void AnimatedSprite::replay(){
-	if(usesSheet){
+void AnimatedSprite::replay() {
+	if (usesSheet) {
 		curFrame = -1;
 		DisplayObject::setImage(images[startIndex]);
 		DisplayObject::setRect(locations[0]);
-	}else{
+	} else {
 		curFrame = startIndex;
 	}
 }
 
-void AnimatedSprite::stop(){
+void AnimatedSprite::stop() {
 	playing = false;
 	curFrame = 0;
-	if(usesSheet){
+	if (usesSheet) {
 		DisplayObject::setImage(images[startIndex]);
 		DisplayObject::setRect(locations[0]);
-	}else{
+	} else {
 		DisplayObject::setImage(images[curFrame]);
 	}
 }
 
-void AnimatedSprite::setFrameRate(int rate){
+void AnimatedSprite::setFrameRate(int rate) {
 	frameRate = rate;
 }
 
-void AnimatedSprite::update(set<SDL_Scancode> pressedKeys){
-	if(playing){
+void AnimatedSprite::update(set<SDL_Scancode> pressedKeys) {
+	if (playing) {
 		std::clock_t end = std::clock();
-		double duration = (( end - start ) / (double) CLOCKS_PER_SEC)*1000;
-		if(duration > frameRate){
+		double duration = ((end - start) / (double) CLOCKS_PER_SEC) * 1000;
+		if (duration > frameRate) {
 			start = end;
 
-			if(curFrame < endIndex){
+			if (curFrame < endIndex) {
 				curFrame++;
-				if(usesSheet){
+				if (usesSheet) {
 					DisplayObject::setRect(locations[curFrame]);
-				}else{
+				} else {
 					DisplayObject::setImage(images[curFrame]);
 				}
-			}else{
-				if(loop){
+			} else {
+				if (loop) {
 					replay();
 					return;
-				}stop();
+				}
+				stop();
 			}
 		}
 	}
 }
 
-void AnimatedSprite::draw(AffineTransform &at){
+void AnimatedSprite::draw(AffineTransform &at) {
 	Sprite::draw(at);
 }
 
-void AnimatedSprite::saveSelf(vector<string> &objects, vector<string> &dependencies) {
+void AnimatedSprite::saveSelf(vector<string> &objects,
+		vector<string> &dependencies) {
 	string desc;
 	stringstream sstm;
+	int num = animationMap.size();
+	string anims = "";
+	for (const auto & [ key, value ] : animationMap) {
+		anims+= key + " " + value->toString();
+	}
+	/*
+	 * bool playing = false;
+	 string currAnimation = "";
+	 int curFrame = 0;
+	 int frameRate, startIndex, endIndex, numFrames;
+	 std::clock_t start;
+	 bool loop, usesSheet;
+	 */
 	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
-	sstm << "4 " << id << " " << imgPath << " " << red << " " << green << " "
-			<< blue << " " << std::boolalpha << vis << " " << std::boolalpha
-			<< isRGB << " " << w << " " << h << " " << speed << " " << scaleX
-			<< " " << scaleY << " " << rotation << " " << rotationAmount << " "
+	sstm << "4 " << id << " " << num << " " << anims << " " << std::boolalpha
+			<< playing << " " << currAnimation << " " << curFrame << " "
+			<< frameRate << " " << startIndex << " " << endIndex << " "
+			<< numFrames << " " << start << " " << std::boolalpha << loop << " "
+			<< std::boolalpha << usesSheet << " " << std::boolalpha << vis
+			<< " " << w << " " << h << " " << speed << " " << scaleX << " "
+			<< scaleY << " " << rotation << " " << rotationAmount << " "
 			<< alpha << " " << px0 << " " << py0 << " " << px1 << " " << py1
 			<< "\n";
 	desc = sstm.str();
 	objects.push_back(desc);
-	for (DisplayObject * child : children) {
-			string dep = id + " " + child->id + "\n";
-			dependencies.push_back(dep);
-			child->saveSelf(objects, dependencies);
-		}
+	for (DisplayObject *child : children) {
+		string dep = id + " " + child->id + "\n";
+		dependencies.push_back(dep);
+		child->saveSelf(objects, dependencies);
+	}
 }
