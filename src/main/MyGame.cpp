@@ -70,6 +70,11 @@ MyGame::MyGame() : Game(1200, 1000){
 	//cout << "Getting here." << endl;
 	this->addChild(me);
 	this->addChild(en);
+	cout << "me: " << (me != 0) << endl;
+	cout << "en: " << (en != 0) << endl;
+	cout << "coin: " << (coin != 0) << endl;
+	cout << "character: " << (character != 0) << endl;
+
 	//this->addChild(bg);
 
 	Game::cs.watchForCollisions("ENEMY", "PLAYER");

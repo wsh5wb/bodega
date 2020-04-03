@@ -11,6 +11,7 @@ Enemy::Enemy(Player* player) : Sprite("ENEMY", "resources/enemies/enemyFloating_
 	this->width = 42; this->height = 40;
 	this->pivotX = this->width/2;
 	this->pivotY = this->height/2;
+	this->state = 0;
 }
 
 void Enemy::update(set<SDL_Scancode> pressedKeys){
@@ -18,14 +19,14 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 
 
 	//enemy is dead so clean it up
-	if(this->health == 0){
-		this->clean = true; //scene will clean it up
-	}
-	//do the actual cleaning if necessary
-	if(this->clean){
-		this->removeThis();
-		delete this;
-	}
+	//if(this->health == 0){
+	//	//this->clean = true; //scene will clean it up
+	//}
+	////do the actual cleaning if necessary
+	//if(this->clean){
+	//	this->removeThis();
+	//	delete this;
+	//}
 
 	//everything else controlled by state machine
 	//state 0 = one time state to kick things off
