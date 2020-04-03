@@ -1,87 +1,17 @@
-45 44
-0 Scene 0 0 0 0 true false 0 0 5 1.5 1.5 0 0.000872665 255 0 0 -50 0
-1 Default0 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 150 100
-1 Default1 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 250 100
-1 Default2 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 350 100
-1 Default3 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 550 100
-1 Default4 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 450 100
-1 Default6 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 250 300
-1 Default8 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 150 200
-1 Default9 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 350 200
-1 Default10 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 250 200
-1 Default11 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 450 200
-1 Default12 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 550 200
-1 Default13 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 450 300
-1 Default16 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 350 300
-1 Default17 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 150 300
-1 Default18 ./resources/art/hades_floor.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 550 300
-1 Default22 ./resources/art/hades_ul_corner.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 50 0
-1 Default23 ./resources/art/hades_ll_corner.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 50 400
-1 Default24 ./resources/art/hades_ur_corner.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 650 0
-1 Default25 ./resources/art/hades_lr_corner.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 650 400
-1 Default26 ./resources/art/hades_lo_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 150 400
-1 Default27 ./resources/art/hades_lo_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 250 400
-1 Default28 ./resources/art/hades_lo_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 350 400
-1 Default29 ./resources/art/hades_lo_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 450 400
-1 Default30 ./resources/art/hades_lo_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 550 400
-1 Default31 ./resources/art/hades_r_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 650 300
-1 Default32 ./resources/art/hades_r_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 650 100
-1 Door1 ./resources/art/hades_lo_door.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 350 400
-1 Default35 ./resources/art/hades_r_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 650 200
-1 Door2 ./resources/art/hades_r_door.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 650 200
-1 Default40 ./resources/art/hades_u_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 150 0
-1 Default41 ./resources/art/hades_u_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 250 0
-1 Default42 ./resources/art/hades_u_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 350 0
-1 Default43 ./resources/art/hades_u_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 450 0
-1 Default44 ./resources/art/hades_u_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 550 0
-1 Door3 ./resources/art/hades_u_door.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 350 0
-1 Default46 ./resources/art/hades_l_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 50 100
-1 Default47 ./resources/art/hades_l_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 50 200
-1 Default48 ./resources/art/hades_l_wall.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 50 300
-1 Door4 ./resources/art/hades_l_door.png 0 0 0 true false 64 64 5 1.57 1.57 0 0.000872665 255 0 0 50 200
-1 Statue1 ./resources/art/hades_statue1.png 0 0 0 true false 63 95 5 1.57 1.57 0 0.000872665 255 0 0 200 50
-1 Statue2 ./resources/art/hades_statue1.png 0 0 0 true false 63 95 5 1.57 1.57 0 0.000872665 255 0 0 500 50
-1 Statue3 ./resources/art/hades_statue1.png 0 0 0 true false 63 95 5 1.57 1.57 0 0.000872665 255 0 0 200 250
-1 Statue4 ./resources/art/hades_statue1.png 0 0 0 true false 63 95 5 1.57 1.57 0 0.000872665 255 0 0 500 250
-5 Char ./resources/character/Idle_10.png 0 0 0 true false 416 454 5 0.2 0.2 0 0.000872665 255 0 0 185 200
-Scene Default0
-Scene Default1
-Scene Default2
-Scene Default3
-Scene Default4
-Scene Default6
-Scene Default8
-Scene Default9
-Scene Default10
-Scene Default11
-Scene Default12
-Scene Default13
-Scene Default16
-Scene Default17
-Scene Default18
-Scene Default22
-Scene Default23
-Scene Default24
-Scene Default25
-Scene Default26
-Scene Default27
-Scene Default28
-Scene Default29
-Scene Default30
-Scene Default31
-Scene Default32
+10 9
+0 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 1.5 1.5 0 0.000872665 255 0 0 -50 0
+1 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1.57 1.57 0 0.000872665 255 0 0 352 192
+1 Door2 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1.57 1.57 0 0.000872665 255 0 0 128 480
+1 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1.57 1.57 0 0.000872665 255 0 0 128 0
+1 Door4 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1.57 1.57 0 0.000872665 255 0 0 0 192
+1 Statue1 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1.57 1.57 0 0.000872665 255 0 0 200 50
+1 Statue2 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1.57 1.57 0 0.000872665 255 0 0 500 50
+1 Statue3 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1.57 1.57 0 0.000872665 255 0 0 200 250
+1 Statue4 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1.57 1.57 0 0.000872665 255 0 0 500 250
+5 Char ./resources/character/Idle_10.png 0 0 0 true false 416 454 5 0.2 0.2 0 0.000872665 255 0 0 350 350
 Scene Door1
-Scene Default35
 Scene Door2
-Scene Default40
-Scene Default41
-Scene Default42
-Scene Default43
-Scene Default44
 Scene Door3
-Scene Default46
-Scene Default47
-Scene Default48
 Scene Door4
 Scene Statue1
 Scene Statue2
