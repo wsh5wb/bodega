@@ -23,6 +23,7 @@ Player::Player() : AnimatedSprite("PLAYER_YOU"){
 	this->addAnimation("resources/PlayerSprites/idleSprite.png", "resources/PlayerSprites/idleSheet.xml", "Idle", 1, 60, true);
 	this->addAnimation("resources/PlayerSprites/runSprite.png", "resources/PlayerSprites/runSheet.xml", "Run", 1, 60, true);
 	this->addAnimation("resources/PlayerSprites/jumpsprites.png", "resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
+	this->addAnimation("resources/PlayerSprites/deadSprite.png", "resources/PlayerSprites/deadSheet.xml", "Dead", 1, 60, false);
 	this->play("Idle");
 	//cout << "Getting here." << endl;
 }
@@ -84,6 +85,11 @@ void Player::update(set<SDL_Scancode> pressedKeys){
 				this->play("Run");
 			}
 			idle = false;
+		}
+		else if (k == SDL_SCANCODE_SPACE){
+			if (this->currAnimation != "Dead"){
+				this->play("Dead");
+			}
 		}
 
 

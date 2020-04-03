@@ -29,7 +29,7 @@ private:
 	AnimatedSprite *character;
 	AnimatedSprite *coin;
 	Player *me;
-	//Scene *bg;
+	Scene *bg;
 	CollisionSystem cs;
 	//Scene* character;
 	string scene;

@@ -50,7 +50,6 @@ MyGame::MyGame() : Game(1200, 1000){
 	//bg = new Scene();
 	//bg->loadScene("./resources/scenes/test3.txt");
 	// character->loadScene("./resources/scenes/test.txt");
-
 	charHit[0] = {me->w*boundLow, me->h*boundLow};
 	charHit[1] = {me->w*boundHigh, me->h*boundLow};
 	charHit[3] = {me->w*boundLow,me->h*boundHigh};
@@ -207,6 +206,8 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 		character->stop();
 		character->play("Idle");
 	}*/
+	//cout << "floryan_head: " << me->isCollided << endl;
+	//cout << "Player: " << me->isCollided << endl;
 
 }
 

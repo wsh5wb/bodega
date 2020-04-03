@@ -35,14 +35,14 @@ void CollisionSystem::update(){
 					if DO1 is Player and DO2 is Platform:
 						resolveCollision()
 					...
-	*/	
+	*/
 
 	// TODO: come up with a better system for this later. It's trash right now
 	for(string pair : pairs){
 		size_t split = pair.find("-");
 		string type1 = pair.substr(0,split);
 		string type2 = pair.substr(split+1);
-		
+
 		vector vec1 = objects[type1];
 		vector vec2 = objects[type2];
 		// sort(vec1.begin(), vec1.end(), compare_xval);
@@ -52,10 +52,11 @@ void CollisionSystem::update(){
 			for(DORange obj2 : vec2){
 				bool collision;
 				if((collision= collidesWith(obj1.object, obj2.object))){
+					//cout << "COLLISION:" << obj1.object->id << " and " << obj2.object->id << endl;
 					resolveCollision(obj1.object, obj2.object,
 						obj1.object->deltaX, obj1.object->deltaY,
 						obj2.object->deltaX, obj2.object->deltaY);
-					
+
 					obj1.object->updateDelta(0,0,0,0,0);
 					obj2.object->updateDelta(0,0,0,0,0);
 				}
@@ -94,11 +95,11 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 
 /* Return:
 	0 - Colinear
-	1 - Right turn																																		
+	1 - Right turn
 	-1 - Left turn
 */
 int CollisionSystem::orientation(SDL_Point p1, SDL_Point q1, SDL_Point p2){
-	int val = (q1.y - p1.y) * (p2.x - q1.x) - (q1.x - p1.x) * (p2.y - q1.y); 
+	int val = (q1.y - p1.y) * (p2.x - q1.x) - (q1.x - p1.x) * (p2.y - q1.y);
 
     if(val < 0){ return -1;}
 	if(val > 0){ return 1;}
@@ -106,7 +107,7 @@ int CollisionSystem::orientation(SDL_Point p1, SDL_Point q1, SDL_Point p2){
 }
 
 bool CollisionSystem::onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3){
-	return (p2.x <= max(p1.x, p3.x) && p2.x >= min(p1.x, p3.x) && p2.y <= max(p1.y, p3.y) && p2.y >= min(p1.y, p3.y)); 
+	return (p2.x <= max(p1.x, p3.x) && p2.x >= min(p1.x, p3.x) && p2.y <= max(p1.y, p3.y) && p2.y >= min(p1.y, p3.y));
 }
 
 
@@ -168,7 +169,7 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	else if((intersect(topL1,botL1,topL2,topR2) || intersect(topL1,botL1,topL2,botL2) || intersect(topL1,botL1,botR2,topR2) || intersect(topL1,botL1,botL2,botR2))){}
 	else if((intersect(botL1,botR1,topL2,topR2) || intersect(botL1,botR1,topL2,botL2) || intersect(botL1,botR1,botR2,topR2) || intersect(botL1,botR1,botL2,botR2))){}
 	else{ ret = false;}
-	
+
 	if(!ret){
 		ret = checkArea(botR1,topL2,topR2,botL2,botR2,dist(topL2,topR2),dist(topL2,botL2)) || checkArea(botR2,topL1,topR1,botL1,botR1,dist(topL1,topR1),dist(topL1,botL1));
 	}
