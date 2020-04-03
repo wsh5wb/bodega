@@ -22,7 +22,6 @@ MyGame::MyGame() : Game(1200, 1000){
 	en = new Enemy(me);
 	en->showHitbox = true;
 
-
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
 
@@ -93,6 +92,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
+	//cout << "Getting here" << endl;
 	for(SDL_Scancode code : pressedKeys){
 		switch(code){
 
