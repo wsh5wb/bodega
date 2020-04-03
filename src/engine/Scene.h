@@ -3,6 +3,8 @@
 
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
+#include "AnimatedSprite.h"
+#include "Player.h"
 #include "DemoSprite.h"
 #include "Layer.h"
 #include <string>

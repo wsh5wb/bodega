@@ -11,7 +11,7 @@
 using namespace std;
 
 MyGame::MyGame() :
-		Game(1300, 900) {
+		Game(1024, 768) {
 	myCamera = Camera::getCamera();
 	character = new Scene();
 	myCamera->addScene(character);
@@ -60,9 +60,9 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 
 	//bounds can also be done like this
 	if (x >= xminZ && x <= xmaxZ && y > yminZ && y <= ymaxZ) {
-		myCamera->setZoom(600, 600);
+		myCamera->setZoom(500, 500);
 	} else {
-		myCamera->setZoom(600, 600);
+		myCamera->setZoom(500, 500);
 	}
 
 	for (SDL_Scancode code : pressedKeys) {

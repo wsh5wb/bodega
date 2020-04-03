@@ -240,20 +240,9 @@ void AnimatedSprite::saveSelf(vector<string> &objects,
 	for (const auto & [ key, value ] : animationMap) {
 		anims+= key + " " + value->toString();
 	}
-	/*
-	 * bool playing = false;
-	 string currAnimation = "";
-	 int curFrame = 0;
-	 int frameRate, startIndex, endIndex, numFrames;
-	 std::clock_t start;
-	 bool loop, usesSheet;
-	 */
+
 	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
-	sstm << "4 " << id << " " << num << " " << anims << " " << std::boolalpha
-			<< playing << " " << currAnimation << " " << curFrame << " "
-			<< frameRate << " " << startIndex << " " << endIndex << " "
-			<< numFrames << " " << start << " " << std::boolalpha << loop << " "
-			<< std::boolalpha << usesSheet << " " << std::boolalpha << vis
+	sstm << "4 " << id << " " << num << " " << anims << " " << std::boolalpha << vis
 			<< " " << w << " " << h << " " << speed << " " << scaleX << " "
 			<< scaleY << " " << rotation << " " << rotationAmount << " "
 			<< alpha << " " << px0 << " " << py0 << " " << px1 << " " << py1
