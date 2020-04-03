@@ -1,16 +1,20 @@
 #include "TweenParam.h"
 
 TweenParam::TweenParam(int paramToTween, double startVal, double endVal,
-		double time, int flags) {
+		double time, int transition) {
 	this->param = paramToTween;
 	this->startVal = startVal;
 	this->endVal = endVal;
 	this->tweenTime = time;
-	this->flags = flags;
+	this->transition = transition;
 }
 
 int TweenParam::getParam() {
 	return param;
+}
+
+double TweenParam::update(double currentValue){
+	return 0.0;
 }
 
 double TweenParam::getStartVal() {
@@ -23,8 +27,4 @@ double TweenParam::getEndVal() {
 
 double TweenParam::getTweenTime() {
 	return tweenTime;
-}
-
-int TweenParam::getFlags() {
-	return flags;
 }

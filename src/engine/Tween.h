@@ -11,10 +11,11 @@ class Tween{
 public:
 	Tween(DisplayObject* object);
 	//Tween(DisplayObject* object, TweenTransitions transition); //this is covered by the flags
-	void animate(int fieldToAnimate, double startVal, double endVal, double time, int flags);
+	void animate(int fieldToAnimate, double startVal, double endVal, double time, int transition);
 	void update(); //invoked once per frame by the TweenJuggler. Updates this tween / DisplayObject
-	void isComplete();
-	void setValue(int param, double value, int flags);
+	bool isComplete();
+	void setValue(int param, double value);
+	double currentParamValue(int param);
 
 
 private:

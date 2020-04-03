@@ -10,33 +10,39 @@ Tween::Tween(DisplayObject *obj) {
 //Tween(DisplayObject* object, TweenTransitions transition); //this is covered by the flags
 
 void Tween::animate(int fieldToAnimate, double startVal, double endVal,
-		double time, int flags) {
+		double timetoComplete,int transition) {
 	tweenParams.push_back(
-			new TweenParam(fieldToAnimate, startVal, endVal, time, flags));
+			new TweenParam(fieldToAnimate, startVal, endVal, timetoComplete, transition));
 }
-
 //invoked once per frame by the TweenJuggler. Updates this tween / DisplayObject
 void Tween::update() {
-	//TODO: this
 	for (TweenParam *t : tweenParams) {
-		int flag = t->getFlags();
-		int function = flag & (~3);
-		int direction = flag & 3;
-		double percentIn = 0; //need some way to calculate this, might need to store start time or something similar
-		switch (function) {
-		case TWEEN_LINEAR: {
-			double amnt = linearTransform(percentIn, direction);
-			double newVal;
-		}
+		double currentValue = currentParamValue(t->getParam());
+		//double percentIn = abs((t->getEndVal() - currentValue)/ (t->getEndVal() - t->getStartVal()));
+		if(t->getEndVal() != currentValue){
+			currentValue = t->update(currentValue);
+			setValue(t->getParam(), currentValue);
 		}
 	}
 }
 
-void Tween::isComplete() {
-	//TODO: i think this just does something with an event
+bool Tween::isComplete() {
+	//not correct, is complete should only complete once every field associated with this particular Tween has finished.
+	bool completed = true;
+	for(vector <TweenParam *> :: iterator it = this->tweenParams.begin(); it != this->tweenParams.end(); ++it){
+			if((*it)->getEndVal() != currentParamValue((*it)->getParam())){
+				completed = false;
+			}
+	}
+	return completed;
 }
 
-void Tween::setValue(int param, double value, int flags) {
+void Tween::setValue(int param, double value) {
+	// alters the value of a particular param to a new value. If it's within a certain margin of the endVal, set to the endVal
+
+}
+
+double Tween::currentParamValue(int param){
 	double start = 0;
 	switch (param) {
 
@@ -47,6 +53,16 @@ void Tween::setValue(int param, double value, int flags) {
 	}
 	case TWEEN_POSITION_Y: {
 		SDL_Point p = object->getPosition();
+		start = p.y;
+		break;
+	}
+	case TWEEN_PIVOT_X:{
+		SDL_Point p = object->getPivot();
+		start = p.x;
+		break;
+	}
+	case TWEEN_PIVOT_Y:{
+		SDL_Point p = object->getPivot();
 		start = p.y;
 		break;
 	}
@@ -68,11 +84,10 @@ void Tween::setValue(int param, double value, int flags) {
 	}
 	default: {
 		cerr << "ERROR: Tween Parameter Not Recognized!\n";
-		return;
+		return start;
 	}
 	}
-	TweenParam *temp = new TweenParam(param, start, value, 60, flags);
-	tweenParams.push_back(temp);
+	return start;
 }
 
 double Tween::linearTransform(double in, int dir) {

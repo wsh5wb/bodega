@@ -9,20 +9,21 @@ class TweenParam {
 
 public:
 	TweenParam(int paramToTween, double startVal, double endVal,
-			double time, int flags);
+			double time, int transition);
 	int getParam();
+	double update(double currentValue);
 	double getStartVal();
 	double getEndVal();
 	double getTweenTime();
-	int getFlags();
 
 private:
 
-	int param = -1;
+	int param = 0;
+	int frameCount = 0;
 	double startVal = -1;
 	double endVal = -1;
 	double tweenTime = -1;
-	int flags = 0;
+	int transition = 0;
 
 };
 

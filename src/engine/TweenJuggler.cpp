@@ -22,4 +22,11 @@ void TweenJuggler::add(Tween* tween) {
 
 void TweenJuggler::nextFrame() {
 	//TODO: do the things and clear the done things
+	for(vector <Tween*> :: iterator it = this->tweens.end(); it != this->tweens.begin(); --it){
+			if ((*it)->isComplete()){
+				this->tweens.erase(it);
+			}else{
+				(*it)->update();
+			}
+	}
 }
