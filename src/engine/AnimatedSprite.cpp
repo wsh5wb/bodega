@@ -55,6 +55,7 @@ void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animN
 		cout << "XML File not found";
 		return;
 	}
+    in.close();
 
 	Animation * a = new Animation(sheetpath,xmlpath,images.size(),frameRate,loop);
 	animationMap.emplace(animName,a);
