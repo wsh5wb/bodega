@@ -76,7 +76,7 @@ void CollisionSystem::handleEvent(Event* e){
 	DisplayObject* child = ((DTEvent*) e)->getAddedObject();
 	DORange_t object;
 	object.object = child;
-	object.x1 = child->getGlobalHitbox()[0].x; object.x2 = child->getGlobalHitbox()[1].x;
+
 	if(child->id.find("ENEMY") != string::npos)			objects["ENEMY"].push_back(object);
 	else if(child->id.find("PLAYER") != string::npos)	objects["PLAYER"].push_back(object);
 	else if(child->id.find("SETTING") != string::npos)	objects["SETTING"].push_back(object);

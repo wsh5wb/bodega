@@ -3,6 +3,8 @@
 
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
+#include "DemoSprite.h"
+#include "Layer.h"
 #include <string>
 #include <vector>
 #include <fstream>

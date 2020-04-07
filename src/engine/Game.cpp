@@ -46,8 +46,12 @@ void Game::quitSDL(){
 }
 
 void Game::initSDL(){
+
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0)
 		cout << "Failed to init SDL, Error: " << SDL_GetError() << endl;
+  
+  if(SDL_Init(SDL_INIT_AUDIO) < 0)
+    cout << "Failed to init audio, Error: " << SDL_GetError() << endl;
 
 	IMG_Init(IMG_INIT_PNG);
 
