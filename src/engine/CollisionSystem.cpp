@@ -209,13 +209,13 @@ void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, i
 	}
 
 	if(d->deltaScaleX != 0){
-		d->setScaleX(1/d->deltaScaleX);
+		d->setScaleX(d->scaleX/d->deltaScaleX);
 	}else if(other->deltaScaleX != 0){
-		other->setScaleX(1/other->deltaScaleX);
+		other->setScaleX(other->scaleX/other->deltaScaleX);
 	}if(d->deltaScaleY != 0){
-		d->setScaleY(1/d->deltaScaleY);
+		d->setScaleY(d->scaleY/d->deltaScaleY);
 	}else if(other->deltaScaleY != 0){
-		other->setScaleY(1/other->deltaScaleY);
+		other->setScaleY(other->scaleY/other->deltaScaleY);
 	}
 
 	if(d->deltaRot != 0){

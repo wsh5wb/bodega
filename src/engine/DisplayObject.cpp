@@ -225,13 +225,13 @@ void DisplayObject::setScale(double x, double y){
 }
 
 void DisplayObject::setScaleX(double x){
-	deltaScaleX = x/scaleX;
+	//deltaScaleX = x/scaleX;
 	scaleX = x;
 	//deltaScaleX = x;
 }
 	
 void DisplayObject::setScaleY(double y){
-	deltaScaleY = y/scaleY;
+	//deltaScaleY = y/scaleY;
 	scaleY = y;
 }
 
