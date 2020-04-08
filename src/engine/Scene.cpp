@@ -152,7 +152,8 @@ void Scene::loadScene(string sceneFilePath) {
 			break;
 		}
 		case 4: { //AnimatedSprite (haven't added some fields yet - needs to be finished). 
-			Sprite *temp = new Sprite();
+
+			AnimatedSprite *temp = new AnimatedSprite();
 			int speed;
 			double scaleX;
 			double scaleY;
@@ -160,11 +161,25 @@ void Scene::loadScene(string sceneFilePath) {
 			double rotationAmount;
 			int alpha;
 			SDL_Point pivot, position;
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
-					>> temp->blue >> std::boolalpha >> temp->vis
-					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
-					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
-					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y;
+			int num;
+			i >> temp->id >> num;
+			for (int Q = 0; Q < num; Q++) {
+
+				string n, b, x;
+				bool l, u;
+				int f, r, s, e;
+				i >> n >> b >> x >> std::boolalpha >> l >> std::boolalpha >> u
+						>> f >> r >> s >> e;
+				if (u) {
+					temp->addAnimation(b, x, n, f, r, l);
+				} else {
+					temp->addAnimation(b, n, f, r, l);
+				}
+			}
+
+			i >> std::boolalpha >> temp->vis >> temp->w >> temp->h >> speed
+					>> scaleX >> scaleY >> rotation >> rotationAmount >> alpha
+					>> pivot.x >> pivot.y >> position.x >> position.y;
 			temp->setSpeed(speed);
 			temp->setScale(scaleX, scaleY);
 			temp->setRotationValue(rotation);
@@ -208,15 +223,57 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
 			break;
-		}case 6: { //Layer
+		}
+		case 6: { //Layer
 
-		    Layer *temp = new Layer();
-		    double s;
-            i >> temp->id >> s ;
-            temp->setScale(s);
-            objects.push_back(temp);
-            break;
-        }
+			Layer *temp = new Layer();
+			double s;
+			i >> temp->id >> s;
+			temp->setScale(s);
+			objects.push_back(temp);
+			break;
+		}
+		case 7: { //Player
+
+			Player *temp = new Player();
+			SDL_Point position;
+			i >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+			objects.push_back(temp);
+			break;
+		}case 8: { //Door
+			Door *temp = new Door();
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			SDL_Point pivot, position;
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
+					>> temp->blue >> std::boolalpha >> temp->vis
+					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
+					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
+					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
+			objects.push_back(temp);
+			if (temp->isRGB) {
+				temp->loadRGBTexture(red, green, blue);
+			} else if (temp->imgPath != "") {
+				temp->loadTexture(temp->imgPath);
+			}
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
+			temp->type="door";
+			temp->setHitbox(0,1);
+			break;
+		}
 		default: {
 			cerr << "ERROR: Object type not recognized!\n";
 			break;
@@ -258,13 +315,14 @@ void Scene::saveScene(string sceneFilePath) {
 	stringstream sstm;
 	long px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
 	sstm << "0 " << id << " " << imgPath << " " << red << " " << green << " "
-			<< blue << " " << std::boolalpha<< vis << " " << std::boolalpha << isRGB << " " << w << " " << h << " " << speed
-			<< " " << scaleX << " " << scaleY << " " << rotation << " "
-			<< rotationAmount << " " << alpha << " " << px0 << " " << py0 << " "
-			<< px1 << " " << py1 << "\n";
+			<< blue << " " << std::boolalpha << vis << " " << std::boolalpha
+			<< isRGB << " " << w << " " << h << " " << speed << " " << scaleX
+			<< " " << scaleY << " " << rotation << " " << rotationAmount << " "
+			<< alpha << " " << px0 << " " << py0 << " " << px1 << " " << py1
+			<< "\n";
 	desc = sstm.str();
 	objects.push_back(desc);
-	for (DisplayObject * child : children) {
+	for (DisplayObject *child : children) {
 		string dep = id + " " + child->id + "\n";
 		dependencies.push_back(dep);
 		child->saveSelf(objects, dependencies);

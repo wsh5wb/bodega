@@ -2,6 +2,7 @@
 #define ANIMATIONS_H
 
 #include <string>
+#include <sstream>
 
 using namespace std;
 class Animation{
@@ -12,6 +13,7 @@ public:
 	string basepath, xmlpath;
 	bool loop, usesSheet;
 	int numFrames, frameRate, startIndex, endIndex;
+	string toString();
 private:
 
 };

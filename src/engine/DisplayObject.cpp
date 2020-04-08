@@ -350,8 +350,8 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		double angle = atan2(topR.y - topL.y, topR.x - topL.x) * 180 / PI;
 
-		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, angle,
-				&pOrigin, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle,
+				&pOrigin, flip);
 
 		at.translate(pivot.x, pivot.y);
 

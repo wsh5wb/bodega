@@ -55,6 +55,7 @@ void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animN
 		cout << "XML File not found";
 		return;
 	}
+    in.close();
 
 	Animation * a = new Animation(sheetpath,xmlpath,images.size(),frameRate,loop);
 	animationMap.emplace(animName,a);
@@ -73,7 +74,7 @@ Animation* AnimatedSprite::getAnimation(string animName){
 }
 
 void AnimatedSprite::play(string animName){
-	
+
 	Animation* a = getAnimation(animName);
 
 	usesSheet = a->usesSheet;
@@ -82,7 +83,7 @@ void AnimatedSprite::play(string animName){
 	frameRate = a->frameRate;
 
 	if(usesSheet){
-		string buffer; 
+		string buffer;
 		char c;
 		ifstream in(a->xmlpath);
 		if(!in){
@@ -197,21 +198,27 @@ void AnimatedSprite::draw(AffineTransform &at){
 	Sprite::draw(at);
 }
 
-void AnimatedSprite::saveSelf(vector<string> &objects, vector<string> &dependencies) {
+void AnimatedSprite::saveSelf(vector<string> &objects,
+		vector<string> &dependencies) {
 	string desc;
 	stringstream sstm;
+	int num = animationMap.size();
+	string anims = "";
+	for (const auto & [ key, value ] : animationMap) {
+		anims+= key + " " + value->toString();
+	}
+
 	int px0 = pivot.x, px1 = position.x, py0 = pivot.y, py1 = position.y;
-	sstm << "4 " << id << " " << imgPath << " " << red << " " << green << " "
-			<< blue << " " << std::boolalpha << vis << " " << std::boolalpha
-			<< isRGB << " " << w << " " << h << " " << speed << " " << scaleX
-			<< " " << scaleY << " " << rotation << " " << rotationAmount << " "
+	sstm << "4 " << id << " " << num << " " << anims << " " << std::boolalpha << vis
+			<< " " << w << " " << h << " " << speed << " " << scaleX << " "
+			<< scaleY << " " << rotation << " " << rotationAmount << " "
 			<< alpha << " " << px0 << " " << py0 << " " << px1 << " " << py1
 			<< "\n";
 	desc = sstm.str();
 	objects.push_back(desc);
-	for (DisplayObject * child : children) {
-			string dep = id + " " + child->id + "\n";
-			dependencies.push_back(dep);
-			child->saveSelf(objects, dependencies);
-		}
+	for (DisplayObject *child : children) {
+		string dep = id + " " + child->id + "\n";
+		dependencies.push_back(dep);
+		child->saveSelf(objects, dependencies);
+	}
 }

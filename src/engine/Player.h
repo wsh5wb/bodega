@@ -20,6 +20,7 @@ public:
 
 	//void onEnemyCollision(Enemy* enemy);
 	virtual void onCollision(DisplayObject* other);
+	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	/* Health and such */
 	int health = 100;
