@@ -18,7 +18,6 @@ void Tween::animate(int fieldToAnimate, double startVal, double endVal,
 void Tween::update() {
 	for (TweenParam *t : tweenParams) {
 		double currentValue = currentParamValue(t->getParam());
-		//double percentIn = abs((t->getEndVal() - currentValue)/ (t->getEndVal() - t->getStartVal()));
 		if(t->getEndVal() != currentValue){
 			currentValue = t->update(currentValue);
 			setValue(t->getParam(), currentValue);
@@ -39,7 +38,54 @@ bool Tween::isComplete() {
 
 void Tween::setValue(int param, double value) {
 	// alters the value of a particular param to a new value. If it's within a certain margin of the endVal, set to the endVal
+	switch (param) {
 
+	case TWEEN_POSITION_X: {
+		SDL_Point p = object->getPosition();
+		p.x = value;
+		object->setPosition(p);
+		break;
+	}
+	case TWEEN_POSITION_Y: {
+		SDL_Point p = object->getPosition();
+		p.y = value;
+		object->setPosition(p);
+		break;
+	}
+	case TWEEN_PIVOT_X:{
+		SDL_Point p = object->getPivot();
+		p.x = value;
+		object->setPivot(p);
+		break;
+	}
+	case TWEEN_PIVOT_Y:{
+		SDL_Point p = object->getPivot();
+		p.y = value;
+		object->setPivot(p);
+		break;
+	}
+	case TWEEN_SCALE_X: {
+		object->setScaleX(value);
+		break;
+	}
+	case TWEEN_SCALE_Y: {
+		object->setScaleY(value);
+		break;
+	}
+	case TWEEN_ROTATION: {
+		object->setRotation(value);
+		break;
+	}
+	case TWEEN_ALPHA: {
+		object->setAlpha(int(value));
+		break;
+	}
+	default: {
+		cerr << "ERROR: Tween Parameter Not Recognized!\n";
+		break;
+	}
+
+}
 }
 
 double Tween::currentParamValue(int param){
@@ -79,35 +125,13 @@ double Tween::currentParamValue(int param){
 		break;
 	}
 	case TWEEN_ALPHA: {
-		start = object->getAlpha();
+		start = double(object->getAlpha());
 		break;
 	}
 	default: {
 		cerr << "ERROR: Tween Parameter Not Recognized!\n";
-		return start;
+		break;
 	}
 	}
 	return start;
-}
-
-double Tween::linearTransform(double in, int dir) {
-	return in;
-}
-
-double Tween::quadraticTransform(double in, int dir) {
-	switch (dir) {
-	case TWEEN_IN: {
-		return in * in;
-	}
-	case TWEEN_OUT: {
-		double inv = 1-in;
-		return 1 - (inv*inv);
-	}
-	case TWEEN_INOUT: {
-			return in<=.5?(2*in*in):.5+(1-(1.5-in)*(1.5-in));
-		}
-	case TWEEN_OUTIN: {
-			return in<=.5?(2*in*in):.5+(1-(1.5-in)*(1.5-in));//needs to be finished
-		}
-	}
 }

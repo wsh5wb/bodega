@@ -15,7 +15,9 @@ public:
 	double getStartVal();
 	double getEndVal();
 	double getTweenTime();
-
+	double linearTransform(int dir);
+	double quadraticTransform(int dir);
+	double percentComplete();
 private:
 
 	int param = 0;

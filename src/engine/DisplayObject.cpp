@@ -302,6 +302,14 @@ void DisplayObject::setSpeed(int s) {
 	speed = s;
 }
 
+void DisplayObject::setPosition(SDL_Point p){
+	position = p;
+}
+
+void DisplayObject::setPivot(SDL_Point p){
+	pivot = p;
+}
+
 void DisplayObject::applyTransformations(AffineTransform &at) {
 	at.translate(position.x, position.y);
 	at.rotate(rotation);
