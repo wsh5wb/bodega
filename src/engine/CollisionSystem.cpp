@@ -55,9 +55,6 @@ void CollisionSystem::update(){
 					resolveCollision(obj1.object, obj2.object,
 						obj1.object->deltaX, obj1.object->deltaY,
 						obj2.object->deltaX, obj2.object->deltaY);
-					
-					obj1.object->updateDelta(0,0,0,0,0);
-					obj2.object->updateDelta(0,0,0,0,0);
 				}
 				// you can turn this into an event dispatch. Definitely would be a good idea.
 				obj1.object->isCollided = collision;
@@ -189,38 +186,91 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	return ret;
 }
 
+// prevCol = -1 for coming from a collision and 1 for not
+void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int deltaX, bool sameDir, bool isCol){
+	
+	int n = (deltaX)/2;
+	if(abs(n) <= 5 && !collidesWith(d,other)){
+		return;
+	}if(n == 0){
+		n = deltaX;
+	}
+	if(!sameDir){
+		n *= -1;
+	}
+
+	d->translate(n,0);
+	
+	if(collidesWith(d,other)){
+		return binarySearchX(d,other,n,isCol,true);
+	}else{
+		return binarySearchX(d,other,n,!isCol,false);
+	}
+
+}
+
+void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int deltaY, bool sameDir, bool isCol){
+	
+	int n = (deltaY)/2;
+	if(abs(n) <= 5 && !collidesWith(d,other)){
+		return;
+	}if(n == 0){
+		n = deltaY;
+	}
+	if(!sameDir){
+		n *= -1;
+	}
+
+	d->translate(0,n);
+	
+	if(collidesWith(d,other)){
+		return binarySearchY(d,other,n,isCol,true);
+	}else{
+		return binarySearchY(d,other,n,!isCol,false);
+	}
+
+}
+
 //Resolves the collision that occurred between d and other
 //xDelta1 and yDelta1 are the amount d moved before causing the collision.
 //xDelta2 and yDelta2 are the amount other moved before causing the collision.
 void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2){
 	if(xDelta1 != 0){
-		d->translate(-xDelta1,0);
+		/*for(int i = 0; i <5;i++){
+			d->translate(-xDelta1/2,0);
+		}*/
+		//cout << "bs" << endl;
+		//binarySearch(d,other,xDelta1,false,true);
+		//d->translate(-xDelta1,0);
+		binarySearchX(d,other,xDelta1,false,true);
 	}else if(xDelta2 != 0){
-		other->translate(-xDelta2,0);
+		//other->translate(-xDelta2,0);
+		binarySearchX(other,d,xDelta2,false,true);
 	}
 
 	if(yDelta1 != 0){
-		d->translate(0,-yDelta1);
+		//d->translate(0,-yDelta1);
+		binarySearchY(d,other,yDelta1,false,true);
 	}else if(yDelta2 != 0){
 		//cout << "before" << other->getPosition().x << " " << other->getPosition().y << endl;
-		other->translate(0,-yDelta2);
+	//	other->translate(0,-yDelta2);
 		//cout << other->getPosition().x << " " << other->getPosition().y << endl;
-
+		binarySearchY(other,d,yDelta2,false,true);
 	}
 
 	if(d->deltaScaleX != 0){
 		d->setScaleX(d->scaleX/d->deltaScaleX);
-	}else if(other->deltaScaleX != 0){
+	}if(other->deltaScaleX != 0){
 		other->setScaleX(other->scaleX/other->deltaScaleX);
 	}if(d->deltaScaleY != 0){
 		d->setScaleY(d->scaleY/d->deltaScaleY);
-	}else if(other->deltaScaleY != 0){
+	}if(other->deltaScaleY != 0){
 		other->setScaleY(other->scaleY/other->deltaScaleY);
 	}
 
 	if(d->deltaRot != 0){
 		d->rotate(-d->deltaRot);
-	}else if(other->deltaRot != 0){
+	}if(other->deltaRot != 0){
 		other->rotate(-other->deltaRot);
 	}
 }

@@ -193,6 +193,10 @@ void DisplayObject::updateDelta(int x, int y, double scaleX, double scaleY, doub
 	deltaRot = rot;
 }
 
+void DisplayObject::resetDelta(){
+	updateDelta(0,0,0,0,0);
+}
+
 void DisplayObject::moveTo(int x, int y) {
 	position.x = x;
 	position.y = y;
