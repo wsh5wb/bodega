@@ -12,10 +12,10 @@
 #define TWEEN_PIVOT_Y 7
 
 //transition functions and directions
-#define TWEEN_IN 0
-#define TWEEN_OUT 1
-#define TWEEN_INOUT 2 //not sure i'll actually use this
-#define TWEEN_OUTIN 3 //not sure i'll actually use this
+#define EASE_NONE 0
+#define EASE_OUT 1
+#define EASE_INOUT 2 //not sure i'll actually use this
+#define EASE_IN 3 //not sure i'll actually use this
 
 #define TWEEN_LINEAR 0
 #define TWEEN_QUADRATIC 1

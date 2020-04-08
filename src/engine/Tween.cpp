@@ -10,9 +10,9 @@ Tween::Tween(DisplayObject *obj) {
 //Tween(DisplayObject* object, TweenTransitions transition); //this is covered by the flags
 
 void Tween::animate(int fieldToAnimate, double startVal, double endVal,
-		double timetoComplete,int transition) {
+		double timetoComplete,int transition, int direction) {
 	tweenParams.push_back(
-			new TweenParam(fieldToAnimate, startVal, endVal, timetoComplete, transition));
+			new TweenParam(fieldToAnimate, startVal, endVal, timetoComplete, transition, direction));
 }
 //invoked once per frame by the TweenJuggler. Updates this tween / DisplayObject
 void Tween::update() {
