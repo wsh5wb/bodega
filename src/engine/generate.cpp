@@ -1,5 +1,9 @@
 /*
 * Code to generate rooms for Hell or Highwater
+* Still unfinished, need to set positions of rooms and integrate
+* with the rest of engine code somehow
+*
+* Also need to implement a slightly more efficient algorithm if time allows
 */
 
 #define NUM_ROOMS 10
