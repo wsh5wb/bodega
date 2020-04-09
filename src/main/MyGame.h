@@ -13,12 +13,9 @@
 #include "Camera.h"
 #include "myCoin.h"
 #include "QuestManager.h"
-<<<<<<< HEAD
 #include "DemoDungeon.h"
-=======
 #include "CollisionSystem.h"
 #include "Enemy.h"
->>>>>>> 291dbf5ee98878889e449e43b809b041231399cc
 
 using namespace std;
 
