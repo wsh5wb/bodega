@@ -31,17 +31,14 @@ public:
 private:
 	AnimatedSprite *character;
 	AnimatedSprite *coin;
-
 	Emitter * em;
 	Particle * p;
-
-	Player *me;
-	//Scene *bg;
-
 	CollisionSystem cs;
 	//Scene* character;
-
 	string scene;
+	bool changed;
+	Coin* myCoin;
+	bool isQuestDone;
 	Sound effect;
 };
 

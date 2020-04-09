@@ -89,6 +89,13 @@ DisplayObject* DisplayObjectContainer::getChild(string id){
 	}return NULL;
 }
 
+void DisplayObjectContainer::resetDelta(){
+	DisplayObject::resetDelta();
+	for(DisplayObject* child : children){
+		child->resetDelta();
+	}
+}
+
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys){
 	DisplayObject::update(pressedKeys);
 	for(DisplayObject* child : children){

@@ -24,6 +24,8 @@ public:
 	void removeImmediateChild(string id);
 	void removeChild(int index);
 	void removeThis();
+
+	virtual void resetDelta();
 	
 	virtual int numChildren();
 	virtual DisplayObject* getChild(int index);
