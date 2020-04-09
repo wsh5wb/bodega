@@ -13,11 +13,10 @@ using namespace std;
 MyGame::MyGame() :
 		Game(1200, 900) {
 	myCamera = Camera::getCamera();
-	character = new Scene();
-	myCamera->addScene(character);
-	this->scene = "./resources/scenes/hades?/start.txt";
+	dungeon = new DemoDungeon();
+	dungeon->generate();
+	myCamera->addScene(dungeon);
 
-	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
 
 }
@@ -92,16 +91,16 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 				myCamera->pan(cs, 0);
 			break;
 		}
-//		case SDL_SCANCODE_Q: {
-//			//character->scaleOut();
-//			myCamera->zoom(2, 2);
-//			break;
-//		}
-//		case SDL_SCANCODE_W: {
-//			//character->scaleIn();
-//			myCamera->zoom(.5, .5);
-//			break;
-//		}
+		case SDL_SCANCODE_Q: {
+			//character->scaleOut();
+			myCamera->zoom(2, 2);
+			break;
+		}
+		case SDL_SCANCODE_W: {
+			//character->scaleIn();
+			myCamera->zoom(.5, .5);
+			break;
+		}
 			//case SDL_SCANCODE_A:
 			// {
 			// 	character->rotateCW();

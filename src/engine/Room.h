@@ -2,19 +2,22 @@
 #define ROOM_H
 
 #include "DisplayObjectContainer.h"
+#include "Scene.h"
 
 using namespace std;
 
-class Room : public DisplayObjectContainer{
+class Room: public DisplayObjectContainer {
 
 public:
 
+	Room(string scene);
+
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
-	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
-	bool active, visable;//draws scene if visible, updates and draws if active
-	Scene room; //scene that room draws
+	bool active = false;
+	bool visable = true; //draws scene if visible, updates and draws if active
+	Scene *room = NULL; //scene that room draws
 
 private:
 
