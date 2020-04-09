@@ -178,7 +178,7 @@ void clear_grid(){
     }
 }
 
-int main(){
+/* int main(){
     for(int i = 0; i < 5; i++){
         generate();
         print_map();
@@ -186,4 +186,4 @@ int main(){
         clear_grid();
     }
 	return 0;
-}
+} */
