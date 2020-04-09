@@ -23,6 +23,7 @@ Camera Controls:
 	X - Zoom Out
 
 Other controls:
+    G - Toggle grid snapping
 	H - Toggle Resource Bar visibility
 	P - the next object you click will become the parent of the currently selected object
 	O - Cancel out the next parent operation

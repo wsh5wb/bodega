@@ -49,6 +49,7 @@ public:
 	bool disable_input;	
 	
 	double gridSize;
+	bool gridOn = true;
 private:
 
 	void initSDL();

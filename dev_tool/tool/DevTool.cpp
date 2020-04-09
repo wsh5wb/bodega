@@ -99,11 +99,19 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 					//  changeParent
 					makeParent = true;
 					break;
-				}case SDL_SCANCODE_O:
+				}
+				case SDL_SCANCODE_O:
 				{
 					//  changeParent
 					makeParent = false;
 					cout << makeParent << endl;
+					break;
+				}
+				case SDL_SCANCODE_G:
+				{
+					gridOn ^= 1;
+					cout << "grid is toggled " << gridOn << endl;
+					SDL_Delay(150);
 					break;
 				}
 			}
@@ -116,7 +124,8 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 		auto point = mouse->getCoordinates();
 		auto offset = children[SCENE_DOC_INDEX]->getPosition(); // this is hacky, we should be using affinetransforms but changes to how mouse updates it's own coordinates are needed
 		point = {point.x - offset.x, point.y - offset.y};
-		point = snapToGrid(point);
+		if(gridOn)
+			point = snapToGrid(point);
 		draggable->moveTo(point.x, point.y);
 	}
 	else if(mouse->leftClick){
