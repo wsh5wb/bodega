@@ -113,6 +113,7 @@ public:
 	double scaleY = 1;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_Point pivot, position;
 private:
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;
@@ -127,7 +128,6 @@ protected:
 	double rotation = 0;
 	double rotationAmount = 0.05;
 	int alpha;
-	SDL_Point pivot, position;
 	SDL_Point* globalHitbox;
 };
 

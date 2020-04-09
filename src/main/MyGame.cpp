@@ -10,14 +10,21 @@
 
 using namespace std;
 
-MyGame::MyGame() :
-		Game(1200, 900) {
+
+MyGame::MyGame() : Game(1200, 900) {
 	myCamera = Camera::getCamera();
 	dungeon = new DemoDungeon();
 	dungeon->generate();
 	myCamera->addScene(dungeon);
 
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
+
+	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
+
+	this->addChild(character);
+	this->addChild(enemy);
+
+	Game::cs.watchForCollisions("ENEMY", "PLAYER");
 
 }
 
@@ -143,6 +150,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		}
 		}
 	}
+
 
 }
 
