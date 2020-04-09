@@ -13,12 +13,8 @@
 #include "Camera.h"
 #include "myCoin.h"
 #include "QuestManager.h"
-<<<<<<< HEAD
-=======
 #include "CollisionSystem.h"
-#include "Player.h"
 #include "Enemy.h"
->>>>>>> enemyDemo
 
 using namespace std;
 
@@ -32,18 +28,12 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
-<<<<<<< HEAD
 	Camera* myCamera;
-	Scene* character;
-=======
-	AnimatedSprite *character;
-	AnimatedSprite *coin;
-	Player *me;
-	Scene *bg;
-	Enemy *en;
+	Scene *character;
+	Enemy *enemy;
 	CollisionSystem cs;
 	//Scene* character;
->>>>>>> enemyDemo
+
 	string scene;
 	Sound effect;
 };
