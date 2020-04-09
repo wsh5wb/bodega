@@ -18,6 +18,7 @@ Player::Player() :
 	this->h = 454;
 	this->scaleX = 0.15;
 	this->scaleY = 0.15;
+
 	this->pivot.x = 0; //this->w / 2;
 	this->pivot.y = 0; //this->h / 2;
 	this->addAnimation("resources/PlayerSprites/idleSprite.png",
@@ -26,6 +27,7 @@ Player::Player() :
 			"resources/PlayerSprites/runSheet.xml", "Run", 1, 60, true);
 	this->addAnimation("resources/PlayerSprites/jumpsprites.png",
 			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
+
 	this->play("Idle");
 	//cout << "Getting here." << endl;
 }
@@ -84,6 +86,11 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 				this->play("Run");
 			}
 			idle = false;
+		}
+		else if (k == SDL_SCANCODE_SPACE){
+			if (this->currAnimation != "Dead"){
+				this->play("Dead");
+			}
 		}
 
 	//play idle animation if player is just standing still on ground
