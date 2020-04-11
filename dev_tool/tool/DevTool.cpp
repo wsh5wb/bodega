@@ -114,11 +114,24 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 					SDL_Delay(150);
 					break;
 				}
+				case SDL_SCANCODE_LCTRL:
+				{
+					selectMultiple = true;
+					break;
+				}
+				case SDL_SCANCODE_RCTRL:
+				{
+					selectMultiple = true;
+					break;
+				}
 			}
 		}
 	}
 
-
+	if (selectMultiple and mouse->leftClick){
+		auto click_coords = mouse->getCoordinates();
+		selected.push_back(leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX))));
+	}
 	if (draggable != NULL and mouse->leftClick){
 		infoBar->updateObjectFields();
 		auto point = mouse->getCoordinates();
@@ -126,15 +139,24 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 		point = {point.x - offset.x, point.y - offset.y};
 		if(gridOn)
 			point = snapToGrid(point);
-		draggable->moveTo(point.x, point.y);
+		if(selected.size() > 1){
+			for(DisplayObject* obj : selected)
+				obj->moveTo(point.x, point.y);
+		}
+		else{
+			draggable->moveTo(point.x, point.y);
+		}
 	}
 	else if(mouse->leftClick){
 		auto click_coords = mouse->getCoordinates();
 		draggable = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
+		selected.insert(selected.begin(), draggable);
 	}
 	else if(draggable != NULL){
 		infoBar->updateObjectFields();
 		draggable = NULL;
+		selectMultiple = false;
+		selected.clear();
 	}
 	resourceBar->update(pressedKeys);
 }

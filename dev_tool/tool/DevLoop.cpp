@@ -27,7 +27,7 @@ DevLoop::DevLoop(int windowWidth, int windowHeight){
 
 	if(!renderer){
 		cout << "renderer failed to init" << endl;
-		return; 
+		return;
 	}
 
 	DevLoop::renderer = renderer;

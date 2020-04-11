@@ -32,8 +32,10 @@ public:
 	SDL_Point snapToGrid(SDL_Point coords);
 private:
 	DisplayObject* draggable = NULL;
+	std::vector<DisplayObject*> selected;
 	ResourceBar *resourceBar;
 	bool makeParent = false;
+	bool selectMultiple = false;
 };
 
 #endif
