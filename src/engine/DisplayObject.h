@@ -110,6 +110,7 @@ public:
 
 	double scaleX = 1;
 	double scaleY = 1;
+	int speed = 5;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 private:
@@ -121,7 +122,7 @@ private:
 
 protected:
 	SDL_Rect srcrect;
-	int speed = 5;
+
 
 	double rotation = 0;
 	double rotationAmount = 0.05;
