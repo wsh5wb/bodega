@@ -46,7 +46,7 @@ SDL_Point DevTool::snapToGrid(SDL_Point coords){
 }
 
 void DevTool::update(set<SDL_Scancode> pressedKeys){
-	cout << gridSize << endl;
+	//cout << gridSize << endl;
 	DevLoop::update(pressedKeys);
 
 	mouse->update(pressedKeys);
@@ -136,6 +136,8 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 		infoBar->updateObjectFields();
 		auto point = mouse->getCoordinates();
 		auto offset = children[SCENE_DOC_INDEX]->getPosition(); // this is hacky, we should be using affinetransforms but changes to how mouse updates it's own coordinates are needed
+		offset.x -= draggable->getPivot().x;
+		offset.y -= draggable->getPivot().y;
 		point = {point.x - offset.x, point.y - offset.y};
 		if(gridOn)
 			point = snapToGrid(point);

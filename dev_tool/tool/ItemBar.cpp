@@ -145,7 +145,7 @@ void ItemBar::event(SDL_Event *event, int* draw){
 		if(curObj != NULL){
 			if(isdigit(xPivEntry.text[0]) || (isdigit(xPivEntry.text[1]) && xPivEntry.text[0] == '-')){
 				int newVal = atoi(xPivEntry.text);
-				curObj->moveX(newVal);
+				curObj->movePivotX(newVal);
 				strncpy(xPivEntry.text,to_string(newVal).c_str(),sizeof(xPivEntry.text));
 			}else{
 				strncpy(xPivEntry.text,to_string(curObj->getPivot().x).c_str(),sizeof(xPivEntry.text));
@@ -158,7 +158,7 @@ void ItemBar::event(SDL_Event *event, int* draw){
 		if(curObj != NULL){
 			if(isdigit(yPivEntry.text[0]) || (isdigit(yPivEntry.text[1]) && yPivEntry.text[0] == '-')){
 				int newVal = atoi(yPivEntry.text);
-				curObj->moveY(newVal);
+				curObj->movePivotY(newVal);
 				strncpy(yPivEntry.text,to_string(newVal).c_str(),sizeof(yPivEntry.text));
 			}else{
 				strncpy(yPivEntry.text,to_string(curObj->getPivot().y).c_str(),sizeof(yPivEntry.text));

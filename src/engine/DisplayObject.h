@@ -61,6 +61,8 @@ public:
 	void moveX(int x);
 	void moveY(int y);
 	void movePivot(int x, int y);
+	void movePivotX(int x);
+	void movePivotY(int y);
 	void scaleIn();
 	void scaleOut();
 	void scale(double s);

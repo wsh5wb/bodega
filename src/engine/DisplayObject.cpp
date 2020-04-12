@@ -353,6 +353,14 @@ void DisplayObject::setPivot(SDL_Point p){
 	pivot = p;
 }
 
+void DisplayObject::movePivotX(int x){
+	pivot.x = x;
+}
+
+void DisplayObject::movePivotY(int y){
+	pivot.y = y;
+}
+
 SDL_Point DisplayObject::getWorld(){
 	return this->world;
 }
