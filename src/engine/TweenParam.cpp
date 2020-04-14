@@ -18,7 +18,12 @@ int TweenParam::getDir(){
 	return direction;
 }
 
+double TweenParam::getFrameCount(){
+	return frameCount;
+}
+
 double TweenParam::update(double currentValue){
+	frameCount += 1;
 	if(frameCount >= tweenTime){
 		return endVal;
 	}
@@ -33,8 +38,24 @@ double TweenParam::update(double currentValue){
 			case TWEEN_SINE:{
 				return sineTransform(direction);
 			}
+			case TWEEN_CUBIC:{
+				return cubicTransform(direction);
+			}
+			case TWEEN_QUARTIC:{
+				return quartTransform(direction);
+			}
+			case TWEEN_QUINTIC:{
+				return quintTransform(direction);
+			}
+			case TWEEN_BACK:{
+				return backTransform(direction);
+			}
+			case TWEEN_ELASTIC:{
+				return elasticTransform(direction);
+			}
 		}
 	}
+	return 0.0;
 }
 
 double TweenParam::getStartVal() {

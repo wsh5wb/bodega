@@ -6,7 +6,6 @@ using namespace std;
 Tween::Tween(DisplayObject *obj) {
 	object = obj;
 }
-
 //Tween(DisplayObject* object, TweenTransitions transition); //this is covered by the flags
 
 void Tween::animate(int fieldToAnimate, double startVal, double endVal,
@@ -16,6 +15,7 @@ void Tween::animate(int fieldToAnimate, double startVal, double endVal,
 }
 //invoked once per frame by the TweenJuggler. Updates this tween / DisplayObject
 void Tween::update() {
+	printf(" Size of TweenParams %x, \n", tweenParams.size());
 	for (TweenParam *t : tweenParams) {
 		double currentValue = currentParamValue(t->getParam());
 		if(t->getEndVal() != currentValue){
@@ -28,9 +28,11 @@ void Tween::update() {
 bool Tween::isComplete() {
 	//not correct, is complete should only complete once every field associated with this particular Tween has finished.
 	bool completed = true;
-	for(vector <TweenParam *> :: iterator it = this->tweenParams.begin(); it != this->tweenParams.end(); ++it){
-			if((*it)->getEndVal() != currentParamValue((*it)->getParam())){
+	for (TweenParam *t : tweenParams) {
+		if(t->getEndVal() != currentParamValue(t->getParam()) && t->getFrameCount() < t->getTweenTime()){
 				completed = false;
+				//printf("The Value of %x is %f \n", t->getParam(), currentParamValue(t->getParam()));
+				//printf("Not Completed.");
 			}
 	}
 	return completed;
@@ -81,6 +83,7 @@ void Tween::setValue(int param, double value) {
 		break;
 	}
 	default: {
+		printf("Error reached with %x \n", param);
 		cerr << "ERROR: Tween Parameter Not Recognized!\n";
 		break;
 	}
@@ -129,6 +132,7 @@ double Tween::currentParamValue(int param){
 		break;
 	}
 	default: {
+		printf("Error reached with %x \n", param);
 		cerr << "ERROR: Tween Parameter Not Recognized!\n";
 		break;
 	}

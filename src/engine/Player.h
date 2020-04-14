@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include "Sprite.h"
+#include "TweenJuggler.h"
 
 using namespace std;
 

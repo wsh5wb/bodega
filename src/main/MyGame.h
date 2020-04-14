@@ -13,6 +13,7 @@
 #include "Camera.h"
 #include "myCoin.h"
 #include "QuestManager.h"
+#include "TweenJuggler.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ private:
 	Scene* character;
 	string scene;
 	Sound effect;
+	TweenJuggler * animationJuggler;
 };
 
 #endif

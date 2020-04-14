@@ -7,8 +7,18 @@
 #include "Sprite.h"
 #include "AnimatedSprite.h"
 #include "MyGame.h"
+#include "TweenJuggler.h"
 
 using namespace std;
+/*	this->alpha = 0;
+	printf("1");
+	TweenJuggler * juggle = TweenJuggler::getInstance();
+	printf("1");
+	Tween * alpha_tween = new Tween(this);
+	printf("1");
+	alpha_tween->animate(TWEEN_ALPHA, this->alpha, 255, 100, TWEEN_LINEAR, EASE_IN);
+	printf("1");
+	juggle->add(alpha_tween);*/
 
 MyGame::MyGame() :
 		Game(1200, 900) {
@@ -16,10 +26,13 @@ MyGame::MyGame() :
 	character = new Scene();
 	myCamera->addScene(character);
 	this->scene = "./resources/scenes/hades?/start.txt";
-
 	character->loadScene(scene);
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
-
+	animationJuggler = TweenJuggler::getInstance();
+	Tween * alpha_tween = new Tween(character);
+	character->setAlpha(40);
+	alpha_tween->animate(TWEEN_ALPHA, character->getAlpha(), 245, 200, TWEEN_LINEAR, EASE_IN);
+	animationJuggler->add(alpha_tween);
 }
 
 MyGame::~MyGame() {
@@ -92,6 +105,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 				myCamera->pan(cs, 0);
 			break;
 		}
+
 //		case SDL_SCANCODE_Q: {
 //			//character->scaleOut();
 //			myCamera->zoom(2, 2);
@@ -111,7 +125,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 			// 	character->rotateCCW();
 			// 	break;
 			// }
-			// case SDL_SCANCODE_I: 
+			// case SDL_SCANCODE_I:
 			// {
 			// 	character->movePivotUp();
 			// 	break;
@@ -153,5 +167,6 @@ void MyGame::draw(AffineTransform &at) {
 	SDL_RenderClear(Game::renderer);
 	myCamera->draw(at);
 	DisplayObjectContainer::draw(at);
+	animationJuggler->nextFrame();
 	SDL_RenderPresent(Game::renderer);
 }

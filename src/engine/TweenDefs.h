@@ -19,7 +19,14 @@
 
 #define TWEEN_LINEAR 0
 #define TWEEN_QUADRATIC 1
-#define TWEEN_SINE 2 //not sure i'll actually use this
+#define TWEEN_SINE 2
+#define TWEEN_CUBIC 3
+#define TWEEN_QUARTIC 4
+#define TWEEN_QUINTIC 5
+#define TWEEN_BACK 6
+#define TWEEN_EXPO 7
+#define TWEEN_ELASTIC 8
+//not sure i'll actually use this
 
 
 #endif

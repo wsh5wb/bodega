@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "AnimatedSprite.h"
 #include "Sprite.h"
+
 //#include "Controls.h"
 
 using namespace std;
@@ -18,6 +19,7 @@ Player::Player() :
 	this->h = 454;
 	this->scaleX = 0.15;
 	this->scaleY = 0.15;
+
 	this->pivot.x = 0; //this->w / 2;
 	this->pivot.y = 0; //this->h / 2;
 	this->addAnimation("resources/PlayerSprites/idleSprite.png",
@@ -26,7 +28,14 @@ Player::Player() :
 			"resources/PlayerSprites/runSheet.xml", "Run", 1, 60, true);
 	this->addAnimation("resources/PlayerSprites/jumpsprites.png",
 			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
-	this->play("Idle");
+		this->play("Idle");
+	//for tweening Demo
+		this->alpha = 30;
+		TweenJuggler * juggle = TweenJuggler::getInstance();
+		Tween * alpha_tween = new Tween(this);
+		alpha_tween->animate(TWEEN_ALPHA, this->alpha, 230, 500, TWEEN_LINEAR, EASE_IN);
+		juggle->add(alpha_tween);
+	//for Tweening Demo
 	//cout << "Getting here." << endl;
 }
 
@@ -84,6 +93,19 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 				this->play("Run");
 			}
 			idle = false;
+		}
+		//for tweening Demo
+		else if (k == SDL_SCANCODE_T){
+			TweenJuggler * juggle = TweenJuggler::getInstance();
+			Tween * position_tween = new Tween(this);
+			position_tween->animate(TWEEN_POSITION_X, oldX, oldX + 200, 200, TWEEN_QUADRATIC, EASE_IN);
+			juggle->add(position_tween);
+		}
+		else if (k == SDL_SCANCODE_R){
+			TweenJuggler * juggle = TweenJuggler::getInstance();
+			Tween * position_tween = new Tween(this);
+			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
+			juggle->add(position_tween);
 		}
 
 	//play idle animation if player is just standing still on ground

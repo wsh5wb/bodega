@@ -16,6 +16,7 @@ public:
 			double time, int transition, int direction);
 	int getParam();
 	int getDir();
+	double getFrameCount();
 	double update(double currentValue);
 	double getStartVal();
 	double getEndVal();
