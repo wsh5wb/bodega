@@ -5,13 +5,16 @@
 using namespace std;
 
 HadesDungeon::HadesDungeon() {
+
+	//might not need
 	layout = new int*[5];
 	for (int i = 0; i < 5; i++) {
 		layout[i] = new int[5];
 		for (int j = 0; j < 5; j++) {
-				layout[i][j] = !(i+j);
+			layout[i][j] = !(i + j);
 		}
 	}
+	id = "HadesDungeon";
 
 	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
 	scenes.push_back("./resources/scenes/hades?/start.txt");
@@ -24,26 +27,13 @@ HadesDungeon::~HadesDungeon() {
 }
 
 void HadesDungeon::update(set<SDL_Scancode> pressedKeys) {
-	DisplayObjectContainer::update(pressedKeys);
+	Dungeon::update(pressedKeys);
 }
 void HadesDungeon::draw(AffineTransform &at) {
-	DisplayObjectContainer::draw(at);
+	Dungeon::draw(at);
 }
 
 void HadesDungeon::generate() {
-	//sets up layout, reads in scenes, generates rooms
-	for (int i = 5; i--;) {
-		for (int j = 5; j--;) {
-			int ind = layout[i][j];
-			string s = scenes.at(ind);
-			Room *temp = new Room(s); //crashes here???
-			temp->id = "HadesDungeon_" + to_string(i) + "-" + to_string(j);
-			temp->moveTo(1200 * j, 900 * i);
-			if (!(i + j)) {
-				temp->active = true;
-			}
-			DisplayObjectContainer::addChild(temp);
-		}
-	}
+	Dungeon::generate();
 }
 
