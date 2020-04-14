@@ -120,9 +120,17 @@ void DevLoop::start(){
 					break;
 				case SDL_KEYDOWN:
 					pressedKeys.insert(event.key.keysym.scancode);
+					if(event.key.keysym.scancode == SDL_SCANCODE_LCTRL ||
+						event.key.keysym.scancode == SDL_SCANCODE_RCTRL){
+						selectMultiple = true;
+					}
 					break;
 				case SDL_KEYUP:
 					pressedKeys.erase(event.key.keysym.scancode);
+					if(event.key.keysym.scancode == SDL_SCANCODE_LCTRL ||
+						event.key.keysym.scancode == SDL_SCANCODE_RCTRL){
+						selectMultiple = false;
+					}
 					break;
 			}
 

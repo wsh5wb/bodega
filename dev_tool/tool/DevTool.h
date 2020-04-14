@@ -35,7 +35,7 @@ private:
 	std::vector<DisplayObject*> selected;
 	ResourceBar *resourceBar;
 	bool makeParent = false;
-	bool selectMultiple = false;
+	bool isHovering = true;
 };
 
 #endif

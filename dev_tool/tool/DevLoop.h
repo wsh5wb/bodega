@@ -50,6 +50,7 @@ public:
 	
 	double gridSize;
 	bool gridOn = true;
+	bool selectMultiple = false;
 private:
 
 	void initSDL();

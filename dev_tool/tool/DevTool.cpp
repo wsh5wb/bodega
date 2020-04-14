@@ -1,4 +1,5 @@
 #include "DevTool.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -15,7 +16,8 @@ DevTool::DevTool() : DevLoop(1280, 720){
 	this->addChild(scene);
 	this->infoBar->initThisWindow((DisplayObjectContainer *) this);
 	// camera->addScene(scene);
-	// this->addChild(mouse);
+
+	this->addChild(mouse);
 	this->addChild(character);
 }
 
@@ -114,52 +116,87 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 					SDL_Delay(150);
 					break;
 				}
-				case SDL_SCANCODE_LCTRL:
-				{
-					selectMultiple = true;
-					break;
-				}
-				case SDL_SCANCODE_RCTRL:
-				{
-					selectMultiple = true;
-					break;
-				}
 			}
 		}
 	}
 
-	if (selectMultiple and mouse->leftClick){
+	// cout << "selected size: " << selected.size() << endl;
+
+	// if (draggable != NULL and mouse->leftClick){
+	// 	infoBar->updateObjectFields();
+	// 	auto point = mouse->getCoordinates();
+	// 	auto offset = children[SCENE_DOC_INDEX]->getPosition(); // this is hacky, we should be using affinetransforms but changes to how mouse updates it's own coordinates are needed
+	// 	offset.x -= draggable->getPivot().x;
+	// 	offset.y -= draggable->getPivot().y;
+	// 	point = {point.x - offset.x, point.y - offset.y};
+	// 	if(gridOn)
+	// 		point = snapToGrid(point);
+	// 	if(selected.size() > 1){
+	// 		for(DisplayObject* obj : selected)
+	// 			obj->moveTo(point.x, point.y);
+	// 	}
+	// 	else{
+	// 		draggable->moveTo(point.x, point.y);
+	// 	}
+	// }
+	// else if(mouse->leftClick){
+	// 	auto click_coords = mouse->getCoordinates();
+	// 	draggable = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
+	// 	selected.clear();
+	// 	if(draggable != NULL){
+	// 		selected.push_back(NULL);
+	// 		selected.at(0) = draggable;
+	// 	}
+	// }
+	// else if(draggable != NULL){
+	// 	infoBar->updateObjectFields();
+	// 	draggable = NULL;
+	// 	selected.clear();
+	// }
+	// selectMultiple = false;
+
+	if(mouse->leftClick){
 		auto click_coords = mouse->getCoordinates();
-		selected.push_back(leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX))));
-	}
-	if (draggable != NULL and mouse->leftClick){
-		infoBar->updateObjectFields();
-		auto point = mouse->getCoordinates();
-		auto offset = children[SCENE_DOC_INDEX]->getPosition(); // this is hacky, we should be using affinetransforms but changes to how mouse updates it's own coordinates are needed
-		offset.x -= draggable->getPivot().x;
-		offset.y -= draggable->getPivot().y;
-		point = {point.x - offset.x, point.y - offset.y};
-		if(gridOn)
-			point = snapToGrid(point);
-		if(selected.size() > 1){
-			for(DisplayObject* obj : selected)
+		DisplayObject* clicked = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
+		cout << "clicked " << clicked << endl;
+
+		if(selected.size() > 0 && selected[0] != NULL && isHovering && !selectMultiple){
+			infoBar->updateObjectFields();
+
+			SDL_Point amountToMove = mouse->getCoordinates();
+			SDL_Point selectedPos = selected[0]->getPosition();
+
+			selectedPos.x -= selected[0]->getPivot().x;
+			selectedPos.y -= selected[0]->getPivot().y;
+			amountToMove.x -= selectedPos.x;
+			amountToMove.y -= selectedPos.y;
+
+			for(DisplayObject* obj : selected){
+				SDL_Point point = {obj->getPosition().x+amountToMove.x, obj->getPosition().y+amountToMove.y};
+				
+				if(gridOn)
+					point = snapToGrid(point);
+
 				obj->moveTo(point.x, point.y);
+			}
 		}
-		else{
-			draggable->moveTo(point.x, point.y);
+		else if(clicked != NULL){
+			if(!selectMultiple)
+				selected.clear();
+
+			isHovering = true;
+			auto it = find(selected.begin(), selected.end(), clicked);
+			if(it == selected.end()){
+				cout << "size is now " << selected.size() +1 << endl;
+				selected.push_back(clicked);
+			}
 		}
 	}
-	else if(mouse->leftClick){
-		auto click_coords = mouse->getCoordinates();
-		draggable = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
-		selected.insert(selected.begin(), draggable);
-	}
-	else if(draggable != NULL){
+	else if(selected.size() > 0 && selected[0] != NULL){
 		infoBar->updateObjectFields();
-		draggable = NULL;
-		selectMultiple = false;
-		selected.clear();
+		isHovering = false;
 	}
+
 	resourceBar->update(pressedKeys);
 }
 

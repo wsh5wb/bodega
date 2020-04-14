@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Mouse::Mouse() : DisplayObject(){
+Mouse::Mouse() : DisplayObjectContainer(){
  	mouseCoords = {0,0};
 	leftClickCoords = {0,0};
 	leftClick = false;
@@ -16,7 +16,7 @@ Mouse::Mouse() : DisplayObject(){
 	vis = false;
 }
 
-Mouse::Mouse(string id, int red, int green, int blue) : DisplayObject(id, red, green, blue){
+Mouse::Mouse(string id, int red, int green, int blue) : DisplayObjectContainer(id, red, green, blue){
 	mouseCoords = {0,0};
 	leftClickCoords = {0,0};
 	leftClick = false;
@@ -34,6 +34,10 @@ Mouse::~Mouse(){
 
 SDL_Point Mouse::getCoordinates(){
 	return this->mouseCoords;
+}
+
+SDL_Point Mouse::getGlobalCoordinates(){
+
 }
 
 void Mouse::setState(Uint32 eventType, const SDL_Event &event){
@@ -113,7 +117,9 @@ void Mouse::draw(AffineTransform &at){
 
 	SDL_Rect dstrect = {tl.x, tl.y, w, h};
 
-	// cout << getCurTexture() << endl;
-
-	SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, 0, &pOrigin, SDL_FLIP_NONE);
+	if(this->renderer != NULL){
+		SDL_RenderCopyEx(this->renderer, curTexture, NULL, &dstrect, 0, &pOrigin, SDL_FLIP_NONE);
+	}
+	else
+		SDL_RenderCopyEx(Game::renderer, curTexture, NULL, &dstrect, 0, &pOrigin, SDL_FLIP_NONE);
 }
