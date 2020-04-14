@@ -120,41 +120,6 @@ void DevTool::update(set<SDL_Scancode> pressedKeys){
 		}
 	}
 
-	// cout << "selected size: " << selected.size() << endl;
-
-	// if (draggable != NULL and mouse->leftClick){
-	// 	infoBar->updateObjectFields();
-	// 	auto point = mouse->getCoordinates();
-	// 	auto offset = children[SCENE_DOC_INDEX]->getPosition(); // this is hacky, we should be using affinetransforms but changes to how mouse updates it's own coordinates are needed
-	// 	offset.x -= draggable->getPivot().x;
-	// 	offset.y -= draggable->getPivot().y;
-	// 	point = {point.x - offset.x, point.y - offset.y};
-	// 	if(gridOn)
-	// 		point = snapToGrid(point);
-	// 	if(selected.size() > 1){
-	// 		for(DisplayObject* obj : selected)
-	// 			obj->moveTo(point.x, point.y);
-	// 	}
-	// 	else{
-	// 		draggable->moveTo(point.x, point.y);
-	// 	}
-	// }
-	// else if(mouse->leftClick){
-	// 	auto click_coords = mouse->getCoordinates();
-	// 	draggable = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
-	// 	selected.clear();
-	// 	if(draggable != NULL){
-	// 		selected.push_back(NULL);
-	// 		selected.at(0) = draggable;
-	// 	}
-	// }
-	// else if(draggable != NULL){
-	// 	infoBar->updateObjectFields();
-	// 	draggable = NULL;
-	// 	selected.clear();
-	// }
-	// selectMultiple = false;
-
 	if(mouse->leftClick){
 		auto click_coords = mouse->getCoordinates();
 		DisplayObject* clicked = leftClick(click_coords, ((DisplayObjectContainer *) this->getChild(SCENE_DOC_INDEX)));
