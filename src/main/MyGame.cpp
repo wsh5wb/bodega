@@ -108,19 +108,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 				myCamera->pan(cs, 0);
 			break;
 		}
-<<<<<<< HEAD
-
-//		case SDL_SCANCODE_Q: {
-//			//character->scaleOut();
-//			myCamera->zoom(2, 2);
-//			break;
-//		}
-//		case SDL_SCANCODE_W: {
-//			//character->scaleIn();
-//			myCamera->zoom(.5, .5);
-//			break;
-//		}
-=======
 		case SDL_SCANCODE_Q: {
 			//character->scaleOut();
 			myCamera->zoom(2, 2);
@@ -131,7 +118,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 			myCamera->zoom(.2, .2);
 			break;
 		}
->>>>>>> b9f70db26531add35ba71458a8f10e4704768711
 			//case SDL_SCANCODE_A:
 			// {
 			// 	character->rotateCW();
@@ -184,6 +170,6 @@ void MyGame::draw(AffineTransform &at) {
 	SDL_RenderClear(Game::renderer);
 	myCamera->draw(at);
 	DisplayObjectContainer::draw(at);
-	animationJuggler->nextFrame();
+	//animationJuggler->nextFrame();
 	SDL_RenderPresent(Game::renderer);
 }
