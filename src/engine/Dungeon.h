@@ -2,6 +2,7 @@
 #define DUNGEON_H
 
 #include "DisplayObjectContainer.h"
+#include "Room.h"
 
 using namespace std;
 
@@ -9,9 +10,8 @@ class Dungeon : public DisplayObjectContainer{
 
 public:
 
-	virtual void update(set<SDL_Scancode> pressedKeys);
-	virtual void draw(AffineTransform &at);
-	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
+	virtual void update(set<SDL_Scancode> pressedKeys)=0;
+	virtual void draw(AffineTransform &at)=0;
 
 	virtual void generate()=0;//sets up layout, reads in scenes, generates rooms
 

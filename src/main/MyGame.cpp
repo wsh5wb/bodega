@@ -20,19 +20,22 @@ using namespace std;
 	printf("1");
 	juggle->add(alpha_tween);*/
 
-MyGame::MyGame() :
-		Game(1200, 900) {
+
+MyGame::MyGame() : Game(1200, 900) {
 	myCamera = Camera::getCamera();
-	character = new Scene();
-	myCamera->addScene(character);
-	this->scene = "./resources/scenes/hades?/start.txt";
-	character->loadScene(scene);
+	dungeon = new DemoDungeon();
+	dungeon->generate();
+	myCamera->addScene(dungeon);
+
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
-	animationJuggler = TweenJuggler::getInstance();
-	Tween * alpha_tween = new Tween(character);
-	character->setAlpha(40);
-	alpha_tween->animate(TWEEN_ALPHA, character->getAlpha(), 245, 200, TWEEN_LINEAR, EASE_IN);
-	animationJuggler->add(alpha_tween);
+
+	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
+
+	this->addChild(character);
+	this->addChild(enemy);
+
+	Game::cs.watchForCollisions("ENEMY", "PLAYER");
+
 }
 
 MyGame::~MyGame() {
@@ -105,6 +108,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 				myCamera->pan(cs, 0);
 			break;
 		}
+<<<<<<< HEAD
 
 //		case SDL_SCANCODE_Q: {
 //			//character->scaleOut();
@@ -116,6 +120,18 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 //			myCamera->zoom(.5, .5);
 //			break;
 //		}
+=======
+		case SDL_SCANCODE_Q: {
+			//character->scaleOut();
+			myCamera->zoom(2, 2);
+			break;
+		}
+		case SDL_SCANCODE_W: {
+			//character->scaleIn();
+			myCamera->zoom(.5, .5);
+			break;
+		}
+>>>>>>> b9f70db26531add35ba71458a8f10e4704768711
 			//case SDL_SCANCODE_A:
 			// {
 			// 	character->rotateCW();
@@ -158,6 +174,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		}
 		}
 	}
+
 
 }
 

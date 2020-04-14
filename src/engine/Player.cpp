@@ -106,6 +106,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			Tween * position_tween = new Tween(this);
 			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
 			juggle->add(position_tween);
+		else if (k == SDL_SCANCODE_SPACE){
+			if (this->currAnimation != "Dead"){
+				this->play("Dead");
+			}
 		}
 
 	//play idle animation if player is just standing still on ground

@@ -14,6 +14,9 @@
 #include "myCoin.h"
 #include "QuestManager.h"
 #include "TweenJuggler.h"
+#include "DemoDungeon.h"
+#include "CollisionSystem.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -28,9 +31,14 @@ public:
 
 private:
 	Camera* myCamera;
-	Scene* character;
+	Scene *character;
+	Enemy *enemy;
+	CollisionSystem cs;
+	//Scene* character;
+
 	string scene;
 	Sound effect;
+	DemoDungeon* dungeon;
 	TweenJuggler * animationJuggler;
 };
 
