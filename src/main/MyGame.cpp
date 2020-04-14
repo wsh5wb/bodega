@@ -19,12 +19,12 @@ MyGame::MyGame() : Game(1200, 900) {
 
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
 
-	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
-
-	this->addChild(character);
-	this->addChild(enemy);
-
-	Game::cs.watchForCollisions("ENEMY", "PLAYER");
+//	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
+//
+//	this->addChild(character);
+//	this->addChild(enemy);
+//
+//	Game::cs.watchForCollisions("ENEMY", "PLAYER");
 
 }
 
