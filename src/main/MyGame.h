@@ -13,6 +13,7 @@
 #include "Camera.h"
 #include "myCoin.h"
 #include "QuestManager.h"
+#include "TweenJuggler.h"
 #include "DemoDungeon.h"
 #include "HadesDungeon.h"
 #include "CollisionSystem.h"
@@ -39,6 +40,7 @@ private:
 	string scene;
 	Sound effect;
 	HadesDungeon* dungeon;
+	TweenJuggler * animationJuggler;
 };
 
 #endif
