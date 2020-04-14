@@ -13,7 +13,7 @@ using namespace std;
 
 MyGame::MyGame() : Game(1200, 900) {
 	myCamera = Camera::getCamera();
-	dungeon = new DemoDungeon();
+	dungeon = new HadesDungeon();
 	dungeon->generate();
 	myCamera->addScene(dungeon);
 
@@ -105,7 +105,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		}
 		case SDL_SCANCODE_W: {
 			//character->scaleIn();
-			myCamera->zoom(.5, .5);
+			myCamera->zoom(.2, .2);
 			break;
 		}
 			//case SDL_SCANCODE_A:

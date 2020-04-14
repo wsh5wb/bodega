@@ -14,6 +14,7 @@
 #include "myCoin.h"
 #include "QuestManager.h"
 #include "DemoDungeon.h"
+#include "HadesDungeon.h"
 #include "CollisionSystem.h"
 #include "Enemy.h"
 
@@ -37,7 +38,7 @@ private:
 
 	string scene;
 	Sound effect;
-	DemoDungeon* dungeon;
+	HadesDungeon* dungeon;
 };
 
 #endif
