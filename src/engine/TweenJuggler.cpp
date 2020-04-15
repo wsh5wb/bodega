@@ -26,7 +26,7 @@ void TweenJuggler::nextFrame() {
 	auto it = tweens.begin();
 	while (it != tweens.end()){
 			if ((*it)->isComplete()){
-				printf("Completed \n");
+				//printf("Completed \n");
 				this->tweens.erase(it);
 			}else{
 				(*it)->update();
