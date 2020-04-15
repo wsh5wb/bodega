@@ -7,7 +7,7 @@
 //#include "Controls.h"
 
 using namespace std;
-
+Player *Player::player = 0;
 Player::Player() :
 		AnimatedSprite("PLAYER_YOU") {
 
@@ -37,6 +37,13 @@ Player::Player() :
 		juggle->add(alpha_tween);
 	//for Tweening Demo
 	//cout << "Getting here." << endl;
+}
+
+Player* Player::getPlayer() {
+	if (player == 0) {
+		player = new Player();
+	}
+	return player;
 }
 
 //Called automatically by collision system when something collides with the player

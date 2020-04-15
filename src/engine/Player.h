@@ -17,6 +17,8 @@ class Player : public AnimatedSprite{
 public:
 	Player();
 
+	static Player* getPlayer();
+
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
@@ -53,6 +55,7 @@ private:
 	int _yAccCount = 0;
 	int _yVel = 0;
 
+	static Player* player;
 	void initIFrames(int numFrames);
 
 };

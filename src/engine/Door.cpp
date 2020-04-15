@@ -37,7 +37,6 @@ void Door::update(set<SDL_Scancode> pressedKeys){
 
 void Door::draw(AffineTransform &at){
 	DisplayObject::draw(at);
-	DisplayObject::drawHitbox(true);
 }
 
 void Door::saveSelf(vector<string> &objects, vector<string> &dependencies) {

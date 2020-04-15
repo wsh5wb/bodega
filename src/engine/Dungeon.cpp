@@ -17,7 +17,6 @@ Dungeon::~Dungeon() {
 		auto find = pressedKeys.find(SDL_SCANCODE_W);
 		if(find != pressedKeys.end()) {
 			if(!zoomed_out) {
-				cerr << "here 17\n";
 				zoomed_out = true;
 				Camera* myCamera = Camera::getCamera();
 				myCamera->setLocation(0,0);
