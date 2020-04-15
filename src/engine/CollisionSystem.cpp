@@ -47,7 +47,7 @@ void CollisionSystem::update(){
 				bool collision;
 				if((collision= collidesWith(obj1, obj2))){
 
-					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
+					if(pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
 						char dir;
 						if(obj1->id.substr(0,obj1->id.length()-1) == "Door")	dir = obj1->id[4];

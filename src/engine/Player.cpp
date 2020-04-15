@@ -30,11 +30,11 @@ Player::Player() :
 			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
 		this->play("Idle");
 	//for tweening Demo
-		this->alpha = 30;
-		TweenJuggler * juggle = TweenJuggler::getInstance();
-		Tween * alpha_tween = new Tween(this);
-		alpha_tween->animate(TWEEN_ALPHA, this->alpha, 230, 500, TWEEN_LINEAR, EASE_IN);
-		juggle->add(alpha_tween);
+		// this->alpha = 30;
+		// TweenJuggler * juggle = TweenJuggler::getInstance();
+		// Tween * alpha_tween = new Tween(this);
+		// alpha_tween->animate(TWEEN_ALPHA, this->alpha, 230, 500, TWEEN_LINEAR, EASE_IN);
+		// juggle->add(alpha_tween);
 	//for Tweening Demo
 	//cout << "Getting here." << endl;
 }
