@@ -63,6 +63,26 @@ void Player::onCollision(DisplayObject *other) {
 
 }
 
+void Player::renderHPBar(int x, int y, int w, int h, float PercentLost, SDL_Color FGColor, SDL_Color BGColor) {
+   SDL_Color old;
+   SDL_GetRenderDrawColor(Game::renderer, &old.r, &old.g, &old.g, &old.a);
+   SDL_Rect bgrect = { x, y, w, h };
+   SDL_SetRenderDrawColor(Game::renderer, BGColor.r, BGColor.g, BGColor.b, BGColor.a);
+   SDL_RenderFillRect(Game::renderer, &bgrect);
+   SDL_SetRenderDrawColor(Game::renderer, FGColor.r, FGColor.g, FGColor.b, FGColor.a);
+   int pw = (int)((float)w * PercentLost);
+   int px = x + (w - pw);
+   SDL_Rect fgrect = { px, y, pw, h };
+   SDL_RenderFillRect(Game::renderer, &fgrect);
+   SDL_SetRenderDrawColor(Game::renderer, old.r, old.g, old.b, old.a);
+}
+
+float Player::percentOfHealthLost(){
+		float d = (float(this->maxHealth - this->health)/ float(this->maxHealth));
+		//printf("Max Health: %x, health %x, percentLoss %9.6f \n", this->maxHealth, this->health, d);
+		return d;
+}
+
 void Player::update(set<SDL_Scancode> pressedKeys) {
 	AnimatedSprite::update(pressedKeys);
 	oldY = this->position.y;
@@ -167,6 +187,7 @@ void Player::initIFrames(int numFrames) {
 
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
+	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
 }
 
 void Player::saveSelf(vector<string> &objects, vector<string> &dependencies) {
