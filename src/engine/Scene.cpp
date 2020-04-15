@@ -235,7 +235,7 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 7: { //Player
 
-			Player *temp = new Player();
+			Player *temp = Player::getPlayer();
 			SDL_Point position;
 			i >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
