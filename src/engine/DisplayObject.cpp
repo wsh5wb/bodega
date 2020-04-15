@@ -18,17 +18,21 @@ DisplayObject::DisplayObject() {
 	pivot.x = 0;
 	pivot.y = 0;
 	globalHitbox = new SDL_Point[4];
+	hitbox = NULL;
 }
 
 DisplayObject::DisplayObject(string id, string filepath){
 	this->id = id;
 	this->imgPath = filepath;
+	globalHitbox = new SDL_Point[4];
+	hitbox = NULL;
 	loadTexture(filepath);
 }
 
 DisplayObject::DisplayObject(string id, string filepath, bool particle){
 	this->id = id;
 	this->imgPath = filepath;
+	hitbox = NULL;
 	if(!particle){ globalHitbox = new SDL_Point[4];}
 
 	loadTexture(filepath);
@@ -42,6 +46,7 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue) {
 	this->blue = blue;
 	this->green = green;
 	globalHitbox = new SDL_Point[4];
+	hitbox = NULL;
 
 	this->loadRGBTexture(red, green, blue);
 }
@@ -458,7 +463,7 @@ void DisplayObject::setHitbox(double boundLow, double boundHigh){
 
 SDL_Point* DisplayObject::getGlobalHitbox(){
 	if(!this->hitbox)
-		return NULL;
+		setHitbox(0,1);
 
 	AffineTransform* at = getGlobalTransform(this);
 	globalHitbox[0] = at->transformPoint(hitbox[0].x, hitbox[0].y);

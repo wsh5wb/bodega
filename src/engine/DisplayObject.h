@@ -7,7 +7,6 @@
 #include <SDL2/SDL_image.h>
 #include <set>
 #include "AffineTransform.h"
-#include "EventDispatcher.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -16,7 +15,7 @@
 
 using namespace std;
 
-class DisplayObject: public EventDispatcher{
+class DisplayObject{
 
 public:
 	string id = "DEFAULT_ID";

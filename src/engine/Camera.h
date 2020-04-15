@@ -28,7 +28,7 @@ public:
 
 	void update(set<SDL_Scancode> pressedKeys);
 	void draw(AffineTransform &at);
-
+	
 
 private:
 

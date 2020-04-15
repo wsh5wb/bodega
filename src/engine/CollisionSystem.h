@@ -9,7 +9,6 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <algorithm>
 
 using namespace std;
 
@@ -55,7 +54,7 @@ public:
 	bool onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3);
 	
 private:
-	map<string,vector<DORange_t> > objects;
+	map<string,vector<DisplayObject*> > objects;
 	vector<string> pairs;
 	
 };

@@ -14,6 +14,7 @@ SDL_Renderer* Game::renderer;
 Game* Game::instance;
 unsigned int Game::frameCounter = 0;
 CollisionSystem Game::cs;
+EventDispatcher Game::eventHandler;
 
 Game::Game(int windowWidth, int windowHeight){
 	Game::instance = this;

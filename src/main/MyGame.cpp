@@ -22,19 +22,31 @@ using namespace std;
 
 
 MyGame::MyGame() : Game(1200, 900) {
+	Game::eventHandler.addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	Game::eventHandler.addEventListener((EventListener*) &Game::cs, "OBJ_RM");
+
 	myCamera = Camera::getCamera();
 	dungeon = new HadesDungeon();
 	dungeon->generate();
 	myCamera->addScene(dungeon);
 
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
+
 	animationJuggler = TweenJuggler::getInstance();
+
 //	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
 //
 //	this->addChild(character);
 //	this->addChild(enemy);
 //
 //	Game::cs.watchForCollisions("ENEMY", "PLAYER");
+	Game::cs.watchForCollisions("PLAYER", "DOOR");
+	// Come up with more elegant solution to determining which dir to go.
+	Game::eventHandler.addEventListener((EventListener*) dungeon, "DUNG_TRANS_U");
+	Game::eventHandler.addEventListener((EventListener*) dungeon, "DUNG_TRANS_D");
+	Game::eventHandler.addEventListener((EventListener*) dungeon, "DUNG_TRANS_R");
+	Game::eventHandler.addEventListener((EventListener*) dungeon, "DUNG_TRANS_L");
+
 
 }
 
@@ -161,6 +173,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 
+	Game::cs.update();
 
 }
 

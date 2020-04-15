@@ -28,9 +28,7 @@ public:
 private:
 	
 	/* List of listeners */
-    std::unordered_map<std::string, std::vector<EventListener*>*> *listeners;
-
-
+    std::unordered_map<std::string, std::vector<EventListener*>> *listeners;
 };
 
 #endif

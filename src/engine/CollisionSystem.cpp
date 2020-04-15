@@ -1,6 +1,9 @@
 #include "CollisionSystem.h"
 #include "DTEvent.h"
+#include "Game.h"
 #include <iostream>
+#include <bits/stdc++.h>
+#include <algorithm>
 
 bool compare_xval(DORange_t do1, DORange_t do2){
 	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
@@ -26,16 +29,6 @@ CollisionSystem::~CollisionSystem(){
 //checks collisions between pairs of DOs where the corresponding types have been requested
 //to be checked (via a single call to watchForCollisions) below.
 void CollisionSystem::update(){
-	/*
-		Possible pseudocode:
-			iterate through display objects:
-				if collidesWith(DO1, DO2):
-					if DO1 is Player and DO2 is Enemy:
-						Dispatch event (to take damage or something)?
-					if DO1 is Player and DO2 is Platform:
-						resolveCollision()
-					...
-	*/
 
 	// TODO: come up with a better system for this later. It's trash right now
 	for(string pair : pairs){
@@ -48,21 +41,56 @@ void CollisionSystem::update(){
 		// sort(vec1.begin(), vec1.end(), compare_xval);
 		// sort(vec2.begin(), vec2.end(), compare_xval);
 
-		for(DORange obj1 : vec1){
-			for(DORange obj2 : vec2){
+		for(DisplayObject* obj1 : vec1){
+			for(DisplayObject* obj2 : vec2){
+				if(obj1 == obj2)	continue;
 				bool collision;
-				if((collision= collidesWith(obj1.object, obj2.object))){
-					//cout << "COLLISION:" << obj1.object->id << " and " << obj2.object->id << endl;
-					resolveCollision(obj1.object, obj2.object,
-						obj1.object->deltaX, obj1.object->deltaY,
-						obj2.object->deltaX, obj2.object->deltaY);
+				if((collision= collidesWith(obj1, obj2))){
 
-					obj1.object->updateDelta(0,0,0,0,0);
-					obj2.object->updateDelta(0,0,0,0,0);
+					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
+						// assuming door1 is always S, 2 W, 3 N, 4 E
+						char dir;
+						if(obj1->id.substr(0,obj1->id.length()-1) == "Door")	dir = obj1->id[4];
+						else													dir = obj2->id[4];
+
+						switch(dir){
+							case '1':{
+								Event e("DUNG_TRANS_D", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+							case '2':{
+								Event e("DUNG_TRANS_L", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+							case '3':{
+								Event e("DUNG_TRANS_U", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+							case '4':{
+								Event e("DUNG_TRANS_R", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+						}
+						cout << obj1->id << " collied with " << obj2->id << endl;
+						
+					}
+					else{
+						resolveCollision(obj1, obj2,
+						obj1->deltaX, obj1->deltaY,
+						obj2->deltaX, obj2->deltaY);
+
+						obj1->updateDelta(0,0,0,0,0);
+						obj2->updateDelta(0,0,0,0,0);
+					}
+					
 				}
 				// you can turn this into an event dispatch. Definitely would be a good idea.
-				obj1.object->isCollided = collision;
-				obj2.object->isCollided = collision;
+				obj1->isCollided = collision;
+				obj2->isCollided = collision;
 			}
 		}
 
@@ -72,14 +100,19 @@ void CollisionSystem::update(){
 //This system watches the game's display tree and is notified whenever a display object is placed onto
 //or taken off of the tree. Thus, the collision system always knows what DOs are in the game at any moment automatically.
 void CollisionSystem::handleEvent(Event* e){
-	// objects.push_back(((DTEvent*) e)->getAddedObject());
-	// objects.sort(compare_xval);
 	DisplayObject* child = ((DTEvent*) e)->getAddedObject();
-    DORange_t object;
-    object.object = child;
-	if(child->id.find("ENEMY") != string::npos)			objects["ENEMY"].push_back(object);
-	else if(child->id.find("PLAYER") != string::npos)	objects["PLAYER"].push_back(object);
-	else if(child->id.find("SETTING") != string::npos)	objects["SETTING"].push_back(object);
+    string str;
+
+	if(child->id.find("ENEMY") != string::npos)				str = "ENEMY";
+	else if(child->id.find("PLAYER") != string::npos)		str = "PLAYER";
+	else if(child->id.find("SETTING") != string::npos)		str = "SETTING";
+	// TODO: Make a new OBJECT category?
+	else if(child->id.find("Door") != string::npos)			str = "DOOR";
+
+	auto it = find(objects[str].begin(), objects[str].end(), child);
+
+	if(e->getType() == "OBJ_ADD" && it == objects[str].end())	objects[str].push_back(child);
+	else if(e->getType() == "OBJ_RM")							objects[str].erase(it);
 }
 
 //This function asks the collision system to start checking for collisions between all pairs

@@ -6,24 +6,24 @@
 using namespace std;
 
 Door::Door() : DisplayObject(){
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
 Door::Door(string id, string filepath) : DisplayObject(id,filepath){
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
 Door::Door(string id, string filepath, bool particle) : DisplayObject(id,filepath,particle){
 	if(particle) {return;}
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
 Door::Door(string id, int red, int green, int blue) : DisplayObject(id,red,green,blue){
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
-	this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
+	// this->addEventListener((EventListener*) &Game::cs, "OBJ_RM");
 }
 
 Door::~Door(){
