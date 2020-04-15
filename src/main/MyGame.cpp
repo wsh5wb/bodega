@@ -28,7 +28,7 @@ MyGame::MyGame() : Game(1200, 900) {
 	myCamera->addScene(dungeon);
 
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
-
+	animationJuggler = TweenJuggler::getInstance();
 //	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
 //
 //	this->addChild(character);
@@ -170,6 +170,6 @@ void MyGame::draw(AffineTransform &at) {
 	SDL_RenderClear(Game::renderer);
 	myCamera->draw(at);
 	DisplayObjectContainer::draw(at);
-	//animationJuggler->nextFrame();
+	animationJuggler->nextFrame();
 	SDL_RenderPresent(Game::renderer);
 }

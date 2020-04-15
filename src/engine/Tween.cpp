@@ -15,7 +15,7 @@ void Tween::animate(int fieldToAnimate, double startVal, double endVal,
 }
 //invoked once per frame by the TweenJuggler. Updates this tween / DisplayObject
 void Tween::update() {
-	printf(" Size of TweenParams %x, \n", tweenParams.size());
+	//printf(" Size of TweenParams %x, \n", tweenParams.size());
 	for (TweenParam *t : tweenParams) {
 		double currentValue = currentParamValue(t->getParam());
 		if(t->getEndVal() != currentValue){
