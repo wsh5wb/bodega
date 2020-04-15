@@ -75,11 +75,11 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 	int ymaxZ = 0;
 
 	//bounds can also be done like this
-	if (x >= xminZ && x <= xmaxZ && y > yminZ && y <= ymaxZ) {
-		myCamera->setZoom(500, 500);
-	} else {
-		myCamera->setZoom(500, 500);
-	}
+//	if (x >= xminZ && x <= xmaxZ && y > yminZ && y <= ymaxZ) {
+//		myCamera->setZoom(500, 500);
+//	} else {
+//		myCamera->setZoom(500, 500);
+//	}
 
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
@@ -108,16 +108,16 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 				myCamera->pan(cs, 0);
 			break;
 		}
-		case SDL_SCANCODE_Q: {
-			//character->scaleOut();
-			myCamera->zoom(2, 2);
-			break;
-		}
-		case SDL_SCANCODE_W: {
-			//character->scaleIn();
-			myCamera->zoom(1.0/GRID_SIZE, 1.0/GRID_SIZE);
-			break;
-		}
+//		case SDL_SCANCODE_Q: {
+//			//character->scaleOut();
+//			myCamera->zoom(2, 2);
+//			break;
+//		}
+//		case SDL_SCANCODE_W: {
+//			//character->scaleIn();
+//			myCamera->zoom(1.0/GRID_SIZE, 1.0/GRID_SIZE);
+//			break;
+//		}
 			//case SDL_SCANCODE_A:
 			// {
 			// 	character->rotateCW();
