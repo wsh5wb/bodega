@@ -18,28 +18,30 @@ void Dungeon::draw(AffineTransform &at) {
 }
 
 void Dungeon::generate() {
-	//sets up layout, reads in scenes, generates rooms
-	//layout = NULL;//replace with output from generate.cpp
-	layout = new int*[5];
-	for (int i = 0; i < 5; i++) {
-		layout[i] = new int[5];
-		for (int j = 0; j < 5; j++) {
-			layout[i][j] = !(i + j);
+	MazeGenerator *M = new MazeGenerator();
+	cerr << "here0\n";
+	layout = (int**) (M->getLayout());
+	for (int i = GRID_SIZE; i--;) {
+		for (int j = GRID_SIZE; j--;) {
+			layout[i][j]-=1;
 		}
 	}
-
-	for (int i = 5; i--;) {
-		for (int j = 5; j--;) {
+	cerr << "here1\n";
+	for (int i = GRID_SIZE; i--;) {
+		for (int j = GRID_SIZE; j--;) {
 			int ind = layout[i][j];
-			string s = this->scenes.at(ind);
-			Room *temp = new Room(s); //crashes here???
-			temp->id = id + to_string(i) + "-" + to_string(j);
-			temp->moveTo(1200 * j, 900 * i);
-			if (!(i + j)) {
-				temp->active = true;
+			if (ind >= 0) {
+				string s = this->scenes.at(ind);
+				Room *temp = new Room(s); //crashes here???
+				temp->id = id + to_string(i) + "-" + to_string(j);
+				temp->moveTo(1200 * j, 900 * i);
+				if (!(i + j)) {
+					temp->active = true;
+				}
+				DisplayObjectContainer::addChild(temp);
 			}
-			DisplayObjectContainer::addChild(temp);
 		}
 	}
+	cerr << "here2\n";
 }
 

@@ -115,7 +115,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		}
 		case SDL_SCANCODE_W: {
 			//character->scaleIn();
-			myCamera->zoom(.2, .2);
+			myCamera->zoom(1.0/GRID_SIZE, 1.0/GRID_SIZE);
 			break;
 		}
 			//case SDL_SCANCODE_A:

@@ -3,6 +3,7 @@
 
 #include "DisplayObjectContainer.h"
 #include "Room.h"
+#include "MazeGenerator.h"
 
 using namespace std;
 
