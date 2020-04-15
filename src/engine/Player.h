@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include "Game.h"
 #include "Sprite.h"
 #include "TweenJuggler.h"
 
@@ -22,10 +23,9 @@ public:
 	//void onEnemyCollision(Enemy* enemy);
 	virtual void onCollision(DisplayObject* other);
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
-
+	virtual void renderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
+	virtual float percentOfHealthLost();
 	/* Health and such */
-	int health = 100;
-	int maxHealth = 100;
 
 	//iFrames
 	bool iFrames = false;
@@ -38,6 +38,9 @@ public:
 	//Enemy* curEnemy = NULL;
 
 private:
+
+	int health = 114;
+	int maxHealth = 320;
 
 	int oldX=0, oldY=0;
 
