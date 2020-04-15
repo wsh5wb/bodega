@@ -271,7 +271,6 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
 			temp->type="door";
-			temp->setHitbox(0,1);
 			break;
 		}
 		default: {
