@@ -42,6 +42,7 @@ private:
 	bool changed;
 	bool isQuestDone;
 	Sound effect;
+	Sound hades_theme;
 	Dungeon* dungeon;
 	TweenJuggler * animationJuggler;
 };

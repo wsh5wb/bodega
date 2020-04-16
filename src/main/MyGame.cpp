@@ -30,9 +30,9 @@ MyGame::MyGame() :
 	dungeon = new HadesDungeon();
 	dungeon->generate();
 	myCamera->addScene(dungeon);
-
+	hades_theme.loadMusic("./resources/sounds/lullaby.wav");
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
-
+	hades_theme.playMusic();
 	animationJuggler = TweenJuggler::getInstance();
 
 //	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
@@ -42,7 +42,8 @@ MyGame::MyGame() :
 //
 //	Game::cs.watchForCollisions("ENEMY", "PLAYER");
 	Game::cs.watchForCollisions("PLAYER", "DOOR");
-	//Game::cs.watchForCollisions("PROJECTILE", "ENEMY");
+	Game::cs.watchForCollisions("PLAYER", "OBSTACLE");
+
 	// Come up with more elegant solution to determining which dir to go.
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"DUNG_TRANS_U");
@@ -80,14 +81,14 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		switch (code) {
 
 		case SDL_SCANCODE_P: {
-			effect.playMusic();
+			hades_theme.playMusic();
 			break;
 		}
 		}
 	}
 
 	Game::cs.update();
-
+	this->resetDelta();
 }
 
 void MyGame::draw(AffineTransform &at) {

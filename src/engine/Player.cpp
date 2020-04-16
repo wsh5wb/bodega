@@ -70,6 +70,11 @@ void Player::onCollision(DisplayObject *other) {
 }
 
 void Player::renderHPBar(int x, int y, int w, int h, float PercentLost, SDL_Color FGColor, SDL_Color BGColor) {
+		if (PercentLost < 0.0){
+			PercentLost = 0.0;
+		}else if (PercentLost > 1.0){
+			PercentLost = 1.0;
+		}
    SDL_Color old;
    SDL_GetRenderDrawColor(Game::renderer, &old.r, &old.g, &old.g, &old.a);
    SDL_Rect bgrect = { x, y, w, h };
@@ -89,6 +94,14 @@ float Player::percentOfHealthLost(){
 		return d;
 }
 
+void Player::changeHealth(int value){
+		this->health += value;
+}
+
+void Player::toggleHealthDisplay(){
+		this->displayHealth = !(this->displayHealth);
+}
+
 void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
 	string path = "./resources/PlayerSprites/fireball.png";
 	int midX = this->position.x + 20;
@@ -99,6 +112,7 @@ void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, d
 
 void Player::update(set<SDL_Scancode> pressedKeys) {
 	AnimatedSprite::update(pressedKeys);
+	resetDelta();
 	oldY = this->position.y;
 	oldX = this->position.x;
 
@@ -110,6 +124,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_RIGHT) {
 			this->position.x += 4;
+			this->deltaX = 4;
 			//this->flipH = false;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
@@ -118,6 +133,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			idle = false;
 		} else if (k == SDL_SCANCODE_LEFT) {
 			this->position.x -= 4;
+			this->deltaX = -4;
 			//this->flipH = true;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
@@ -126,12 +142,14 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			idle = false;
 		} else if (k == SDL_SCANCODE_UP) {
 			this->position.y -= 4;
+			this->deltaY = -4;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_DOWN) {
 			this->position.y += 4;
+			this->deltaY = 4;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}
@@ -161,6 +179,15 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
 			juggle->add(position_tween);
 		}
+		else if (k == SDL_SCANCODE_SEMICOLON){
+			changeHealth(-20);
+		}
+		else if (k == SDL_SCANCODE_APOSTROPHE){
+			changeHealth(20);
+		}
+		/*else if (k == SDL_SCANCODE_COMMA){
+			toggleHealthDisplay();
+		*/
 		/*else if (k == SDL_SCANCODE_SPACE){
 			if (this->currAnimation != "Dead"){
 				this->play("Dead");
@@ -203,7 +230,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		}
 
 	}
-	
+
 	if(xMov != 0 || yMov != 0){
 		if((((std::clock() - lastFired) / (double) CLOCKS_PER_SEC)*1000) > 150){
 			addProjectile(xMov,yMov,1000,0.3,0.3);
@@ -235,11 +262,10 @@ void Player::initIFrames(int numFrames) {
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
 	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
-
 	for(Projectile* p : projectiles){
 		p->draw(at);
 	}
-	
+
 }
 
 void Player::saveSelf(vector<string> &objects, vector<string> &dependencies) {

@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include <iostream>
 #include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -32,21 +33,78 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 
-	find = pressedKeys.find(SDL_SCANCODE_V);
-	if (find != pressedKeys.end()) {
-		for (auto c : children) {
-			((Room*) (c))->visible = true;
+	for (SDL_Scancode code : pressedKeys) {
+		switch (code) {
+
+		case SDL_SCANCODE_V: {
+			for (auto c : children) {
+				((Room*) (c))->visible = true;
+			}
+			break;
 		}
-	}
 
-	find = pressedKeys.find(SDL_SCANCODE_N);
-	if (find != pressedKeys.end()) {
-		Player *p = Player::getPlayer();
-		p->moveTo(224, 224);
-		current_x = start_x;
-		current_y = start_y;
-		zoomed_out = true;
+		case SDL_SCANCODE_N: {
+			if (DEBUG_CHANGE_ROOM) {
+				DEBUG_CHANGE_ROOM = false;
+				Player *p = Player::getPlayer();
+				p->moveTo(224, 224);
+				current_x = start_x;
+				current_y = start_y;
+				zoomed_out = true;
+			}
+			break;
+		}
 
+		case SDL_SCANCODE_I: {
+			if (DEBUG_CHANGE_ROOM) {
+				DEBUG_CHANGE_ROOM = false;
+				current_y -= 1;
+				zoomed_out = true;
+				cerr << "setting location to: (" << current_x << ", "
+						<< current_y << ")\n";
+			}
+			break;
+		}
+
+		case SDL_SCANCODE_J: {
+			if (DEBUG_CHANGE_ROOM) {
+				DEBUG_CHANGE_ROOM = false;
+				current_x -= 1;
+				zoomed_out = true;
+				cerr << "setting location to: (" << current_x << ", "
+						<< current_y << ")\n";
+			}
+			break;
+		}
+
+		case SDL_SCANCODE_K: {
+			if (DEBUG_CHANGE_ROOM) {
+				DEBUG_CHANGE_ROOM = false;
+				current_y += 1;
+				zoomed_out = true;
+				cerr << "setting location to: (" << current_x << ", "
+						<< current_y << ")\n";
+			}
+			break;
+		}
+
+		case SDL_SCANCODE_L: {
+			if (DEBUG_CHANGE_ROOM) {
+				DEBUG_CHANGE_ROOM = false;
+				current_x += 1;
+				zoomed_out = true;
+				cerr << "setting location to: (" << current_x << ", "
+						<< current_y << ")\n";
+			}
+			break;
+		}
+
+		case SDL_SCANCODE_U: {
+			DEBUG_CHANGE_ROOM = true;
+			break;
+		}
+
+		}
 	}
 }
 
@@ -55,16 +113,23 @@ void Dungeon::draw(AffineTransform &at) {
 }
 
 void Dungeon::generate() {
+	int basic_rooms[] = { 0, 2, 3, 4, 5 };
+	int basic_rooms_size = 5;
 	MazeGenerator *M = new MazeGenerator();
 	cerr << "here0\n";
 	layout = (int**) (M->getLayout());
-	for (int i = GRID_SIZE; i--;) {
+	srand (time(NULL));for
+(	int i = GRID_SIZE; i--;) {
 		for (int j = GRID_SIZE; j--;) {
 			if (layout[i][j] == START_ROOM) {
 				start_x = current_x = j;
 				start_y = current_y = i;
 			}
 			layout[i][j] -= 1;
+			if(!(layout[i][j])) {
+				int ind = rand()%basic_rooms_size;
+				layout[i][j] = basic_rooms[ind];
+			}
 		}
 	}
 
@@ -75,8 +140,9 @@ void Dungeon::generate() {
 		for (int j = GRID_SIZE; j--;) {
 			int ind = layout[i][j];
 			if (ind >= 0) {
-				printf("room at (%d,%d) ", j,i);
-				room_t* room_data = level.rooms["("+to_string(i)+","+to_string(j)+")"];
+				printf("room at (%d,%d) ", j, i);
+				room_t *room_data = level.rooms["(" + to_string(i) + ","
+						+ to_string(j) + ")"];
 				int c = 0;
 				unsigned char doors = room_data->doors;
 				printf("doors %x\n", doors);
@@ -84,7 +150,7 @@ void Dungeon::generate() {
 				Room *temp = new Room(s, doors); //crashes here???
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
-				
+
 				if (start_x == j && start_y == i) {
 					temp->active = true;
 					temp->start = true;
@@ -111,6 +177,7 @@ void Dungeon::handleEvent(Event *e) {
 	int field;
 	double startPos, endPos;
 	Player *player = Player::getPlayer();
+	int player_dist = 75;
 	// printf("before transition, curr x and y are %d     %d\n", current_x, current_y);
 
 	if (type == "DUNG_TRANS_D") {
@@ -118,7 +185,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_y += 1;
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
-		player->translate(0, 100);
+		player->translate(0, player_dist);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
@@ -132,7 +199,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_x -= 1;
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
-		player->translate(-100, 0);
+		player->translate(-player_dist, 0);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
@@ -146,7 +213,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_y -= 1;
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
-		player->translate(0, -100);
+		player->translate(0, -player_dist);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
@@ -160,7 +227,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_x += 1;
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
-		player->translate(100, 0);
+		player->translate(player_dist, 0);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
@@ -183,7 +250,7 @@ void Dungeon::handleEvent(Event *e) {
 				current_y);
 		Tween *camPosTween = new Tween(Camera::getCamera()->container);
 		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,
-				EASE_INOUT);
+		EASE_INOUT);
 		juggler->add(camPosTween);
 	}
 

@@ -29,6 +29,8 @@ public:
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 	virtual void renderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	virtual float percentOfHealthLost();
+	void changeHealth(int value);
+	void toggleHealthDisplay();
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
 
@@ -38,7 +40,7 @@ public:
 	int numIFrames = 0;
 
 
-	vector<Projectile*> projectiles; 
+	vector<Projectile*> projectiles;
 	/* Current Enemy player is engaging with*/
 	//Enemy* curEnemy = NULL;
 
@@ -46,6 +48,7 @@ private:
 
 	int health = 114;
 	int maxHealth = 320;
+	bool displayHealth = true;
 
 	int oldX=0, oldY=0;
 

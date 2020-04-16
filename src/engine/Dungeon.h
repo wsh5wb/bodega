@@ -25,6 +25,7 @@ public:
 	vector<string> scenes;//list of paths to scenes representing rooms in dungeon
 	int start_x, start_y, current_x, current_y;
 	bool zoomed_out = true;
+	bool DEBUG_CHANGE_ROOM = false;
 
 private:
 

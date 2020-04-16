@@ -10,13 +10,13 @@ Projectile::Projectile() : Sprite(){
 }*/
 
 Projectile::Projectile(string path, int x, int y, int speedX, int speedY, int timeout, double scaleX, double scaleY) : Sprite("projectile",path){
-	if(speedX != 0 && speedY != 0){
+	/*if(speedX != 0 && speedY != 0){
 		if(speedX < 0){speedX = -sqrt(-1*speedX);}
 		else {speedX = sqrt(speedX);}
 		
 		if(speedY < 0){speedY = -sqrt(-1*speedY);}
 		else{speedY = sqrt(speedY);}
-	}
+	}*/
 
 	this->speedX = speedX;
 	this->speedY = speedY;
