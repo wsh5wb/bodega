@@ -14,6 +14,14 @@ Room::Room(string scene, unsigned char doors){
 	addChild(room);
 }
 
+void Room::addToDisplayTree(){
+	//addChild(room);
+}
+
+void Room::removeFromDisplayTree(){
+	//removeImmediateChild(room);
+}
+
 void Room::generateDoors(unsigned char doors){
 	// need a way to dynamically change these paths. Probably just pass them in from dungeon
 	string paths[4] = {"./resources/art/hades/u_door2.png","./resources/art/hades/r_door2.png",
@@ -36,7 +44,7 @@ void Room::generateDoors(unsigned char doors){
 			door->setSpeed(5);
 			door->setRotation(.05);
 			door->setHitbox(hitboxes[y]);
-			door->showHitbox = true;
+			//door->showHitbox = true;
 			room->addChild(door);
 		}
 	}
@@ -45,8 +53,8 @@ void Room::generateDoors(unsigned char doors){
 void Room::generateWalls(){
 	int w = room->w, h = room->h;
 	// ordered NESW
-	SDL_Point position[4] = {{0,0},{w-1,0},{0,h-1}};
-	int dimensions[2][2] = {{w,4},{4,h}};
+	SDL_Point position[4] = {{0,0},{w-3,0},{0,h-3}};
+	int dimensions[2][2] = {{w,3},{3,h}};
 	for(int i =0; i < 4; i++){
 		DisplayObject* wall = new DisplayObject();
 		wall->id = "OBSTACLE_WALL" + to_string(i+1);
@@ -55,15 +63,17 @@ void Room::generateWalls(){
 		wall->w = dimensions[i%2][0];
 		wall->h = dimensions[i%2][1];
 		wall->setHitbox(0,1);
-		wall->showHitbox = true;
+		//wall->showHitbox = true;
 		printf("Adding wall%d at (%d,%d)\n", i+1,position[i%3].x,position[i%3].y);
 		room->addChild(wall);
 	}
 }
 
 void Room::update(set<SDL_Scancode> pressedKeys) {
-	if (active||start)
+
+	if (active||start){
 		room->update(pressedKeys);
+	}
 }
 
 void Room::draw(AffineTransform &at) {

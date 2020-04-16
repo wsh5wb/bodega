@@ -16,6 +16,9 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
+	void addToDisplayTree();
+	void removeFromDisplayTree();
+
 	bool active = false;
 	bool start = false;
 	bool visible = false; //draws scene if visible, updates and draws if active
