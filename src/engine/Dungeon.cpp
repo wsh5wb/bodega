@@ -31,6 +31,13 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			myCamera->setZoom(500, 500);
 		}
 	}
+
+	find = pressedKeys.find(SDL_SCANCODE_Q);
+	if (find != pressedKeys.end()) {
+		for(auto c:children){
+			((Room*)(c))->visible = true;
+		}
+	}
 }
 
 void Dungeon::draw(AffineTransform &at) {
@@ -63,6 +70,7 @@ void Dungeon::generate() {
 				if (start_x == j && start_y == i) {
 					temp->active = true;
 					temp->start = true;
+					temp->visible = true;
 					start_room = temp;
 				} else {
 					DisplayObjectContainer::addChild(temp);
@@ -78,7 +86,7 @@ void Dungeon::handleEvent(Event *e) {
 	string type = e->getType();
 	Room *old_room = (Room*) DisplayObjectContainer::getChild(
 			id + to_string(current_y) + "-" + to_string(current_x));
-	if(!old_room){
+	if (!old_room) {
 		cerr << "player not in valid room\n";
 		return;
 	}
@@ -99,6 +107,7 @@ void Dungeon::handleEvent(Event *e) {
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
+			new_room->visible = true;
 		}
 	} else if (type == "DUNG_TRANS_L") {
 		startPos = 1200 * current_x;
@@ -112,6 +121,7 @@ void Dungeon::handleEvent(Event *e) {
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
+			new_room->visible = true;
 		}
 	} else if (type == "DUNG_TRANS_U") {
 		startPos = 900 * current_y;
@@ -125,6 +135,7 @@ void Dungeon::handleEvent(Event *e) {
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
+			new_room->visible = true;
 		}
 	} else if (type == "DUNG_TRANS_R") {
 		startPos = 1200 * current_x;
@@ -138,6 +149,7 @@ void Dungeon::handleEvent(Event *e) {
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
+			new_room->visible = true;
 		}
 	}
 

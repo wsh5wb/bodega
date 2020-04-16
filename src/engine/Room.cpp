@@ -13,7 +13,7 @@ void Room::update(set<SDL_Scancode> pressedKeys) {
 
 void Room::draw(AffineTransform &at) {
 	DisplayObjectContainer::applyTransformations(at);
-	if (visable)
+	if (visible)
 		room->draw(at);
 	DisplayObjectContainer::reverseTransformations(at);
 
