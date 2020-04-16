@@ -30,9 +30,9 @@ MyGame::MyGame() :
 	dungeon = new HadesDungeon();
 	dungeon->generate();
 	myCamera->addScene(dungeon);
-
+	hades_theme.loadMusic("./resources/sounds/lullaby.wav");
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
-
+	hades_theme.playMusic();
 	animationJuggler = TweenJuggler::getInstance();
 
 //	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
@@ -79,7 +79,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		switch (code) {
 
 		case SDL_SCANCODE_P: {
-			effect.playMusic();
+			hades_theme.playMusic();
 			break;
 		}
 		}
