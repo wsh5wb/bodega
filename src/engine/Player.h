@@ -17,6 +17,7 @@ class Player : public AnimatedSprite{
 
 public:
 	Player();
+	virtual ~Player();
 
 	static Player* getPlayer();
 

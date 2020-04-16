@@ -4,6 +4,8 @@
 #include <iostream>
 #include <bits/stdc++.h>
 #include <algorithm>
+#include "Projectile.h"
+#include "Player.h"
 
 bool compare_xval(DORange_t do1, DORange_t do2){
 	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
@@ -98,6 +100,15 @@ void CollisionSystem::update(){
 			}
 		}
 
+	}
+	// Handle user projectile/enemy collisions
+	for(Projectile* p : Player::getPlayer()->projectiles){
+		vector ens = objects["ENEMY"];
+		for(DisplayObject* en : ens){
+			if(collidesWith(p,en)){
+				cout << en->id << " collied with " << "Projectile" << endl;
+			}
+		}
 	}
 }
 

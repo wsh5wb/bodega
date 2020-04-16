@@ -39,6 +39,12 @@ Player::Player() :
 	//cout << "Getting here." << endl;
 }
 
+Player::~Player(){
+	for(vector<Projectile*>::iterator it = projectiles.begin(); it != projectiles.end();it++){
+		delete *it;
+	}projectiles.clear();
+}
+
 Player* Player::getPlayer() {
 	if (player == 0) {
 		player = new Player();
@@ -200,7 +206,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	
 	if(xMov != 0 || yMov != 0){
 		if((((std::clock() - lastFired) / (double) CLOCKS_PER_SEC)*1000) > 150){
-			addProjectile(xMov,yMov,2000,0.3,0.3);
+			addProjectile(xMov,yMov,1000,0.3,0.3);
 			lastFired = std::clock();
 		}
 	}
