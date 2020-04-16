@@ -16,6 +16,7 @@
 #include "TweenJuggler.h"
 #include "DemoDungeon.h"
 #include "HadesDungeon.h"
+#include "OceanDungeon.h"
 #include "CollisionSystem.h"
 #include "Enemy.h"
 
@@ -41,7 +42,7 @@ private:
 	bool changed;
 	bool isQuestDone;
 	Sound effect;
-	HadesDungeon* dungeon;
+	Dungeon* dungeon;
 	TweenJuggler * animationJuggler;
 };
 
