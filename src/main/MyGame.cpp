@@ -34,6 +34,7 @@ MyGame::MyGame() :
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
 	hades_theme.playMusic();
 	animationJuggler = TweenJuggler::getInstance();
+	addChild(myCamera->container);
 
 //	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
 //

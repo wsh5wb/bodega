@@ -86,6 +86,7 @@ DisplayObject* DisplayObjectContainer::getChild(string id){
 void DisplayObjectContainer::resetDelta(){
 	DisplayObject::resetDelta();
 	for(DisplayObject* child : children){
+		//cout << "child " << child->id << endl;
 		child->resetDelta();
 	}
 }
@@ -102,6 +103,10 @@ void DisplayObjectContainer::draw(AffineTransform &at){
 	DisplayObject::applyTransformations(at);
 
 	for(DisplayObject* child : children){
+		/*if((dynamic_cast<DisplayObjectContainer*>(child)) != nullptr){
+
+		}
+		*/
 		child->draw(at);
 	}
 	

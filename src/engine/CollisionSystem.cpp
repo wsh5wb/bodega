@@ -85,7 +85,7 @@ void CollisionSystem::update(){
 					}
 					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
 						printf("Player collided with obstacle\n");
-						resolveCollision(obj1, obj2,
+						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,
 							obj2->deltaX, obj2->deltaY);
 
@@ -257,7 +257,7 @@ void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int 
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
 	}if(n == 0){
-		n = deltaX;
+		n = 1;
 	}
 	if(!sameDir){
 		n *= -1;
@@ -279,7 +279,7 @@ void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int 
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
 	}if(n == 0){
-		n = deltaY;
+		n = 1;
 	}
 	if(!sameDir){
 		n *= -1;
@@ -295,6 +295,22 @@ void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int 
 
 }
 
+void CollisionSystem::resolveObstacleCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2){
+	//cout << xDelta1 << " " << yDelta1 << " " << xDelta2 << " " << yDelta2 << endl;
+
+
+	if(xDelta1 != 0){
+		d->translate(-xDelta1,0);
+	}else if(xDelta2 != 0){
+		other->translate(-xDelta2,0);
+	}
+
+	if(yDelta1 != 0){
+		d->translate(0,-yDelta1);
+	}else if(yDelta2 != 0){
+		other->translate(0,-yDelta2);
+	}
+}
 //Resolves the collision that occurred between d and other
 //xDelta1 and yDelta1 are the amount d moved before causing the collision.
 //xDelta2 and yDelta2 are the amount other moved before causing the collision.
@@ -347,7 +363,7 @@ void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, i
 		binarySearchX(other,d,xDelta2,false,true);
 	}
 
-	cout << xDelta1 << " " << yDelta1 << " " << xDelta2 << " " << yDelta2 << endl;
+	//cout << xDelta1 << " " << yDelta1 << " " << xDelta2 << " " << yDelta2 << endl;
 	if(yDelta1 != 0){
 		if(yDelta2 != 0 && other->speed > d->speed){
 			binarySearchY(other,d,yDelta2,false,true);

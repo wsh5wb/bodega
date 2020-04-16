@@ -205,6 +205,7 @@ void DisplayObject::updateDelta(int x, int y, double scaleX, double scaleY, doub
 }
 
 void DisplayObject::resetDelta(){
+	//cout << id << " reset";
 	updateDelta(0,0,0,0,0);
 }
 

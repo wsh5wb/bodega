@@ -112,7 +112,6 @@ void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, d
 
 void Player::update(set<SDL_Scancode> pressedKeys) {
 	AnimatedSprite::update(pressedKeys);
-	resetDelta();
 	oldY = this->position.y;
 	oldX = this->position.x;
 
@@ -124,7 +123,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_RIGHT) {
 			this->position.x += 4;
-			this->deltaX = 4;
+			this->deltaX += 4;
 			//this->flipH = false;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
@@ -133,7 +132,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			idle = false;
 		} else if (k == SDL_SCANCODE_LEFT) {
 			this->position.x -= 4;
-			this->deltaX = -4;
+			this->deltaX += -4;
 			//this->flipH = true;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
@@ -142,14 +141,14 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			idle = false;
 		} else if (k == SDL_SCANCODE_UP) {
 			this->position.y -= 4;
-			this->deltaY = -4;
+			this->deltaY += -4;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_DOWN) {
 			this->position.y += 4;
-			this->deltaY = 4;
+			this->deltaY += 4;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}
