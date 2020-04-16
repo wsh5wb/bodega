@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include <iostream>
 #include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -55,9 +56,12 @@ void Dungeon::draw(AffineTransform &at) {
 }
 
 void Dungeon::generate() {
+	int basic_rooms [] = {0,2,3,4,5};
+	int basic_rooms_size = 5;
 	MazeGenerator *M = new MazeGenerator();
 	cerr << "here0\n";
 	layout = (int**) (M->getLayout());
+	srand (time(NULL));
 	for (int i = GRID_SIZE; i--;) {
 		for (int j = GRID_SIZE; j--;) {
 			if (layout[i][j] == START_ROOM) {
@@ -65,6 +69,10 @@ void Dungeon::generate() {
 				start_y = current_y = i;
 			}
 			layout[i][j] -= 1;
+			if(!(layout[i][j])){
+				int ind = rand()%basic_rooms_size;
+				layout[i][j] = basic_rooms[ind];
+			}
 		}
 	}
 
@@ -111,6 +119,7 @@ void Dungeon::handleEvent(Event *e) {
 	int field;
 	double startPos, endPos;
 	Player *player = Player::getPlayer();
+	int player_dist = 75;
 	// printf("before transition, curr x and y are %d     %d\n", current_x, current_y);
 
 	if (type == "DUNG_TRANS_D") {
@@ -118,7 +127,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_y += 1;
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
-		player->translate(0, 100);
+		player->translate(0, player_dist);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
@@ -132,7 +141,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_x -= 1;
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
-		player->translate(-100, 0);
+		player->translate(-player_dist, 0);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
@@ -146,7 +155,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_y -= 1;
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
-		player->translate(0, -100);
+		player->translate(0, -player_dist);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
@@ -160,7 +169,7 @@ void Dungeon::handleEvent(Event *e) {
 		current_x += 1;
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
-		player->translate(100, 0);
+		player->translate(player_dist, 0);
 		old_room->active = false;
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));

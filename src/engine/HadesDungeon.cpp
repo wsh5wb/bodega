@@ -10,6 +10,10 @@ HadesDungeon::HadesDungeon() {
 
 	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
 	scenes.push_back("./resources/scenes/hades?/start.txt");
+	scenes.push_back("./resources/scenes/hades?/basic_room2.txt");
+	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
+	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
+	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
 }
 
 HadesDungeon::~HadesDungeon() {
