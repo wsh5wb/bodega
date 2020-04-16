@@ -83,15 +83,25 @@ float Player::percentOfHealthLost(){
 		return d;
 }
 
+void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
+	string path = "./resources/PlayerSprites/fireball.png";
+	int midX = this->position.x + 20;
+	int midY = this->position.y + 20;
+	Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
+	projectiles.push_back(p);
+}
+
 void Player::update(set<SDL_Scancode> pressedKeys) {
 	AnimatedSprite::update(pressedKeys);
 	oldY = this->position.y;
 	oldX = this->position.x;
 
+	//if(find(pressedKeys.begin(),pressedKeys.end())
 	//Movement arrow keys
 	//Controls is a class we wrote that just checks the SDL Scancode values and game controller values in one check
+	int xMov = 0, yMov = 0;
 	bool idle = true;
-	for (auto k : pressedKeys)
+	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_RIGHT) {
 			this->position.x += 4;
 			//this->flipH = false;
@@ -121,6 +131,17 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			idle = false;
 		}
+
+		//for shooting projectiles
+		if(k == SDL_SCANCODE_A){
+			xMov = -6;
+		}if(k == SDL_SCANCODE_D){
+			xMov = 6;
+		}if(k == SDL_SCANCODE_W){
+			yMov = -6;
+		}if(k == SDL_SCANCODE_S){
+			yMov = 6;
+		}
 		//for tweening Demo
 		else if (k == SDL_SCANCODE_T){
 			TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -134,12 +155,12 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
 			juggle->add(position_tween);
 		}
-		else if (k == SDL_SCANCODE_SPACE){
+		/*else if (k == SDL_SCANCODE_SPACE){
 			if (this->currAnimation != "Dead"){
 				this->play("Dead");
 			}
-		}
-
+		}*/
+	}
 	//play idle animation if player is just standing still on ground
 	if (this->currAnimation == "Run" && idle) {
 		this->play("Idle");
@@ -162,6 +183,26 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		_yVel++;
 		if (_yVel > _maxFall)
 			_yVel = _maxFall;
+	}
+
+	// Update projectiles
+	for(vector<Projectile*>::iterator it = projectiles.begin(); it != projectiles.end();){
+		Projectile * p = *it;
+		if((((std::clock() - p->start ) / (double) CLOCKS_PER_SEC)*1000) > p->timeout){
+			it = projectiles.erase(it);
+			delete p;
+		}else{
+			p->update(pressedKeys);
+			it++;
+		}
+
+	}
+	
+	if(xMov != 0 || yMov != 0){
+		if((((std::clock() - lastFired) / (double) CLOCKS_PER_SEC)*1000) > 150){
+			addProjectile(xMov,yMov,2000,0.3,0.3);
+			lastFired = std::clock();
+		}
 	}
 
 	/* Jumping */
@@ -188,6 +229,11 @@ void Player::initIFrames(int numFrames) {
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
 	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
+
+	for(Projectile* p : projectiles){
+		p->draw(at);
+	}
+	
 }
 
 void Player::saveSelf(vector<string> &objects, vector<string> &dependencies) {
