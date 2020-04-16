@@ -51,6 +51,7 @@ MyGame::MyGame() : Game(1200, 900) {
 }
 
 MyGame::~MyGame() {
+
 	Scene* character = new Scene();
 	character->addChild(myCamera->container);
 	//character->saveScene("./resources/scenes/testSave3.txt");
