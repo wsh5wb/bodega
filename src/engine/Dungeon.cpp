@@ -161,6 +161,8 @@ void Dungeon::handleEvent(Event *e) {
 
 	// no tweening until we add functionality to tween camera
 	Camera *myCamera = Camera::getCamera();
-	myCamera->setLocation(1200 * current_x, 900 * current_y);
+	if(!zoomed_out){
+		myCamera->setLocation(1200 * current_x, 900 * current_y);
+	}
 
 }
