@@ -6,7 +6,7 @@ Room::Room(string scene):DisplayObjectContainer() {
 }
 
 void Room::update(set<SDL_Scancode> pressedKeys) {
-	if (active)
+	if (active||start)
 		room->update(pressedKeys);
 }
 

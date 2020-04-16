@@ -16,6 +16,7 @@ public:
 	virtual void draw(AffineTransform &at);
 
 	bool active = false;
+	bool start = false;
 	bool visable = true; //draws scene if visible, updates and draws if active
 	Scene *room = NULL; //scene that room draws
 
