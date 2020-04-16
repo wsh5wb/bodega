@@ -40,14 +40,16 @@ void CollisionSystem::update(){
 		vector vec2 = objects[type2];
 		// sort(vec1.begin(), vec1.end(), compare_xval);
 		// sort(vec2.begin(), vec2.end(), compare_xval);
-
+		int i = 0;
 		for(DisplayObject* obj1 : vec1){
 			for(DisplayObject* obj2 : vec2){
 				if(obj1 == obj2)	continue;
 				bool collision;
+				i++;
+				
 				if((collision= collidesWith(obj1, obj2))){
 
-					if(pair == "PLAYER-DOOR"){
+					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
 						char dir;
 						if(obj1->id.substr(0,obj1->id.length()-1) == "Door")	dir = obj1->id[4];
@@ -75,7 +77,8 @@ void CollisionSystem::update(){
 								break;
 							}
 						}
-						cout << obj1->id << " collied with " << obj2->id << endl;
+						// printf("Door addr: %x\n", obj2);
+						cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
 						
 					}
 					else{
@@ -111,7 +114,10 @@ void CollisionSystem::handleEvent(Event* e){
 
 	auto it = find(objects[str].begin(), objects[str].end(), child);
 
-	if(e->getType() == "OBJ_ADD" && it == objects[str].end())	objects[str].push_back(child);
+	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
+		printf("Adding %s to DT\n", child->id.c_str());
+		objects[str].push_back(child);
+	}
 	else if(e->getType() == "OBJ_RM")							objects[str].erase(it);
 }
 

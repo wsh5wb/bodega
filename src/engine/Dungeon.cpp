@@ -57,16 +57,24 @@ void Dungeon::generate() {
 			layout[i][j] -= 1;
 		}
 	}
+
+	floor_t level = M->getLevel();
 	cerr << "here1\n";
 	Room *start_room;
 	for (int i = GRID_SIZE; i--;) {
 		for (int j = GRID_SIZE; j--;) {
 			int ind = layout[i][j];
 			if (ind >= 0) {
+				printf("room at (%d,%d) ", j,i);
+				room_t* room_data = level.rooms["("+to_string(i)+","+to_string(j)+")"];
+				int c = 0;
+				unsigned char doors = room_data->doors;
+				printf("doors %x\n", doors);
 				string s = this->scenes.at(ind);
-				Room *temp = new Room(s); //crashes here???
+				Room *temp = new Room(s, doors); //crashes here???
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
+				
 				if (start_x == j && start_y == i) {
 					temp->active = true;
 					temp->start = true;
@@ -87,7 +95,7 @@ void Dungeon::handleEvent(Event *e) {
 	Room *old_room = (Room*) DisplayObjectContainer::getChild(
 			id + to_string(current_y) + "-" + to_string(current_x));
 	if (!old_room) {
-		cerr << "player not in valid room\n";
+		// cerr << "player not in valid room\n";
 		return;
 	}
 	int field;

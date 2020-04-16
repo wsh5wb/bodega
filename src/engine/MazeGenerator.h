@@ -40,12 +40,12 @@ struct position{
     }
 
     string to_str(){
-        return "("+to_string(x)+","+to_string(y)+")";
+        return "("+to_string(y)+","+to_string(x)+")";
     }
 }; typedef struct position pos_t;
 
 struct room{
-	struct room* doors[4];
+	unsigned char doors = 0;
 	int size[2] = {5,5};
 	pos_t pos;
 	int availableDoors = 0;
@@ -55,9 +55,9 @@ struct room{
 struct floor{
 	map<string, room_t*> rooms;
 	// spawn room
-	room_t* startRoom;
+	room_t startRoom;
 	// "boss" room
-	room_t* bossRoom;
+	room_t bossRoom;
 
 }; typedef struct floor floor_t;
 
@@ -71,7 +71,7 @@ public:
 	void print_map();
 	void clear_grid();
 	int** getLayout();
-
+	floor_t getLevel();
 
 private:
 

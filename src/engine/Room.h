@@ -11,6 +11,7 @@ class Room: public DisplayObjectContainer {
 public:
 
 	Room(string scene);
+	Room(string scene, unsigned char doors);
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
