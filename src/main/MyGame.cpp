@@ -18,7 +18,7 @@ MyGame::MyGame() : Game(1200, 1000){
 	coin = new AnimatedSprite("ENEMY_COIN","./resources/miscellaneous/Dogecoin_Logo.png");
 	coin->moveTo(200,200);
 	coin->showHitbox = true;
-	character->setSpeed(50);
+	character->setSpeed(20);
 	
 	//p->showHitbox = true;
 	double boundLow = 0.15;
