@@ -14,7 +14,7 @@ Dungeon::~Dungeon() {
 
 void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 	DisplayObjectContainer::update(pressedKeys);
-	auto find = pressedKeys.find(SDL_SCANCODE_W);
+	auto find = pressedKeys.find(SDL_SCANCODE_M);
 	if (find != pressedKeys.end()) {
 		if (!zoomed_out) {
 			zoomed_out = true;
@@ -32,11 +32,21 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 
-	find = pressedKeys.find(SDL_SCANCODE_Q);
+	find = pressedKeys.find(SDL_SCANCODE_V);
 	if (find != pressedKeys.end()) {
-		for(auto c:children){
-			((Room*)(c))->visible = true;
+		for (auto c : children) {
+			((Room*) (c))->visible = true;
 		}
+	}
+
+	find = pressedKeys.find(SDL_SCANCODE_N);
+	if (find != pressedKeys.end()) {
+		Player *p = Player::getPlayer();
+		p->moveTo(224, 224);
+		current_x = start_x;
+		current_y = start_y;
+		zoomed_out = true;
+
 	}
 }
 
@@ -153,16 +163,20 @@ void Dungeon::handleEvent(Event *e) {
 		}
 	}
 
-	// printf("after transition, curr x and y are %d     %d\n", current_x, current_y);
-	// Tween* camPosTween = new Tween(Camera::getCamera());
-	// TweenJuggler *juggler = TweenJuggler::getInstance();
-	// camPosTween->animate(field, startPos, endPos, 100, TWEEN_LINEAR, EASE_IN);
-	// juggler->add(camPosTween);
+//	Tween *playerPosTween = new Tween(player);
+	TweenJuggler *juggler = TweenJuggler::getInstance();
+//	playerPosTween->animate(field, player->position.x, player->position.x + (((int)(endPos-startPos)>>31)^100), 100, TWEEN_LINEAR, EASE_IN);
+//	juggler->add(playerPosTween);
 
 	// no tweening until we add functionality to tween camera
 	Camera *myCamera = Camera::getCamera();
-	if(!zoomed_out){
-		myCamera->setLocation(1200 * current_x, 900 * current_y);
+	if (!zoomed_out) {
+		printf("after transition, curr x and y are %d     %d\n", current_x,
+				current_y);
+		Tween *camPosTween = new Tween(Camera::getCamera()->container);
+		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,
+				EASE_INOUT);
+		juggler->add(camPosTween);
 	}
 
 }

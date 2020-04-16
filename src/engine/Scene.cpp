@@ -239,7 +239,7 @@ void Scene::loadScene(string sceneFilePath) {
 			SDL_Point position;
 			i >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
-			temp->setHitbox(0,1);
+			temp->setHitbox(.4,.6);
 			temp->showHitbox = true;
 			objects.push_back(temp);
 			break;
