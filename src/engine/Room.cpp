@@ -45,8 +45,8 @@ void Room::generateDoors(unsigned char doors){
 void Room::generateWalls(){
 	int w = room->w, h = room->h;
 	// ordered NESW
-	SDL_Point position[4] = {{0,0},{w-1,0},{0,h-1}};
-	int dimensions[2][2] = {{w,4},{4,h}};
+	SDL_Point position[4] = {{0,0},{w-3,0},{0,h-3}};
+	int dimensions[2][2] = {{w,3},{3,h}};
 	for(int i =0; i < 4; i++){
 		DisplayObject* wall = new DisplayObject();
 		wall->id = "OBSTACLE_WALL" + to_string(i+1);
