@@ -1,0 +1,136 @@
+68 67
+0 DEFAULT_ID  -989344336 21982 -989344328 true false 1088241058 144 5 1 1 0 0.05 255 0 0 0 0
+2 camera  0 0 0 true false 0 0 5 1 1 0 0.05 255 -250 -250 -2400 -900
+2 HadesDungeon  -1 -1 128 true false 0 -1006878112 5 1 1 0 0.05 255 0 0 0 0
+2 HadesDungeon2-3  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 3600 1800
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon2-2  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 2400 1800
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon2-0  0 0 0 true false 0 3 5 1 1 0 0.05 255 0 0 0 1800
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon1-2  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 2400 900
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon1-1  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 1200 900
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon1-0  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 0 900
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon0-3  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 3600 0
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon0-2  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 2400 0
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon0-0  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 0 0
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+2 HadesDungeon0-4  0 0 0 true false 0 0 5 1 1 0 0.05 255 0 0 4800 0
+2 Scene ./resources/art/hades/background.png 0 0 0 true false 512 384 5 2.34375 2.34375 0 0.000872665 255 0 0 0 0
+8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 352
+8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 0 128
+8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.000872665 255 0 0 192 0
+8 Door4 ./resources/art/hades/r_door2.png 0 0 0 true false 32 128 5 1 1 0 0.000872665 255 0 0 480 128
+1 Statue1 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.000872665 255 0 0 80 48
+1 Statue2 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.000872665 255 0 0 368 48
+1 Statue3 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.000872665 255 0 0 80 208
+1 Statue4 ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.000872665 255 0 0 368 208
+7 -672 536
+DEFAULT_ID camera
+camera HadesDungeon
+HadesDungeon HadesDungeon2-3
+HadesDungeon2-3 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon2-2
+HadesDungeon2-2 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon2-0
+HadesDungeon2-0 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon1-2
+HadesDungeon1-2 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon1-1
+HadesDungeon1-1 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon1-0
+HadesDungeon1-0 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon0-3
+HadesDungeon0-3 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon0-2
+HadesDungeon0-2 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon0-0
+HadesDungeon0-0 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+HadesDungeon HadesDungeon0-4
+HadesDungeon0-4 Scene
+Scene Door1
+Scene Door2
+Scene Door3
+Scene Door4
+Scene Statue1
+Scene Statue2
+Scene Statue3
+Scene Statue4
+Scene PLAYER_YOU

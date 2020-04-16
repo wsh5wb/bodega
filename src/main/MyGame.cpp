@@ -51,7 +51,9 @@ MyGame::MyGame() : Game(1200, 900) {
 }
 
 MyGame::~MyGame() {
-//	character->saveScene("./resources/scenes/testSave2.txt");
+	Scene* character = new Scene();
+	character->addChild(myCamera->container);
+	character->saveScene("./resources/scenes/testSave3.txt");
 //	std::ofstream o("./resources/scenes/test.txt");
 //	o << "2 1" << std::endl;
 //	o << "0 " << "Scene" << " "<< "0" << " " << "0" << " "<< "0" << " "<< "0" << " "<< "true" << " "<< "false"  << " "<< "0" << " "<< "0" << std::endl;

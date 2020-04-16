@@ -3,6 +3,7 @@
 Room::Room(string scene):DisplayObjectContainer() {
 	room = new Scene();
 	room->loadScene(scene);
+	addChild(room);
 }
 
 void Room::update(set<SDL_Scancode> pressedKeys) {
