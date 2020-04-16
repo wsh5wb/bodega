@@ -16,6 +16,7 @@
 #include "TweenJuggler.h"
 #include "DemoDungeon.h"
 #include "HadesDungeon.h"
+#include "OceanDungeon.h"
 #include "CollisionSystem.h"
 #include "Enemy.h"
 
@@ -34,12 +35,14 @@ private:
 	Camera* myCamera;
 	Scene *character;
 	Enemy *enemy;
+
 	CollisionSystem cs;
 	//Scene* character;
-
 	string scene;
+	bool changed;
+	bool isQuestDone;
 	Sound effect;
-	HadesDungeon* dungeon;
+	Dungeon* dungeon;
 	TweenJuggler * animationJuggler;
 };
 

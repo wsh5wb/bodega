@@ -47,6 +47,8 @@ public:
 	//xDelta1 and yDelta1 are the amount d moved before causing the collision.
 	//xDelta2 and yDelta2 are the amount other moved before causing the collision.
 	void resolveCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2);
+	void binarySearchX(DisplayObject* d, DisplayObject* other, int deltaX, bool sameDir, bool isCol);
+	void binarySearchY(DisplayObject* d, DisplayObject* other, int deltaY, bool sameDir, bool isCol);
 
 	AffineTransform* globalTransform(DisplayObject* o);
 	bool intersect(SDL_Point p1, SDL_Point q1, SDL_Point p2, SDL_Point q2);

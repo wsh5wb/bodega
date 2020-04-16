@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "TweenJuggler.h"
+#include "Projectile.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ public:
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 	virtual void renderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	virtual float percentOfHealthLost();
+	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
 
 	//iFrames
@@ -35,7 +37,7 @@ public:
 	int numIFrames = 0;
 
 
-
+	vector<Projectile*> projectiles; 
 	/* Current Enemy player is engaging with*/
 	//Enemy* curEnemy = NULL;
 
@@ -54,6 +56,7 @@ private:
 	int _yAcc = 2; //one pixel every two frames
 	int _yAccCount = 0;
 	int _yVel = 0;
+	std::clock_t lastFired;
 
 	static Player* player;
 	void initIFrames(int numFrames);

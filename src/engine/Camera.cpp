@@ -27,28 +27,22 @@ void Camera::removeScene(DisplayObject *child) {
 }
 
 void Camera::pan(int dx, int dy) {
-	x += dx;
-	y += dy;
+	container->translate(-dx, -dy);
 }
 void Camera::zoom(double x, double y) {
-	viewportWidth = (int) (x * viewportWidth);
-	viewportHeight = (int) (y * viewportHeight);
+	container->scaleX = x * (container->scaleX);
+	container->scaleY = y * (container->scaleY);
 }
 
 void Camera::setLocation(int newX, int newY) {
-	x = newX;
-	y = newY;
+	container->moveTo(-newX, -newY);
+	//container->movePivot(-newX/2, -newY/2);
 }
 void Camera::setZoom(double w, double h) {
-	viewportWidth = w;
-	viewportHeight = h;
+	container->setScale(1.0 * w / 500.0, 1.0 * h / 500.0);
 }
 
 void Camera::update(set<SDL_Scancode> pressedKeys) {
-	container->moveTo(-x, -y);
-	container->movePivot(-viewportWidth/2, -viewportHeight/2);
-	container->setScale(1.0 * viewportWidth / 500.0,
-			1.0 * viewportHeight / 500.0);
 	container->update(pressedKeys);
 }
 void Camera::draw(AffineTransform &at) {
