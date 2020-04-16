@@ -174,6 +174,7 @@ void Dungeon::handleEvent(Event *e) {
 		// cerr << "player not in valid room\n";
 		return;
 	}
+	old_room->removeFromDisplayTree();
 	int field;
 	double startPos, endPos;
 	Player *player = Player::getPlayer();
@@ -193,6 +194,7 @@ void Dungeon::handleEvent(Event *e) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
 			new_room->visible = true;
+			new_room->addToDisplayTree();
 		}
 	} else if (type == "DUNG_TRANS_L") {
 		startPos = 1200 * current_x;
@@ -207,6 +209,7 @@ void Dungeon::handleEvent(Event *e) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
 			new_room->visible = true;
+			new_room->addToDisplayTree();
 		}
 	} else if (type == "DUNG_TRANS_U") {
 		startPos = 900 * current_y;
@@ -221,6 +224,7 @@ void Dungeon::handleEvent(Event *e) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
 			new_room->visible = true;
+			new_room->addToDisplayTree();
 		}
 	} else if (type == "DUNG_TRANS_R") {
 		startPos = 1200 * current_x;
@@ -235,6 +239,7 @@ void Dungeon::handleEvent(Event *e) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
 			new_room->active = true;
 			new_room->visible = true;
+			new_room->addToDisplayTree();
 		}
 	}
 
