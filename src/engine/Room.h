@@ -22,7 +22,8 @@ public:
 	Scene *room = NULL; //scene that room draws
 
 private:
-
+	void generateDoors(unsigned char doors);
+	void generateWalls();
 };
 
 #endif

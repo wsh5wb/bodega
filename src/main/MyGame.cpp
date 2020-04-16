@@ -42,6 +42,7 @@ MyGame::MyGame() :
 //
 //	Game::cs.watchForCollisions("ENEMY", "PLAYER");
 	Game::cs.watchForCollisions("PLAYER", "DOOR");
+	Game::cs.watchForCollisions("PLAYER", "OBSTACLE");
 	// Come up with more elegant solution to determining which dir to go.
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"DUNG_TRANS_U");
@@ -86,7 +87,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 	}
 
 	Game::cs.update();
-
+	this->resetDelta();
 }
 
 void MyGame::draw(AffineTransform &at) {

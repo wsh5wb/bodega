@@ -78,19 +78,26 @@ void CollisionSystem::update(){
 							}
 						}
 						// printf("Door addr: %x\n", obj2);
-						cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
+						// cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
 						
+					}
+					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
+						printf("Player collided with obstacle\n");
+						resolveCollision(obj1, obj2,
+							obj1->deltaX, obj1->deltaY,
+							obj2->deltaX, obj2->deltaY);
+
+						// obj1->updateDelta(0,0,0,0,0);
+						// obj2->updateDelta(0,0,0,0,0);
 					}
 					else{
 						resolveCollision(obj1, obj2,
-						obj1->deltaX, obj1->deltaY,
-						obj2->deltaX, obj2->deltaY);
+							obj1->deltaX, obj1->deltaY,
+							obj2->deltaX, obj2->deltaY);
 
-						obj1->updateDelta(0,0,0,0,0);
-						obj2->updateDelta(0,0,0,0,0);
+						// obj1->updateDelta(0,0,0,0,0);
+						// obj2->updateDelta(0,0,0,0,0);
 					}
-					
-
 				}
 				// you can turn this into an event dispatch. Definitely would be a good idea.
 				obj1->isCollided = collision;
@@ -113,6 +120,7 @@ void CollisionSystem::handleEvent(Event* e){
 	else if(child->id.find("SETTING") != string::npos)		str = "SETTING";
 	// TODO: Make a new OBJECT category?
 	else if(child->id.find("Door") != string::npos)			str = "DOOR";
+	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
 
 	auto it = find(objects[str].begin(), objects[str].end(), child);
 

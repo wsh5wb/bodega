@@ -372,8 +372,9 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		reverseTransformations(at);
 
-		if(showHitbox)	drawHitbox(isCollided);
+		
 	}
+	if(showHitbox)	drawHitbox(isCollided);
 
 }
 
@@ -394,7 +395,7 @@ void DisplayObject::saveSelf(vector<string> &objects,
 
 
 void DisplayObject::drawHitbox(bool col){
-	if(curTexture != NULL){
+	// if(curTexture != NULL){
 		if(!vis){return;}
 		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}
 		else{ SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);}
@@ -410,7 +411,7 @@ void DisplayObject::drawHitbox(bool col){
 		// this->globalHitbox[1] = hitbox[1];
 		// this->globalHitbox[2] = hitbox[2];
 		// this->globalHitbox[3] = hitbox[3];
-	}
+	// }
 	// if(curTexture != NULL){
 	// 	if(!vis){return;}
 
@@ -437,7 +438,7 @@ void DisplayObject::drawHitbox(bool col){
 }
 
 void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col){
-	if(curTexture != NULL){
+	// if(curTexture != NULL){
 		if(!vis){return;}
 		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}
 		else{ SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);}
@@ -447,7 +448,7 @@ void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL
 		SDL_RenderDrawLine(Game::renderer,bottomR.x,bottomR.y,topR.x,topR.y);
 		SDL_SetRenderDrawColor(Game::renderer,0,0,0,255);
 
-	}
+	// }
 }
 
 void DisplayObject::setHitbox(SDL_Point* points){
