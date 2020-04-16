@@ -9,8 +9,9 @@ EventDispatcher::~EventDispatcher(){
 	//TODO: Find out if map destructor automatically frees container memory.
 	for(auto it = listeners->begin(); it != listeners->end(); ++it){
 		vector<EventListener*> l = it->second;
-		for(int i = 0; i < l.size(); i++){
-			delete l[i];
+		for(auto it = l.end(); it != l.begin(); --it){
+			if(*it)
+				delete *it;
 		}
 		l.clear();
 	}
