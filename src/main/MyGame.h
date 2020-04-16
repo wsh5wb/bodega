@@ -34,10 +34,12 @@ private:
 	Camera* myCamera;
 	Scene *character;
 	Enemy *enemy;
+
 	CollisionSystem cs;
 	//Scene* character;
-
 	string scene;
+	bool changed;
+	bool isQuestDone;
 	Sound effect;
 	HadesDungeon* dungeon;
 	TweenJuggler * animationJuggler;

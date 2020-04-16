@@ -204,6 +204,10 @@ void DisplayObject::updateDelta(int x, int y, double scaleX, double scaleY, doub
 	deltaRot = rot;
 }
 
+void DisplayObject::resetDelta(){
+	updateDelta(0,0,0,0,0);
+}
+
 void DisplayObject::moveTo(int x, int y) {
 	position.x = x;
 	position.y = y;
@@ -243,13 +247,13 @@ void DisplayObject::setScale(double x, double y){
 }
 
 void DisplayObject::setScaleX(double x){
-	deltaScaleX = x/scaleX;
+	//deltaScaleX = x/scaleX;
 	scaleX = x;
 	//deltaScaleX = x;
 }
 
 void DisplayObject::setScaleY(double y){
-	deltaScaleY = y/scaleY;
+	//deltaScaleY = y/scaleY;
 	scaleY = y;
 }
 
@@ -361,8 +365,8 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		double angle = atan2(topR.y - topL.y, topR.x - topL.x) * 180 / PI;
 
-		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle,
-				&pOrigin, flip);
+		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle,&pOrigin, flip);
+
 
 		at.translate(pivot.x, pivot.y);
 

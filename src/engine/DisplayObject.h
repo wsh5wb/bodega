@@ -33,7 +33,7 @@ public:
 	virtual ~DisplayObject();
 
 	AffineTransform* getGlobalTransform(DisplayObject* o);
-
+	virtual void resetDelta();
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
@@ -113,6 +113,7 @@ public:
 
 	double scaleX = 1;
 	double scaleY = 1;
+	int speed = 5;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_Point pivot, position;
@@ -125,7 +126,7 @@ private:
 
 protected:
 	SDL_Rect srcrect;
-	int speed = 5;
+
 
 	double rotation = 0;
 	double rotationAmount = 0.05;
