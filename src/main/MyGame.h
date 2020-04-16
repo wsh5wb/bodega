@@ -14,6 +14,7 @@
 #include "CollisionSystem.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Jelly.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ private:
 	Player *me;
 	Scene *bg;
 	Enemy *en;
+	Jelly *jl;
 	CollisionSystem cs;
 	//Scene* character;
 	string scene;

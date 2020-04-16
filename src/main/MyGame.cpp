@@ -21,6 +21,12 @@ MyGame::MyGame() : Game(1200, 1000){
 	me->showHitbox = true;
 	en = new Enemy(me);
 	en->showHitbox = true;
+	jl = new Jelly(me);
+	jl->showHitbox = true;
+	jl->xBound = 1200;
+	jl->yBound = 1000;
+	jl->position.x = 600;
+	jl->position.y = 500;
 
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
@@ -65,15 +71,25 @@ MyGame::MyGame() : Game(1200, 1000){
 
 	en->setHitbox(charHit);
 
+	charHit[0] = {jl->w*boundLow, jl->h*boundLow};
+	charHit[1] = {jl->w*boundHigh, jl->h*boundLow};
+	charHit[3] = {jl->w*boundLow,jl->h*boundHigh};
+	charHit[2] = {jl->w*boundHigh,jl->h*boundHigh};
+
+	jl->setHitbox(charHit);
+
 	this->addChild(character);
 	this->addChild(coin);
-	//cout << "Getting here." << endl;
 	this->addChild(me);
 	this->addChild(en);
-	cout << "me: " << (me != 0) << endl;
-	cout << "en: " << (en != 0) << endl;
-	cout << "coin: " << (coin != 0) << endl;
-	cout << "character: " << (character != 0) << endl;
+	//cout << (jl) << endl;
+	this->addChild(jl);
+	//cout << "Getting here." << endl;
+
+	//cout << "me: " << (me != 0) << endl;
+	//cout << "en: " << (en != 0) << endl;
+	//cout << "coin: " << (coin != 0) << endl;
+	//cout << "character: " << (character != 0) << endl;
 
 	//this->addChild(bg);
 
@@ -81,6 +97,8 @@ MyGame::MyGame() : Game(1200, 1000){
 	//cout << me->type << endl;
 	//cout << character->type << endl;
 	//cout << coin->type << endl;
+	//cout << "Jelly: " << jl->position.x << endl;
+	//cout << "Getting Here" << endl;
 }
 
 MyGame::~MyGame(){
@@ -97,7 +115,8 @@ void MyGame::update(set<SDL_Scancode> pressedKeys){
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
-	//cout << "Getting here" << endl;
+
+
 	for(SDL_Scancode code : pressedKeys){
 		switch(code){
 
