@@ -44,7 +44,7 @@ void Room::generateDoors(unsigned char doors){
 			door->setSpeed(5);
 			door->setRotation(.05);
 			door->setHitbox(hitboxes[y]);
-			door->showHitbox = true;
+			// door->showHitbox = true;
 			room->addChild(door);
 		}
 	}

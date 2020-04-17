@@ -11,6 +11,7 @@
 #define NUM_ROOMS 25
 #define GRID_SIZE 8
 
+
 // room definitions
 #define START_ROOM 2
 #define REG_ROOM   1
