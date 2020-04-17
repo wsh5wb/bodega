@@ -17,9 +17,9 @@ HadesDungeon::HadesDungeon() {
 }
 
 HadesDungeon::~HadesDungeon() {
-	for (int i = 0; i < 5; i++)
-		delete layout[i];
-	delete layout;
+//	for (int i = 0; i < 5; i++)
+//		delete layout[i];
+//	delete layout;
 }
 
 void HadesDungeon::update(set<SDL_Scancode> pressedKeys) {

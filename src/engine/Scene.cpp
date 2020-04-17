@@ -239,11 +239,12 @@ void Scene::loadScene(string sceneFilePath) {
 			SDL_Point position;
 			i >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
-			temp->setHitbox(.1,.9);
+			temp->setHitbox(.1, .9);
 			temp->showHitbox = true;
 			objects.push_back(temp);
 			break;
-		}case 8: { //Door
+		}
+		case 8: { //Door
 			Door *temp = new Door();
 			int speed;
 			double scaleX;
@@ -272,7 +273,41 @@ void Scene::loadScene(string sceneFilePath) {
 			}
 			temp->moveTo(position.x, position.y);
 			temp->movePivot(pivot.x, pivot.y);
-			temp->type="door";
+			temp->type = "door";
+			break;
+		}
+		case 9: { //Object
+			Object *temp = new Object();
+			int speed;
+			double scaleX;
+			double scaleY;
+			double rotation;
+			double rotationAmount;
+			int alpha;
+			SDL_Point pivot, position;
+			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
+					>> temp->blue >> std::boolalpha >> temp->vis
+					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
+					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
+					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y
+					>> temp->boundLowX >> temp->boundHighX >> temp->boundLowY
+					>> temp->boundHighY;
+			temp->setSpeed(speed);
+			temp->setScale(scaleX, scaleY);
+			temp->setRotationValue(rotation);
+			temp->setRotation(rotationAmount);
+			temp->setAlpha(alpha);
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
+			objects.push_back(temp);
+			if (temp->isRGB) {
+				temp->loadRGBTexture(red, green, blue);
+			} else if (temp->imgPath != "") {
+				temp->loadTexture(temp->imgPath);
+			}
+			temp->moveTo(position.x, position.y);
+			temp->movePivot(pivot.x, pivot.y);
+			temp->hitbox();
 			break;
 		}
 		default: {

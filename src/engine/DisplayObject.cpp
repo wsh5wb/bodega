@@ -473,6 +473,18 @@ void DisplayObject::setHitbox(double boundLow, double boundHigh){
 
 }
 
+void DisplayObject::setHitbox(double boundLowX, double boundHighX, double boundLowY, double boundHighY){
+
+	SDL_Point charHit[4];
+	charHit[0] = {(int)(w*boundLowX),(int)(h*boundLowY)};
+	charHit[1] = {(int)(w*boundHighX),(int)(h*boundLowY)};
+	charHit[3] = {(int)(w*boundLowX),(int)(h*boundHighY)};
+	charHit[2] = {(int)(w*boundHighX),(int)(h*boundHighY)};
+
+	setHitbox(charHit);
+
+}
+
 
 SDL_Point* DisplayObject::getGlobalHitbox(){
 	if(!this->hitbox)

@@ -6,6 +6,7 @@
 #include "AnimatedSprite.h"
 #include "Player.h"
 #include "DemoSprite.h"
+#include "Object.h"
 #include "Layer.h"
 #include "Door.h"
 #include <string>

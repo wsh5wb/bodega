@@ -13,9 +13,9 @@ OceanDungeon::OceanDungeon() {
 }
 
 OceanDungeon::~OceanDungeon() {
-	for (int i = 0; i < 5; i++)
-		delete layout[i];
-	delete layout;
+//	for (int i = 0; i < 5; i++)
+//		delete layout[i];
+//	delete layout;
 }
 
 void OceanDungeon::update(set<SDL_Scancode> pressedKeys) {

@@ -99,6 +99,7 @@ public:
 	SDL_Point* getGlobalHitbox();
 	void setHitbox(SDL_Point* points);
 	void setHitbox(double boundLow, double boundHigh);
+	void setHitbox(double boundLowX, double boundHighX, double boundLowY, double boundHighY);
 	void drawHitbox(bool col);
 	void drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col);
 	void updateDelta(int x, int y, double scaleX, double scaleY, double rot);

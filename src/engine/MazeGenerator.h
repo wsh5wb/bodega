@@ -8,8 +8,8 @@
 #ifndef MAZEGENERATOR_H
 #define MAZEGENERATOR_H
 
-#define NUM_ROOMS 1
-#define GRID_SIZE 16
+#define NUM_ROOMS 10
+#define GRID_SIZE 5
 
 // room definitions
 #define START_ROOM 2
