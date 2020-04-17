@@ -16,6 +16,7 @@
 #include "Enemy.h"
 #include "Jelly.h"
 #include "Cerb.h"
+#include "Urchin.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ private:
 	Enemy *en;
 	Jelly *jl;
 	Cerb *bs;
+	Urchin *jl2;
 	CollisionSystem cs;
 	//Scene* character;
 	string scene;

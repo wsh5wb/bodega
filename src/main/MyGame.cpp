@@ -27,6 +27,12 @@ MyGame::MyGame() : Game(1200, 1000){
 	jl->yBound = 1000;
 	jl->position.x = 600;
 	jl->position.y = 500;
+	jl2 = new Urchin(me);
+	jl2->showHitbox = true;
+	jl2->xBound = 1200;
+	jl2->yBound = 1000;
+	jl2->position.x = 300;
+	jl2->position.y = 300;
 	bs = new Cerb(me);
 	bs->showHitbox = true;
 	bs->position.x = 1000;
@@ -82,6 +88,13 @@ MyGame::MyGame() : Game(1200, 1000){
 
 	jl->setHitbox(charHit);
 
+	charHit[0] = {jl2->w*boundLow, jl2->h*boundLow};
+	charHit[1] = {jl2->w*boundHigh, jl2->h*boundLow};
+	charHit[3] = {jl2->w*boundLow,jl2->h*boundHigh};
+	charHit[2] = {jl2->w*boundHigh,jl2->h*boundHigh};
+
+	jl2->setHitbox(charHit);
+
 	charHit[0] = {bs->w*boundLow, bs->h*boundLow};
 	charHit[1] = {bs->w*boundHigh, bs->h*boundLow};
 	charHit[3] = {bs->w*boundLow,bs->h*boundHigh};
@@ -95,6 +108,7 @@ MyGame::MyGame() : Game(1200, 1000){
 	this->addChild(en);
 	//cout << (jl) << endl;
 	this->addChild(jl);
+	this->addChild(jl2);
 	this->addChild(bs);
 	//cout << "Getting here." << endl;
 

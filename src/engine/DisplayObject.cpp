@@ -90,7 +90,7 @@ void DisplayObject::setTexture(SDL_Texture* t){
 
 void DisplayObject::decreaseAlpha(){
 	alpha -= 10;
-	alpha = alpha < 0 ? 0 : alpha;
+	//alpha = alpha < 0 ? 0 : alpha;
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
