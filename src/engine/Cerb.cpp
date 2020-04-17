@@ -94,16 +94,16 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     lungeTime++;
     if (lungeTime > 10){
       restCount++;
-      //runs away on being hit while vulnerable
+      //runs away on being hit while vulnerable, to a spot at least 50 away from player
       if (wasHit()){
         if (std::rand()%2 == 0)
-        this->targX = std::rand()%(500) + player->position.x;
+        this->targX = 50 + std::rand()%(500) + player->position.x;
         else
-        this->targX = -1*std::rand()%(500) + player->position.x;
+        this->targX = -50 + -1*std::rand()%(500) + player->position.x;
         if (std::rand()%2 == 0)
-        this->targY = std::rand()%(500) + player->position.y;
+        this->targY = 50 + std::rand()%(500) + player->position.y;
         else
-        this->targY = -1*std::rand()%(500) + player->position.y;
+        this->targY = -50 -1*std::rand()%(500) + player->position.y;
         state = 5;
       }
       //when below half health, less time vulnerable
@@ -118,13 +118,13 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     restCount++;
     if (wasHit()){
       if (std::rand()%2 == 0)
-      this->targX = std::rand()%(500) + player->position.x;
+      this->targX = 50 + std::rand()%(500) + player->position.x;
       else
-      this->targX = -1*std::rand()%(500) + player->position.x;
+      this->targX = -50 + -1*std::rand()%(500) + player->position.x;
       if (std::rand()%2 == 0)
-      this->targY = std::rand()%(500) + player->position.y;
+      this->targY = 50 + std::rand()%(500) + player->position.y;
       else
-      this->targY = -1*std::rand()%(500) + player->position.y;
+      this->targY = -50 + -1*std::rand()%(500) + player->position.y;
       state = 5;
     }
     if (restCount >= 55 || (health < 250 && restCount >= 25)){
@@ -132,9 +132,13 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     }
   }
   else if (state == 5){
-    if (Enemy::isTargetReached()){
+    //Run away until target reached or hits the edge of the room
+    if (Enemy::isTargetReached() || atWall()){
       state = 1;
     }
+  }
+  else if (state == 6){
+    //TODO: add death animation
   }
 }
 
@@ -148,5 +152,11 @@ void Cerb::shoot(){
 
 bool Cerb::wasHit(){
   //TODO: return true if collision was with Player's attack
+
+  return false;
+}
+
+bool Cerb::atWall(){
+  //TODO: return true if touching wall or other solid non-player object
   return false;
 }

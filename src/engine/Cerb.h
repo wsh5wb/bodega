@@ -17,6 +17,7 @@ public:
 
   void shoot();
   bool wasHit();
+  bool atWall();
 
   int health = 500;
   int maxHealth = 500;
