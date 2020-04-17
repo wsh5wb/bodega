@@ -17,6 +17,7 @@
 #include "Jelly.h"
 #include "Cerb.h"
 #include "Skel.h"
+#include "Urchin.h"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ private:
 	Jelly *jl;
 	Cerb *bs;
 	Skel *sk;
+	Urchin *jl2;
 	CollisionSystem cs;
 	//Scene* character;
 	string scene;
