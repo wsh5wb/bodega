@@ -19,6 +19,9 @@
 #include "OceanDungeon.h"
 #include "CollisionSystem.h"
 #include "Enemy.h"
+#include "Jelly.h"
+#include "Cerb.h"
+#include "Urchin.h"
 
 using namespace std;
 
@@ -32,9 +35,11 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
+
 	Camera* myCamera;
 	Scene *character;
 	Enemy *enemy;
+
 	//Scene* character;
 	string scene;
 	bool changed;

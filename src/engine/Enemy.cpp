@@ -110,7 +110,7 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 	if(this->shield == 0){
 		this->state = 5;
 	}
-	cout<<this->state<<endl;
+	//cout<<this->state<<endl;
 }
 
 void Enemy::onMeleeStrike(){

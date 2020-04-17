@@ -54,7 +54,6 @@ MyGame::MyGame() :
 			"DUNG_TRANS_R");
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"DUNG_TRANS_L");
-
 }
 
 MyGame::~MyGame() {
