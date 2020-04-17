@@ -31,6 +31,10 @@ MyGame::MyGame() : Game(1200, 1000){
 	bs->showHitbox = true;
 	bs->position.x = 1000;
 	bs->position.y = 800;
+	sk = new Skel(me);
+	sk->showHitbox = true;
+	sk->position.x = 1000;
+	sk->position.y = 100;
 
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
@@ -89,6 +93,13 @@ MyGame::MyGame() : Game(1200, 1000){
 
 	bs->setHitbox(charHit);
 
+	charHit[0] = {sk->w*boundLow, sk->h*boundLow};
+	charHit[1] = {sk->w*boundHigh, sk->h*boundLow};
+	charHit[3] = {sk->w*boundLow,sk->h*boundHigh};
+	charHit[2] = {sk->w*boundHigh,sk->h*boundHigh};
+
+	sk->setHitbox(charHit);
+
 	this->addChild(character);
 	this->addChild(coin);
 	this->addChild(me);
@@ -96,6 +107,7 @@ MyGame::MyGame() : Game(1200, 1000){
 	//cout << (jl) << endl;
 	this->addChild(jl);
 	this->addChild(bs);
+	this->addChild(sk);
 	//cout << "Getting here." << endl;
 
 	//cout << "me: " << (me != 0) << endl;
