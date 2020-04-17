@@ -28,12 +28,12 @@ public:
 
 	void update(set<SDL_Scancode> pressedKeys);
 	void draw(AffineTransform &at);
-
+	DisplayObjectContainer* container;
+	
 
 private:
 
 	static Camera* camera;
-	DisplayObjectContainer* container;
 	
 };
 

@@ -13,10 +13,12 @@ using namespace std;
 SDL_Renderer* Game::renderer;
 Game* Game::instance;
 unsigned int Game::frameCounter = 0;
-CollisionSystem Game::cs;
+CollisionSystem* Game::cs;
+EventDispatcher Game::eventHandler;
 
 Game::Game(int windowWidth, int windowHeight){
 	Game::instance = this;
+	Game::cs = new CollisionSystem();
 
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;

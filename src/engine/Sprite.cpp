@@ -44,3 +44,4 @@ void Sprite::saveSelf(vector<string> &objects, vector<string> &dependencies) {
 		child->saveSelf(objects, dependencies);
 	}
 }
+

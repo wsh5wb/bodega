@@ -18,17 +18,21 @@ DisplayObject::DisplayObject() {
 	pivot.x = 0;
 	pivot.y = 0;
 	globalHitbox = new SDL_Point[4];
+	hitbox = NULL;
 }
 
 DisplayObject::DisplayObject(string id, string filepath){
 	this->id = id;
 	this->imgPath = filepath;
+	globalHitbox = new SDL_Point[4];
+	hitbox = NULL;
 	loadTexture(filepath);
 }
 
 DisplayObject::DisplayObject(string id, string filepath, bool particle){
 	this->id = id;
 	this->imgPath = filepath;
+	hitbox = NULL;
 	if(!particle){ globalHitbox = new SDL_Point[4];}
 
 	loadTexture(filepath);
@@ -42,6 +46,7 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue) {
 	this->blue = blue;
 	this->green = green;
 	globalHitbox = new SDL_Point[4];
+	hitbox = NULL;
 
 	this->loadRGBTexture(red, green, blue);
 }
@@ -134,6 +139,12 @@ void DisplayObject::toggleVisibility(){
 	vis = !vis;
 }
 
+
+SDL_Color DisplayObject::colorSDL(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+   SDL_Color col = {r,g,b,a};
+   return col;
+}
+
 void DisplayObject::makeVisible() {
 	vis = true;
 }
@@ -194,6 +205,7 @@ void DisplayObject::updateDelta(int x, int y, double scaleX, double scaleY, doub
 }
 
 void DisplayObject::resetDelta(){
+	//cout << id << " reset";
 	updateDelta(0,0,0,0,0);
 }
 
@@ -306,6 +318,14 @@ void DisplayObject::setSpeed(int s) {
 	speed = s;
 }
 
+void DisplayObject::setPosition(SDL_Point p){
+	position = p;
+}
+
+void DisplayObject::setPivot(SDL_Point p){
+	pivot = p;
+}
+
 void DisplayObject::applyTransformations(AffineTransform &at) {
 	at.translate(position.x, position.y);
 	at.rotate(rotation);
@@ -346,15 +366,16 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		double angle = atan2(topR.y - topL.y, topR.x - topL.x) * 180 / PI;
 
-		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle,
-				&pOrigin, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(Game::renderer, curTexture, &srcrect, &dstrect, angle,&pOrigin, flip);
+
 
 		at.translate(pivot.x, pivot.y);
 
 		reverseTransformations(at);
 
-		if(showHitbox)	drawHitbox(isCollided);
+		
 	}
+	if(showHitbox)	drawHitbox(isCollided);
 
 }
 
@@ -375,7 +396,7 @@ void DisplayObject::saveSelf(vector<string> &objects,
 
 
 void DisplayObject::drawHitbox(bool col){
-	if(curTexture != NULL){
+	// if(curTexture != NULL){
 		if(!vis){return;}
 		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}
 		else{ SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);}
@@ -391,7 +412,7 @@ void DisplayObject::drawHitbox(bool col){
 		// this->globalHitbox[1] = hitbox[1];
 		// this->globalHitbox[2] = hitbox[2];
 		// this->globalHitbox[3] = hitbox[3];
-	}
+	// }
 	// if(curTexture != NULL){
 	// 	if(!vis){return;}
 
@@ -418,7 +439,7 @@ void DisplayObject::drawHitbox(bool col){
 }
 
 void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col){
-	if(curTexture != NULL){
+	// if(curTexture != NULL){
 		if(!vis){return;}
 		if(col){ SDL_SetRenderDrawColor(Game::renderer,0,255,0,255);}
 		else{ SDL_SetRenderDrawColor(Game::renderer,255,0,0,255);}
@@ -428,7 +449,7 @@ void DisplayObject::drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL
 		SDL_RenderDrawLine(Game::renderer,bottomR.x,bottomR.y,topR.x,topR.y);
 		SDL_SetRenderDrawColor(Game::renderer,0,0,0,255);
 
-	}
+	// }
 }
 
 void DisplayObject::setHitbox(SDL_Point* points){
@@ -441,6 +462,7 @@ void DisplayObject::setHitbox(SDL_Point* points){
 }
 
 void DisplayObject::setHitbox(double boundLow, double boundHigh){
+
 	SDL_Point charHit[4];
 	charHit[0] = {(int)(w*boundLow),(int)(h*boundLow)};
 	charHit[1] = {(int)(w*boundHigh),(int)(h*boundLow)};
@@ -451,10 +473,22 @@ void DisplayObject::setHitbox(double boundLow, double boundHigh){
 
 }
 
+void DisplayObject::setHitbox(double boundLowX, double boundHighX, double boundLowY, double boundHighY){
+
+	SDL_Point charHit[4];
+	charHit[0] = {(int)(w*boundLowX),(int)(h*boundLowY)};
+	charHit[1] = {(int)(w*boundHighX),(int)(h*boundLowY)};
+	charHit[3] = {(int)(w*boundLowX),(int)(h*boundHighY)};
+	charHit[2] = {(int)(w*boundHighX),(int)(h*boundHighY)};
+
+	setHitbox(charHit);
+
+}
+
 
 SDL_Point* DisplayObject::getGlobalHitbox(){
 	if(!this->hitbox)
-		return NULL;
+		setHitbox(0,1);
 
 	AffineTransform* at = getGlobalTransform(this);
 	globalHitbox[0] = at->transformPoint(hitbox[0].x, hitbox[0].y);

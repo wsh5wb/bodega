@@ -5,7 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include "Game.h"
-#include "AnimatedSprite.h"
+#include "Player.h"
 #include "DisplayObjectContainer.h"
 #include "Sprite.h"
 #include "Scene.h"
@@ -13,9 +13,15 @@
 #include "Camera.h"
 #include "myCoin.h"
 #include "QuestManager.h"
+#include "TweenJuggler.h"
+#include "DemoDungeon.h"
+#include "HadesDungeon.h"
+#include "OceanDungeon.h"
 #include "CollisionSystem.h"
-#include "Emitter.h"
-#include "Player.h"
+#include "Enemy.h"
+#include "Jelly.h"
+#include "Cerb.h"
+#include "Urchin.h"
 
 using namespace std;
 
@@ -29,17 +35,19 @@ public:
 	virtual void draw(AffineTransform &at);
 
 private:
-	AnimatedSprite *character;
-	AnimatedSprite *coin;
-	Emitter * em;
-	Particle * p;
-	CollisionSystem cs;
+
+	Camera* myCamera;
+	Scene *character;
+	Enemy *enemy;
+
 	//Scene* character;
 	string scene;
 	bool changed;
-	Coin* myCoin;
 	bool isQuestDone;
 	Sound effect;
+	Sound hades_theme;
+	Dungeon* dungeon;
+	TweenJuggler * animationJuggler;
 };
 
 #endif

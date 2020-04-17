@@ -6,37 +6,92 @@ using namespace std;
 Tween::Tween(DisplayObject *obj) {
 	object = obj;
 }
-
 //Tween(DisplayObject* object, TweenTransitions transition); //this is covered by the flags
 
 void Tween::animate(int fieldToAnimate, double startVal, double endVal,
-		double time, int flags) {
+		double timetoComplete,int transition, int direction) {
 	tweenParams.push_back(
-			new TweenParam(fieldToAnimate, startVal, endVal, time, flags));
+			new TweenParam(fieldToAnimate, startVal, endVal, timetoComplete, transition, direction));
 }
-
 //invoked once per frame by the TweenJuggler. Updates this tween / DisplayObject
 void Tween::update() {
-	//TODO: this
+	//printf(" Size of TweenParams %x, \n", tweenParams.size());
 	for (TweenParam *t : tweenParams) {
-		int flag = t->getFlags();
-		int function = flag & (~3);
-		int direction = flag & 3;
-		double percentIn = 0; //need some way to calculate this, might need to store start time or something similar
-		switch (function) {
-		case TWEEN_LINEAR: {
-			double amnt = linearTransform(percentIn, direction);
-			double newVal;
-		}
+		double currentValue = currentParamValue(t->getParam());
+		if(t->getEndVal() != currentValue){
+			currentValue = t->update(currentValue);
+			setValue(t->getParam(), currentValue);
 		}
 	}
 }
 
-void Tween::isComplete() {
-	//TODO: i think this just does something with an event
+bool Tween::isComplete() {
+	//not correct, is complete should only complete once every field associated with this particular Tween has finished.
+	bool completed = true;
+	for (TweenParam *t : tweenParams) {
+		if(t->getEndVal() != currentParamValue(t->getParam()) && t->getFrameCount() < t->getTweenTime()){
+				completed = false;
+				//printf("The Value of %x is %f \n", t->getParam(), currentParamValue(t->getParam()));
+				//printf("Not Completed.");
+			}
+	}
+	return completed;
 }
 
-void Tween::setValue(int param, double value, int flags) {
+void Tween::setValue(int param, double value) {
+	// alters the value of a particular param to a new value. If it's within a certain margin of the endVal, set to the endVal
+	switch (param) {
+
+	case TWEEN_POSITION_X: {
+		SDL_Point p = object->getPosition();
+		p.x = value;
+		object->setPosition(p);
+		break;
+	}
+	case TWEEN_POSITION_Y: {
+		SDL_Point p = object->getPosition();
+		p.y = value;
+		object->setPosition(p);
+		break;
+	}
+	case TWEEN_PIVOT_X:{
+		SDL_Point p = object->getPivot();
+		p.x = value;
+		object->setPivot(p);
+		break;
+	}
+	case TWEEN_PIVOT_Y:{
+		SDL_Point p = object->getPivot();
+		p.y = value;
+		object->setPivot(p);
+		break;
+	}
+	case TWEEN_SCALE_X: {
+		object->setScaleX(value);
+		break;
+	}
+	case TWEEN_SCALE_Y: {
+		object->setScaleY(value);
+		break;
+	}
+	case TWEEN_ROTATION: {
+		object->setRotation(value);
+		break;
+	}
+	case TWEEN_ALPHA: {
+		object->setAlpha(int(value));
+		break;
+	}
+	default: {
+		printf("Error reached with %x \n", param);
+		cerr << "ERROR: Tween Parameter Not Recognized!\n";
+		break;
+	}
+
+}
+}
+
+double Tween::currentParamValue(int param){
 	double start = 0;
 	switch (param) {
 
@@ -47,6 +102,16 @@ void Tween::setValue(int param, double value, int flags) {
 	}
 	case TWEEN_POSITION_Y: {
 		SDL_Point p = object->getPosition();
+		start = p.y;
+		break;
+	}
+	case TWEEN_PIVOT_X:{
+		SDL_Point p = object->getPivot();
+		start = p.x;
+		break;
+	}
+	case TWEEN_PIVOT_Y:{
+		SDL_Point p = object->getPivot();
 		start = p.y;
 		break;
 	}
@@ -63,36 +128,14 @@ void Tween::setValue(int param, double value, int flags) {
 		break;
 	}
 	case TWEEN_ALPHA: {
-		start = object->getAlpha();
+		start = double(object->getAlpha());
 		break;
 	}
 	default: {
+		printf("Error reached with %x \n", param);
 		cerr << "ERROR: Tween Parameter Not Recognized!\n";
-		return;
+		break;
 	}
 	}
-	TweenParam *temp = new TweenParam(param, start, value, 60, flags);
-	tweenParams.push_back(temp);
-}
-
-double Tween::linearTransform(double in, int dir) {
-	return in;
-}
-
-double Tween::quadraticTransform(double in, int dir) {
-	switch (dir) {
-	case TWEEN_IN: {
-		return in * in;
-	}
-	case TWEEN_OUT: {
-		double inv = 1-in;
-		return 1 - (inv*inv);
-	}
-	case TWEEN_INOUT: {
-			return in<=.5?(2*in*in):.5+(1-(1.5-in)*(1.5-in));
-		}
-	case TWEEN_OUTIN: {
-			return in<=.5?(2*in*in):.5+(1-(1.5-in)*(1.5-in));//needs to be finished
-		}
-	}
+	return start;
 }

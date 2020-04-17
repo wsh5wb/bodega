@@ -8,16 +8,25 @@
 #define TWEEN_SCALE_Y 3
 #define TWEEN_ROTATION 4
 #define TWEEN_ALPHA 5
+#define TWEEN_PIVOT_X 6
+#define TWEEN_PIVOT_Y 7
 
 //transition functions and directions
-#define TWEEN_IN 0
-#define TWEEN_OUT 1
-#define TWEEN_INOUT 2 //not sure i'll actually use this
-#define TWEEN_OUTIN 3 //not sure i'll actually use this
+#define EASE_NONE 0
+#define EASE_OUT 1
+#define EASE_INOUT 2 //not sure i'll actually use this
+#define EASE_IN 3 //not sure i'll actually use this
 
 #define TWEEN_LINEAR 0
-#define TWEEN_QUADRATIC 4
-#define TWEEN_SINE 8 //not sure i'll actually use this
+#define TWEEN_QUADRATIC 1
+#define TWEEN_SINE 2
+#define TWEEN_CUBIC 3
+#define TWEEN_QUARTIC 4
+#define TWEEN_QUINTIC 5
+#define TWEEN_BACK 6
+#define TWEEN_EXPO 7
+#define TWEEN_ELASTIC 8
+//not sure i'll actually use this
 
 
 #endif

@@ -6,7 +6,10 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include "Game.h"
 #include "Sprite.h"
+#include "TweenJuggler.h"
+#include "Projectile.h"
 
 using namespace std;
 
@@ -14,16 +17,22 @@ class Player : public AnimatedSprite{
 
 public:
 	Player();
+	virtual ~Player();
+
+	static Player* getPlayer();
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
 	//void onEnemyCollision(Enemy* enemy);
 	virtual void onCollision(DisplayObject* other);
-
+	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
+	virtual void renderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
+	virtual float percentOfHealthLost();
+	void changeHealth(int value);
+	void toggleHealthDisplay();
+	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
-	int health = 100;
-	int maxHealth = 100;
 
 	//iFrames
 	bool iFrames = false;
@@ -31,11 +40,15 @@ public:
 	int numIFrames = 0;
 
 
-
+	vector<Projectile*> projectiles;
 	/* Current Enemy player is engaging with*/
 	//Enemy* curEnemy = NULL;
 
 private:
+
+	int health = 114;
+	int maxHealth = 320;
+	bool displayHealth = true;
 
 	int oldX=0, oldY=0;
 
@@ -47,7 +60,9 @@ private:
 	int _yAcc = 2; //one pixel every two frames
 	int _yAccCount = 0;
 	int _yVel = 0;
+	std::clock_t lastFired;
 
+	static Player* player;
 	void initIFrames(int numFrames);
 
 };

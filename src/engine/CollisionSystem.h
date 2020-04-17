@@ -9,7 +9,6 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <algorithm>
 
 using namespace std;
 
@@ -48,6 +47,7 @@ public:
 	//xDelta1 and yDelta1 are the amount d moved before causing the collision.
 	//xDelta2 and yDelta2 are the amount other moved before causing the collision.
 	void resolveCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2);
+	void resolveObstacleCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2);
 	void binarySearchX(DisplayObject* d, DisplayObject* other, int deltaX, bool sameDir, bool isCol);
 	void binarySearchY(DisplayObject* d, DisplayObject* other, int deltaY, bool sameDir, bool isCol);
 
@@ -57,7 +57,7 @@ public:
 	bool onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3);
 	
 private:
-	map<string,vector<DORange_t> > objects;
+	map<string,vector<DisplayObject*> > objects;
 	vector<string> pairs;
 	
 };

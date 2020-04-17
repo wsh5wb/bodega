@@ -7,15 +7,15 @@
 #include <SDL2/SDL_image.h>
 #include <set>
 #include "AffineTransform.h"
-#include "EventDispatcher.h"
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
-class DisplayObject: public EventDispatcher{
+class DisplayObject{
 
 public:
 	string id = "DEFAULT_ID";
@@ -83,6 +83,9 @@ public:
 	double getScaleX();
 	double getScaleY();
 
+
+
+	SDL_Color colorSDL(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	int getAlpha();
 	void setAlpha(int a);
 	void setPosition(SDL_Point p);
@@ -96,6 +99,7 @@ public:
 	SDL_Point* getGlobalHitbox();
 	void setHitbox(SDL_Point* points);
 	void setHitbox(double boundLow, double boundHigh);
+	void setHitbox(double boundLowX, double boundHighX, double boundLowY, double boundHighY);
 	void drawHitbox(bool col);
 	void drawHitbox(SDL_Point topL, SDL_Point topR, SDL_Point bottomL, SDL_Point bottomR, bool col);
 	void updateDelta(int x, int y, double scaleX, double scaleY, double rot);
@@ -113,6 +117,7 @@ public:
 	int speed = 5;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_Point pivot, position;
 private:
 	SDL_Texture* texture = NULL;
 	SDL_Surface* image = NULL;
@@ -127,7 +132,6 @@ protected:
 	double rotation = 0;
 	double rotationAmount = 0.05;
 	int alpha;
-	SDL_Point pivot, position;
 	SDL_Point* globalHitbox;
 };
 

@@ -1,6 +1,11 @@
 #include "CollisionSystem.h"
 #include "DTEvent.h"
+#include "Game.h"
 #include <iostream>
+#include <bits/stdc++.h>
+#include <algorithm>
+#include "Projectile.h"
+#include "Player.h"
 
 bool compare_xval(DORange_t do1, DORange_t do2){
 	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
@@ -26,57 +31,116 @@ CollisionSystem::~CollisionSystem(){
 //checks collisions between pairs of DOs where the corresponding types have been requested
 //to be checked (via a single call to watchForCollisions) below.
 void CollisionSystem::update(){
-	/*
-		Possible pseudocode:
-			iterate through display objects:
-				if collidesWith(DO1, DO2):
-					if DO1 is Player and DO2 is Enemy:
-						Dispatch event (to take damage or something)?
-					if DO1 is Player and DO2 is Platform:
-						resolveCollision()
-					...
-	*/	
 
 	// TODO: come up with a better system for this later. It's trash right now
 	for(string pair : pairs){
 		size_t split = pair.find("-");
 		string type1 = pair.substr(0,split);
 		string type2 = pair.substr(split+1);
-		
+
 		vector vec1 = objects[type1];
 		vector vec2 = objects[type2];
 		// sort(vec1.begin(), vec1.end(), compare_xval);
 		// sort(vec2.begin(), vec2.end(), compare_xval);
-
-		for(DORange obj1 : vec1){
-			for(DORange obj2 : vec2){
+		int i = 0;
+		for(DisplayObject* obj1 : vec1){
+			for(DisplayObject* obj2 : vec2){
+				if(obj1 == obj2)	continue;
 				bool collision;
-				if((collision= collidesWith(obj1.object, obj2.object))){
-					resolveCollision(obj1.object, obj2.object,
-						obj1.object->deltaX, obj1.object->deltaY,
-						obj2.object->deltaX, obj2.object->deltaY);
+				i++;
+				
+				if((collision= collidesWith(obj1, obj2))){
+
+					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
+						// assuming door1 is always S, 2 W, 3 N, 4 E
+						char dir;
+						if(obj1->id.substr(0,obj1->id.length()-1) == "Door")	dir = obj1->id[4];
+						else													dir = obj2->id[4];
+
+						switch(dir){
+							case '1':{
+								Event e("DUNG_TRANS_D", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+							case '2':{
+								Event e("DUNG_TRANS_L", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+							case '3':{
+								Event e("DUNG_TRANS_U", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+							case '4':{
+								Event e("DUNG_TRANS_R", &Game::eventHandler);
+								Game::eventHandler.dispatchEvent(&e);
+								break;
+							}
+						}
+						// printf("Door addr: %x\n", obj2);
+						// cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
+						
+					}
+					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
+						// printf("Player collided with obstacle\n");
+						resolveObstacleCollision(obj1, obj2,
+							obj1->deltaX, obj1->deltaY,
+							obj2->deltaX, obj2->deltaY);
+
+						// obj1->updateDelta(0,0,0,0,0);
+						// obj2->updateDelta(0,0,0,0,0);
+					}
+					else{
+						resolveCollision(obj1, obj2,
+							obj1->deltaX, obj1->deltaY,
+							obj2->deltaX, obj2->deltaY);
+
+						// obj1->updateDelta(0,0,0,0,0);
+						// obj2->updateDelta(0,0,0,0,0);
+					}
 				}
 				// you can turn this into an event dispatch. Definitely would be a good idea.
-				obj1.object->isCollided = collision;
-				obj2.object->isCollided = collision;
+				obj1->isCollided = collision;
+				obj2->isCollided = collision;
 			}
 		}
 
 	}
+	// Handle user projectile/enemy collisions
+	/*for(Projectile* p : Player::getPlayer()->projectiles){
+		vector ens = objects["ENEMY"];
+		for(DisplayObject* en : ens){
+			if(collidesWith(p,en)){
+				cout << en->id << " collied with " << "Projectile" << endl;
+			}
+		}
+	}*/
 }
 
 //This system watches the game's display tree and is notified whenever a display object is placed onto
 //or taken off of the tree. Thus, the collision system always knows what DOs are in the game at any moment automatically.
 void CollisionSystem::handleEvent(Event* e){
-	// objects.push_back(((DTEvent*) e)->getAddedObject());
-	// objects.sort(compare_xval);
 	DisplayObject* child = ((DTEvent*) e)->getAddedObject();
-	DORange_t object;
-	object.object = child;
 
-	if(child->id.find("ENEMY") != string::npos)			objects["ENEMY"].push_back(object);
-	else if(child->id.find("PLAYER") != string::npos)	objects["PLAYER"].push_back(object);
-	else if(child->id.find("SETTING") != string::npos)	objects["SETTING"].push_back(object);
+    string str;
+
+	if(child->id.find("ENEMY") != string::npos)				str = "ENEMY";
+	else if(child->id.find("PLAYER") != string::npos)		str = "PLAYER";
+	else if(child->id.find("SETTING") != string::npos)		str = "SETTING";
+	// TODO: Make a new OBJECT category?
+	else if(child->id.find("Door") != string::npos)			str = "DOOR";
+	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
+
+	auto it = find(objects[str].begin(), objects[str].end(), child);
+
+	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
+		// printf("Adding %s to DT\n", child->id.c_str());
+		objects[str].push_back(child);
+	}
+	else if(e->getType() == "OBJ_RM")							objects[str].erase(it);
+
 }
 
 //This function asks the collision system to start checking for collisions between all pairs
@@ -91,11 +155,11 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 
 /* Return:
 	0 - Colinear
-	1 - Right turn																																		
+	1 - Right turn
 	-1 - Left turn
 */
 int CollisionSystem::orientation(SDL_Point p1, SDL_Point q1, SDL_Point p2){
-	int val = (q1.y - p1.y) * (p2.x - q1.x) - (q1.x - p1.x) * (p2.y - q1.y); 
+	int val = (q1.y - p1.y) * (p2.x - q1.x) - (q1.x - p1.x) * (p2.y - q1.y);
 
     if(val < 0){ return -1;}
 	if(val > 0){ return 1;}
@@ -103,7 +167,7 @@ int CollisionSystem::orientation(SDL_Point p1, SDL_Point q1, SDL_Point p2){
 }
 
 bool CollisionSystem::onSeg(SDL_Point p1, SDL_Point p2, SDL_Point p3){
-	return (p2.x <= max(p1.x, p3.x) && p2.x >= min(p1.x, p3.x) && p2.y <= max(p1.y, p3.y) && p2.y >= min(p1.y, p3.y)); 
+	return (p2.x <= max(p1.x, p3.x) && p2.x >= min(p1.x, p3.x) && p2.y <= max(p1.y, p3.y) && p2.y >= min(p1.y, p3.y));
 }
 
 
@@ -166,7 +230,7 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	else if((intersect(topL1,botL1,topL2,topR2) || intersect(topL1,botL1,topL2,botL2) || intersect(topL1,botL1,botR2,topR2) || intersect(topL1,botL1,botL2,botR2))){}
 	else if((intersect(botL1,botR1,topL2,topR2) || intersect(botL1,botR1,topL2,botL2) || intersect(botL1,botR1,botR2,topR2) || intersect(botL1,botR1,botL2,botR2))){}
 	else{ ret = false;}
-	
+
 	if(!ret){
 		ret = checkArea(botR1,topL2,topR2,botL2,botR2,dist(topL2,topR2),dist(topL2,botL2)) || checkArea(botR2,topL1,topR1,botL1,botR1,dist(topL1,topR1),dist(topL1,botL1));
 	}
@@ -193,7 +257,7 @@ void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int 
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
 	}if(n == 0){
-		n = deltaX;
+		n = 1;
 	}
 	if(!sameDir){
 		n *= -1;
@@ -215,7 +279,7 @@ void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int 
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
 	}if(n == 0){
-		n = deltaY;
+		n = 1;
 	}
 	if(!sameDir){
 		n *= -1;
@@ -231,6 +295,22 @@ void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int 
 
 }
 
+void CollisionSystem::resolveObstacleCollision(DisplayObject* d, DisplayObject* other, int xDelta1, int yDelta1, int xDelta2, int yDelta2){
+	//cout << xDelta1 << " " << yDelta1 << " " << xDelta2 << " " << yDelta2 << endl;
+
+
+	if(xDelta1 != 0){
+		d->translate(-xDelta1,0);
+	}else if(xDelta2 != 0){
+		other->translate(-xDelta2,0);
+	}
+
+	if(yDelta1 != 0){
+		d->translate(0,-yDelta1);
+	}else if(yDelta2 != 0){
+		other->translate(0,-yDelta2);
+	}
+}
 //Resolves the collision that occurred between d and other
 //xDelta1 and yDelta1 are the amount d moved before causing the collision.
 //xDelta2 and yDelta2 are the amount other moved before causing the collision.
@@ -283,7 +363,7 @@ void CollisionSystem::resolveCollision(DisplayObject* d, DisplayObject* other, i
 		binarySearchX(other,d,xDelta2,false,true);
 	}
 
-
+	//cout << xDelta1 << " " << yDelta1 << " " << xDelta2 << " " << yDelta2 << endl;
 	if(yDelta1 != 0){
 		if(yDelta2 != 0 && other->speed > d->speed){
 			binarySearchY(other,d,yDelta2,false,true);
