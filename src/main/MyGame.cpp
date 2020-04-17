@@ -27,6 +27,10 @@ MyGame::MyGame() : Game(1200, 1000){
 	jl->yBound = 1000;
 	jl->position.x = 600;
 	jl->position.y = 500;
+	bs = new Cerb(me);
+	bs->showHitbox = true;
+	bs->position.x = 1000;
+	bs->position.y = 800;
 
 	double boundLow = 0.15;
 	double boundHigh = 1 - boundLow;
@@ -78,12 +82,20 @@ MyGame::MyGame() : Game(1200, 1000){
 
 	jl->setHitbox(charHit);
 
+	charHit[0] = {bs->w*boundLow, bs->h*boundLow};
+	charHit[1] = {bs->w*boundHigh, bs->h*boundLow};
+	charHit[3] = {bs->w*boundLow,bs->h*boundHigh};
+	charHit[2] = {bs->w*boundHigh,bs->h*boundHigh};
+
+	bs->setHitbox(charHit);
+
 	this->addChild(character);
 	this->addChild(coin);
 	this->addChild(me);
 	this->addChild(en);
 	//cout << (jl) << endl;
 	this->addChild(jl);
+	this->addChild(bs);
 	//cout << "Getting here." << endl;
 
 	//cout << "me: " << (me != 0) << endl;

@@ -15,6 +15,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Jelly.h"
+#include "Cerb.h"
 
 using namespace std;
 
@@ -34,6 +35,7 @@ private:
 	Scene *bg;
 	Enemy *en;
 	Jelly *jl;
+	Cerb *bs;
 	CollisionSystem cs;
 	//Scene* character;
 	string scene;

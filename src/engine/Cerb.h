@@ -26,4 +26,6 @@ public:
   int health = 500;
   int maxHealth = 500;
   int prowlTime = 0;
-}
+};
+
+#endif

@@ -7,9 +7,9 @@ using namespace std;
 Cerb::Cerb(Player* player) : Enemy(player){
   type = "ENEMY";
   this->id = "ENEMY_BOSS1";
-  this->loadTexture("resources/enemies/CerbIdle.png")
+  this->loadTexture("resources/enemies/CerbIdle.png");
   this->player = player;
-  this->w = 50; this->h = 50
+  this->w = 50; this->h = 50;
   this->pivot.x = this->w/2;
   this->pivot.y = this->h/2;
   state = 0;
@@ -42,13 +42,13 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     Enemy::moveToTarget();
   }
   else if (state == 3){
-    lunge();
+    //lunge();
   }
   else if (state == 4){
-    shoot();
+    //shoot();
   }
   else if (state == 5){
-    avoid();
+    //avoid();
   }
   else if (state == 6){
 
@@ -89,4 +89,8 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
       targY = player->position.y;
     }
   }
+}
+
+void Cerb::draw(AffineTransform &at){
+  Enemy::draw(at);
 }
