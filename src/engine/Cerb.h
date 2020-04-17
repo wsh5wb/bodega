@@ -15,17 +15,14 @@ public:
   virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
-  void onHit();
-  void patrol();
-  void rush();
-  void lunge();
   void shoot();
-  void moveToTarget();
-  bool isTargetReached();
+  bool wasHit();
 
   int health = 500;
   int maxHealth = 500;
   int prowlTime = 0;
+  int lungeTime = 0;
+  int restCount = 0;
 };
 
 #endif
