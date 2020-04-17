@@ -27,7 +27,7 @@ public:
 
 	//Global frame counter
 	static unsigned int frameCounter;
-	static CollisionSystem cs;
+	static CollisionSystem* cs;
 	static EventDispatcher eventHandler;
 
 	Game(int windowWidth, int windowHeight);

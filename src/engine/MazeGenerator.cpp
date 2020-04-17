@@ -70,28 +70,28 @@ void MazeGenerator::generate() {
 			// layout is WSEN
 			//			 0000
 			if (adjRooms[NORTH]) {
-				printf("Adding N-S connection b/w (%d,%d) and (%d,%d)\n", x,y,x,y-1);
+				// printf("Adding N-S connection b/w (%d,%d) and (%d,%d)\n", x,y,x,y-1);
 				room->doors |= (1<<NORTH);
 				adjRooms[NORTH]->doors |= (1<<SOUTH);
 				room->availableDoors++;
 				adjRooms[NORTH]->availableDoors++;
 			}
 			if (adjRooms[EAST]) {
-				printf("Adding E-W connection b/w (%d,%d) and (%d,%d)\n", x,y,x+1,y);
+				// printf("Adding E-W connection b/w (%d,%d) and (%d,%d)\n", x,y,x+1,y);
 				room->doors |= (1<<EAST);
 				adjRooms[EAST]->doors |= (1<<WEST);
 				room->availableDoors++;
 				adjRooms[EAST]->availableDoors++;
 			}
 			if (adjRooms[SOUTH]) {
-				printf("Adding S-N connection b/w (%d,%d) and (%d,%d)\n", x,y,x,y+1);
+				// printf("Adding S-N connection b/w (%d,%d) and (%d,%d)\n", x,y,x,y+1);
 				room->doors |= (1<<SOUTH);
 				adjRooms[SOUTH]->doors |= (1<<NORTH);
 				room->availableDoors++;
 				adjRooms[SOUTH]->availableDoors++;
 			}
 			if (adjRooms[WEST]) {
-				printf("Adding W-E connection b/w (%d,%d) and (%d,%d)\n", x,y,x-1,y);
+				// printf("Adding W-E connection b/w (%d,%d) and (%d,%d)\n", x,y,x-1,y);
 				room->doors |= (1<<WEST);
 				adjRooms[WEST]->doors |= (1<<EAST);
 				room->availableDoors++;

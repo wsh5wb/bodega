@@ -30,10 +30,10 @@ void Room::generateDoors(unsigned char doors){
 	int coords[4][2] = {{192,0},{480,128},{192,352},{0,128}};
 	SDL_Point hitboxes[4][4] =
 	{
-		{{0,0}, {128,0},{128,5}, {0,5} },
-		{{27,0}, {32,0}, {32,128}, {27,128} },
-		{{0,27}, {128,27}, {128,32}, {0,32} },
-		{{0,0}, {5,0}, {5,128}, {0,128} }
+		{{0,0}, {128,0},{128,10}, {0,10} },
+		{{22,0}, {32,0}, {32,128}, {22,128} },
+		{{0,22}, {128,22}, {128,32}, {0,32} },
+		{{0,0}, {10,0}, {10,128}, {0,128} }
 	};
 
 	int id[4] = {3,4,1,2};
@@ -44,7 +44,7 @@ void Room::generateDoors(unsigned char doors){
 			door->setSpeed(5);
 			door->setRotation(.05);
 			door->setHitbox(hitboxes[y]);
-			//door->showHitbox = true;
+			door->showHitbox = true;
 			room->addChild(door);
 		}
 	}
@@ -64,7 +64,7 @@ void Room::generateWalls(){
 		wall->h = dimensions[i%2][1];
 		wall->setHitbox(0,1);
 		//wall->showHitbox = true;
-		printf("Adding wall%d at (%d,%d)\n", i+1,position[i%3].x,position[i%3].y);
+		// printf("Adding wall%d at (%d,%d)\n", i+1,position[i%3].x,position[i%3].y);
 		room->addChild(wall);
 	}
 }

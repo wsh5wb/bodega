@@ -8,6 +8,7 @@
 using namespace std;
 
 Dungeon::~Dungeon() {
+	cerr << "DUNGEON DESTRUCTOR" << endl;
 	for (int i = 0; i < 5; i++)
 		delete layout[i];
 	delete layout;
@@ -140,12 +141,12 @@ void Dungeon::generate() {
 		for (int j = GRID_SIZE; j--;) {
 			int ind = layout[i][j];
 			if (ind >= 0) {
-				printf("room at (%d,%d) ", j, i);
+				// printf("room at (%d,%d) ", j, i);
 				room_t *room_data = level.rooms["(" + to_string(i) + ","
 						+ to_string(j) + ")"];
 				int c = 0;
 				unsigned char doors = room_data->doors;
-				printf("doors %x\n", doors);
+				// printf("doors %x\n", doors);
 				string s = this->scenes.at(ind);
 				Room *temp = new Room(s, doors); //crashes here???
 				temp->id = id + to_string(i) + "-" + to_string(j);

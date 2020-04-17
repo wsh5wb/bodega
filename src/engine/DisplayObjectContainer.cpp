@@ -23,6 +23,7 @@ DisplayObjectContainer::DisplayObjectContainer(string id, int red, int green, in
 DisplayObjectContainer::~DisplayObjectContainer(){
 	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
 		delete *it;
+		*it = NULL;
 	}children.clear();
 }
 
@@ -39,6 +40,7 @@ void DisplayObjectContainer::removeImmediateChild(DisplayObject* child){
 			DTEvent e("OBJ_RM", &Game::eventHandler, child);
 			Game::eventHandler.dispatchEvent(&e);
 			delete *it;
+			*it = NULL;
 			children.erase(it);
 			break;
 		}
@@ -51,6 +53,7 @@ void DisplayObjectContainer::removeImmediateChild(string id){
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
 			delete *it;
+			*it = NULL;
 			children.erase(it);
 			break;
 		}
@@ -60,12 +63,14 @@ void DisplayObjectContainer::removeImmediateChild(string id){
 void DisplayObjectContainer::removeChild(int index){
 	vector<DisplayObject*>::iterator it = children.begin() + index;
 	delete *it;
+	*it = NULL;
 	children.erase(it);
 }
 
 void DisplayObjectContainer::removeThis(){
 	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
 		delete *it;
+		*it = NULL;
 	}children.clear();
 }
 

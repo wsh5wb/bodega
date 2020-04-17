@@ -22,8 +22,8 @@ using namespace std;
 
 MyGame::MyGame() :
 		Game(1200, 900) {
-	Game::eventHandler.addEventListener((EventListener*) &Game::cs, "OBJ_ADD");
-	Game::eventHandler.addEventListener((EventListener*) &Game::cs, "OBJ_RM");
+	Game::eventHandler.addEventListener((EventListener*) Game::cs, "OBJ_ADD");
+	Game::eventHandler.addEventListener((EventListener*) Game::cs, "OBJ_RM");
 
 	myCamera = Camera::getCamera();
 	// dungeon = new OceanDungeon();
@@ -42,8 +42,8 @@ MyGame::MyGame() :
 //	this->addChild(enemy);
 //
 //	Game::cs.watchForCollisions("ENEMY", "PLAYER");
-	Game::cs.watchForCollisions("PLAYER", "DOOR");
-	Game::cs.watchForCollisions("PLAYER", "OBSTACLE");
+	Game::cs->watchForCollisions("PLAYER", "DOOR");
+	Game::cs->watchForCollisions("PLAYER", "OBSTACLE");
 
 	// Come up with more elegant solution to determining which dir to go.
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
@@ -76,8 +76,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 	DisplayObjectContainer::update(pressedKeys);
 	myCamera->update(pressedKeys);
 
-
-
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
 
@@ -88,7 +86,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 
-	Game::cs.update();
+	Game::cs->update();
 	this->resetDelta();
 }
 

@@ -84,7 +84,7 @@ void CollisionSystem::update(){
 						
 					}
 					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
-						printf("Player collided with obstacle\n");
+						// printf("Player collided with obstacle\n");
 						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,
 							obj2->deltaX, obj2->deltaY);
@@ -136,7 +136,7 @@ void CollisionSystem::handleEvent(Event* e){
 	auto it = find(objects[str].begin(), objects[str].end(), child);
 
 	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
-		printf("Adding %s to DT\n", child->id.c_str());
+		// printf("Adding %s to DT\n", child->id.c_str());
 		objects[str].push_back(child);
 	}
 	else if(e->getType() == "OBJ_RM")							objects[str].erase(it);
