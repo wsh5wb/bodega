@@ -11,9 +11,9 @@ HadesDungeon::HadesDungeon() {
 	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
 	scenes.push_back("./resources/scenes/hades?/start.txt");
 	scenes.push_back("./resources/scenes/hades?/basic_room2.txt");
-	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
-	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
-	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
+	scenes.push_back("./resources/scenes/hades?/lava_statue.txt");
+	scenes.push_back("./resources/scenes/hades?/lava_chest.txt");
+	scenes.push_back("./resources/scenes/hades?/lava_small_chest.txt");
 }
 
 HadesDungeon::~HadesDungeon() {
