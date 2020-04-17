@@ -9,8 +9,17 @@ Two running options:
 Once compiled, use `make run` to run game
 
 
-# FOR CONTROLLER DEMO
+# Controls for Alpha demo
 
-* Jump is A
+* Arrow keys to move
 
-* Run is left and right joystick or dpad
+* M to show map
+
+* V to show entire map
+
+* U to enter camera translation mode
+
+While in translation mode:
+
+* I,J,K,L to move camera between adjacent room cells
+* N to reset character and camera to main room
