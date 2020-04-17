@@ -60,7 +60,7 @@ private:
 	int _yAcc = 2; //one pixel every two frames
 	int _yAccCount = 0;
 	int _yVel = 0;
-	std::clock_t lastFired;
+	std::clock_t lastFired = 0;
 
 	static Player* player;
 	void initIFrames(int numFrames);
