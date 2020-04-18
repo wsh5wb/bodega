@@ -50,7 +50,7 @@ void CollisionSystem::update(){
 				i++;
 				
 				if((collision= collidesWith(obj1, obj2))){
-
+					// Maybe handle some of this in other classes via events to reduce cluter?
 					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
 						char dir;
@@ -98,7 +98,7 @@ void CollisionSystem::update(){
 								if(it != vec2.end())
 									vec2.erase(it);
 							}
-							// temporary fix until projectiles in display tree are finalized
+							
 							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
 							continue;
 						}
@@ -110,13 +110,18 @@ void CollisionSystem::update(){
 						// obj1->updateDelta(0,0,0,0,0);
 						// obj2->updateDelta(0,0,0,0,0);
 					}
-					else{
-						resolveCollision(obj1, obj2,
+					else if(pair == "FLOOR-PLAYER" || pair == "PLAYER-FLOOR"){
+						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,
 							obj2->deltaX, obj2->deltaY);
 
 						// obj1->updateDelta(0,0,0,0,0);
 						// obj2->updateDelta(0,0,0,0,0);
+					}
+					else{
+						resolveCollision(obj1, obj2,
+							obj1->deltaX, obj1->deltaY,
+							obj2->deltaX, obj2->deltaY);
 					}
 				}
 				// you can turn this into an event dispatch. Definitely would be a good idea.
@@ -126,15 +131,6 @@ void CollisionSystem::update(){
 		}
 
 	}
-	// Handle user projectile/enemy collisions
-	/*for(Projectile* p : Player::getPlayer()->projectiles){
-		vector ens = objects["ENEMY"];
-		for(DisplayObject* en : ens){
-			if(collidesWith(p,en)){
-				cout << en->id << " collied with " << "Projectile" << endl;
-			}
-		}
-	}*/
 }
 
 //This system watches the game's display tree and is notified whenever a display object is placed onto
@@ -150,6 +146,7 @@ void CollisionSystem::handleEvent(Event* e){
 	// TODO: Make a new OBJECT category?
 	else if(child->id.find("Door") != string::npos)			str = "DOOR";
 	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
+	else if(child->id.find("FLOOR") != string::npos)		str = "FLOOR";
 	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
 
 	auto it = find(objects[str].begin(), objects[str].end(), child);

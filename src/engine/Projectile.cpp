@@ -28,7 +28,7 @@ Projectile::Projectile(string path, int x, int y, int speedX, int speedY, int ti
 	this->moveTo(x, y);
 	this->start = std::clock();
 	setHitbox(0.05,0.95);
-	this->showHitbox = true;
+	// this->showHitbox = true;
 }
 
 /*Projectile::Projectile(string path, int x, int y, int lowX, int highX, int lowY, int highY, int timeout, double scaleX, double scaleY) : Sprite("particle",path,true){
