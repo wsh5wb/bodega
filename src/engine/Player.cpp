@@ -224,7 +224,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	// 	Projectile * p = *it;
 	// 	if((((std::clock() - p->start ) / (double) CLOCKS_PER_SEC)*1000) > p->timeout){
 	// 		it = projectiles.erase(it);
-			
+
 	// 		((DisplayObjectContainer*)this->parent)->removeImmediateChild(*it);
 	// 		// delete p;
 	// 	}else{
