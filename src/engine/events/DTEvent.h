@@ -8,7 +8,7 @@ using namespace std;
 
 class DTEvent : public Event{
 public:
-	DTEvent(string type, EventDispatcher* source, DisplayObject* &do1) : Event(type, source){
+	DTEvent(string type, EventDispatcher* source, DisplayObject* do1) : Event(type, source){
 		this->addedObject = do1;
 	}
 

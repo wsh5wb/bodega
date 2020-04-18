@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "AnimatedSprite.h"
 #include "Sprite.h"
+#include "DTEvent.h"
 
 //#include "Controls.h"
 
@@ -40,9 +41,9 @@ Player::Player() :
 }
 
 Player::~Player(){
-	for(vector<Projectile*>::iterator it = projectiles.begin(); it != projectiles.end();it++){
-		delete *it;
-	}projectiles.clear();
+	// for(vector<Projectile*>::iterator it = projectiles.begin(); it != projectiles.end();it++){
+	// 	delete *it;
+	// }projectiles.clear();
 }
 
 Player* Player::getPlayer() {
@@ -107,7 +108,8 @@ void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, d
 	int midX = this->position.x + 20;
 	int midY = this->position.y + 20;
 	Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
-	projectiles.push_back(p);
+	// projectiles.push_back(p);
+	((DisplayObjectContainer*)this->parent)->addChild(p);
 }
 
 void Player::update(set<SDL_Scancode> pressedKeys) {
@@ -217,18 +219,20 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			_yVel = _maxFall;
 	}
 
-	// Update projectiles
-	for(vector<Projectile*>::iterator it = projectiles.begin(); it != projectiles.end();){
-		Projectile * p = *it;
-		if((((std::clock() - p->start ) / (double) CLOCKS_PER_SEC)*1000) > p->timeout){
-			it = projectiles.erase(it);
-			delete p;
-		}else{
-			p->update(pressedKeys);
-			it++;
-		}
+	// // Update projectiles
+	// for(vector<Projectile*>::iterator it = projectiles.begin(); it != projectiles.end();){
+	// 	Projectile * p = *it;
+	// 	if((((std::clock() - p->start ) / (double) CLOCKS_PER_SEC)*1000) > p->timeout){
+	// 		it = projectiles.erase(it);
+			
+	// 		((DisplayObjectContainer*)this->parent)->removeImmediateChild(*it);
+	// 		// delete p;
+	// 	}else{
+	// 		// p->update(pressedKeys);
+	// 		it++;
+	// 	}
 
-	}
+	// }
 
 	if(xMov != 0 || yMov != 0){
 		if((((std::clock() - lastFired) / (double) CLOCKS_PER_SEC)*1000) > 150){
@@ -261,9 +265,9 @@ void Player::initIFrames(int numFrames) {
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
 	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
-	for(Projectile* p : projectiles){
-		p->draw(at);
-	}
+	// for(Projectile* p : projectiles){
+	// 	p->draw(at);
+	// }
 
 }
 

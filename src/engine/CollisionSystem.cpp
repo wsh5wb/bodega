@@ -80,10 +80,28 @@ void CollisionSystem::update(){
 							}
 						}
 						// printf("Door addr: %x\n", obj2);
-						// cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
+						cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
 						
 					}
 					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
+						if(pair == "PROJECTILE-OBSTACLE" || pair == "OBSTACLE-PROJECTILE"){
+							DisplayObject* obj;
+							if(type1 == "PROJECTILE"){
+								obj = obj1;
+								auto it = find(vec1.begin(), vec1.end(), obj);
+								if(it != vec1.end())
+									vec1.erase(it);
+							}
+							else if(type2 == "PROJECTILE") {
+							 	obj = obj2;
+								auto it = find(vec2.begin(), vec2.end(), obj);
+								if(it != vec2.end())
+									vec2.erase(it);
+							}
+							// temporary fix until projectiles in display tree are finalized
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							continue;
+						}
 						// printf("Player collided with obstacle\n");
 						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,
@@ -132,13 +150,11 @@ void CollisionSystem::handleEvent(Event* e){
 	// TODO: Make a new OBJECT category?
 	else if(child->id.find("Door") != string::npos)			str = "DOOR";
 	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
+	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
 
 	auto it = find(objects[str].begin(), objects[str].end(), child);
 
-	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
-		// printf("Adding %s to DT\n", child->id.c_str());
-		objects[str].push_back(child);
-	}
+	if(e->getType() == "OBJ_ADD" && it == objects[str].end())	objects[str].push_back(child);
 	else if(e->getType() == "OBJ_RM")							objects[str].erase(it);
 
 }
