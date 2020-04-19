@@ -35,6 +35,10 @@ MyGame::MyGame() :
 	hades_theme.playMusic();
 	animationJuggler = TweenJuggler::getInstance();
 	addChild(myCamera->container);
+	/*Player * me = new Player();
+	me->showHitbox = true;
+	Jelly * jel = new Jelly(me);
+	dungeon->addChild(jel);*/
 
 //	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
 //
@@ -60,8 +64,9 @@ MyGame::MyGame() :
 
 MyGame::~MyGame() {
 
-	Scene *character = new Scene();
-	character->addChild(myCamera->container);
+	//Scene *character = new Scene();
+	//character->addChild(myCamera->container);
+
 	//character->saveScene("./resources/scenes/testSave3.txt");
 //	std::ofstream o("./resources/scenes/test.txt");
 //	o << "2 1" << std::endl;
