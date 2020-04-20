@@ -1,9 +1,9 @@
 6 5
 0 Scene ./resources/art/hades/background.png 0 0 0 true false 0 0 5 2.34375 2.34375 0 0.05 255 0 0 0 0
-9 Statue1_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 80 48 .3 .7 .17 .3
-9 Statue2_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 368 48 .3 .7 .17 .3
-9 Statue3_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 80 208 .3 .7 .17 .3
-9 Statue4_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 368 208 .3 .7 .17 .3
+9 Statue1_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 80 48 .34 .55 .25 .3
+9 Statue2_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 368 48 .45 .55 .25 .3
+9 Statue3_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 80 208 .45 .55 .25 .3
+9 Statue4_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 368 208 .45 .55 .25 .3
 7 224 224
 Scene Statue1_OBSTACLE
 Scene Statue2_OBSTACLE

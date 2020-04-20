@@ -9,9 +9,13 @@ using namespace std;
 
 Dungeon::~Dungeon() {
 	cerr << "DUNGEON DESTRUCTOR" << endl;
-	for (int i = 0; i < GRID_SIZE; i++)
-		delete [] layout[i];
-	delete layout;
+	cleanMatrix(layout);
+}
+
+void Dungeon::cleanMatrix(int** m){
+	for(int i=0; i<GRID_SIZE; i++)
+		delete m[i];
+	delete m;
 }
 
 void Dungeon::update(set<SDL_Scancode> pressedKeys) {
