@@ -179,7 +179,7 @@ void Dungeon::handleEvent(Event *e) {
 	int field;
 	double startPos, endPos;
 	Player *player = Player::getPlayer();
-	int player_dist = 100;
+	int player_dist = 87;
 	// printf("before transition, curr x and y are %d     %d\n", current_x, current_y);
 
 	if (type == "DUNG_TRANS_D") {
@@ -187,8 +187,8 @@ void Dungeon::handleEvent(Event *e) {
 		current_y += 1;
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
-		player->translate(0, player_dist);
 		old_room->active = false;
+		player->translate(0, player_dist);
 		Room *new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
