@@ -103,9 +103,9 @@ void CollisionSystem::update(){
 							continue;
 						}
 						// printf("Player collided with obstacle\n");
-						//resolveObstacleCollision(obj1, obj2,
-						//	obj1->deltaX, obj1->deltaY,
-						//	obj2->deltaX, obj2->deltaY);
+						resolveObstacleCollision(obj1, obj2,
+							obj1->deltaX, obj1->deltaY,
+							obj2->deltaX, obj2->deltaY);
 
 						// obj1->updateDelta(0,0,0,0,0);
 						// obj2->updateDelta(0,0,0,0,0);
