@@ -6,6 +6,8 @@
 #include <algorithm>
 #include "Projectile.h"
 #include "Player.h"
+#include "Door.h"
+#include "Room.h"
 
 bool compare_xval(DORange_t do1, DORange_t do2){
 	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
@@ -54,8 +56,20 @@ void CollisionSystem::update(){
 					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
 						char dir;
-						if(obj1->id.substr(0,obj1->id.length()-1) == "Door")	dir = obj1->id[4];
-						else													dir = obj2->id[4];
+						Door* door;
+						if(obj1->id.substr(0,obj1->id.length()-1) == "Door"){
+							dir = obj1->id[4];
+							door = (Door*) obj1;
+						}
+						else{
+							dir = obj2->id[4];
+							door = (Door*) obj2;
+						}
+
+						if(!((Room*) door->room)->active){
+							printf("Room is not active yet! id = %s\n");
+							continue;
+						}
 
 						switch(dir){
 							case '1':{
