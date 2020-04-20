@@ -1,0 +1,11 @@
+5 4
+0 Scene ./resources/art/hades/background.png 0 0 0 true false 0 0 5 2.34375 2.34375 0 0.05 255 0 0 0 0
+10 ENEMY_Jellyfish1 80 48 
+10 ENEMY_Jellyfish2 368 48
+10 ENEMY_Jellyfish3 80 208
+10 ENEMY_Jellyfish4 368 208
+Scene ENEMY_Jellyfish1
+Scene ENEMY_Jellyfish2
+Scene ENEMY_Jellyfish3
+Scene ENEMY_Jellyfish4
+

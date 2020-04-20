@@ -239,8 +239,8 @@ void Scene::loadScene(string sceneFilePath) {
 			SDL_Point position;
 			i >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
-			temp->setHitbox(.1, .9);
-			temp->showHitbox = true;
+//			temp->setHitbox(.1, .9);
+//			temp->showHitbox = true;
 			objects.push_back(temp);
 			break;
 		}
@@ -310,6 +310,30 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->hitbox();
 			break;
 		}
+		case 10: { //Jelly
+
+			Player *tempP = Player::getPlayer();
+			Jelly *temp = new Jelly(tempP);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+//					temp->setHitbox(.1, .9);
+//					temp->showHitbox = true;
+			objects.push_back(temp);
+			break;
+		}
+		case 11: { //Urchin
+
+					Player *tempP = Player::getPlayer();
+					Urchin *temp = new Urchin(tempP);
+					SDL_Point position;
+					i >> temp->id >> position.x >> position.y;
+					temp->moveTo(position.x, position.y);
+		//					temp->setHitbox(.1, .9);
+		//					temp->showHitbox = true;
+					objects.push_back(temp);
+					break;
+				}
 		default: {
 			cerr << "ERROR: Object type not recognized!\n";
 			break;
