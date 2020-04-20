@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Door.h"
 #include <iostream>
 #include <sstream>
 

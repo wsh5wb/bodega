@@ -153,6 +153,7 @@ void Dungeon::generate() {
 				temp->moveTo(1200 * j, 900 * i);
 
 				if (start_x == j && start_y == i) {
+					printf("Setting start room to active\n");
 					temp->active = true;
 					temp->start = true;
 					temp->visible = true;

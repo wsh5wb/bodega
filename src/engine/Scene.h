@@ -8,7 +8,6 @@
 #include "DemoSprite.h"
 #include "Object.h"
 #include "Layer.h"
-#include "Door.h"
 #include "Jelly.h"
 #include "Urchin.h"
 #include <string>
