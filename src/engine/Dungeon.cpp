@@ -179,7 +179,7 @@ void Dungeon::handleEvent(Event *e) {
 	int field;
 	double startPos, endPos;
 	Player *player = Player::getPlayer();
-	int player_dist = 75;
+	int player_dist = 100;
 	// printf("before transition, curr x and y are %d     %d\n", current_x, current_y);
 
 	if (type == "DUNG_TRANS_D") {

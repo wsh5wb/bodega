@@ -9,8 +9,10 @@ Jelly::Jelly(Player* player) : Enemy(player){
   this->id = "ENEMY_Jellyfish";
   this->scaleX *= 0.1;
   this->scaleY *= 0.1;
-  xSpe = 5;
-  ySpe = 5;
+  this->xBound=512-(w*scaleX);
+  this->yBound=384-(h*scaleY);
+  xSpe = 1;
+  ySpe = 1;
   state = 0;
 }
 
@@ -31,10 +33,10 @@ void Jelly::update(set<SDL_Scancode> pressedKeys){
   cout << position.x << ", " << position.y << endl;
   position.x += xSpe;
   position.y += ySpe;
-  if (position.x == 0 || position.x == xBound){
+  if (position.x <= 0 || position.x >= xBound){
     xSpe *= -1;
   }
-  if (position.y == 0 || position.y == yBound){
+  if (position.y <= 0 || position.y >= yBound){
     ySpe *= -1;
   }
 }
