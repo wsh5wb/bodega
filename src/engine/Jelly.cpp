@@ -55,7 +55,7 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			timer = 0;
 		}
 	}
-	cout << position.x << ", " << position.y << endl;
+	// cout << position.x << ", " << position.y << endl;
 	position.x += xSpe;
 	position.y += ySpe;
 	if (position.x <= 0 || position.x >= xBound) {

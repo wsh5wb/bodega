@@ -208,10 +208,11 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 
 void CollisionSystem::ignoreCollisions(string type1, string type2){
 	string pair1 = type1 + "-" + type2;
-	string pair2 = type2 + "-" + type2;
+	string pair2 = type2 + "-" + type1;
 
 	for(auto it = pairs.begin(); it != pairs.end(); ++it){
 		if(*it == pair1 || *it == pair2){
+			printf("Removed pair %s\n", pair1.c_str());
 			pairs.erase(it);
 			return;
 		}
