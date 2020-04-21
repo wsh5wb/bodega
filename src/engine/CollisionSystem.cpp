@@ -147,12 +147,16 @@ void CollisionSystem::update(){
 							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
 							continue;
 						}
-						// printf("Player collided with obstacle\n");
-						
-
-						// obj1->updateDelta(0,0,0,0,0);
-						// obj2->updateDelta(0,0,0,0,0);
 					}
+					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
+						if(type1 == "ENEMY"){
+							((Player*) obj2)->changeHealth(-1);
+						}
+						else if(type2 == "ENEMY") {
+							((Player*)obj1)->changeHealth(-1);
+						}
+					}
+					
 					else if(pair == "FLOOR-PLAYER" || pair == "PLAYER-FLOOR"){
 						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,

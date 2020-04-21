@@ -182,12 +182,12 @@ void Dungeon::handleEvent(Event *e) {
 			id + to_string(current_y) + "-" + to_string(current_x));
 
 		// temporary until actual enemy killing is implemented
-		for(DisplayObject* child : activeRoom->room->children){
+		/*for(DisplayObject* child : activeRoom->room->children){
 			if(child->id.substr(0,5) == "ENEMY"){
 				activeRoom->room->removeImmediateChild(child);
 				break;
 			}
-		}
+		}*/
 
 		if(activeRoom->room->numEnemies > 1){
 			activeRoom->room->numEnemies--;
@@ -196,6 +196,15 @@ void Dungeon::handleEvent(Event *e) {
 
 		activeRoom->room->numEnemies = 0;
 		activeRoom->openDoors();
+	}else if(type == "PLAYER_KILLED"){
+		Room *activeRoom = (Room*) DisplayObjectContainer::getChild(
+			id + to_string(current_y) + "-" + to_string(current_x));
+		activeRoom->openDoors();
+		Player *p = Player::getPlayer();
+		p->moveTo(224, 224);
+		current_x = start_x;
+		current_y = start_y;
+		zoomed_out = true;
 	}
 	
 }
