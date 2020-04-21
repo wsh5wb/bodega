@@ -50,6 +50,8 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PLAYER", "OBSTACLE");
 	Game::cs->watchForCollisions("PLAYER", "FLOOR");
 	Game::cs->watchForCollisions("PROJECTILE","OBSTACLE");
+	Game::cs->watchForCollisions("PROJECTILE","ENEMY");
+	Game::cs->watchForCollisions("PLAYER","ENEMY");
 
 	// Come up with more elegant solution to determining which dir to go.
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
@@ -63,6 +65,8 @@ MyGame::MyGame() :
 	// is it worth to check everytime enemy is killed?
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"ENEMY_KILLED");
+	Game::eventHandler.addEventListener((EventListener*) dungeon,
+		"PLAYER_KILLED");
 }
 
 MyGame::~MyGame() {

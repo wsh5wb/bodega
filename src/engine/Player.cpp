@@ -99,6 +99,13 @@ float Player::percentOfHealthLost(){
 
 void Player::changeHealth(int value){
 		this->health += value;
+		if(health <= 0){
+			health = maxHealth;
+			Event e("PLAYER_KILLED", &Game::eventHandler);
+			Game::eventHandler.dispatchEvent(&e);
+			//moveTo(224,224);
+		}
+
 }
 
 void Player::toggleHealthDisplay(){
@@ -107,8 +114,8 @@ void Player::toggleHealthDisplay(){
 
 void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
 	string path = "./resources/PlayerSprites/fireball.png";
-	int midX = this->position.x + 20;
-	int midY = this->position.y + 20;
+	int midX = this->position.x + (w*scaleX)/3;
+	int midY = this->position.y + (w*scaleX)/3;
 	Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
 	// projectiles.push_back(p);
 	((DisplayObjectContainer*)this->parent)->addChild(p);
@@ -125,7 +132,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	int xMov = 0, yMov = 0;
 	bool idle = true;
 	for (auto k : pressedKeys){
-		if (k == SDL_SCANCODE_RIGHT) {
+		if (k == SDL_SCANCODE_D) {
 			this->position.x += 4;
 			this->deltaX += 4;
 			//this->flipH = false;
@@ -134,7 +141,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
-		} else if (k == SDL_SCANCODE_LEFT) {
+		} else if (k == SDL_SCANCODE_A) {
 			this->position.x -= 4;
 			this->deltaX += -4;
 			//this->flipH = true;
@@ -143,14 +150,14 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
-		} else if (k == SDL_SCANCODE_UP) {
+		} else if (k == SDL_SCANCODE_W) {
 			this->position.y -= 4;
 			this->deltaY += -4;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}
 			idle = false;
-		} else if (k == SDL_SCANCODE_DOWN) {
+		} else if (k == SDL_SCANCODE_S) {
 			this->position.y += 4;
 			this->deltaY += 4;
 			if (this->currAnimation != "Run") {
@@ -160,13 +167,13 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		}
 
 		//for shooting projectiles
-		if(k == SDL_SCANCODE_A){
+		if(k == SDL_SCANCODE_LEFT){
 			xMov = -6;
-		}if(k == SDL_SCANCODE_D){
+		}if(k == SDL_SCANCODE_RIGHT){
 			xMov = 6;
-		}if(k == SDL_SCANCODE_W){
+		}if(k == SDL_SCANCODE_UP){
 			yMov = -6;
-		}if(k == SDL_SCANCODE_S){
+		}if(k == SDL_SCANCODE_DOWN){
 			yMov = 6;
 		}
 		//for tweening Demo
@@ -237,7 +244,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	// }
 
 	if(xMov != 0 || yMov != 0){
-		if((((std::clock() - lastFired) / (double) CLOCKS_PER_SEC)*1000) > 150){
+		if((double)(((std::clock() - lastFired) / (double) (attackSpeed*CLOCKS_PER_SEC)) > 1.0)){
 			addProjectile(xMov,yMov,1000,0.3,0.3);
 			lastFired = std::clock();
 		}

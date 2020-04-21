@@ -133,23 +133,30 @@ void CollisionSystem::update(){
 								auto it = find(vec1.begin(), vec1.end(), obj);
 								if(it != vec1.end())
 									vec1.erase(it);
+
+								((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
 							}
 							else if(type2 == "PROJECTILE") {
 							 	obj = obj2;
 								auto it = find(vec2.begin(), vec2.end(), obj);
 								if(it != vec2.end())
 									vec2.erase(it);
+								((Enemy*)obj1)->changeHealth(-Player::getPlayer()->damage);
 							}
 							
 							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
 							continue;
 						}
-						// printf("Player collided with obstacle\n");
-						
-
-						// obj1->updateDelta(0,0,0,0,0);
-						// obj2->updateDelta(0,0,0,0,0);
 					}
+					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
+						if(type1 == "ENEMY"){
+							((Player*) obj2)->changeHealth(-1);
+						}
+						else if(type2 == "ENEMY") {
+							((Player*)obj1)->changeHealth(-1);
+						}
+					}
+					
 					else if(pair == "FLOOR-PLAYER" || pair == "PLAYER-FLOOR"){
 						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,

@@ -31,32 +31,15 @@ void Scene::loadScene(string sceneFilePath) {
 
 		case 0: { //Scene
 			Scene *temp = this;
-			int speed;
 			double scaleX;
 			double scaleY;
-			double rotation;
-			double rotationAmount;
-			int alpha;
-			SDL_Point pivot, position;
-			i >> id >> imgPath >> red >> green >> blue >> std::boolalpha >> vis
-					>> std::boolalpha >> isRGB >> w >> h >> speed >> scaleX
-					>> scaleY >> rotation >> rotationAmount >> alpha >> pivot.x
-					>> pivot.y >> position.x >> position.y;
-			temp->setSpeed(speed);
-			temp->setScale(scaleX, scaleY);
-			temp->setRotationValue(rotation);
-			temp->setRotation(rotationAmount);
-			temp->setAlpha(alpha);
-			temp->moveTo(position.x, position.y);
-			temp->movePivot(pivot.x, pivot.y);
+			i >> id >> imgPath >> scaleX
+					>> scaleY ;
 			objects.push_back(temp);
-			if (temp->isRGB) {
-				temp->loadRGBTexture(red, green, blue);
-			} else if (temp->imgPath != "0") {
+			temp->setScale(scaleX, scaleY);
+			if (temp->imgPath != "0") {
 				temp->loadTexture(temp->imgPath);
 			}
-			temp->moveTo(position.x, position.y);
-			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		case 1: { //DisplayObject

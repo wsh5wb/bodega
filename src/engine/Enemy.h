@@ -31,10 +31,11 @@ public:
 	void patrol();
 	void moveToTarget();
 	bool isTargetReached();
+	void changeHealth(int amount);
 
 
 	/* Health and such */
-	int health = 100;
+	int health = 200;
 	int shield = 100;
 	int maxHealth = 100;
 	int maxShield = 100;

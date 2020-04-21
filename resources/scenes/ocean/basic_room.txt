@@ -1,5 +1,5 @@
 5 4
-0 Scene ./resources/art/ocean/background.png 0 0 0 true false 0 0 5 2.34375 2.34375 0 0.05 255 0 0 0 0
+0 Scene ./resources/art/ocean/background.png 2.34375 2.34375
 8 Door1 ./resources/art/hades/lo_door2.png 0 0 0 true false 128 32 5 1 1 0 0.05 0 0 0 192 352
 8 Door2 ./resources/art/hades/l_door2.png 0 0 0 true false 32 128 5 1 1 0 0.05 0 0 0  0 128
 8 Door3 ./resources/art/hades/u_door2.png 0 0 0 true false 128 32 5 1 1 0 0.05 0 0 0 192 0

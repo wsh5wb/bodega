@@ -35,6 +35,8 @@ public:
 	void toggleHealthDisplay();
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
+	int damage = 100;
+	double attackSpeed = .5;
 
 	//iFrames
 	bool iFrames = false;

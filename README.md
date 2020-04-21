@@ -11,7 +11,7 @@ Once compiled, use `make run` to run game
 
 # Controls for Alpha demo
 
-* Arrow keys to move
+* W,A,S,D to move
 
 * M to show map
 
@@ -19,7 +19,7 @@ Once compiled, use `make run` to run game
 
 * V to show entire map
 
-* W,A,S,D to shoot basic projectiles (sometimes the projectiles do not fire and game needs to be restarted a few times to work. We are working on this bug).
+* Arrow keys to shoot basic projectiles (sometimes the projectiles do not fire and game needs to be restarted a few times to work. We are working on this bug).
 
 * U to enter camera translation mode
 

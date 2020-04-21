@@ -1,2 +1,2 @@
 1 0
-0 Scene ./resources/art/hades/background.png 0 0 0 true false 0 0 5 2.34375 2.34375 0 0.05 255 0 0 0 0
+0 Scene ./resources/art/hades/background.png 2.34375 2.34375 
