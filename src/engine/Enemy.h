@@ -35,7 +35,7 @@ public:
 
 
 	/* Health and such */
-	int health = 100;
+	int health = 200;
 	int shield = 100;
 	int maxHealth = 100;
 	int maxShield = 100;
