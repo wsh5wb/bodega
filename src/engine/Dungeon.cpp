@@ -12,8 +12,8 @@ Dungeon::~Dungeon() {
 	cleanMatrix(layout);
 }
 
-void Dungeon::cleanMatrix(int** m){
-	for(int i=0; i<GRID_SIZE; i++)
+void Dungeon::cleanMatrix(int **m) {
+	for (int i = 0; i < GRID_SIZE; i++)
 		delete m[i];
 	delete m;
 }
@@ -51,10 +51,15 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		case SDL_SCANCODE_N: {
 			if (DEBUG_CHANGE_ROOM) {
 				DEBUG_CHANGE_ROOM = false;
+
 				Player *p = Player::getPlayer();
 				p->moveTo(224, 224);
 				current_x = start_x;
 				current_y = start_y;
+				Room *start_room = (Room*) DisplayObjectContainer::getChild(
+						id + to_string(current_y) + "-" + to_string(current_x));
+				start_room->openDoors();
+
 				zoomed_out = true;
 			}
 			break;
@@ -173,23 +178,23 @@ void Dungeon::generate() {
 
 void Dungeon::handleEvent(Event *e) {
 	string type = e->getType();
-	if(type == "DUNG_TRANS_D" || type == "DUNG_TRANS_L" ||
-		type == "DUNG_TRANS_U" || type == "DUNG_TRANS_R"){
+	if (type == "DUNG_TRANS_D" || type == "DUNG_TRANS_L"
+			|| type == "DUNG_TRANS_U" || type == "DUNG_TRANS_R") {
 		transitionRoom(type);
-	} else if(type == "ENEMY_KILLED"){
+	} else if (type == "ENEMY_KILLED") {
 
 		Room *activeRoom = (Room*) DisplayObjectContainer::getChild(
-			id + to_string(current_y) + "-" + to_string(current_x));
+				id + to_string(current_y) + "-" + to_string(current_x));
 
 		// temporary until actual enemy killing is implemented
-		for(DisplayObject* child : activeRoom->room->children){
-			if(child->id.substr(0,5) == "ENEMY"){
+		for (DisplayObject *child : activeRoom->room->children) {
+			if (child->id.substr(0, 5) == "ENEMY") {
 				activeRoom->room->removeImmediateChild(child);
 				break;
 			}
 		}
 
-		if(activeRoom->room->numEnemies > 1){
+		if (activeRoom->room->numEnemies > 1) {
 			activeRoom->room->numEnemies--;
 			return;
 		}
@@ -197,10 +202,10 @@ void Dungeon::handleEvent(Event *e) {
 		activeRoom->room->numEnemies = 0;
 		activeRoom->openDoors();
 	}
-	
+
 }
 
-void Dungeon::transitionRoom(string type){
+void Dungeon::transitionRoom(string type) {
 	Room *old_room = (Room*) DisplayObjectContainer::getChild(
 			id + to_string(current_y) + "-" + to_string(current_x));
 	if (!old_room) {
@@ -277,7 +282,7 @@ void Dungeon::transitionRoom(string type){
 	}
 
 	// close doors if enemies exist
-	if(new_room->room->numEnemies > 0)
+	if (new_room->room->numEnemies > 0)
 		new_room->closeDoors();
 
 //	Tween *playerPosTween = new Tween(player);

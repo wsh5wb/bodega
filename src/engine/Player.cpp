@@ -105,8 +105,8 @@ void Player::toggleHealthDisplay(){
 
 void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
 	string path = "./resources/PlayerSprites/fireball.png";
-	int midX = this->position.x + (w*scaleX)/4;
-	int midY = this->position.y + (w*scaleX)/4;
+	int midX = this->position.x + (w*scaleX)/3;
+	int midY = this->position.y + (w*scaleX)/3;
 	Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
 	// projectiles.push_back(p);
 	((DisplayObjectContainer*)this->parent)->addChild(p);
@@ -235,7 +235,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	// }
 
 	if(xMov != 0 || yMov != 0){
-		if((((std::clock() - lastFired) / (double) CLOCKS_PER_SEC)*1000) > 150){
+		if((double)(((std::clock() - lastFired) / (double) (attackSpeed*CLOCKS_PER_SEC)) > 1.0)){
 			addProjectile(xMov,yMov,1000,0.3,0.3);
 			lastFired = std::clock();
 		}
