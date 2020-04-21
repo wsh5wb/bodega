@@ -130,7 +130,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	int xMov = 0, yMov = 0;
 	bool idle = true;
 	for (auto k : pressedKeys){
-		if (k == SDL_SCANCODE_RIGHT) {
+		if (k == SDL_SCANCODE_D) {
 			this->position.x += 4;
 			this->deltaX += 4;
 			//this->flipH = false;
@@ -139,7 +139,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
-		} else if (k == SDL_SCANCODE_LEFT) {
+		} else if (k == SDL_SCANCODE_A) {
 			this->position.x -= 4;
 			this->deltaX += -4;
 			//this->flipH = true;
@@ -148,14 +148,14 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
-		} else if (k == SDL_SCANCODE_UP) {
+		} else if (k == SDL_SCANCODE_W) {
 			this->position.y -= 4;
 			this->deltaY += -4;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}
 			idle = false;
-		} else if (k == SDL_SCANCODE_DOWN) {
+		} else if (k == SDL_SCANCODE_S) {
 			this->position.y += 4;
 			this->deltaY += 4;
 			if (this->currAnimation != "Run") {
@@ -165,13 +165,13 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		}
 
 		//for shooting projectiles
-		if(k == SDL_SCANCODE_A){
+		if(k == SDL_SCANCODE_LEFT){
 			xMov = -6;
-		}if(k == SDL_SCANCODE_D){
+		}if(k == SDL_SCANCODE_RIGHT){
 			xMov = 6;
-		}if(k == SDL_SCANCODE_W){
+		}if(k == SDL_SCANCODE_UP){
 			yMov = -6;
-		}if(k == SDL_SCANCODE_S){
+		}if(k == SDL_SCANCODE_DOWN){
 			yMov = 6;
 		}
 		//for tweening Demo
