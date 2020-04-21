@@ -50,6 +50,7 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PLAYER", "OBSTACLE");
 	Game::cs->watchForCollisions("PLAYER", "FLOOR");
 	Game::cs->watchForCollisions("PROJECTILE","OBSTACLE");
+	Game::cs->watchForCollisions("PROJECTILE","ENEMY");
 
 	// Come up with more elegant solution to determining which dir to go.
 	Game::eventHandler.addEventListener((EventListener*) dungeon,

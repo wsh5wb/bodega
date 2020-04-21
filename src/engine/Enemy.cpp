@@ -118,6 +118,13 @@ void Enemy::onMeleeStrike(){
 	if(this->shield < 0) this->shield = 0;
 }
 
+void Enemy::changeHealth(int amount){
+	health += amount;
+	if(health <= 0){
+		((DisplayObjectContainer *)this->parent)->removeImmediateChild(this);
+	}
+}
+
 //void Enemy::onEssenceStrike(Weapon* w){
 //
 //	if(this->shield <= 0) this->health -= w->damage;

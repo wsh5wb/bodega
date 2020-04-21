@@ -31,6 +31,7 @@ public:
 	void patrol();
 	void moveToTarget();
 	bool isTargetReached();
+	void changeHealth(int amount);
 
 
 	/* Health and such */

@@ -133,12 +133,15 @@ void CollisionSystem::update(){
 								auto it = find(vec1.begin(), vec1.end(), obj);
 								if(it != vec1.end())
 									vec1.erase(it);
+
+								((Enemy*) obj2)->changeHealth(-100);
 							}
 							else if(type2 == "PROJECTILE") {
 							 	obj = obj2;
 								auto it = find(vec2.begin(), vec2.end(), obj);
 								if(it != vec2.end())
 									vec2.erase(it);
+								((Enemy*)obj1)->changeHealth(-100);
 							}
 							
 							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
