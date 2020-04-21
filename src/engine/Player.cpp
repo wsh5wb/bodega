@@ -4,7 +4,6 @@
 #include "AnimatedSprite.h"
 #include "Sprite.h"
 #include "DTEvent.h"
-
 //#include "Controls.h"
 
 using namespace std;
@@ -29,7 +28,10 @@ Player::Player() :
 			"resources/PlayerSprites/runSheet.xml", "Run", 1, 60, true);
 	this->addAnimation("resources/PlayerSprites/jumpsprites.png",
 			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
-		this->play("Idle");
+	this->play("Idle");
+	string pathy = "./resources/miscellaneous/pixelart.png";
+	chat_box = new TextBox(pathy, "resources/fonts/dtm.ttf", 15, "Welcome to Hell! It's a gloomy place...", {245, 245, 245, 255});
+	this->addChild(chat_box);
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();

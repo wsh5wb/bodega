@@ -362,7 +362,7 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		int distAdj = dist(topL,topR);
 		int distOpp = dist(topR,bottomR);
-		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
+	  dstrect = { topL.x, topL.y, distAdj, distOpp};
 
 		double angle = atan2(topR.y - topL.y, topR.x - topL.x) * 180 / PI;
 
@@ -373,7 +373,7 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		reverseTransformations(at);
 
-		
+
 	}
 	if(showHitbox)	drawHitbox(isCollided);
 

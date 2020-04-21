@@ -10,6 +10,8 @@
 #include "Sprite.h"
 #include "TweenJuggler.h"
 #include "Projectile.h"
+#include "TextBox.h"
+
 
 using namespace std;
 
@@ -60,6 +62,7 @@ private:
 	int _yAcc = 2; //one pixel every two frames
 	int _yAccCount = 0;
 	int _yVel = 0;
+	TextBox * chat_box; 
 	std::clock_t lastFired = 0;
 
 	static Player* player;

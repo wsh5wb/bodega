@@ -129,7 +129,7 @@ private:
 
 protected:
 	SDL_Rect srcrect;
-
+	SDL_Rect dstrect;
 
 	double rotation = 0;
 	double rotationAmount = 0.05;
