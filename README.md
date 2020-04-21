@@ -15,6 +15,8 @@ Once compiled, use `make run` to run game
 
 * M to show map
 
+* O to kill an enemy in room
+
 * V to show entire map
 
 * W,A,S,D to shoot basic projectiles (sometimes the projectiles do not fire and game needs to be restarted a few times to work. We are working on this bug).
