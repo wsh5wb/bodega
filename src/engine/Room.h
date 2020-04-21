@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Room: public DisplayObjectContainer {
+class Room: public DisplayObjectContainer{
 
 public:
 
@@ -23,6 +23,9 @@ public:
 	bool start = false;
 	bool visible = false; //draws scene if visible, updates and draws if active
 	Scene *room = NULL; //scene that room draws
+	
+	void openDoors();
+	void closeDoors();
 
 private:
 	void generateDoors(unsigned char doors);

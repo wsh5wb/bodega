@@ -174,6 +174,34 @@ void Dungeon::generate() {
 
 void Dungeon::handleEvent(Event *e) {
 	string type = e->getType();
+	if(type == "DUNG_TRANS_D" || type == "DUNG_TRANS_L" ||
+		type == "DUNG_TRANS_U" || type == "DUNG_TRANS_R"){
+		transitionRoom(type);
+	} else if(type == "ENEMY_KILLED"){
+
+		Room *activeRoom = (Room*) DisplayObjectContainer::getChild(
+			id + to_string(current_y) + "-" + to_string(current_x));
+
+		// temporary until actual enemy killing is implemented
+		for(DisplayObject* child : activeRoom->room->children){
+			if(child->id.substr(0,5) == "ENEMY"){
+				activeRoom->room->removeImmediateChild(child);
+				break;
+			}
+		}
+
+		if(activeRoom->room->numEnemies > 1){
+			activeRoom->room->numEnemies--;
+			return;
+		}
+
+		activeRoom->room->numEnemies = 0;
+		activeRoom->openDoors();
+	}
+	
+}
+
+void Dungeon::transitionRoom(string type){
 	Room *old_room = (Room*) DisplayObjectContainer::getChild(
 			id + to_string(current_y) + "-" + to_string(current_x));
 	if (!old_room) {
@@ -186,7 +214,7 @@ void Dungeon::handleEvent(Event *e) {
 	Player *player = Player::getPlayer();
 	int player_dist = 90;
 	// printf("before transition, curr x and y are %d     %d\n", current_x, current_y);
-
+	Room *new_room;
 	if (type == "DUNG_TRANS_D") {
 		startPos = 900 * current_y;
 		current_y += 1;
@@ -194,7 +222,7 @@ void Dungeon::handleEvent(Event *e) {
 		endPos = 900 * current_y;
 		old_room->active = false;
 		player->translate(0, player_dist);
-		Room *new_room = (Room*) DisplayObjectContainer::getChild(
+		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
@@ -209,7 +237,7 @@ void Dungeon::handleEvent(Event *e) {
 		endPos = 1200 * current_x;
 		player->translate(-player_dist, 0);
 		old_room->active = false;
-		Room *new_room = (Room*) DisplayObjectContainer::getChild(
+		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
@@ -224,7 +252,7 @@ void Dungeon::handleEvent(Event *e) {
 		endPos = 900 * current_y;
 		player->translate(0, -player_dist);
 		old_room->active = false;
-		Room *new_room = (Room*) DisplayObjectContainer::getChild(
+		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
@@ -239,7 +267,7 @@ void Dungeon::handleEvent(Event *e) {
 		endPos = 1200 * current_x;
 		player->translate(player_dist, 0);
 		old_room->active = false;
-		Room *new_room = (Room*) DisplayObjectContainer::getChild(
+		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
 			cerr << id + to_string(current_y) + "-" + to_string(current_x);
@@ -248,6 +276,10 @@ void Dungeon::handleEvent(Event *e) {
 			new_room->addToDisplayTree();
 		}
 	}
+
+	// close doors if enemies exist
+	if(new_room->room->numEnemies > 0)
+		new_room->closeDoors();
 
 //	Tween *playerPosTween = new Tween(player);
 	TweenJuggler *juggler = TweenJuggler::getInstance();
@@ -264,5 +296,4 @@ void Dungeon::handleEvent(Event *e) {
 		EASE_INOUT);
 		juggler->add(camPosTween);
 	}
-
 }

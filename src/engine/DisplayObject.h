@@ -116,6 +116,8 @@ public:
 	double scaleY = 1;
 	int speed = 5;
 
+	int numEnemies = 0;
+
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_Point pivot, position;
 private:

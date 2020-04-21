@@ -66,8 +66,8 @@ void CollisionSystem::update(){
 							door = (Door*) obj2;
 						}
 
-						if(!((Room*) door->room)->active){
-							printf("Room is not active yet! id = %s\n");
+						if(!((Room*) door->room) || 
+							(!((Room*) door->room)->active && (Room*) door->room)){
 							continue;
 						}
 
@@ -204,6 +204,18 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 	if(find(pairs.begin(), pairs.end(), pair) != pairs.end())	return;
 
 	pairs.push_back(pair);
+}
+
+void CollisionSystem::ignoreCollisions(string type1, string type2){
+	string pair1 = type1 + "-" + type2;
+	string pair2 = type2 + "-" + type2;
+
+	for(auto it = pairs.begin(); it != pairs.end(); ++it){
+		if(*it == pair1 || *it == pair2){
+			pairs.erase(it);
+			return;
+		}
+	}
 }
 
 /* Return:

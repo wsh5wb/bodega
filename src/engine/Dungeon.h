@@ -29,7 +29,7 @@ public:
 	bool DEBUG_CHANGE_ROOM = false;
 
 private:
-
+	void transitionRoom(string type);
 };
 
 #endif

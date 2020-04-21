@@ -93,3 +93,29 @@ void Room::draw(AffineTransform &at) {
 	DisplayObjectContainer::reverseTransformations(at);
 
 }
+
+void Room::openDoors(){
+
+	Game::cs->watchForCollisions("DOORS", "PLAYER");
+	for(DisplayObject* child : room->children){
+		if(child->id.substr(0,4) == "Door"){
+			printf("opening %s\n", child->id.c_str());
+			child->makeVisible();
+		}
+	}
+	// if(activeRoom->room->numEnemies == 0)
+	// 	printf("No Enemies\n");
+	// else
+	// 	printf("Num enemies = %d\n", activeRoom->room->numEnemies--);
+
+}
+
+void Room::closeDoors(){
+	Game::cs->ignoreCollisions("DOORS", "PLAYER");
+	for(DisplayObject* child : room->children){
+		if(child->id.substr(0,4) == "Door"){
+			printf("closing %s\n", child->id.c_str());
+			child->makeInvisible();
+		}
+	}
+}

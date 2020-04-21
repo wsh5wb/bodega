@@ -60,6 +60,9 @@ MyGame::MyGame() :
 			"DUNG_TRANS_R");
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"DUNG_TRANS_L");
+	// is it worth to check everytime enemy is killed?
+	Game::eventHandler.addEventListener((EventListener*) dungeon,
+			"ENEMY_KILLED");
 }
 
 MyGame::~MyGame() {
@@ -87,6 +90,12 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 
 		case SDL_SCANCODE_P: {
 			hades_theme.playMusic();
+			break;
+		}
+		case SDL_SCANCODE_O: {
+			Event e("ENEMY_KILLED", &Game::eventHandler);
+			Game::eventHandler.dispatchEvent(&e);
+			SDL_Delay(50);
 			break;
 		}
 		}

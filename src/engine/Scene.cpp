@@ -323,19 +323,23 @@ void Scene::loadScene(string sceneFilePath) {
 //					temp->setHitbox(.1, .9);
 //					temp->showHitbox = true;
 			objects.push_back(temp);
+			this->numEnemies += 1;
+			printf("Adding enemy %d\n", this->numEnemies);
 			break;
 		}
 		case 11: { //Urchin
 
-					Player *tempP = Player::getPlayer();
-					Urchin *temp = new Urchin(tempP);
-					SDL_Point position;
-					i >> temp->id >> position.x >> position.y;
-					temp->moveTo(position.x, position.y);
-		//					temp->setHitbox(.1, .9);
-		//					temp->showHitbox = true;
-					objects.push_back(temp);
-					break;
+			Player *tempP = Player::getPlayer();
+			Urchin *temp = new Urchin(tempP);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+//					temp->setHitbox(.1, .9);
+//					temp->showHitbox = true;
+			objects.push_back(temp);
+			this->numEnemies += 1;
+			printf("Adding enemy %d\n", this->numEnemies);
+			break;
 				}
 		default: {
 			cerr << "ERROR: Object type not recognized!\n";
