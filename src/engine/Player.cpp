@@ -105,8 +105,8 @@ void Player::toggleHealthDisplay(){
 
 void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
 	string path = "./resources/PlayerSprites/fireball.png";
-	int midX = this->position.x + 20;
-	int midY = this->position.y + 20;
+	int midX = this->position.x + (w*scaleX)/4;
+	int midY = this->position.y + (w*scaleX)/4;
 	Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
 	// projectiles.push_back(p);
 	((DisplayObjectContainer*)this->parent)->addChild(p);
