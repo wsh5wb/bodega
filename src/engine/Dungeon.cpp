@@ -118,8 +118,7 @@ void Dungeon::draw(AffineTransform &at) {
 }
 
 void Dungeon::generate() {
-	int basic_rooms[] = { 0, 2, 3, 4, 5 };
-	int basic_rooms_size = 5;
+
 	MazeGenerator *M = new MazeGenerator();
 	cerr << "here0\n";
 	layout = (int**) (M->getLayout());

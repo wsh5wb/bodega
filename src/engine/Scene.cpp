@@ -316,7 +316,7 @@ void Scene::loadScene(string sceneFilePath) {
 			int skin = 0;
 			i >> skin;
 			Player *tempP = Player::getPlayer();
-			Jelly *temp = new Jelly(tempP,skin);
+			Jelly *temp = new Jelly(tempP, skin);
 			SDL_Point position;
 			i >> temp->id >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
@@ -324,7 +324,7 @@ void Scene::loadScene(string sceneFilePath) {
 //					temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
-			printf("Adding enemy %d\n", this->numEnemies);
+			printf("Adding enemy (Jelly) %d\n", this->numEnemies);
 			break;
 		}
 		case 11: { //Urchin
@@ -338,9 +338,23 @@ void Scene::loadScene(string sceneFilePath) {
 //					temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
-			printf("Adding enemy %d\n", this->numEnemies);
+			printf("Adding enemy (Urchin) %d\n", this->numEnemies);
 			break;
-				}
+		}
+		case 12: { //Enemy
+
+			Player *tempP = Player::getPlayer();
+			Enemy *temp = new Enemy(tempP);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+			//					temp->setHitbox(.1, .9);
+			//					temp->showHitbox = true;
+			objects.push_back(temp);
+			this->numEnemies += 1;
+			printf("Adding enemy (Enemy) %d\n", this->numEnemies);
+			break;
+		}
 		default: {
 			cerr << "ERROR: Object type not recognized!\n";
 			break;

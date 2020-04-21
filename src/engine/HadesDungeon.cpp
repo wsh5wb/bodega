@@ -8,18 +8,27 @@ HadesDungeon::HadesDungeon() {
 
 	id = "HadesDungeon";
 
+	basic_rooms_size = 8;
+	int basic_rooms0[] = { 0, 2, 3, 4, 5 ,6 ,7 ,8 };
+	basic_rooms = (int*)malloc(sizeof(int)*basic_rooms_size);
+	for(int i = 0;i<basic_rooms_size;i++){
+		basic_rooms[i] = basic_rooms0[i];
+	}
+
+
 	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
 	scenes.push_back("./resources/scenes/hades?/start.txt");
 	scenes.push_back("./resources/scenes/hades?/basic_room2.txt");
 	scenes.push_back("./resources/scenes/hades?/lava_statue.txt");
 	scenes.push_back("./resources/scenes/hades?/lava_chest.txt");
 	scenes.push_back("./resources/scenes/hades?/jelly_room.txt");
+	scenes.push_back("./resources/scenes/hades?/single_jelly_room.txt");
+	scenes.push_back("./resources/scenes/hades?/double_jelly_room.txt");
+	scenes.push_back("./resources/scenes/hades?/single_enemy_room.txt");
 }
 
 HadesDungeon::~HadesDungeon() {
-//	for (int i = 0; i < 5; i++)
-//		delete layout[i];
-//	delete layout;
+	free(basic_rooms);
 }
 
 void HadesDungeon::update(set<SDL_Scancode> pressedKeys) {
