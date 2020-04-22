@@ -13,7 +13,7 @@ EventDispatcher::~EventDispatcher(){
 		for(EventListener* listener : l){
 			// cerr << "addr of stuff: " << it->first << " " << listener << endl;
 			if(listener){
-				delete listener;
+				//delete listener;
 				listener = NULL;
 			}
 		}

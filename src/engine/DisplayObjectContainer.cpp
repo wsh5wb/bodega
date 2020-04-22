@@ -2,6 +2,7 @@
 #include "DTEvent.h"
 #include "Game.h"
 #include <iostream>
+#include "Player.h"
 
 using namespace std;
 
@@ -155,4 +156,15 @@ void DisplayObjectContainer::saveSelf(vector<string> &objects,
 		dependencies.push_back(dep);
 		child->saveSelf(objects, dependencies);
 	}
+}
+
+void DisplayObjectContainer::cleanUpDisplayTree(){
+	for(auto child: children){
+		child->cleanUpDisplayTree();
+		child->parent=NULL;
+		if(child!=Player::getPlayer()){
+			free(child);
+		}
+	}
+	children.clear();
 }
