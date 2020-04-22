@@ -159,6 +159,7 @@ void Player::levelUp(){
 	damage += 10;
 	health += 10;
 	maxHealth += 10;
+	attackSpeed += .2;
 }
 
 void Player::toggleHealthDisplay(){
@@ -246,10 +247,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 //			juggle->add(position_tween);
 //		}
 		else if (k == SDL_SCANCODE_SEMICOLON){
-			changeHealth(-20);
+			changeHealth(-2);
 		}
 		else if (k == SDL_SCANCODE_APOSTROPHE){
-			changeHealth(20);
+			changeHealth(2);
 		}
 		/*else if (k == SDL_SCANCODE_COMMA){
 			toggleHealthDisplay();

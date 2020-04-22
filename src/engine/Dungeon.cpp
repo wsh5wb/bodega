@@ -236,8 +236,8 @@ void Dungeon::transitionRoom(string type) {
 		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
-			cerr << id + to_string(current_y) + "-" + to_string(current_x);
-			new_room->active = true;
+			cerr << id + to_string(current_y) + "-" + to_string(current_x)
+					<< "\n";
 			new_room->visible = true;
 			new_room->addToDisplayTree();
 		}
@@ -251,8 +251,8 @@ void Dungeon::transitionRoom(string type) {
 		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
-			cerr << id + to_string(current_y) + "-" + to_string(current_x);
-			new_room->active = true;
+			cerr << id + to_string(current_y) + "-" + to_string(current_x)
+					<< "\n";
 			new_room->visible = true;
 			new_room->addToDisplayTree();
 		}
@@ -266,8 +266,8 @@ void Dungeon::transitionRoom(string type) {
 		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
-			cerr << id + to_string(current_y) + "-" + to_string(current_x);
-			new_room->active = true;
+			cerr << id + to_string(current_y) + "-" + to_string(current_x)
+					<< "\n";
 			new_room->visible = true;
 			new_room->addToDisplayTree();
 		}
@@ -281,16 +281,15 @@ void Dungeon::transitionRoom(string type) {
 		new_room = (Room*) DisplayObjectContainer::getChild(
 				id + to_string(current_y) + "-" + to_string(current_x));
 		if (new_room) {
-			cerr << id + to_string(current_y) + "-" + to_string(current_x);
-			new_room->active = true;
+			cerr << id + to_string(current_y) + "-" + to_string(current_x)
+					<< "\n";
 			new_room->visible = true;
 			new_room->addToDisplayTree();
+
 		}
 	}
 
 	// close doors if enemies exist
-	if (new_room->room->numEnemies > 0)
-		new_room->closeDoors();
 
 //	Tween *playerPosTween = new Tween(player);
 	TweenJuggler *juggler = TweenJuggler::getInstance();
@@ -307,4 +306,11 @@ void Dungeon::transitionRoom(string type) {
 		EASE_INOUT);
 		juggler->add(camPosTween);
 	}
+	if (new_room) {
+		new_room->active = true;
+		if (new_room->room->numEnemies > 0)
+			new_room->closeDoors();
+
+	}
+
 }
