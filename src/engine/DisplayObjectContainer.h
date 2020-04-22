@@ -22,8 +22,12 @@ public:
 	void addChild(DisplayObject* child);
 	void removeImmediateChild(DisplayObject* child);
 	void removeImmediateChild(string id);
+	void removeImmediateChildNoDelete(DisplayObject* child);
 	void removeChild(int index);
 	void removeThis();
+
+	void addToCollisionSystem();
+	void removeFromCollisionSystem();
 
 	virtual void resetDelta();
 	

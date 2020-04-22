@@ -19,6 +19,7 @@ Sprite::Sprite(string id, int red, int green, int blue) :
 }
 
 void Sprite::update(set<SDL_Scancode> pressedKeys) {
+	DisplayObjectContainer::update(pressedKeys);
 //	cout << "sprite";
 }
 
@@ -44,4 +45,3 @@ void Sprite::saveSelf(vector<string> &objects, vector<string> &dependencies) {
 		child->saveSelf(objects, dependencies);
 	}
 }
-

@@ -26,34 +26,36 @@ MyGame::MyGame() :
 	Game::eventHandler.addEventListener((EventListener*) Game::cs, "OBJ_RM");
 
 	myCamera = Camera::getCamera();
-	// dungeon = new OceanDungeon();
-	dungeon = new HadesDungeon();
+
+	// Dungeon generation
+	dunMan = new DungeonManager();
+
+	printf("Generating Ocean\n");
+	Dungeon* dungeon = new HadesDungeon();
 	dungeon->generate();
-	myCamera->addScene(dungeon);
+	dunMan->activeDungeon = dungeon;
+	myCamera->addScene(dunMan->activeDungeon);
+	dungeon->addToCollisionSystem();
+
+	// myCamera->addScene(dunMan->dungeons[OCEAN]);
+
+	// Music and tweens
 	hades_theme.loadMusic("./resources/sounds/lullaby.wav");
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
 	hades_theme.playMusic();
 	animationJuggler = TweenJuggler::getInstance();
 	addChild(myCamera->container);
-	/*Player * me = new Player();
-	me->showHitbox = true;
-	Jelly * jel = new Jelly(me);
-	dungeon->addChild(jel);*/
 
-//	enemy = new Enemy((Player*) character->getChild("PLAYER_YOU"));
-//
-//	this->addChild(character);
-//	this->addChild(enemy);
-//
-//	Game::cs.watchForCollisions("ENEMY", "PLAYER");
+	// Collision setup
 	Game::cs->watchForCollisions("PLAYER", "DOOR");
 	Game::cs->watchForCollisions("PLAYER", "OBSTACLE");
 	Game::cs->watchForCollisions("PLAYER", "FLOOR");
+	Game::cs->watchForCollisions("PLAYER","ENEMY");
+	Game::cs->watchForCollisions("PLAYER","PORTAL");
 	Game::cs->watchForCollisions("PROJECTILE","OBSTACLE");
 	Game::cs->watchForCollisions("PROJECTILE","ENEMY");
-	Game::cs->watchForCollisions("PLAYER","ENEMY");
 
-	// Come up with more elegant solution to determining which dir to go.
+	// Initial event watching
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"DUNG_TRANS_U");
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
@@ -62,11 +64,12 @@ MyGame::MyGame() :
 			"DUNG_TRANS_R");
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"DUNG_TRANS_L");
-	// is it worth to check everytime enemy is killed?
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"ENEMY_KILLED");
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
-		"PLAYER_KILLED");
+			"PLAYER_KILLED");
+	Game::eventHandler.addEventListener((EventListener*) dunMan, 
+			"CHANGE_DUNGEON");
 }
 
 MyGame::~MyGame() {
@@ -102,6 +105,11 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 			SDL_Delay(50);
 			break;
 		}
+		case SDL_SCANCODE_SPACE: {
+			Event e("CHANGE_DUNGEON", &Game::eventHandler);
+			Game::eventHandler.dispatchEvent(&e);
+			SDL_Delay(100);
+		}
 		}
 	}
 
@@ -113,7 +121,7 @@ void MyGame::draw(AffineTransform &at) {
 	Game::draw(at);
 //	myCamera->draw(at);
 	SDL_RenderClear(Game::renderer);
-	myCamera->draw(at);
+	// myCamera->draw(at);
 	DisplayObjectContainer::draw(at);
 	animationJuggler->nextFrame();
 	SDL_RenderPresent(Game::renderer);

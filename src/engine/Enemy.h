@@ -35,6 +35,7 @@ public:
 
 
 	/* Health and such */
+	unsigned int xp = 5;
 	int health = 200;
 	int shield = 100;
 	int maxHealth = 100;

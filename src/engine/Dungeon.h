@@ -28,7 +28,7 @@ public:
 	bool zoomed_out = true;
 	bool DEBUG_CHANGE_ROOM = false;
 	int * basic_rooms;
-	int basic_rooms_size;
+	int basic_rooms_size = 0;
 
 private:
 	void transitionRoom(string type);
