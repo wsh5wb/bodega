@@ -56,7 +56,7 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 				Player *p = Player::getPlayer();
 				p->moveTo(224, 224);
 				Room *old_room = (Room*) DisplayObjectContainer::getChild(
-										id + to_string(current_y) + "-" + to_string(current_x));
+						id + to_string(current_y) + "-" + to_string(current_x));
 				old_room->active = false;
 				current_x = start_x;
 				current_y = start_y;
@@ -132,8 +132,8 @@ void Dungeon::generate() {
 	MazeGenerator M;
 	cerr << "here0\n";
 	layout = (int**) (M.getLayout());
-	srand (time(NULL));
-	for(int i = GRID_SIZE; i--;) {
+	srand (time(NULL));for
+(	int i = GRID_SIZE; i--;) {
 		for (int j = GRID_SIZE; j--;) {
 			if (layout[i][j] == START_ROOM) {
 				start_x = current_x = j;
@@ -205,26 +205,8 @@ void Dungeon::handleEvent(Event *e) {
 
 		activeRoom->room->numEnemies = 0;
 		activeRoom->openDoors();
-	}else if(type == "PLAYER_KILLED"){
-//		Player *p = Player::getPlayer();
-//		p->moveTo(224, 224);
-//		Room *old_room = (Room*) DisplayObjectContainer::getChild(
-//								id + to_string(current_y) + "-" + to_string(current_x));
-//		old_room->active = false;
-//		current_x = start_x;
-//		current_y = start_y;
-//		Room *start_room = (Room*) DisplayObjectContainer::getChild(
-//				id + to_string(current_y) + "-" + to_string(current_x));
-//		start_room->active = true;
-//		start_room->openDoors();
-//
-//		zoomed_out = true;
-		Camera * c = Camera::getCamera();
-		c->container->removeImmediateChild(this);
-		Dungeon* new_hades_dungeon = new HadesDungeon();
-		new_hades_dungeon->generate();
-		c->container->addChild(new_hades_dungeon);
-		cleanUpDisplayTree();
+	} else if (type == "PLAYER_KILLED") {
+		//do nothing
 	}
 
 }

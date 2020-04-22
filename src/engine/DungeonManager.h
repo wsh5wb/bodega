@@ -9,39 +9,47 @@
 #define HADES		 	0
 #define OCEAN			1
 
-class DungeonManager : EventListener{
+class DungeonManager: EventListener {
 public:
-	virtual void handleEvent(Event* e){
-		if(e->getType() == "CHANGE_DUNGEON"){
+	virtual void handleEvent(Event *e) {
+		if (e->getType() == "CHANGE_DUNGEON") {
 			printf("Changing dungeon\n");
 			Camera::getCamera()->removeScene(activeDungeon);
 			// delete activeDungeon;
-			switch(curr_dungeon){
-				case HADES: {
-					printf("GENERATING OCEAN\n");
-					activeDungeon = new OceanDungeon();
-					activeDungeon->generate();
-					curr_dungeon = OCEAN;
-					break;
-				}
-				case OCEAN: {
-					printf("GENERATING HADES\n");
-					activeDungeon = new HadesDungeon();
-					activeDungeon->generate();
-					curr_dungeon = HADES;
-					break;
-				}
+			switch (curr_dungeon) {
+			case HADES: {
+				printf("GENERATING OCEAN\n");
+				activeDungeon = new OceanDungeon();
+				activeDungeon->generate();
+				curr_dungeon = OCEAN;
+				break;
+			}
+			case OCEAN: {
+				printf("GENERATING HADES\n");
+				activeDungeon = new HadesDungeon();
+				activeDungeon->generate();
+				curr_dungeon = HADES;
+				break;
+			}
 			}
 
 			Camera::getCamera()->addScene(activeDungeon);
 			// curr_dungeon = (curr_dungeon+1)%NUM_DUNGEONS;
+		} else if (e->getType() == "PLAYER_KILLED") {
+			printf("Changing dungeon (on death)\n");
+			Camera::getCamera()->removeScene(activeDungeon);
+			printf("GENERATING HADES (on death)\n");
+			activeDungeon = new HadesDungeon();
+			activeDungeon->generate();
+			curr_dungeon = HADES;
+			Camera::getCamera()->addScene(activeDungeon);
 		}
-	} 
+	}
 
-	Dungeon* activeDungeon = NULL;
+	Dungeon *activeDungeon = NULL;
 	unsigned char curr_dungeon = HADES;
 	// probably put num dungeons in define statement somewhere
-	Dungeon* dungeons[NUM_DUNGEONS];
+	Dungeon *dungeons[NUM_DUNGEONS];
 };
 
 #endif

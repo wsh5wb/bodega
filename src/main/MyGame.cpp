@@ -31,7 +31,7 @@ MyGame::MyGame() :
 	dunMan = new DungeonManager();
 
 	printf("Generating Ocean\n");
-	Dungeon* dungeon = new HadesDungeon();
+	Dungeon *dungeon = new HadesDungeon();
 	dungeon->generate();
 	dunMan->activeDungeon = dungeon;
 	myCamera->addScene(dunMan->activeDungeon);
@@ -50,10 +50,10 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PLAYER", "DOOR");
 	Game::cs->watchForCollisions("PLAYER", "OBSTACLE");
 	Game::cs->watchForCollisions("PLAYER", "FLOOR");
-	Game::cs->watchForCollisions("PLAYER","ENEMY");
-	Game::cs->watchForCollisions("PLAYER","PORTAL");
-	Game::cs->watchForCollisions("PROJECTILE","OBSTACLE");
-	Game::cs->watchForCollisions("PROJECTILE","ENEMY");
+	Game::cs->watchForCollisions("PLAYER", "ENEMY");
+	Game::cs->watchForCollisions("PLAYER", "PORTAL");
+	Game::cs->watchForCollisions("PROJECTILE", "OBSTACLE");
+	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 
 	// Initial event watching
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
@@ -68,8 +68,10 @@ MyGame::MyGame() :
 			"ENEMY_KILLED");
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"PLAYER_KILLED");
-	Game::eventHandler.addEventListener((EventListener*) dunMan, 
+	Game::eventHandler.addEventListener((EventListener*) dunMan,
 			"CHANGE_DUNGEON");
+	Game::eventHandler.addEventListener((EventListener*) dunMan,
+			"PLAYER_KILLED");
 }
 
 MyGame::~MyGame() {
