@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include "HadesDungeon.h"
 
 using namespace std;
 
@@ -198,23 +199,25 @@ void Dungeon::handleEvent(Event *e) {
 		activeRoom->room->numEnemies = 0;
 		activeRoom->openDoors();
 	}else if(type == "PLAYER_KILLED"){
-		Player *p = Player::getPlayer();
-		p->moveTo(224, 224);
-		Room *old_room = (Room*) DisplayObjectContainer::getChild(
-								id + to_string(current_y) + "-" + to_string(current_x));
-		old_room->active = false;
-		current_x = start_x;
-		current_y = start_y;
-		Room *start_room = (Room*) DisplayObjectContainer::getChild(
-				id + to_string(current_y) + "-" + to_string(current_x));
-		start_room->active = true;
-		start_room->openDoors();
-
-		zoomed_out = true;
-
-//		cleanUpDisplayTree();
-//		generate();
-
+//		Player *p = Player::getPlayer();
+//		p->moveTo(224, 224);
+//		Room *old_room = (Room*) DisplayObjectContainer::getChild(
+//								id + to_string(current_y) + "-" + to_string(current_x));
+//		old_room->active = false;
+//		current_x = start_x;
+//		current_y = start_y;
+//		Room *start_room = (Room*) DisplayObjectContainer::getChild(
+//				id + to_string(current_y) + "-" + to_string(current_x));
+//		start_room->active = true;
+//		start_room->openDoors();
+//
+//		zoomed_out = true;
+		Camera * c = Camera::getCamera();
+		c->container->removeImmediateChild(this);
+		Dungeon* new_hades_dungeon = new HadesDungeon();
+		new_hades_dungeon->generate();
+		c->container->addChild(new_hades_dungeon);
+		cleanUpDisplayTree();
 	}
 
 }

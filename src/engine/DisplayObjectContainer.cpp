@@ -158,12 +158,14 @@ void DisplayObjectContainer::saveSelf(vector<string> &objects,
 	}
 }
 
-void DisplayObjectContainer::cleanUpDisplayTree(){
-	for(auto child: children){
-		child->cleanUpDisplayTree();
-		child->parent=NULL;
-		if(child!=Player::getPlayer()){
-			free(child);
+void DisplayObjectContainer::cleanUpDisplayTree() {
+	for (auto child : children) {
+		if (child) {
+			child->cleanUpDisplayTree();
+			child->parent = NULL;
+			if (child != Player::getPlayer()) {
+				free(child);
+			}
 		}
 	}
 	children.clear();
