@@ -1,7 +1,10 @@
 #include "TextBox.h"
 #include <iostream>
-TextBox::TextBox() : DisplayObject(){
+#include <ctype.h>
 
+TextBox::TextBox() : DisplayObject(){
+  this->start = std::clock();
+  this->timeout = 300;
 }
 // next steps: 1) make sure that if the text is longer than a certain length that it gets divided up.
 // we then render each load font
@@ -9,17 +12,26 @@ TextBox::TextBox() : DisplayObject(){
 // and then updated with the next batch of text. If no next batch of text exists, then stop displaying the textbox
 // (or potentially delete the textBox)
 
+//current Max Allotment per line: 20 characters, 60 overall
 
 TextBox::TextBox(string path,
                  const string &font_path,
                  int font_size,
                  const string &message_text,
                  const SDL_Color &color): DisplayObject("TextBox", path){
-    text_texture = loadFont(font_path, font_size, message_text, color);
-    SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+    this->fullMessageText = message_text;
+    this->fontPath = font_path;
+    this->font_size = font_size;
+    this->textColor = color;
     position.x = 350;
     position.y = -250;
     setScale(1.25, 1.5);
+    this->start = std::clock();
+    this->timeout = 2000;
+    chunkString(message_text, 60);
+    current_print = all_strings[current_print_loc];
+    text_texture = loadFont(font_path, font_size, current_print, color);
+    SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
 }
 
 void TextBox::draw(AffineTransform &at){
@@ -28,10 +40,38 @@ void TextBox::draw(AffineTransform &at){
     auto current_y = dstrect.y;
     text_rect.x = current_x + 40;
     text_rect.y = current_y + 50;
-    if(count < 100){
     SDL_RenderCopy(Game::renderer, text_texture, nullptr, &text_rect);
-    count++;
+}
+
+void TextBox::update(set<SDL_Scancode> pressedKeys){
+  DisplayObject::update(pressedKeys);
+  if((((std::clock() - start ) / (double) CLOCKS_PER_SEC)*1000) > timeout){
+    this->start = std::clock();
+    if(current_print_loc < all_strings.size()-1){
+      this->current_print_loc ++;
+      current_print = all_strings[current_print_loc];
+      text_texture = loadFont(fontPath, font_size, current_print, textColor);
+      SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
     }
+  }
+  if(current_print_loc >= all_strings.size()- 1 && text_active){
+    text_active = false;
+    TweenJuggler * juggle = TweenJuggler::getInstance();
+    Tween * alpha_tween = new Tween(this);
+    alpha_tween->animate(TWEEN_ALPHA, this->alpha, 0, 30, TWEEN_SINE, EASE_OUT);
+    juggle->add(alpha_tween);
+    text_texture = loadFont(fontPath, font_size, "", textColor);
+    SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+  }
+}
+
+void TextBox::chunkString(string message, int chunkSize){
+     for(int i = 0; i < message.length(); i+=chunkSize){
+        string s = message.substr(i, chunkSize) + "...";
+        all_strings.push_back(s);
+        printf("%s \n", message.substr(i, chunkSize).c_str());
+        printf("Start: %x \n", i);
+     }
 }
 
 SDL_Texture* TextBox::loadFont(const std::string &font_path, int font_size, const std::string &message_text, const SDL_Color &color){

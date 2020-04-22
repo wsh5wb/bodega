@@ -30,7 +30,7 @@ Player::Player() :
 			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
 	this->play("Idle");
 	string pathy = "./resources/miscellaneous/pixelart.png";
-	chat_box = new TextBox(pathy, "resources/fonts/dtm.ttf", 15, "Welcome to Hell! It's a gloomy place...", {245, 245, 245, 255});
+	chat_box = new TextBox(pathy, "resources/fonts/dtm.ttf", 15, "There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand", {245, 245, 245, 255});
 	this->addChild(chat_box);
 	//for tweening Demo
 		// this->alpha = 30;

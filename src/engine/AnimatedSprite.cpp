@@ -171,6 +171,7 @@ void AnimatedSprite::setFrameRate(int rate){
 }
 
 void AnimatedSprite::update(set<SDL_Scancode> pressedKeys){
+	DisplayObjectContainer::update(pressedKeys);
 	if(playing){
 		std::clock_t end = std::clock();
 		double duration = (( end - start ) / (double) CLOCKS_PER_SEC)*1000;
