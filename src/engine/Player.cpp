@@ -98,6 +98,7 @@ float Player::percentOfHealthLost(){
 }
 
 void Player::changeHealth(int value){
+
 		this->health += value;
 		if(health <= 0){
 			health = maxHealth;
@@ -116,9 +117,12 @@ void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, d
 	string path = "./resources/PlayerSprites/fireball.png";
 	int midX = this->position.x + (w*scaleX)/3;
 	int midY = this->position.y + (w*scaleX)/3;
+	printf("Adding new projectile\n");
 	Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
 	// projectiles.push_back(p);
 	((DisplayObjectContainer*)this->parent)->addChild(p);
+	DTEvent e("OBJ_ADD", &Game::eventHandler, p);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::update(set<SDL_Scancode> pressedKeys) {

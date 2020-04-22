@@ -7,6 +7,10 @@
 #include "Camera.h"
 #include "EventListener.h"
 
+#define NUM_DUNGEONS	2
+#define HADES		 	0
+#define OCEAN			1
+
 using namespace std;
 
 class Dungeon : public DisplayObjectContainer, EventListener{
@@ -28,10 +32,24 @@ public:
 	bool zoomed_out = true;
 	bool DEBUG_CHANGE_ROOM = false;
 	int * basic_rooms;
-	int basic_rooms_size;
+	int basic_rooms_size = 0;
 
 private:
 	void transitionRoom(string type);
+};
+
+class DungeonManager : EventListener{
+public:
+	virtual void handleEvent(Event* e){
+		if(e->getType() == "CHANGE_DUNGEON"){
+			printf("Changing dungeon\n");
+			curr_dungeon = (curr_dungeon+1)%NUM_DUNGEONS;
+		}
+	}
+
+	unsigned char curr_dungeon = 0;
+	// probably put num dungeons in define statement somewhere
+	Dungeon* dungeons[NUM_DUNGEONS];
 };
 
 #endif

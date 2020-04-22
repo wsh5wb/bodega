@@ -53,7 +53,7 @@ void Room::generateDoors(unsigned char doors){
 			door->setRotation(.05);
 			door->setHitbox(hitboxes[y]);
 			// door->setHitbox(hitboxes[y][0],hitboxes[y][1],hitboxes[y][2],hitboxes[y][3]);
-			door->showHitbox = true;
+			// door->showHitbox = true;
 			door->room = this;
 			room->addChild(door);
 		}
@@ -73,7 +73,7 @@ void Room::generateWalls(){
 		wall->w = dimensions[i%2][0];
 		wall->h = dimensions[i%2][1];
 		wall->setHitbox(0,1);
-		wall->showHitbox = true;
+		// wall->showHitbox = true;
 		// printf("Adding wall%d at (%d,%d)\n", i+1,position[i%3].x,position[i%3].y);
 		room->addChild(wall);
 	}

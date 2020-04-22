@@ -156,7 +156,10 @@ void CollisionSystem::update(){
 							((Player*)obj1)->changeHealth(-1);
 						}
 					}
-					
+					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
+						Event e("CHANGE_DUNGEON", &Game::eventHandler);
+						Game::eventHandler.dispatchEvent(&e);
+					}
 					else if(pair == "FLOOR-PLAYER" || pair == "PLAYER-FLOOR"){
 						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,
@@ -187,6 +190,7 @@ void CollisionSystem::handleEvent(Event* e){
 
     string str;
 
+    // Do some longest string matching for strings
 	if(child->id.find("ENEMY") != string::npos)				str = "ENEMY";
 	else if(child->id.find("PLAYER") != string::npos)		str = "PLAYER";
 	else if(child->id.find("SETTING") != string::npos)		str = "SETTING";
@@ -195,11 +199,18 @@ void CollisionSystem::handleEvent(Event* e){
 	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
 	else if(child->id.find("FLOOR") != string::npos)		str = "FLOOR";
 	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
+	else if(child->id.find("PORTAL") != string::npos)		str = "PORTAL";
 
 	auto it = find(objects[str].begin(), objects[str].end(), child);
 
-	if(e->getType() == "OBJ_ADD" && it == objects[str].end())	objects[str].push_back(child);
-	else if(e->getType() == "OBJ_RM")							objects[str].erase(it);
+	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
+		// printf("Adding %s to CS\n", child->id.c_str());
+		objects[str].push_back(child);
+	}
+	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
+		// printf("removing %s from CS\n", child->id.c_str());
+		objects[str].erase(it);
+	}
 
 }
 

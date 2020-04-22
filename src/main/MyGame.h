@@ -40,13 +40,12 @@ private:
 	Scene *character;
 	Enemy *enemy;
 
-	//Scene* character;
+	DungeonManager* dunMan;
 	string scene;
 	bool changed;
 	bool isQuestDone;
 	Sound effect;
 	Sound hades_theme;
-	Dungeon* dungeon;
 	TweenJuggler * animationJuggler;
 };
 
