@@ -53,7 +53,7 @@ void Room::generateDoors(unsigned char doors){
 			door->setRotation(.05);
 			door->setHitbox(hitboxes[y]);
 			// door->setHitbox(hitboxes[y][0],hitboxes[y][1],hitboxes[y][2],hitboxes[y][3]);
-			// door->showHitbox = true;
+			door->showHitbox = true;
 			door->room = this;
 			room->addChild(door);
 		}

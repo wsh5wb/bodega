@@ -50,6 +50,7 @@ Player::~Player(){
 
 Player* Player::getPlayer() {
 	if (player == 0) {
+		printf("Making new player!\n");
 		player = new Player();
 	}
 	return player;

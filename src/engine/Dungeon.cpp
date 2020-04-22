@@ -127,7 +127,7 @@ void Dungeon::draw(AffineTransform &at) {
 }
 
 void Dungeon::generate() {
-	
+
 	MazeGenerator M;
 	cerr << "here0\n";
 	layout = (int**) (M.getLayout());
@@ -153,7 +153,6 @@ void Dungeon::generate() {
 		for (int j = GRID_SIZE; j--;) {
 			int ind = layout[i][j];
 			if (ind >= 0) {
-				printf("Adding room to dungeon\n");
 				// printf("room at (%d,%d) ", j, i);
 				room_t *room_data = level.rooms["(" + to_string(i) + ","
 						+ to_string(j) + ")"];
@@ -171,13 +170,13 @@ void Dungeon::generate() {
 					temp->start = true;
 					temp->visible = true;
 					start_room = temp;
-					DisplayObject* portal = 
-						new DisplayObject("PORTAL", "./resources/character/floryan_head.png");
-					portal->scale(.25);
-					portal->moveTo(240,180);
-					portal->setHitbox(.1,.9);
-					portal->showHitbox = true;
-					temp->room->addChild(portal);
+					// DisplayObject* portal = 
+					// 	new DisplayObject("PORTAL", "./resources/character/floryan_head.png");
+					// portal->scale(.25);
+					// portal->moveTo(240,180);
+					// portal->setHitbox(.1,.9);
+					// portal->showHitbox = true;
+					// temp->room->addChild(portal);
 				} else {
 					DisplayObjectContainer::addChild(temp);
 				}

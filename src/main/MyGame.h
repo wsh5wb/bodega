@@ -18,6 +18,7 @@
 #include "HadesDungeon.h"
 #include "OceanDungeon.h"
 #include "CollisionSystem.h"
+#include "DungeonManager.h"
 #include "Enemy.h"
 #include "Jelly.h"
 #include "Cerb.h"

@@ -33,14 +33,10 @@ MyGame::MyGame() :
 	printf("Generating Ocean\n");
 	Dungeon* dungeon = new HadesDungeon();
 	dungeon->generate();
-	dunMan->dungeons[HADES] = dungeon;
-	myCamera->addScene(dunMan->dungeons[HADES]);
+	dunMan->activeDungeon = dungeon;
+	myCamera->addScene(dunMan->activeDungeon);
 	dungeon->addToCollisionSystem();
 
-	printf("Generating Ocean\n");
-	Dungeon* dungeon1 = new OceanDungeon();
-	dungeon1->generate();
-	dunMan->dungeons[OCEAN] = dungeon1;
 	// myCamera->addScene(dunMan->dungeons[OCEAN]);
 
 	// Music and tweens
@@ -72,6 +68,8 @@ MyGame::MyGame() :
 			"ENEMY_KILLED");
 	Game::eventHandler.addEventListener((EventListener*) dungeon,
 			"PLAYER_KILLED");
+	Game::eventHandler.addEventListener((EventListener*) dunMan, 
+			"CHANGE_DUNGEON");
 }
 
 MyGame::~MyGame() {
@@ -106,6 +104,11 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 			Game::eventHandler.dispatchEvent(&e);
 			SDL_Delay(50);
 			break;
+		}
+		case SDL_SCANCODE_SPACE: {
+			Event e("CHANGE_DUNGEON", &Game::eventHandler);
+			Game::eventHandler.dispatchEvent(&e);
+			SDL_Delay(100);
 		}
 		}
 	}
