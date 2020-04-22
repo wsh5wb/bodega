@@ -307,7 +307,7 @@ void Scene::loadScene(string sceneFilePath) {
 //					temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
-			printf("Adding enemy (Jelly) %d\n", this->numEnemies);
+			// printf("Adding enemy (Jelly) %d\n", this->numEnemies);
 			break;
 		}
 		case 11: { //Urchin
@@ -321,7 +321,7 @@ void Scene::loadScene(string sceneFilePath) {
 //					temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
-			printf("Adding enemy (Urchin) %d\n", this->numEnemies);
+			// printf("Adding enemy (Urchin) %d\n", this->numEnemies);
 			break;
 		}
 		case 12: { //Enemy
@@ -335,7 +335,7 @@ void Scene::loadScene(string sceneFilePath) {
 			//					temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
-			printf("Adding enemy (Enemy) %d\n", this->numEnemies);
+			// printf("Adding enemy (Enemy) %d\n", this->numEnemies);
 			break;
 		}
 		default: {

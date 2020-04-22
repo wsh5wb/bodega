@@ -1,6 +1,7 @@
 #include "DisplayObjectContainer.h"
 #include "DTEvent.h"
 #include "Game.h"
+#include "Player.h"
 #include <iostream>
 #include "Player.h"
 
@@ -36,8 +37,12 @@ DisplayObjectContainer::~DisplayObjectContainer() {
 		// this allows to change rm case of cs.handleEvent();
 		DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 		Game::eventHandler.dispatchEvent(&e);
-		delete *it;
-		*it = NULL;
+
+		if((*it) != Player::getPlayer()){
+			delete *it;
+			*it = NULL;
+		}
+
 	}
 	children.clear();
 }
@@ -45,8 +50,8 @@ DisplayObjectContainer::~DisplayObjectContainer() {
 void DisplayObjectContainer::addChild(DisplayObject *child) {
 	children.push_back(child);
 	child->parent = this;
-	// DTEvent e("OBJ_ADD", &Game::eventHandler, child);
-	// Game::eventHandler.dispatchEvent(&e);
+	DTEvent e("OBJ_ADD", &Game::eventHandler, child);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void DisplayObjectContainer::addToCollisionSystem(){
@@ -76,8 +81,8 @@ void DisplayObjectContainer::removeImmediateChild(DisplayObject *child) {
 	for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); it++) {
 		if (child == *it) {
-			// DTEvent e("OBJ_RM", &Game::eventHandler, child);
-			// Game::eventHandler.dispatchEvent(&e);
+			DTEvent e("OBJ_RM", &Game::eventHandler, child);
+			Game::eventHandler.dispatchEvent(&e);
 			delete *it;
 			*it = NULL;
 			children.erase(it);
@@ -90,8 +95,8 @@ void DisplayObjectContainer::removeImmediateChild(string id) {
 	for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); it++) {
 		if (id == (*it)->id) {
-			// DTEvent e("OBJ_RM", &Game::eventHandler, *it);
-			// Game::eventHandler.dispatchEvent(&e);
+			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
+			Game::eventHandler.dispatchEvent(&e);
 			delete *it;
 			*it = NULL;
 			children.erase(it);
@@ -103,6 +108,8 @@ void DisplayObjectContainer::removeImmediateChild(string id) {
 void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
 	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
 		if(child == *it){
+			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
+			Game::eventHandler.dispatchEvent(&e);
 			children.erase(it);
 			break;
 		}
@@ -111,6 +118,8 @@ void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
 
 void DisplayObjectContainer::removeChild(int index) {
 	vector<DisplayObject*>::iterator it = children.begin() + index;
+	DTEvent e("OBJ_RM", &Game::eventHandler, *it);
+	Game::eventHandler.dispatchEvent(&e);
 	delete *it;
 	*it = NULL;
 	children.erase(it);
@@ -119,6 +128,8 @@ void DisplayObjectContainer::removeChild(int index) {
 void DisplayObjectContainer::removeThis() {
 	for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); it++) {
+		DTEvent e("OBJ_RM", &Game::eventHandler, *it);
+		Game::eventHandler.dispatchEvent(&e);
 		delete *it;
 		*it = NULL;
 	}
@@ -147,7 +158,6 @@ void DisplayObjectContainer::resetDelta() {
 	DisplayObject::resetDelta();
 	for (DisplayObject *child : children) {
 		//cout << "child " << child->id << endl;
-
 		child->resetDelta();
 	}
 }

@@ -21,6 +21,8 @@ Once compiled, use `make run` to run game
 
 * Arrow keys to shoot basic projectiles (sometimes the projectiles do not fire and game needs to be restarted a few times to work. We are working on this bug).
 
+* Space to switch dungeons
+
 * U to enter camera translation mode
 
 While in translation mode:
