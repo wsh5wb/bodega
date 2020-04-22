@@ -29,20 +29,20 @@ void Room::generateDoors(unsigned char doors){
 		"./resources/art/hades/lo_door2.png","./resources/art/hades/l_door2.png"};
 	// if all rooms are the same dimensions for every dungeon this should be constant
 	int coords[4][2] = {{192,0},{480,128},{192,352},{0,128}};
-	SDL_Point hitboxes[4][4] =
-	{
-		{{51,0}, {77,0},{77,10}, {51,10} },
-		{{22,51}, {32,51}, {32,77}, {22,77} },
-		{{51,22}, {77,22}, {77,32}, {51,32} },
-		{{0,51}, {10,51}, {10,77}, {0,77} }
-	};
-	// double hitboxes[4][4] =
-	// {
-	// 	{.4,.6,0,.15},
-	// 	{.85,1,.4,.6 },
-	// 	{ .4,.6,.85,1},
-	// 	{ 0,.15,.4,.6}
-	// };
+//	double hitboxes[4][4] =
+//	{
+//		{{51,0}, {77,0},{77,10}, {51,10} },
+//		{{22,51}, {32,51}, {32,77}, {22,77} },
+//		{{51,22}, {77,22}, {77,32}, {51,32} },
+//		{{0,51}, {10,51}, {10,77}, {0,77} }
+//	};
+	 double hitboxes[4][4] =
+	 {
+	 	{.4,.6,0,.3125},
+	 	{.6875,1,.23,.37 },
+	 	{ .4,.6,.6875,1},
+	 	{ 0,.3125,.23,.37}
+	 };
 
 	int id[4] = {3,4,1,2};
 	for(int i = 1, y = 0; i < 16 && y < 4; i*=2, y++){
@@ -51,9 +51,9 @@ void Room::generateDoors(unsigned char doors){
 			door->moveTo(coords[y][0], coords[y][1]);
 			door->setSpeed(5);
 			door->setRotation(.05);
-			door->setHitbox(hitboxes[y]);
-			// door->setHitbox(hitboxes[y][0],hitboxes[y][1],hitboxes[y][2],hitboxes[y][3]);
-			//door->showHitbox = true;
+			//door->setHitbox(hitboxes[y]);
+			door->setHitbox(hitboxes[y][0],hitboxes[y][1],hitboxes[y][2],hitboxes[y][3]);
+			door->showHitbox = true;
 			door->room = this;
 			room->addChild(door);
 		}
