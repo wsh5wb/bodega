@@ -121,6 +121,7 @@ void Enemy::onMeleeStrike(){
 void Enemy::changeHealth(int amount){
 	health += amount;
 	if(health <= 0){
+		Player::getPlayer()->changeXP(xp);
 		Event e("ENEMY_KILLED", &Game::eventHandler);
 		Game::eventHandler.dispatchEvent(&e);
 		((DisplayObjectContainer *)this->parent)->removeImmediateChild(this);

@@ -37,6 +37,7 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
+	virtual void cleanUpDisplayTree();
 
 	void loadTexture(string filepath);
 	void loadRGBTexture(int red, int green, int blue);

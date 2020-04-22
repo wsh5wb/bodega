@@ -29,9 +29,11 @@ Player::Player() :
 	this->addAnimation("resources/PlayerSprites/jumpsprites.png",
 			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
 	this->play("Idle");
-	string pathy = "./resources/miscellaneous/pixelart.png";
-	chat_box = new TextBox(pathy, "resources/fonts/dtm.ttf", 15, "Welcome to Hell! It's a gloomy place...", {245, 245, 245, 255});
+	chat_box = new TextBox("There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand");
 	this->addChild(chat_box);
+	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
+	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
+
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -91,25 +93,73 @@ void Player::renderHPBar(int x, int y, int w, int h, float PercentLost, SDL_Colo
    SDL_SetRenderDrawColor(Game::renderer, old.r, old.g, old.b, old.a);
 }
 
+void Player::renderXPBar(int x, int y, int w, int h, float PercentXP, SDL_Color FGColor, SDL_Color BGColor) {
+	if (PercentXP < 0.0){
+		PercentXP = 0.0;
+	}else if (PercentXP > 1.0){
+		PercentXP = 1.0;
+	}
+   SDL_Color old;
+   SDL_GetRenderDrawColor(Game::renderer, &old.r, &old.g, &old.g, &old.a);
+   SDL_Rect bgrect = { x, y, w, h };
+   SDL_SetRenderDrawColor(Game::renderer, BGColor.r, BGColor.g, BGColor.b, BGColor.a);
+   SDL_RenderFillRect(Game::renderer, &bgrect);
+   SDL_SetRenderDrawColor(Game::renderer, FGColor.r, FGColor.g, FGColor.b, FGColor.a);
+   int pw = (int)((float)w * PercentXP);
+   int px = x + (w - pw);
+   SDL_Rect fgrect = { px, y, pw, h };
+   SDL_RenderFillRect(Game::renderer, &fgrect);
+   SDL_SetRenderDrawColor(Game::renderer, old.r, old.g, old.b, old.a);
+}
+
 float Player::percentOfHealthLost(){
-		float d = (float(this->maxHealth - this->health)/ float(this->maxHealth));
-		//printf("Max Health: %x, health %x, percentLoss %9.6f \n", this->maxHealth, this->health, d);
-		return d;
+	float d = (float(this->maxHealth - this->health)/ float(this->maxHealth));
+	//printf("Max Health: %x, health %x, percentLoss %9.6f \n", this->maxHealth, this->health, d);
+	return d;
+}
+
+float Player::percentOfXP(){
+	if(level == maxLevel){ return 0.0;}
+	float d = (float(this->xpChart[level-1] - this->xp)/ float(this->xpChart[level-1]));
+	//printf("Max Health: %x, health %x, percentLoss %9.6f \n", this->maxHealth, this->health, d);
+	return d;
 }
 
 void Player::changeHealth(int value){
-		this->health += value;
-		if(health <= 0){
-			health = maxHealth;
-			Event e("PLAYER_KILLED", &Game::eventHandler);
-			Game::eventHandler.dispatchEvent(&e);
-			//moveTo(224,224);
-		}
+	this->health += value;
+	if(health <= 0){
+		health = maxHealth;
+		Event e("PLAYER_KILLED", &Game::eventHandler);
+		Game::eventHandler.dispatchEvent(&e);
+	}
+}
+
+bool Player::checkLevelUp(){
+	if(level == maxLevel){
+		return false;
+	}return xp >= xpChart[level-1];
+}
+
+void Player::changeXP(int value){
+	this->xp += value;
+	while(checkLevelUp()){
+		xp -= xpChart[level-1];
+		levelUp();
+	}
 
 }
 
+// Can maybe do stuff at special levels like increase speed of projectiles or amount of health or something
+void Player::levelUp(){
+	level++;
+	cout << "You leveled up!" << endl;
+	damage += 10;
+	health += 10;
+	maxHealth += 10;
+}
+
 void Player::toggleHealthDisplay(){
-		this->displayHealth = !(this->displayHealth);
+	this->displayHealth = !(this->displayHealth);
 }
 
 void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
@@ -177,18 +227,18 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			yMov = 6;
 		}
 		//for tweening Demo
-		else if (k == SDL_SCANCODE_T){
-			TweenJuggler * juggle = TweenJuggler::getInstance();
-			Tween * position_tween = new Tween(this);
-			position_tween->animate(TWEEN_POSITION_X, oldX, oldX + 200, 200, TWEEN_QUADRATIC, EASE_IN);
-			juggle->add(position_tween);
-		}
-		else if (k == SDL_SCANCODE_R){
-			TweenJuggler * juggle = TweenJuggler::getInstance();
-			Tween * position_tween = new Tween(this);
-			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
-			juggle->add(position_tween);
-		}
+//		else if (k == SDL_SCANCODE_T){
+//			TweenJuggler * juggle = TweenJuggler::getInstance();
+//			Tween * position_tween = new Tween(this);
+//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX + 200, 200, TWEEN_QUADRATIC, EASE_IN);
+//			juggle->add(position_tween);
+//		}
+//		else if (k == SDL_SCANCODE_R){
+//			TweenJuggler * juggle = TweenJuggler::getInstance();
+//			Tween * position_tween = new Tween(this);
+//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
+//			juggle->add(position_tween);
+//		}
 		else if (k == SDL_SCANCODE_SEMICOLON){
 			changeHealth(-20);
 		}
@@ -244,7 +294,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	// }
 
 	if(xMov != 0 || yMov != 0){
-		if((double)(((std::clock() - lastFired) / (double) (attackSpeed*CLOCKS_PER_SEC)) > 1.0)){
+		if((double)(((double)attackSpeed*(std::clock() - lastFired) / (double) (CLOCKS_PER_SEC)) > 1.0)){
 			addProjectile(xMov,yMov,1000,0.3,0.3);
 			lastFired = std::clock();
 		}
@@ -274,6 +324,7 @@ void Player::initIFrames(int numFrames) {
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
 	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
+	renderXPBar(950, 20, 200, 25, percentOfXP(), colorSDL(128, 0, 0, 220), colorSDL(114, 218, 255, 220));
 	// for(Projectile* p : projectiles){
 	// 	p->draw(at);
 	// }

@@ -25,6 +25,7 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
 		this->scaleX *= 1;
 		this->scaleY *= 1;
+		this->setAlpha(100);
 		break;
 	}
 	default: {
