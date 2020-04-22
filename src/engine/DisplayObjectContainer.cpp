@@ -31,6 +31,10 @@ DisplayObjectContainer::DisplayObjectContainer(string id, int red, int green,
 DisplayObjectContainer::~DisplayObjectContainer() {
 	for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); it++) {
+		// probably change to check if in collision system first, then signal.
+		// this allows to change rm case of cs.handleEvent();
+		DTEvent e("OBJ_RM", &Game::eventHandler, *it);
+		Game::eventHandler.dispatchEvent(&e);
 		delete *it;
 		*it = NULL;
 	}
@@ -40,16 +44,39 @@ DisplayObjectContainer::~DisplayObjectContainer() {
 void DisplayObjectContainer::addChild(DisplayObject *child) {
 	children.push_back(child);
 	child->parent = this;
-	DTEvent e("OBJ_ADD", &Game::eventHandler, child);
-	Game::eventHandler.dispatchEvent(&e);
+	// DTEvent e("OBJ_ADD", &Game::eventHandler, child);
+	// Game::eventHandler.dispatchEvent(&e);
 }
+
+void DisplayObjectContainer::addToCollisionSystem(){
+	DTEvent e("OBJ_ADD", &Game::eventHandler, this);
+	Game::eventHandler.dispatchEvent(&e);
+	for(DisplayObject* child : children){
+		if(dynamic_cast<DisplayObjectContainer*>(child) == nullptr){
+			DTEvent e("OBJ_ADD", &Game::eventHandler, child);
+			Game::eventHandler.dispatchEvent(&e);
+		} else	((DisplayObjectContainer*) child)->addToCollisionSystem();
+	}
+}
+
+void DisplayObjectContainer::removeFromCollisionSystem(){
+	DTEvent e("OBJ_RM", &Game::eventHandler, this);
+	Game::eventHandler.dispatchEvent(&e);
+	for(DisplayObject* child : children){
+		if(dynamic_cast<DisplayObjectContainer*>(child) == nullptr){
+			DTEvent e("OBJ_RM", &Game::eventHandler, child);
+			Game::eventHandler.dispatchEvent(&e);
+		} else	((DisplayObjectContainer*) child)->addToCollisionSystem();
+	}
+}
+
 
 void DisplayObjectContainer::removeImmediateChild(DisplayObject *child) {
 	for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); it++) {
 		if (child == *it) {
-			DTEvent e("OBJ_RM", &Game::eventHandler, child);
-			Game::eventHandler.dispatchEvent(&e);
+			// DTEvent e("OBJ_RM", &Game::eventHandler, child);
+			// Game::eventHandler.dispatchEvent(&e);
 			delete *it;
 			*it = NULL;
 			children.erase(it);
@@ -62,10 +89,19 @@ void DisplayObjectContainer::removeImmediateChild(string id) {
 	for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); it++) {
 		if (id == (*it)->id) {
-			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
-			Game::eventHandler.dispatchEvent(&e);
+			// DTEvent e("OBJ_RM", &Game::eventHandler, *it);
+			// Game::eventHandler.dispatchEvent(&e);
 			delete *it;
 			*it = NULL;
+			children.erase(it);
+			break;
+		}
+	}
+}
+
+void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
+	for(vector<DisplayObject*>::iterator it = children.begin(); it != children.end(); it++){
+		if(child == *it){
 			children.erase(it);
 			break;
 		}
