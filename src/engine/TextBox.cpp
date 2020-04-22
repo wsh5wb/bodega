@@ -30,6 +30,7 @@ TextBox::TextBox(string path,
     this->timeout = 2000;
     chunkString(message_text, 60);
     current_print = all_strings[current_print_loc];
+    current_print_loc ++;
     text_texture = loadFont(font_path, font_size, current_print, color);
     SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
 }
@@ -47,21 +48,24 @@ void TextBox::update(set<SDL_Scancode> pressedKeys){
   DisplayObject::update(pressedKeys);
   if((((std::clock() - start ) / (double) CLOCKS_PER_SEC)*1000) > timeout){
     this->start = std::clock();
-    if(current_print_loc < all_strings.size()-1){
-      this->current_print_loc ++;
+    if(current_print_loc < all_strings.size()){
       current_print = all_strings[current_print_loc];
       text_texture = loadFont(fontPath, font_size, current_print, textColor);
       SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+      this->current_print_loc ++;
     }
-  }
-  if(current_print_loc >= all_strings.size()- 1 && text_active){
-    text_active = false;
-    TweenJuggler * juggle = TweenJuggler::getInstance();
-    Tween * alpha_tween = new Tween(this);
-    alpha_tween->animate(TWEEN_ALPHA, this->alpha, 0, 30, TWEEN_SINE, EASE_OUT);
-    juggle->add(alpha_tween);
-    text_texture = loadFont(fontPath, font_size, "", textColor);
-    SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+    else if(current_print_loc > all_strings.size() && text_active){
+      text_active = false;
+      TweenJuggler * juggle = TweenJuggler::getInstance();
+      Tween * alpha_tween = new Tween(this);
+      alpha_tween->animate(TWEEN_ALPHA, this->alpha, 0, 30, TWEEN_SINE, EASE_OUT);
+      juggle->add(alpha_tween);
+      text_texture = loadFont(fontPath, font_size, "", textColor);
+      SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+    }
+    else if (text_active){
+      current_print_loc++;
+    }
   }
 }
 
