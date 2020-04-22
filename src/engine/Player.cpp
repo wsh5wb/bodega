@@ -29,9 +29,11 @@ Player::Player() :
 	this->addAnimation("resources/PlayerSprites/jumpsprites.png",
 			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
 	this->play("Idle");
-	string pathy = "./resources/miscellaneous/pixelart.png";
-	chat_box = new TextBox(pathy, "resources/fonts/dtm.ttf", 15, "There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand", {245, 245, 245, 255});
+	chat_box = new TextBox("There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand");
 	this->addChild(chat_box);
+	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
+	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
+
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();

@@ -14,13 +14,26 @@ TextBox::TextBox() : DisplayObject(){
 
 //current Max Allotment per line: 20 characters, 60 overall
 
-TextBox::TextBox(string path,
-                 const string &font_path,
+TextBox::TextBox(const string &message_text): DisplayObject("TextBox", "./resources/miscellaneous/pixelart.png"){
+  this->fullMessageText = message_text;
+  position.x = 350;
+  position.y = -250;
+  setScale(1.25, 1.5);
+  this->start = std::clock();
+  this->timeout = 2000;
+  chunkString(fullMessageText, 60);
+  current_print = all_strings[current_print_loc];
+  current_print_loc ++;
+  text_texture = loadFont(font_path, font_size, current_print, textColor);
+  SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+}
+
+TextBox::TextBox(const string &font_path,
                  int font_size,
                  const string &message_text,
-                 const SDL_Color &color): DisplayObject("TextBox", path){
+                 const SDL_Color &color): DisplayObject("TextBox", "./resources/miscellaneous/pixelart.png"){
     this->fullMessageText = message_text;
-    this->fontPath = font_path;
+    this->font_path = font_path;
     this->font_size = font_size;
     this->textColor = color;
     position.x = 350;
@@ -50,7 +63,7 @@ void TextBox::update(set<SDL_Scancode> pressedKeys){
     this->start = std::clock();
     if(current_print_loc < all_strings.size()){
       current_print = all_strings[current_print_loc];
-      text_texture = loadFont(fontPath, font_size, current_print, textColor);
+      text_texture = loadFont(font_path, font_size, current_print, textColor);
       SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
       this->current_print_loc ++;
     }
@@ -60,8 +73,7 @@ void TextBox::update(set<SDL_Scancode> pressedKeys){
       Tween * alpha_tween = new Tween(this);
       alpha_tween->animate(TWEEN_ALPHA, this->alpha, 0, 30, TWEEN_SINE, EASE_OUT);
       juggle->add(alpha_tween);
-      text_texture = loadFont(fontPath, font_size, "", textColor);
-      SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+      SDL_DestroyTexture(text_texture);
     }
     else if (text_active){
       current_print_loc++;
@@ -94,4 +106,10 @@ SDL_Texture* TextBox::loadFont(const std::string &font_path, int font_size, cons
   }
   SDL_FreeSurface(text_surface);
   return text_texture;
+}
+
+void TextBox::addMessagetoDisplay(string message){
+  this->fullMessageText = fullMessageText + message;
+  chunkString(message, 60);
+  text_active = true;
 }
