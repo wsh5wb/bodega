@@ -126,13 +126,15 @@ float Player::percentOfXP(){
 	return d;
 }
 
-void Player::changeHealth(int value){
+bool Player::changeHealth(int value){
 	this->health += value;
 	if(health <= 0){
 		health = maxHealth;
 		Event e("PLAYER_KILLED", &Game::eventHandler);
 		Game::eventHandler.dispatchEvent(&e);
+		return true;
 	}
+	return false;
 }
 
 bool Player::checkLevelUp(){

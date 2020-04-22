@@ -35,7 +35,6 @@ MyGame::MyGame() :
 	dungeon->generate();
 	dunMan->activeDungeon = dungeon;
 	myCamera->addScene(dunMan->activeDungeon);
-	dungeon->addToCollisionSystem();
 
 	// myCamera->addScene(dunMan->dungeons[OCEAN]);
 
@@ -47,7 +46,6 @@ MyGame::MyGame() :
 	addChild(myCamera->container);
 
 	// Collision setup
-	Game::cs->watchForCollisions("PLAYER", "DOOR");
 	Game::cs->watchForCollisions("PLAYER", "OBSTACLE");
 	Game::cs->watchForCollisions("PLAYER", "FLOOR");
 	Game::cs->watchForCollisions("PLAYER", "ENEMY");

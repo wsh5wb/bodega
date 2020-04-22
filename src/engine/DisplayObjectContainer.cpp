@@ -35,10 +35,12 @@ DisplayObjectContainer::~DisplayObjectContainer() {
 			it != children.end(); it++) {
 		// probably change to check if in collision system first, then signal.
 		// this allows to change rm case of cs.handleEvent();
-		DTEvent e("OBJ_RM", &Game::eventHandler, *it);
-		Game::eventHandler.dispatchEvent(&e);
 
 		if((*it) != Player::getPlayer()){
+			if((*it)->id.find("ENEMY") != string::npos)
+				printf("Deleting %s from %s\n", (*it)->id.c_str(), this->id.c_str());
+			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
+			Game::eventHandler.dispatchEvent(&e);
 			delete *it;
 			*it = NULL;
 		}
@@ -79,7 +81,7 @@ void DisplayObjectContainer::removeFromCollisionSystem(){
 
 void DisplayObjectContainer::removeImmediateChild(DisplayObject *child) {
 	for (vector<DisplayObject*>::iterator it = children.begin();
-			it != children.end(); it++) {
+			it != children.end(); ++it) {
 		if (child == *it) {
 			DTEvent e("OBJ_RM", &Game::eventHandler, child);
 			Game::eventHandler.dispatchEvent(&e);
@@ -97,6 +99,7 @@ void DisplayObjectContainer::removeImmediateChild(string id) {
 		if (id == (*it)->id) {
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
+			printf("Setting %s to NULL\n", (*it)->id.c_str());
 			delete *it;
 			*it = NULL;
 			children.erase(it);
@@ -110,7 +113,9 @@ void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
 		if(child == *it){
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
+			printf("Setting %s to NULL\n", (*it)->id.c_str());
 			children.erase(it);
+			*it = NULL;
 			break;
 		}
 	}
@@ -120,6 +125,7 @@ void DisplayObjectContainer::removeChild(int index) {
 	vector<DisplayObject*>::iterator it = children.begin() + index;
 	DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 	Game::eventHandler.dispatchEvent(&e);
+	printf("Setting %s to NULL\n", (*it)->id.c_str());
 	delete *it;
 	*it = NULL;
 	children.erase(it);
@@ -130,6 +136,7 @@ void DisplayObjectContainer::removeThis() {
 			it != children.end(); it++) {
 		DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 		Game::eventHandler.dispatchEvent(&e);
+		printf("Setting %s to NULL\n", (*it)->id.c_str());
 		delete *it;
 		*it = NULL;
 	}

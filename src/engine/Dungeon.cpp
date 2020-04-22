@@ -129,6 +129,7 @@ void Dungeon::draw(AffineTransform &at) {
 
 void Dungeon::generate() {
 
+	Game::cs->watchForCollisions("PLAYER", "DOOR");
 	MazeGenerator M;
 	cerr << "here0\n";
 	layout = (int**) (M.getLayout());

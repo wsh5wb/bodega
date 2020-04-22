@@ -42,6 +42,7 @@ void CollisionSystem::update(){
 
 		vector vec1 = objects[type1];
 		vector vec2 = objects[type2];
+
 		// sort(vec1.begin(), vec1.end(), compare_xval);
 		// sort(vec2.begin(), vec2.end(), compare_xval);
 		int i = 0;
@@ -150,10 +151,14 @@ void CollisionSystem::update(){
 					}
 					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
 						if(type1 == "ENEMY"){
-							((Player*) obj2)->changeHealth(-1);
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*) obj2)->changeHealth(-1))
+								return;
 						}
 						else if(type2 == "ENEMY") {
-							((Player*)obj1)->changeHealth(-1);
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*)obj1)->changeHealth(-1))
+								return;
 						}
 					}
 					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
@@ -188,7 +193,7 @@ void CollisionSystem::update(){
 void CollisionSystem::handleEvent(Event* e){
 	DisplayObject* child = ((DTEvent*) e)->getAddedObject();
 
-    string str;
+    string str="";
 
     // Do some longest string matching for strings
 	if(child->id.find("ENEMY") != string::npos)				str = "ENEMY";
@@ -201,15 +206,22 @@ void CollisionSystem::handleEvent(Event* e){
 	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
 	else if(child->id.find("PORTAL") != string::npos)		str = "PORTAL";
 
+	if(str == "")	return;
+
 	auto it = find(objects[str].begin(), objects[str].end(), child);
 
 	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
-		// printf("Adding %s to CS\n", child->id.c_str());
 		objects[str].push_back(child);
+		if(str == "ENEMY"){
+			printf("Adding %s to CS\n", child->id.c_str());
+		}
 	}
 	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
-		// printf("removing %s from CS\n", child->id.c_str());
 		objects[str].erase(it);
+		if(str == "ENEMY"){
+			printf("Removing %s from CS\n", child->id.c_str());
+			it = find(objects[str].begin(), objects[str].end(), child);
+		}
 	}
 
 }

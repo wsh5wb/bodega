@@ -33,7 +33,7 @@ public:
 	virtual void renderXPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	virtual float percentOfHealthLost();
 	virtual float percentOfXP();
-	void changeHealth(int value);
+	bool changeHealth(int value);
 	void toggleHealthDisplay();
 	bool checkLevelUp();
 	void levelUp();
