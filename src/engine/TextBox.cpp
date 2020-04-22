@@ -28,7 +28,7 @@ void TextBox::draw(AffineTransform &at){
     auto current_y = dstrect.y;
     text_rect.x = current_x + 40;
     text_rect.y = current_y + 50;
-    if(count < 100){
+    if(count < 300){
     SDL_RenderCopy(Game::renderer, text_texture, nullptr, &text_rect);
     count++;
     }

@@ -211,6 +211,10 @@ void Dungeon::handleEvent(Event *e) {
 		start_room->openDoors();
 
 		zoomed_out = true;
+
+//		cleanUpDisplayTree();
+//		generate();
+
 	}
 
 }

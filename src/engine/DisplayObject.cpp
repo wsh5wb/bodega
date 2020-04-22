@@ -55,6 +55,7 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue) {
 DisplayObject::~DisplayObject(){
 	if(image != NULL) SDL_FreeSurface(image);
 	if(texture != NULL) SDL_DestroyTexture(texture);
+	cleanUpDisplayTree();
 }
 
 void DisplayObject::loadTexture(string filepath) {
@@ -392,6 +393,11 @@ void DisplayObject::saveSelf(vector<string> &objects,
 			<< "\n";
 	desc = sstm.str();
 	objects.push_back(desc);
+}
+
+
+void DisplayObject::cleanUpDisplayTree(){
+	//do nothing
 }
 
 

@@ -177,18 +177,18 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			yMov = 6;
 		}
 		//for tweening Demo
-		else if (k == SDL_SCANCODE_T){
-			TweenJuggler * juggle = TweenJuggler::getInstance();
-			Tween * position_tween = new Tween(this);
-			position_tween->animate(TWEEN_POSITION_X, oldX, oldX + 200, 200, TWEEN_QUADRATIC, EASE_IN);
-			juggle->add(position_tween);
-		}
-		else if (k == SDL_SCANCODE_R){
-			TweenJuggler * juggle = TweenJuggler::getInstance();
-			Tween * position_tween = new Tween(this);
-			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
-			juggle->add(position_tween);
-		}
+//		else if (k == SDL_SCANCODE_T){
+//			TweenJuggler * juggle = TweenJuggler::getInstance();
+//			Tween * position_tween = new Tween(this);
+//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX + 200, 200, TWEEN_QUADRATIC, EASE_IN);
+//			juggle->add(position_tween);
+//		}
+//		else if (k == SDL_SCANCODE_R){
+//			TweenJuggler * juggle = TweenJuggler::getInstance();
+//			Tween * position_tween = new Tween(this);
+//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
+//			juggle->add(position_tween);
+//		}
 		else if (k == SDL_SCANCODE_SEMICOLON){
 			changeHealth(-20);
 		}
@@ -244,7 +244,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	// }
 
 	if(xMov != 0 || yMov != 0){
-		if((double)(((std::clock() - lastFired) / (double) (attackSpeed*CLOCKS_PER_SEC)) > 1.0)){
+		if((double)(((double)attackSpeed*(std::clock() - lastFired) / (double) (CLOCKS_PER_SEC)) > 1.0)){
 			addProjectile(xMov,yMov,1000,0.3,0.3);
 			lastFired = std::clock();
 		}
