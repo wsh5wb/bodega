@@ -46,7 +46,7 @@ void StatMenu::draw(AffineTransform &at){
 }
 
 void StatMenu::generateText(){
-  //int x = Player::getPlayer()->getHealth(); this line destroys everything????
+  //int x = Player::getPlayer()->getHealth(); //this line destroys everything????
   title_texture = loadFont(font_path, title_font_size, overall_title, textColor);
   SDL_QueryTexture(title_texture, nullptr, nullptr, &title_rect.w, &title_rect.h);
   health_texture = loadFont(font_path, font_size, health, textColor);
