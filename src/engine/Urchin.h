@@ -13,7 +13,7 @@ public:
   virtual void update(set<SDL_Scancode> pressedKeys);
   virtual void draw(AffineTransform &at);
 
-  int timer;
+  int timer = 0;
   int xSpe, ySpe;
   int xBound, yBound;
 };
