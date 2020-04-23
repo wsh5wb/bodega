@@ -4,7 +4,7 @@
 
 using namespace std;
 
-HadesDungeon::HadesDungeon() {
+HadesDungeon::HadesDungeon(){
 
 	id = "HadesDungeon";
 

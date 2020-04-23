@@ -4,7 +4,7 @@
 
 using namespace std;
 
-OceanDungeon::OceanDungeon() {
+OceanDungeon::OceanDungeon(){
 
 	id = "OceanDungeon";
 

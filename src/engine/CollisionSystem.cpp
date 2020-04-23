@@ -74,21 +74,25 @@ void CollisionSystem::update(){
 
 						switch(dir){
 							case '1':{
+								printf("Collided down\n");
 								Event e("DUNG_TRANS_D", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
 							}
 							case '2':{
+								printf("Collided left\n");
 								Event e("DUNG_TRANS_L", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
 							}
 							case '3':{
+								printf("Collided up\n");
 								Event e("DUNG_TRANS_U", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
 							}
 							case '4':{
+								printf("Collided right\n");
 								Event e("DUNG_TRANS_R", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
@@ -238,16 +242,9 @@ void CollisionSystem::handleEvent(Event* e){
 
 	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
 		objects[str].push_back(child);
-		if(str == "ENEMY"){
-			printf("Adding %s to CS\n", child->id.c_str());
-		}
 	}
 	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
 		objects[str].erase(it);
-		if(str == "ENEMY"){
-			printf("Removing %s from CS\n", child->id.c_str());
-			it = find(objects[str].begin(), objects[str].end(), child);
-		}
 	}
 
 }
