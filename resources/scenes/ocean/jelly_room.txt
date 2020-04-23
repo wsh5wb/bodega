@@ -1,0 +1,11 @@
+5 4
+0 Scene ./resources/art/ocean/background.png 2.34375 2.34375 
+10 1 ENEMY_Jellyfish1 80 48 
+10 1 ENEMY_Jellyfish2 368 48
+10 1 ENEMY_Jellyfish3 80 208
+10 1 ENEMY_Jellyfish4 368 208
+Scene ENEMY_Jellyfish1
+Scene ENEMY_Jellyfish2
+Scene ENEMY_Jellyfish3
+Scene ENEMY_Jellyfish4
+
