@@ -7,6 +7,8 @@
 #include "Camera.h"
 #include "EventListener.h"
 
+#define ROOM_START_DELAY 90 //number of frames before room starts being active after player enters
+
 using namespace std;
 
 class Dungeon : public DisplayObjectContainer, EventListener{
@@ -30,6 +32,8 @@ public:
 	int * basic_rooms;
 	int basic_rooms_size = 0;
 	int dungeonType = 0;
+	int timer = 0;
+	Room* changingRoom = NULL;
 
 private:
 	void transitionRoom(string type);
