@@ -149,6 +149,30 @@ void CollisionSystem::update(){
 							continue;
 						}
 					}
+
+					else if(pair == "chest-PLAYER" || pair == "PLAYER-chest"){
+						DisplayObject* obj;
+						if(type1 == "chest"){
+							obj = obj1;
+							auto it = find(vec1.begin(), vec1.end(), obj);
+							if(it != vec1.end())
+								vec1.erase(it);
+
+							//((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
+						}
+						else if(type2 == "chest") {
+						 	obj = obj2;
+							auto it = find(vec2.begin(), vec2.end(), obj);
+							if(it != vec2.end())
+								vec2.erase(it);
+							//((Enemy*)obj1)->changeHealth(-Player::getPlayer()->damage);
+						}
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+						Event e("CHEST_OPENED", &Game::eventHandler);
+						Game::eventHandler.dispatchEvent(&e);
+						continue;
+					}
+					
 					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
 						if(type1 == "ENEMY"){
 							// must leave outdated scope if vec1/vec2 change
@@ -201,10 +225,12 @@ void CollisionSystem::handleEvent(Event* e){
 	else if(child->id.find("SETTING") != string::npos)		str = "SETTING";
 	// TODO: Make a new OBJECT category?
 	else if(child->id.find("Door") != string::npos)			str = "DOOR";
+	else if(child->id.find("chest") != string::npos)		str = "chest"; //before obstacle to overrule it
 	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
 	else if(child->id.find("FLOOR") != string::npos)		str = "FLOOR";
 	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
 	else if(child->id.find("PORTAL") != string::npos)		str = "PORTAL";
+
 
 	if(str == "")	return;
 

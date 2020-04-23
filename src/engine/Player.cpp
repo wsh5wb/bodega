@@ -128,6 +128,9 @@ float Player::percentOfXP(){
 
 bool Player::changeHealth(int value){
 	this->health += value;
+	if(health > maxHealth){
+		health = maxHealth;
+	}
 	if(health <= 0){
 		health = maxHealth;
 		Event e("PLAYER_KILLED", &Game::eventHandler);
@@ -135,6 +138,11 @@ bool Player::changeHealth(int value){
 		return true;
 	}
 	return false;
+}
+
+void Player::changeMaxHealth(int value){
+	maxHealth += value;
+	health += value;
 }
 
 bool Player::checkLevelUp(){
@@ -160,6 +168,18 @@ void Player::levelUp(){
 	health += 10;
 	maxHealth += 10;
 	attackSpeed += .2;
+}
+
+void Player::modifySpeed(int value){
+	runSpeed += value;
+}
+
+void Player::changeDamage(int value){
+	damage += value;
+}
+
+void Player::changeAttackSpeed(double value){
+	attackSpeed += value;
 }
 
 void Player::toggleHealthDisplay(){
@@ -190,8 +210,8 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	bool idle = true;
 	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_D) {
-			this->position.x += 4;
-			this->deltaX += 4;
+			this->position.x += runSpeed;
+			this->deltaX += runSpeed;
 			//this->flipH = false;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
@@ -199,8 +219,8 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
 		} else if (k == SDL_SCANCODE_A) {
-			this->position.x -= 4;
-			this->deltaX += -4;
+			this->position.x -= runSpeed;
+			this->deltaX += -runSpeed;
 			//this->flipH = true;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
@@ -208,15 +228,15 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
 		} else if (k == SDL_SCANCODE_W) {
-			this->position.y -= 4;
-			this->deltaY += -4;
+			this->position.y -= runSpeed;
+			this->deltaY += -runSpeed;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_S) {
-			this->position.y += 4;
-			this->deltaY += 4;
+			this->position.y += runSpeed;
+			this->deltaY += runSpeed;
 			if (this->currAnimation != "Run") {
 				this->play("Run");
 			}

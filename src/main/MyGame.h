@@ -23,6 +23,7 @@
 #include "Jelly.h"
 #include "Cerb.h"
 #include "Urchin.h"
+#include "ItemSystem.h"
 
 using namespace std;
 
@@ -42,6 +43,7 @@ private:
 	Enemy *enemy;
 
 	DungeonManager* dunMan;
+	ItemSystem* itemSys;
 	string scene;
 	bool changed;
 	bool isQuestDone;

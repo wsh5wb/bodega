@@ -27,6 +27,7 @@ MyGame::MyGame() :
 
 	myCamera = Camera::getCamera();
 
+	itemSys = new ItemSystem();
 	// Dungeon generation
 	dunMan = new DungeonManager();
 
@@ -50,6 +51,7 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PLAYER", "FLOOR");
 	Game::cs->watchForCollisions("PLAYER", "ENEMY");
 	Game::cs->watchForCollisions("PLAYER", "PORTAL");
+	Game::cs->watchForCollisions("PLAYER", "chest");
 	Game::cs->watchForCollisions("PROJECTILE", "OBSTACLE");
 	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 
@@ -70,6 +72,8 @@ MyGame::MyGame() :
 			"CHANGE_DUNGEON");
 	Game::eventHandler.addEventListener((EventListener*) dunMan,
 			"PLAYER_KILLED");
+	Game::eventHandler.addEventListener((EventListener*) itemSys,
+			"CHEST_OPENED");
 }
 
 MyGame::~MyGame() {

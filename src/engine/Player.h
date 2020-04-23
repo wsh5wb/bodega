@@ -34,10 +34,14 @@ public:
 	virtual float percentOfHealthLost();
 	virtual float percentOfXP();
 	bool changeHealth(int value);
+	void changeMaxHealth(int value);
+	void changeDamage(int value);
+	void changeAttackSpeed(double value);
 	void toggleHealthDisplay();
 	bool checkLevelUp();
 	void levelUp();
 	void changeXP(int value);
+	void modifySpeed(int value);
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
 	int damage = 100;
@@ -60,6 +64,7 @@ private:
 	int health = 114;
 	int maxHealth = 320;
 	bool displayHealth = true;
+	int runSpeed = 2;
 
 	int oldX=0, oldY=0;
 
