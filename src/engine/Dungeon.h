@@ -12,7 +12,7 @@ using namespace std;
 class Dungeon : public DisplayObjectContainer, EventListener{
 
 public:
-
+	Dungeon();
 	~Dungeon();
 	void cleanMatrix(int** m);
 
