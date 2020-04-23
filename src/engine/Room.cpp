@@ -1,5 +1,6 @@
 #include "Room.h"
 #include "Door.h"
+#include "Dungeon.h"
 
 Room::Room(string scene):DisplayObjectContainer() {
 	room = new Scene();
@@ -48,7 +49,8 @@ void Room::generateDoors(unsigned char doors){
 	int id[4] = {3,4,1,2};
 	for(int i = 1, y = 0; i < 16 && y < 4; i*=2, y++){
 		if(doors & i){
-			Door* door = new Door("Door"+to_string(id[y]), paths[parent->dungeonType][y]);
+			//Door* door = new Door("Door"+to_string(id[y]), paths[((Dungeon*)parent)->dungeonType][y]);
+			Door* door = new Door("Door"+to_string(id[y]), paths[0][y]);
 			door->moveTo(coords[y][0], coords[y][1]);
 			door->setSpeed(5);
 			door->setRotation(.05);

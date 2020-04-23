@@ -22,7 +22,7 @@ public:
 				activeDungeon = new OceanDungeon();
 				activeDungeon->generate();
 				curr_dungeon = OCEAN;
-				activeDungeon->dungeonType=cur_dungeon;
+				activeDungeon->dungeonType=curr_dungeon;
 				break;
 			}
 			case OCEAN: {
@@ -30,7 +30,7 @@ public:
 				activeDungeon = new HadesDungeon();
 				activeDungeon->generate();
 				curr_dungeon = HADES;
-				activeDungeon->dungeonType=cur_dungeon;
+				activeDungeon->dungeonType=curr_dungeon;
 				break;
 			}
 			}
@@ -44,7 +44,7 @@ public:
 			activeDungeon = new HadesDungeon();
 			activeDungeon->generate();
 			curr_dungeon = HADES;
-			activeDungeon->dungeonType=cur_dungeon;
+			activeDungeon->dungeonType=curr_dungeon;
 			Camera::getCamera()->addScene(activeDungeon);
 		}
 	}
