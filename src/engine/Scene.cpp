@@ -317,8 +317,8 @@ void Scene::loadScene(string sceneFilePath) {
 			SDL_Point position;
 			i >> temp->id >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
-//					temp->setHitbox(.1, .9);
-//					temp->showHitbox = true;
+			temp->setHitbox(.1, .9);
+			temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
 			// printf("Adding enemy (Urchin) %d\n", this->numEnemies);

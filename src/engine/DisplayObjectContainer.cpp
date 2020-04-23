@@ -37,8 +37,6 @@ DisplayObjectContainer::~DisplayObjectContainer() {
 		// this allows to change rm case of cs.handleEvent();
 
 		if((*it) != Player::getPlayer()){
-			if((*it)->id.find("ENEMY") != string::npos)
-				printf("Deleting %s from %s\n", (*it)->id.c_str(), this->id.c_str());
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
 			delete *it;

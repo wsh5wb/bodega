@@ -8,8 +8,35 @@
 
 using namespace std;
 
+Dungeon::Dungeon(){
+	Game::eventHandler.addEventListener((EventListener*) this,
+			"DUNG_TRANS_U");
+	Game::eventHandler.addEventListener((EventListener*) this,
+			"DUNG_TRANS_D");
+	Game::eventHandler.addEventListener((EventListener*) this,
+			"DUNG_TRANS_R");
+	Game::eventHandler.addEventListener((EventListener*) this,
+			"DUNG_TRANS_L");
+	Game::eventHandler.addEventListener((EventListener*) this,
+			"ENEMY_KILLED");
+	Game::eventHandler.addEventListener((EventListener*) this,
+			"PLAYER_KILLED");
+
+}
 Dungeon::~Dungeon() {
 	cerr << "DUNGEON DESTRUCTOR" << endl;
+	Game::eventHandler.removeEventListener((EventListener*) this,
+			"DUNG_TRANS_U");
+	Game::eventHandler.removeEventListener((EventListener*) this,
+			"DUNG_TRANS_D");
+	Game::eventHandler.removeEventListener((EventListener*) this,
+			"DUNG_TRANS_R");
+	Game::eventHandler.removeEventListener((EventListener*) this,
+			"DUNG_TRANS_L");
+	Game::eventHandler.removeEventListener((EventListener*) this,
+			"ENEMY_KILLED");
+	Game::eventHandler.removeEventListener((EventListener*) this,
+			"PLAYER_KILLED");
 	cleanMatrix(layout);
 }
 

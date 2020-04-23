@@ -12,7 +12,7 @@ using namespace std;
 class Dungeon : public DisplayObjectContainer, EventListener{
 
 public:
-
+	Dungeon();
 	~Dungeon();
 	void cleanMatrix(int** m);
 
@@ -29,6 +29,7 @@ public:
 	bool DEBUG_CHANGE_ROOM = false;
 	int * basic_rooms;
 	int basic_rooms_size = 0;
+	int dungeonType = 0;
 
 private:
 	void transitionRoom(string type);

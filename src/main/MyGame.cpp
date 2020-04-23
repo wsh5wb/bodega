@@ -56,18 +56,7 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 
 	// Initial event watching
-	Game::eventHandler.addEventListener((EventListener*) dungeon,
-			"DUNG_TRANS_U");
-	Game::eventHandler.addEventListener((EventListener*) dungeon,
-			"DUNG_TRANS_D");
-	Game::eventHandler.addEventListener((EventListener*) dungeon,
-			"DUNG_TRANS_R");
-	Game::eventHandler.addEventListener((EventListener*) dungeon,
-			"DUNG_TRANS_L");
-	Game::eventHandler.addEventListener((EventListener*) dungeon,
-			"ENEMY_KILLED");
-	Game::eventHandler.addEventListener((EventListener*) dungeon,
-			"PLAYER_KILLED");
+	
 	Game::eventHandler.addEventListener((EventListener*) dunMan,
 			"CHANGE_DUNGEON");
 	Game::eventHandler.addEventListener((EventListener*) dunMan,
