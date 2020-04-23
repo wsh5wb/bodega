@@ -33,7 +33,8 @@ Player::Player() :
 	this->addChild(chat_box);
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
-
+	my_stats = new StatMenu();
+	this->addChild(my_stats);
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -158,6 +159,19 @@ void Player::changeXP(int value){
 		levelUp();
 	}
 
+}
+
+int Player::getHealth(){
+	return this->health;
+}
+int Player::getMaxHealth(){
+	return this->maxHealth;
+}
+double Player::getSpeed(){
+	return this->speed;
+}
+double Player::getDamage(){
+	return this->damage;
 }
 
 // Can maybe do stuff at special levels like increase speed of projectiles or amount of health or something

@@ -11,6 +11,7 @@
 #include "TweenJuggler.h"
 #include "Projectile.h"
 #include "TextBox.h"
+#include "StatMenu.h"
 
 #define LEVELS 5
 using namespace std;
@@ -33,6 +34,10 @@ public:
 	virtual void renderXPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	virtual float percentOfHealthLost();
 	virtual float percentOfXP();
+	int getHealth();
+	int getMaxHealth();
+	double getSpeed();
+	double getDamage();
 	bool changeHealth(int value);
 	void changeMaxHealth(int value);
 	void changeDamage(int value);
@@ -59,7 +64,7 @@ public:
 
 private:
 	unsigned int xp = 0;
-	unsigned int level = 1, maxLevel = LEVELS; 
+	unsigned int level = 1, maxLevel = LEVELS;
 	unsigned int xpChart[LEVELS-1] = {10,25,50,100};
 	int health = 114;
 	int maxHealth = 320;
@@ -76,7 +81,8 @@ private:
 	int _yAcc = 2; //one pixel every two frames
 	int _yAccCount = 0;
 	int _yVel = 0;
-	TextBox * chat_box; 
+	TextBox * chat_box;
+	StatMenu * my_stats;
 	std::clock_t lastFired = 0;
 
 	static Player* player;
