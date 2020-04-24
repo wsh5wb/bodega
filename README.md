@@ -8,8 +8,10 @@ Two running options:
 
 Once compiled, use `make run` to run game
 
+Note, you may need to first run sudo apt-get install libsdl2-mixer-dev on Linux or the equivalent on Mac 
 
-# Controls for Alpha demo
+
+# Controls for Beta demo
 
 * W,A,S,D to move
 
@@ -19,7 +21,7 @@ Once compiled, use `make run` to run game
 
 * V to show entire map
 
-* Arrow keys to shoot basic projectiles (sometimes the projectiles do not fire and game needs to be restarted a few times to work. We are working on this bug).
+* Arrow keys to shoot basic projectiles 
 
 * Space to switch dungeons
 
@@ -29,3 +31,12 @@ While in translation mode:
 
 * I,J,K,L to move camera between adjacent room cells
 * N to reset character and camera to main room
+
+Design Team Updates:
+
+
+Engine Team Updates:
+
+Our team made a couple small engine bug fixes in various areas such as collision resolutions. In other areas, we worked on adding player levels/an XP system, random item generation, and a combat system. We also helped the level team add the ability to switch between dungeons and worked on boss room generation. 
+
+Level Team Updates:
