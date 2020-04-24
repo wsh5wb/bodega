@@ -2,6 +2,10 @@
 #include "Door.h"
 #include "Dungeon.h"
 
+Room::Room(){
+
+}
+
 Room::Room(string scene):DisplayObjectContainer() {
 	room = new Scene();
 	room->loadScene(scene);

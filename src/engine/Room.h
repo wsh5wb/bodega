@@ -10,6 +10,7 @@ class Room: public DisplayObjectContainer{
 
 public:
 
+	Room();
 	Room(string scene);
 	Room(string scene, unsigned char doors);
 
@@ -23,6 +24,7 @@ public:
 	bool start = false;
 	bool visible = false; //draws scene if visible, updates and draws if active
 	Scene *room = NULL; //scene that room draws
+	string type = "";
 	
 	void openDoors();
 	void closeDoors();

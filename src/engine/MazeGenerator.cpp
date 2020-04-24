@@ -139,7 +139,7 @@ void MazeGenerator::generateBossRoom(uniform_int_distribution<int>& dist, mt1993
 	srand(time(NULL));
 	int connect = rand() % 8;
 	unsigned char adjRoomDoor = 0;
-	int adjRoomLocs[8][2]={{x,y-1},{x-1,y},{x+2,y},{x-1,y+1},{x+2,y+1},{x,y+2},{x+1,y+2}};
+	int adjRoomLocs[8][2]={{x,y-1},{x+1,y-1},{x-1,y},{x+2,y},{x-1,y+1},{x+2,y+1},{x,y+2},{x+1,y+2}};
 
 	while(!checkPossible(adjRoomLocs[connect][0], adjRoomLocs[connect][1])){
 		connect = rand() % 8;
@@ -194,7 +194,7 @@ void MazeGenerator::generateBossRoom(uniform_int_distribution<int>& dist, mt1993
 
 void MazeGenerator::setStartRoom(){
 	for(auto it = level.rooms.begin(); it != level.rooms.end(); ++it){
-		if(it->second->distFromBoss >= 7){
+		if(it->second->distFromBoss == 1){
 			grid[it->second->pos.y][it->second->pos.x] = START_ROOM;
 			return;
 		}
@@ -203,8 +203,8 @@ void MazeGenerator::setStartRoom(){
 
 // X,Y is boss's adjacent room's x,y
 bool MazeGenerator::checkPossible(int x, int y){
-	printf("Checking possible for (%x,%x)\n", x,y);
 	// x or y out of bounds, not possible
+	printf("Checking generation for (%x,%x)\n", x,y);
 	if(x<0 || y<0 || x>=GRID_SIZE || y>=GRID_SIZE)
 		return false;
 	// if room is in top left or bottom right corner area, not possible
