@@ -45,4 +45,4 @@ Our team made a couple small engine bug fixes in various areas such as collision
 
 Level Team Updates:
 
-For Daniel and Tonks, we focused on removing bugs with scene transitions, removing faulty environemnt collisions, adding in preliminary spawners for our third and fourth areas, added in a player information system and textbox, worked out bugs in our projectile/collision system and updated visuals for player projectiles, and locating theme music for each of our four areas. We also helped the design team with boss room generation and viewing with Camera and reworking all our enemy programming. 
+For Daniel and Tonks, we focused on removing bugs with scene transitions, removing faulty environemnt collisions, adding in preliminary spawners for our third and fourth areas, added in a player information system and textbox, worked out bugs in our projectile/collision system and updated visuals for player projectiles, and locating theme music for each of our four areas. We also helped the design team with boss room generation, viewing boss rooms with Camera, and reworking all our enemy programming. 
