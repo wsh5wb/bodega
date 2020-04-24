@@ -8,8 +8,8 @@ Jelly::Jelly(Player *player) :
 		Enemy(player) {
 	this->loadTexture("resources/enemies/jelly.png");
 	this->id = "ENEMY_Jellyfish";
-	this->scaleX *= 0.1;
-	this->scaleY *= 0.1;
+	this->scaleX *= 32./w;
+	this->scaleY *= 48./h;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
 	xSpe = 1;
@@ -31,8 +31,8 @@ Jelly::Jelly(Player *player, int d) :
 	default: {
 		this->loadTexture("resources/enemies/jelly.png");
 		this->id = "ENEMY_Jellyfish";
-		this->scaleX *= 0.1;
-		this->scaleY *= 0.1;
+		this->scaleX *= 32./w;
+		this->scaleY *= 48./h;
 	}
 	}
 

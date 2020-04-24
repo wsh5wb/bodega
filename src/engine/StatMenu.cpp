@@ -51,6 +51,13 @@ void StatMenu::draw(AffineTransform &at){
     SDL_RenderCopy(Game::renderer, modifiers_title_texture, nullptr, &modifiers_title_rect);
 }
 
+void StatMenu::handleEvent(Event* e){
+  string type = e->getType();
+  if (type == "STATS_CHANGED") {
+    generateText();
+  }
+}
+
 void StatMenu::generateText(){
   int curr_health = Player::getPlayer()->getHealth();
   int curr_level = Player::getPlayer()->getLevel();

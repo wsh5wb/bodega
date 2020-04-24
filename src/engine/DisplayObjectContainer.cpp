@@ -97,7 +97,6 @@ void DisplayObjectContainer::removeImmediateChild(string id) {
 		if (id == (*it)->id) {
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
-			printf("Setting %s to NULL\n", (*it)->id.c_str());
 			delete *it;
 			*it = NULL;
 			children.erase(it);
@@ -111,7 +110,6 @@ void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
 		if(child == *it){
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
-			printf("Setting %s to NULL\n", (*it)->id.c_str());
 			children.erase(it);
 			*it = NULL;
 			break;
@@ -123,7 +121,6 @@ void DisplayObjectContainer::removeChild(int index) {
 	vector<DisplayObject*>::iterator it = children.begin() + index;
 	DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 	Game::eventHandler.dispatchEvent(&e);
-	printf("Setting %s to NULL\n", (*it)->id.c_str());
 	delete *it;
 	*it = NULL;
 	children.erase(it);
@@ -134,7 +131,6 @@ void DisplayObjectContainer::removeThis() {
 			it != children.end(); it++) {
 		DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 		Game::eventHandler.dispatchEvent(&e);
-		printf("Setting %s to NULL\n", (*it)->id.c_str());
 		delete *it;
 		*it = NULL;
 	}

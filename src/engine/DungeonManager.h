@@ -20,17 +20,17 @@ public:
 			case HADES: {
 				printf("GENERATING OCEAN\n");
 				activeDungeon = new OceanDungeon();
-				activeDungeon->generate();
 				curr_dungeon = OCEAN;
 				activeDungeon->dungeonType=curr_dungeon;
+				activeDungeon->generate();
 				break;
 			}
 			case OCEAN: {
 				printf("GENERATING HADES\n");
 				activeDungeon = new HadesDungeon();
-				activeDungeon->generate();
 				curr_dungeon = HADES;
 				activeDungeon->dungeonType=curr_dungeon;
+				activeDungeon->generate();
 				break;
 			}
 			}
@@ -42,9 +42,9 @@ public:
 			Camera::getCamera()->removeScene(activeDungeon);
 			printf("GENERATING HADES (on death)\n");
 			activeDungeon = new HadesDungeon();
-			activeDungeon->generate();
 			curr_dungeon = HADES;
 			activeDungeon->dungeonType=curr_dungeon;
+			activeDungeon->generate();
 			Camera::getCamera()->addScene(activeDungeon);
 		}
 	}

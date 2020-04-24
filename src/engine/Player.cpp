@@ -120,7 +120,8 @@ float Player::percentOfHealthLost(){
 
 float Player::percentOfXP(){
 	if(level == maxLevel){ return 0.0;}
-	float d = (float(this->xpChart[level-1] - this->xp)/ float(this->xpChart[level-1]));
+	//float d = (float(this->xpChart[level-1] - this->xp)/ float(this->xpChart[level-1]));
+	float d = (float(this->xpNeeded - this->xp)/ float(this->xpNeeded));
 	//printf("Max Health: %x, health %x, percentLoss %9.6f \n", this->maxHealth, this->health, d);
 	return d;
 }
@@ -134,26 +135,35 @@ bool Player::changeHealth(int value){
 		health = maxHealth;
 		Event e("PLAYER_KILLED", &Game::eventHandler);
 		Game::eventHandler.dispatchEvent(&e);
+		Event e2("STATS_CHANGED", &Game::eventHandler);
+		Game::eventHandler.dispatchEvent(&e2);
 		return true;
 	}
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 	return false;
 }
 
 void Player::changeMaxHealth(int value){
 	maxHealth += value;
 	health += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 bool Player::checkLevelUp(){
 	if(level == maxLevel){
 		return false;
-	}return xp >= xpChart[level-1];
+	}//return xp >= xpChart[level-1];
+	return xp >= xpNeeded;
 }
 
 void Player::changeXP(int value){
 	this->xp += value;
 	while(checkLevelUp()){
-		xp -= xpChart[level-1];
+		//xp -= xpChart[level-1];
+		xp -= xpNeeded;
+		xpNeeded *= xpScale;
 		levelUp();
 	}
 
@@ -186,18 +196,26 @@ void Player::levelUp(){
 	health += 10;
 	maxHealth += 10;
 	attackSpeed += .2;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::modifySpeed(int value){
 	runSpeed += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::changeDamage(int value){
 	damage += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::changeAttackSpeed(double value){
 	attackSpeed += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::toggleHealthDisplay(){
@@ -339,7 +357,7 @@ void Player::initIFrames(int numFrames) {
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
 	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
-	renderXPBar(950, 20, 200, 25, percentOfXP(), colorSDL(128, 0, 0, 220), colorSDL(114, 218, 255, 220));
+	renderXPBar(950, 20, 200, 25, percentOfXP(), colorSDL(3, 12, 80, 220), colorSDL(220, 230, 120, 220));
 	// for(Projectile* p : projectiles){
 	// 	p->draw(at);
 	// }

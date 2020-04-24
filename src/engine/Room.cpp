@@ -2,6 +2,10 @@
 #include "Door.h"
 #include "Dungeon.h"
 
+Room::Room(){
+
+}
+
 Room::Room(string scene):DisplayObjectContainer() {
 	room = new Scene();
 	room->loadScene(scene);
@@ -9,6 +13,15 @@ Room::Room(string scene):DisplayObjectContainer() {
 }
 
 Room::Room(string scene, unsigned char doors){
+	room = new Scene();
+	generateDoors(doors);
+	room->loadScene(scene);
+	generateWalls();
+	addChild(room);
+}
+
+Room::Room(string scene, unsigned char doors, int d){
+	dungeonType = d;
 	room = new Scene();
 	generateDoors(doors);
 	room->loadScene(scene);
@@ -25,6 +38,10 @@ void Room::removeFromDisplayTree(){
 }
 
 void Room::generateDoors(unsigned char doors){
+	if(!doors){
+		printf("ROOM HAD NO DOORS\n");
+		return;
+	}
 	// need a way to dynamically change these paths. Probably just pass them in from dungeon
 	string paths[2][4] = {{"./resources/art/hades/u_door2.png","./resources/art/hades/r_door2.png",
 			"./resources/art/hades/lo_door2.png","./resources/art/hades/l_door2.png"},{"./resources/art/ocean/u_door.png","./resources/art/ocean/r_door.png",
@@ -49,8 +66,8 @@ void Room::generateDoors(unsigned char doors){
 	int id[4] = {3,4,1,2};
 	for(int i = 1, y = 0; i < 16 && y < 4; i*=2, y++){
 		if(doors & i){
-			//Door* door = new Door("Door"+to_string(id[y]), paths[((Dungeon*)parent)->dungeonType][y]);
-			Door* door = new Door("Door"+to_string(id[y]), paths[0][y]);
+			Door* door = new Door("Door"+to_string(id[y]), paths[dungeonType][y]);
+			//Door* door = new Door("Door"+to_string(id[y]), paths[0][y]);
 			door->moveTo(coords[y][0], coords[y][1]);
 			door->setSpeed(5);
 			door->setRotation(.05);
@@ -80,6 +97,10 @@ void Room::generateWalls(){
 		// printf("Adding wall%d at (%d,%d)\n", i+1,position[i%3].x,position[i%3].y);
 		room->addChild(wall);
 	}
+}
+
+void Room::removeWall(int wall){
+	room->removeImmediateChild("OBSTACLE_WALL"+to_string(wall+1));
 }
 
 void Room::update(set<SDL_Scancode> pressedKeys) {
