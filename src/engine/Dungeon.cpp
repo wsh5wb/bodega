@@ -239,7 +239,7 @@ void Dungeon::generate() {
 						seenBoss = true;
 						boss_y = i; boss_x = j;
 					}
-					s = this->scenes.at(0);
+					s = this->scenes.at(this->scenes.size()-1-bossRoomsCount);
 				}else 	s = this->scenes.at(ind);
 				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);

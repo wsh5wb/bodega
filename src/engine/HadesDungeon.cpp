@@ -26,6 +26,10 @@ HadesDungeon::HadesDungeon(){
 	scenes.push_back("./resources/scenes/hades?/double_jelly_room.txt");
 	scenes.push_back("./resources/scenes/hades?/four_lava_jelly_room.txt");
 	scenes.push_back("./resources/scenes/hades?/urchin_room.txt");
+	scenes.push_back("./resources/scenes/hades?/boss_top_left.txt");
+	scenes.push_back("./resources/scenes/hades?/boss_top_right.txt");
+	scenes.push_back("./resources/scenes/hades?/boss_bot_left.txt");
+	scenes.push_back("./resources/scenes/hades?/boss_bot_right.txt");
 }
 
 HadesDungeon::~HadesDungeon() {

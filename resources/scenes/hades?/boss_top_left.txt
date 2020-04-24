@@ -1,0 +1,2 @@
+1 0
+0 Scene ./resources/art/hades/HadesBossTLC.png 1.0480349345 1.0477299185 
