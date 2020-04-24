@@ -194,7 +194,7 @@ void MazeGenerator::generateBossRoom(uniform_int_distribution<int>& dist, mt1993
 
 void MazeGenerator::setStartRoom(){
 	for(auto it = level.rooms.begin(); it != level.rooms.end(); ++it){
-		if(it->second->distFromBoss == 1){
+		if(it->second->distFromBoss >= 7){
 			grid[it->second->pos.y][it->second->pos.x] = START_ROOM;
 			return;
 		}
