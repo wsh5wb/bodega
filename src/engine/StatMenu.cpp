@@ -53,7 +53,7 @@ void StatMenu::draw(AffineTransform &at){
 
 void StatMenu::handleEvent(Event* e){
   string type = e->getType();
-  if (type == "STATS_CHANGED") {
+  if (type == "STATS_CHANGED" && text_active == true) {
     generateText();
   }
 }
@@ -90,6 +90,7 @@ void StatMenu::update(set<SDL_Scancode> pressedKeys){
         alpha_tween->animate(TWEEN_ALPHA, this->alpha, 255, 30, TWEEN_QUADRATIC, EASE_IN);
         juggle->add(alpha_tween);
         generateText();
+        text_active = true;
       }
         else if (this->alpha == 255){
         TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -103,6 +104,7 @@ void StatMenu::update(set<SDL_Scancode> pressedKeys){
         SDL_DestroyTexture(attack_speed_texture);
         SDL_DestroyTexture(level_texture);
         SDL_DestroyTexture(modifiers_title_texture);
+        text_active = false;
       }
     }
   }

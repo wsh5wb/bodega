@@ -31,6 +31,7 @@ public:
   void chunkString(string s, int chunkSize);
 
 private:
+  bool text_active = true;
   string font_path = "resources/fonts/dtm.ttf";
   string default_path = "./resources/miscellaneous/tablet.png";
   string overall_title = "Attributes";
