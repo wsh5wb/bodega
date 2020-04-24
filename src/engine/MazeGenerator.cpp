@@ -141,51 +141,42 @@ void MazeGenerator::generateBossRoom(uniform_int_distribution<int>& dist, mt1993
 	unsigned char adjRoomDoor = 0;
 	int adjRoomLocs[8][2]={{x,y-1},{x-1,y},{x+2,y},{x-1,y+1},{x+2,y+1},{x,y+2},{x+1,y+2}};
 
-	while(adjRoomLocs[connect][0] >= GRID_SIZE || adjRoomLocs[connect][1] >= GRID_SIZE||
-		adjRoomLocs[connect][0] < 0 || adjRoomLocs[connect][1] < 0){
+	while(!checkPossible(adjRoomLocs[connect][0], adjRoomLocs[connect][1])){
 		connect = rand() % 8;
 	}
-
+	pos.x = adjRoomLocs[connect][0]; pos.y = adjRoomLocs[connect][1];
 	printf("CONNECT IS %d\n", connect);
 
 	if(connect == 0){
 		adjRoomDoor = 1<<SOUTH;
-		pos.x = x; pos.y = y-1;
 		level.rooms["("+to_string(y)+","+to_string(x)+")"]->doors = (1<<NORTH);
 	}
 	else if(connect == 1){
 		adjRoomDoor = 1<<SOUTH;
-		pos.x = x+1; pos.y = y-1;
 		level.rooms["("+to_string(y)+","+to_string(x+1)+")"]->doors = (1<<NORTH);
 	}
 	else if(connect == 2){
 		adjRoomDoor = 1<<EAST;
-		pos.x = x-1; pos.y = y;
 		level.rooms["("+to_string(y)+","+to_string(x)+")"]->doors = (1<<WEST);
 	}
 	else if(connect == 3){
 		adjRoomDoor = 1<<WEST;
-		pos.x = x+2; pos.y = y;
 		level.rooms["("+to_string(y)+","+to_string(x+1)+")"]->doors = (1<<EAST);
 	}
 	else if(connect == 4){
 		adjRoomDoor = 1<<EAST;
-		pos.x = x-1; pos.y = y+1;
 		level.rooms["("+to_string(y+1)+","+to_string(x)+")"]->doors = (1<<WEST);
 	}
 	else if(connect == 5){
 		adjRoomDoor = 1<<WEST;
-		pos.x = x+2; pos.y = y+1;
 		level.rooms["("+to_string(y+1)+","+to_string(x+1)+")"]->doors = (1<<EAST);
 	}
 	else if(connect == 6){
 		adjRoomDoor = 1<<NORTH;
-		pos.x = x; pos.y = y+2;
 		level.rooms["("+to_string(y+1)+","+to_string(x)+")"]->doors = (1<<SOUTH);
 	}
 	else if(connect == 7){
 		adjRoomDoor = 1<<NORTH;
-		pos.x = x+1; pos.y = y+2;
 		level.rooms["("+to_string(y+1)+","+to_string(x+1)+")"]->doors = (1<<SOUTH);
 	}
 
@@ -208,6 +199,27 @@ void MazeGenerator::setStartRoom(){
 			return;
 		}
 	}
+}
+
+// X,Y is boss's adjacent room's x,y
+bool MazeGenerator::checkPossible(int x, int y){
+	printf("Checking possible for (%x,%x)\n", x,y);
+	// x or y out of bounds, not possible
+	if(x<0 || y<0 || x>=GRID_SIZE || y>=GRID_SIZE)
+		return false;
+	// if room is in top left or bottom right corner area, not possible
+	if(x+y==0 || x+y==1 || x+y==2*(GRID_SIZE-1)-1 || x+y==2*(GRID_SIZE-1))
+		return false;
+	// if room is in bottom left corner area, not possible
+	if(x<2 && y>GRID_SIZE-3 && x!=1 && y!=GRID_SIZE-2)
+		return false;
+	// if room is in top right corner area, not possible
+	if(x>GRID_SIZE-3 && y<2 && x!=GRID_SIZE-2 && y!=1)
+		return false;
+
+	printf("Generation is possible\n");
+
+	return true;
 }
 
 void MazeGenerator::print_map() {

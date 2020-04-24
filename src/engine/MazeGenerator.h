@@ -79,6 +79,7 @@ public:
 private:
 	void generateBossRoom(uniform_int_distribution<int>& dist, mt19937 &e);
 	void setStartRoom();
+	bool checkPossible(int x, int y);
 	floor_t level;
 	int** grid;
 
