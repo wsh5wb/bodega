@@ -37,6 +37,6 @@ Design Team Updates:
 
 Engine Team Updates:
 
-Our team made a couple small engine bug fixes in various areas such as collision resolutions. In other areas, we worked on adding player levels/an XP system, random item generation, and a combat system. We also helped the level team add the ability to switch between dungeons and worked on boss room generation. 
+Our team made a couple small engine bug fixes in various areas such as collision resolutions and event dispatchers. In other areas, we worked on adding player levels/an XP system, random item generation, and a combat system. We also helped the level team add the ability to switch between dungeons and worked on boss room generation and door locking mechanics.
 
 Level Team Updates:
