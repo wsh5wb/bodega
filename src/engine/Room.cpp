@@ -16,6 +16,15 @@ Room::Room(string scene, unsigned char doors){
 	addChild(room);
 }
 
+Room::Room(string scene, unsigned char doors, int d){
+	dungeonType = d;
+	room = new Scene();
+	generateDoors(doors);
+	room->loadScene(scene);
+	generateWalls();
+	addChild(room);
+}
+
 void Room::addToDisplayTree(){
 	//addChild(room);
 }
@@ -49,8 +58,8 @@ void Room::generateDoors(unsigned char doors){
 	int id[4] = {3,4,1,2};
 	for(int i = 1, y = 0; i < 16 && y < 4; i*=2, y++){
 		if(doors & i){
-			//Door* door = new Door("Door"+to_string(id[y]), paths[((Dungeon*)parent)->dungeonType][y]);
-			Door* door = new Door("Door"+to_string(id[y]), paths[0][y]);
+			Door* door = new Door("Door"+to_string(id[y]), paths[dungeonType][y]);
+			//Door* door = new Door("Door"+to_string(id[y]), paths[0][y]);
 			door->moveTo(coords[y][0], coords[y][1]);
 			door->setSpeed(5);
 			door->setRotation(.05);

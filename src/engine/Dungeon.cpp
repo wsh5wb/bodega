@@ -192,7 +192,7 @@ void Dungeon::generate() {
 				unsigned char doors = room_data->doors;
 				// printf("doors %x\n", doors);
 				string s = this->scenes.at(ind);
-				Room *temp = new Room(s, doors); //crashes here???
+				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
 

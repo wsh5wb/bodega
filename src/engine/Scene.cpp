@@ -312,8 +312,10 @@ void Scene::loadScene(string sceneFilePath) {
 		}
 		case 11: { //Urchin
 
+			int skin = 0;
+			i >> skin;
 			Player *tempP = Player::getPlayer();
-			Urchin *temp = new Urchin(tempP);
+			Urchin *temp = new Urchin(tempP, skin);
 			SDL_Point position;
 			i >> temp->id >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);

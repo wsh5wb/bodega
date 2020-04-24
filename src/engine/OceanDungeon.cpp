@@ -8,8 +8,8 @@ OceanDungeon::OceanDungeon() {
 
 	id = "OceanDungeon";
 
-	basic_rooms_size = 4;
-	int basic_rooms0[] = { 0, 2, 3, 4 };
+	basic_rooms_size = 5;
+	int basic_rooms0[] = { 0, 2, 3, 4, 5 };
 	basic_rooms = (int*) malloc(sizeof(int) * basic_rooms_size);
 	for (int i = 0; i < basic_rooms_size; i++) {
 		basic_rooms[i] = basic_rooms0[i];
@@ -20,6 +20,7 @@ OceanDungeon::OceanDungeon() {
 	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
 	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
 	scenes.push_back("./resources/scenes/ocean/jelly_room.txt");
+	scenes.push_back("./resources/scenes/ocean/urchin_room.txt");
 }
 
 OceanDungeon::~OceanDungeon() {
