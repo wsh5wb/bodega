@@ -36,6 +36,8 @@ public:
 	Room* changingRoom = NULL;
 
 private:
+	SDL_Point boss_locations[4];
+	bool isBossRoom(int x, int y);
 	void transitionRoom(string type);
 };
 

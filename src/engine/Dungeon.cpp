@@ -218,7 +218,7 @@ void Dungeon::generate() {
 	floor_t level = M.getLevel();
 	cerr << "here1\n";
 	Room *start_room;
-	bool seenBoss = false;
+	// bool seenBoss = false;
 	int bossRoomsCount = 0;
 	for (int i = GRID_SIZE; i--;) {
 		for (int j = GRID_SIZE; j--;) {
@@ -232,9 +232,9 @@ void Dungeon::generate() {
 				// printf("doors %x\n", doors);
 				string s;
 				if(ind == BOSS_ROOM -1){
-					if(!seenBoss){	
-						seenBoss = true;
-						boss_x = j; boss_y = i;
+					boss_locations[bossRoomsCount] = {j,i};
+					if(room_data->doors != 0){
+						boss_y = i; boss_x = j;
 					}
 					s = this->scenes.at(0);
 				}else 	s = this->scenes.at(ind);
@@ -305,6 +305,16 @@ void Dungeon::handleEvent(Event *e) {
 
 }
 
+bool Dungeon::isBossRoom(int x, int y){
+	for(SDL_Point loc : boss_locations){
+		if(loc.x == x && loc.y == y){
+			printf("in boss room!\n");
+			return true;
+		}
+	}
+	return false;
+}
+
 void Dungeon::transitionRoom(string type) {
 	Room *old_room = (Room*) DisplayObjectContainer::getChild(
 			id + to_string(current_y) + "-" + to_string(current_x));
@@ -322,6 +332,9 @@ void Dungeon::transitionRoom(string type) {
 	if (type == "DUNG_TRANS_D") {
 		startPos = 900 * current_y;
 		current_y += 1;
+		if(isBossRoom(current_x, current_y)){
+			current_y = boss_y; current_x = boss_x;
+		}
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
 		old_room->active = false;
@@ -337,6 +350,9 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_L") {
 		startPos = 1200 * current_x;
 		current_x -= 1;
+		if(isBossRoom(current_x, current_y)){
+			current_y = boss_y; current_x = boss_x;
+		}
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
 		player->translate(-player_dist, 0);
@@ -352,6 +368,9 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_U") {
 		startPos = 900 * current_y;
 		current_y -= 1;
+		if(isBossRoom(current_x, current_y)){
+			current_y = boss_y; current_x = boss_x;
+		}
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
 		player->translate(0, -player_dist);
@@ -367,6 +386,9 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_R") {
 		startPos = 1200 * current_x;
 		current_x += 1;
+		if(isBossRoom(current_x, current_y)){
+			current_y = boss_y; current_x = boss_x;
+		}
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
 		player->translate(player_dist, 0);
@@ -393,6 +415,7 @@ void Dungeon::transitionRoom(string type) {
 	Camera *myCamera = Camera::getCamera();
 	if (!zoomed_out) {
 		if (current_x == boss_x && current_y == boss_y) {
+			printf("At boss room!\n");
 			int room_size_x = 512;
 			int room_size_y = 384;
 			int x_adj = (boss_x - start_x) * room_size_x;
