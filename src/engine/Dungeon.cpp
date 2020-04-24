@@ -228,6 +228,10 @@ void Dungeon::generate() {
 				int c = 0;
 				unsigned char doors = room_data->doors;
 				// printf("doors %x\n", doors);
+				if(ind == BOSS_ROOM -1){
+					boss_x = j; boss_y = i;
+					ind = 0;
+				}
 				string s = this->scenes.at(ind);
 				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);
