@@ -15,10 +15,10 @@ OlympusDungeon::OlympusDungeon() {
 		basic_rooms[i] = basic_rooms0[i];
 	}
 
-	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
+	scenes.push_back("./resources/scenes/olympus/basic_room1.txt");
 	scenes.push_back("./resources/scenes/ocean/start.txt");
-	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
-	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
+	scenes.push_back("./resources/scenes/olympus/basic_room1.txt");
+	scenes.push_back("./resources/scenes/ocean/torch_chest.txt");
 	scenes.push_back("./resources/scenes/ocean/jelly_room.txt");
 	scenes.push_back("./resources/scenes/ocean/urchin_room.txt");
 }
