@@ -1,0 +1,12 @@
+6 5
+0 Scene ./resources/art/forest/background.png 2.34375 2.34375
+9 chest_OBSTACLE ./resources/art/hades/small_chest.png 5 1 1 0 0.05 0 0 0 240 176 .3 .7 -.05 .3
+9 bush1_OBSTACLE ./resources/art/forest/bush.png 5 1 1 0 0.05 0 0 0 64 64 .2 .8 .05 .65
+9 pine1_OBSTACLE ./resources/art/forest/pine.png 5 1 1 0 0.05 0 0 0 352 64 .2 .8 .05 .65
+9 bush2_OBSTACLE ./resources/art/forest/bush.png 5 1 1 0 0.05 0 0 0 64 224 .2 .8 .05 .65
+9 pine2_OBSTACLE ./resources/art/forest/pine.png 5 1 1 0 0.05 0 0 0 352 224 .2 .8 .05 .65
+Scene chest_OBSTACLE
+Scene bush1_OBSTACLE
+Scene pine1_OBSTACLE
+Scene bush2_OBSTACLE
+Scene pine2_OBSTACLE

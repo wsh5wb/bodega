@@ -4,10 +4,14 @@
 #include "Dungeon.h"
 #include "HadesDungeon.h"
 #include "OceanDungeon.h"
+#include "ForestDungeon.h"
+#include "OlympusDungeon.h"
 
-#define NUM_DUNGEONS	2
+#define NUM_DUNGEONS	4
 #define HADES		 	0
 #define OCEAN			1
+#define FOREST		 	2
+#define OLYMPUS			3
 
 class DungeonManager: EventListener {
 public:
@@ -21,15 +25,31 @@ public:
 				printf("GENERATING OCEAN\n");
 				activeDungeon = new OceanDungeon();
 				curr_dungeon = OCEAN;
-				activeDungeon->dungeonType=curr_dungeon;
+				activeDungeon->dungeonType = curr_dungeon;
 				activeDungeon->generate();
 				break;
 			}
 			case OCEAN: {
+				printf("GENERATING FOREST\n");
+				activeDungeon = new ForestDungeon();
+				curr_dungeon = FOREST;
+				activeDungeon->dungeonType = curr_dungeon;
+				activeDungeon->generate();
+				break;
+			}
+			case FOREST: {
+				printf("GENERATING OLYMPUS\n");
+				activeDungeon = new OlympusDungeon();
+				curr_dungeon = OLYMPUS;
+				activeDungeon->dungeonType = curr_dungeon;
+				activeDungeon->generate();
+				break;
+			}
+			case OLYMPUS: {
 				printf("GENERATING HADES\n");
 				activeDungeon = new HadesDungeon();
 				curr_dungeon = HADES;
-				activeDungeon->dungeonType=curr_dungeon;
+				activeDungeon->dungeonType = curr_dungeon;
 				activeDungeon->generate();
 				break;
 			}
@@ -43,7 +63,7 @@ public:
 			printf("GENERATING HADES (on death)\n");
 			activeDungeon = new HadesDungeon();
 			curr_dungeon = HADES;
-			activeDungeon->dungeonType=curr_dungeon;
+			activeDungeon->dungeonType = curr_dungeon;
 			activeDungeon->generate();
 			Camera::getCamera()->addScene(activeDungeon);
 		}

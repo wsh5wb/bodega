@@ -1,0 +1,2 @@
+1 0
+0 Scene ./resources/art/forest/background.png 2.34375 2.34375
