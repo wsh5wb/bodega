@@ -60,6 +60,35 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 
+	//camera for being in dungeon
+	if (!zoomed_out && current_x == boss_x && current_y == boss_y) {
+		int room_size_x = 512;
+		int room_size_y = 384;
+		int x_adj = (boss_x - start_x) * room_size_x;
+		int y_adj = (boss_y - start_y) * room_size_y;
+		Player *p = Player::getPlayer();
+		Camera *myCamera = Camera::getCamera();
+		int c_x = -myCamera->container->position.x;
+		int c_y = -myCamera->container->position.y;
+		if (p->position.x - x_adj < (room_size_x / 2)
+				&& p->position.x - x_adj > (-room_size_x / 2)) {
+			c_x = 1200 * current_x + 2.34375 * (p->position.x - x_adj) - 600;
+		} else if (p->position.x - x_adj > (-room_size_x / 2)) {
+			c_x = 1200 * (current_x);
+		} else {
+			c_x = 1200 * (current_x - 1);
+		}
+		if (p->position.y - y_adj < (room_size_y / 2)
+				&& p->position.y - y_adj > (-room_size_y / 2)) {
+			c_y = 900 * current_y + 2.34375 * (p->position.y - y_adj) - 450;
+		} else if (p->position.y - y_adj > (-room_size_y / 2)) {
+			c_y = 900 * (current_y);
+		} else {
+			c_y = 900 * (current_y - 1);
+		}
+		myCamera->setLocation(c_x, c_y);
+	}
+
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
 
@@ -140,12 +169,20 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			break;
 		}
 
+		case SDL_SCANCODE_C: {
+			Player *p = Player::getPlayer();
+			cerr << "player x: " << p->position.x;
+			cerr << "\nplayer y: " << p->position.y << "\n\n";
+			break;
+		}
+
 		}
 	}
 	if (changingRoom) {
 		if (timer <= ROOM_START_DELAY) {
 			timer++;
 		} else {
+			zoomed_out = true;
 			changingRoom->active = true;
 			changingRoom = NULL;
 			timer = 0;
@@ -329,6 +366,26 @@ void Dungeon::transitionRoom(string type) {
 	// no tweening until we add functionality to tween camera
 	Camera *myCamera = Camera::getCamera();
 	if (!zoomed_out) {
+		if (current_x == boss_x && current_y == boss_y) {
+			int room_size_x = 512;
+			int room_size_y = 384;
+			int x_adj = (boss_x - start_x) * room_size_x;
+			int y_adj = (boss_y - start_y) * room_size_y;
+			Player *p = Player::getPlayer();
+			Camera *myCamera = Camera::getCamera();
+			int c_x, c_y;
+			if (p->position.x - x_adj > 0) {
+				c_x = 1200 * (current_x);
+			} else {
+				c_x = 1200 * (current_x - 1);
+			}
+			if (p->position.y - y_adj > 0) {
+				c_y = 900 * (current_y);
+			} else {
+				c_y = 900 * (current_y - 1);
+			}
+			myCamera->setLocation(c_x, c_y);
+		}
 		printf("after transition, curr x and y are %d     %d\n", current_x,
 				current_y);
 		Tween *camPosTween = new Tween(Camera::getCamera()->container);

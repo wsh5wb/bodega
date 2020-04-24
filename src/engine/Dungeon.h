@@ -26,7 +26,7 @@ public:
 
 	int ** layout; //2d int array representing dungeon structure where -1 is empty and each other int is index into scenes for that room's corrosponding scene
 	vector<string> scenes;//list of paths to scenes representing rooms in dungeon
-	int start_x, start_y, current_x, current_y;
+	int start_x, start_y, current_x, current_y, boss_x = 2, boss_y = 2;
 	bool zoomed_out = true;
 	bool DEBUG_CHANGE_ROOM = false;
 	int * basic_rooms;
