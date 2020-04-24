@@ -38,6 +38,8 @@ void StatMenu::draw(AffineTransform &at){
     damage_rect.y = current_y + 175;
     attack_speed_rect.x = current_x + 50;
     attack_speed_rect.y = current_y + 200;
+    level_rect.x = current_x + 50;
+    level_rect.y = current_y + 225;
     modifiers_title_rect.x = current_x + 250;
     modifiers_title_rect.y = current_y + 100;
     SDL_RenderCopy(Game::renderer, title_texture, nullptr, &title_rect);
@@ -45,21 +47,25 @@ void StatMenu::draw(AffineTransform &at){
     SDL_RenderCopy(Game::renderer, speed_texture, nullptr, &speed_rect);
     SDL_RenderCopy(Game::renderer, damage_texture, nullptr, &damage_rect);
     SDL_RenderCopy(Game::renderer, attack_speed_texture, nullptr, &attack_speed_rect);
+    SDL_RenderCopy(Game::renderer, level_texture, nullptr, &level_rect);
     SDL_RenderCopy(Game::renderer, modifiers_title_texture, nullptr, &modifiers_title_rect);
 }
 
 void StatMenu::generateText(){
   int curr_health = Player::getPlayer()->getHealth();
-  int curr_speed = Player::getPlayer()->getSpeed();
-  int curr_damage = Player::getPlayer()->getDamage();
+  int curr_level = Player::getPlayer()->getLevel();
+  double curr_speed = Player::getPlayer()->getSpeed();
+  double curr_damage = Player::getPlayer()->getDamage();
   double curr_attack = Player::getPlayer()->getAttackSpeed();
   title_texture = loadFont(font_path, title_font_size, overall_title, textColor);
   SDL_QueryTexture(title_texture, nullptr, nullptr, &title_rect.w, &title_rect.h);
   health_texture = loadFont(font_path, font_size, health + to_string(curr_health), textColor);
   SDL_QueryTexture(health_texture, nullptr, nullptr, &health_rect.w, &health_rect.h);
-  speed_texture = loadFont(font_path, font_size, speed + to_string(curr_speed), textColor);
+  level_texture = loadFont(font_path, font_size, level + to_string(curr_level), textColor);
+  SDL_QueryTexture(level_texture, nullptr, nullptr, &level_rect.w, &level_rect.h);
+  speed_texture = loadFont(font_path, font_size, speed + to_string(curr_speed).substr(0, 4), textColor);
   SDL_QueryTexture(speed_texture, nullptr, nullptr, &speed_rect.w, &speed_rect.h);
-  damage_texture = loadFont(font_path, font_size, damage + to_string(curr_damage), textColor);
+  damage_texture = loadFont(font_path, font_size, damage + to_string(curr_damage).substr(0, 5), textColor);
   SDL_QueryTexture(damage_texture, nullptr, nullptr, &damage_rect.w, &damage_rect.h);
   attack_speed_texture = loadFont(font_path, font_size, attack_speed + to_string(curr_attack).substr(0,3), textColor);
   SDL_QueryTexture(attack_speed_texture, nullptr, nullptr, &attack_speed_rect.w, &attack_speed_rect.h);
@@ -88,6 +94,7 @@ void StatMenu::update(set<SDL_Scancode> pressedKeys){
         SDL_DestroyTexture(speed_texture);
         SDL_DestroyTexture(damage_texture);
         SDL_DestroyTexture(attack_speed_texture);
+        SDL_DestroyTexture(level_texture);
         SDL_DestroyTexture(modifiers_title_texture);
       }
     }

@@ -32,12 +32,12 @@ private:
   string font_path = "resources/fonts/dtm.ttf";
   string default_path = "./resources/miscellaneous/tablet.png";
   string overall_title = "Attributes";
-  string health = "Health:"; string speed = "Speed:"; string damage = "Damage:"; string modifiers_title = "Modifiers"; string attack_speed = "Attack Speed:";
+  string health = "Health:"; string speed = "Speed: "; string damage = "Damage: "; string modifiers_title = "Modifiers"; string attack_speed = "Attack Speed: "; string level = "Level: ";
   int title_font_size = 30;
   int font_size = 20;
   SDL_Color textColor = {0, 0, 0, 255};
-  SDL_Texture * title_texture, * health_texture, * speed_texture, * damage_texture, * attack_speed_texture, *modifiers_title_texture;
-  SDL_Rect title_rect, health_rect, speed_rect, damage_rect, attack_speed_rect, modifiers_title_rect;
+  SDL_Texture * title_texture, * health_texture, * speed_texture, * damage_texture, * attack_speed_texture, *level_texture, *modifiers_title_texture;
+  SDL_Rect title_rect, health_rect, speed_rect, damage_rect, attack_speed_rect, level_rect, modifiers_title_rect;
   AffineTransform * my_at;
 
 };

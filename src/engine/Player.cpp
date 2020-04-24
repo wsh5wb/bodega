@@ -174,6 +174,10 @@ double Player::getDamage(){
 double Player::getAttackSpeed(){
 	return this->attackSpeed;
 }
+
+int Player::getLevel(){
+	return this->level;
+}
 // Can maybe do stuff at special levels like increase speed of projectiles or amount of health or something
 void Player::levelUp(){
 	level++;
