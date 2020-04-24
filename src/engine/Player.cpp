@@ -33,8 +33,6 @@ Player::Player() :
 	this->addChild(chat_box);
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
-	my_stats = new StatMenu();
-	this->addChild(my_stats);
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -122,7 +120,8 @@ float Player::percentOfHealthLost(){
 
 float Player::percentOfXP(){
 	if(level == maxLevel){ return 0.0;}
-	float d = (float(this->xpChart[level-1] - this->xp)/ float(this->xpChart[level-1]));
+	//float d = (float(this->xpChart[level-1] - this->xp)/ float(this->xpChart[level-1]));
+	float d = (float(this->xpNeeded - this->xp)/ float(this->xpNeeded));
 	//printf("Max Health: %x, health %x, percentLoss %9.6f \n", this->maxHealth, this->health, d);
 	return d;
 }
@@ -136,26 +135,35 @@ bool Player::changeHealth(int value){
 		health = maxHealth;
 		Event e("PLAYER_KILLED", &Game::eventHandler);
 		Game::eventHandler.dispatchEvent(&e);
+		Event e2("STATS_CHANGED", &Game::eventHandler);
+		Game::eventHandler.dispatchEvent(&e2);
 		return true;
 	}
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 	return false;
 }
 
 void Player::changeMaxHealth(int value){
 	maxHealth += value;
 	health += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 bool Player::checkLevelUp(){
 	if(level == maxLevel){
 		return false;
-	}return xp >= xpChart[level-1];
+	}//return xp >= xpChart[level-1];
+	return xp >= xpNeeded;
 }
 
 void Player::changeXP(int value){
 	this->xp += value;
 	while(checkLevelUp()){
-		xp -= xpChart[level-1];
+		//xp -= xpChart[level-1];
+		xp -= xpNeeded;
+		xpNeeded *= xpScale;
 		levelUp();
 	}
 
@@ -173,7 +181,9 @@ double Player::getSpeed(){
 double Player::getDamage(){
 	return this->damage;
 }
-
+double Player::getAttackSpeed(){
+	return this->attackSpeed;
+}
 // Can maybe do stuff at special levels like increase speed of projectiles or amount of health or something
 void Player::levelUp(){
 	level++;
@@ -182,18 +192,26 @@ void Player::levelUp(){
 	health += 10;
 	maxHealth += 10;
 	attackSpeed += .2;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::modifySpeed(int value){
 	runSpeed += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::changeDamage(int value){
 	damage += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::changeAttackSpeed(double value){
 	attackSpeed += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::toggleHealthDisplay(){
@@ -255,6 +273,12 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 				this->play("Run");
 			}
 			idle = false;
+		} else if (k == SDL_SCANCODE_1){
+			this->current_ball_type = 0;
+		}	else if (k == SDL_SCANCODE_2){
+			this->current_ball_type = 1;
+		} else if (k == SDL_SCANCODE_3){
+			this->current_ball_type = 2;
 		}
 
 		//for shooting projectiles
@@ -267,33 +291,6 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		}if(k == SDL_SCANCODE_DOWN){
 			yMov = 6;
 		}
-		//for tweening Demo
-//		else if (k == SDL_SCANCODE_T){
-//			TweenJuggler * juggle = TweenJuggler::getInstance();
-//			Tween * position_tween = new Tween(this);
-//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX + 200, 200, TWEEN_QUADRATIC, EASE_IN);
-//			juggle->add(position_tween);
-//		}
-//		else if (k == SDL_SCANCODE_R){
-//			TweenJuggler * juggle = TweenJuggler::getInstance();
-//			Tween * position_tween = new Tween(this);
-//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
-//			juggle->add(position_tween);
-//		}
-		// else if (k == SDL_SCANCODE_SEMICOLON){
-		// 	changeHealth(-2);
-		// }
-		else if (k == SDL_SCANCODE_APOSTROPHE){
-			changeHealth(2);
-		}
-		/*else if (k == SDL_SCANCODE_COMMA){
-			toggleHealthDisplay();
-		*/
-		/*else if (k == SDL_SCANCODE_SPACE){
-			if (this->currAnimation != "Dead"){
-				this->play("Dead");
-			}
-		}*/
 	}
 	//play idle animation if player is just standing still on ground
 	if (this->currAnimation == "Run" && idle) {
@@ -340,15 +337,6 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			lastFired = std::clock();
 		}
 	}
-
-	/* Jumping */
-	//if(_standing && controls::pressJump()){
-	//	this->_yVel = _jumpVel;
-	//	_standing = false;
-	//	this->play("Jump");
-	//}
-	/* Actual falling depending on falling versus whether a jump occurred */
-	//this->position.y += _yVel;
 }
 
 //void Player::onEnemyCollision(Enemy* enemy){
@@ -365,7 +353,7 @@ void Player::initIFrames(int numFrames) {
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
 	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
-	renderXPBar(950, 20, 200, 25, percentOfXP(), colorSDL(128, 0, 0, 220), colorSDL(114, 218, 255, 220));
+	renderXPBar(950, 20, 200, 25, percentOfXP(), colorSDL(3, 12, 80, 220), colorSDL(220, 230, 120, 220));
 	// for(Projectile* p : projectiles){
 	// 	p->draw(at);
 	// }

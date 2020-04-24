@@ -60,6 +60,11 @@ MyGame::MyGame() :
 			"PLAYER_KILLED");
 	Game::eventHandler.addEventListener((EventListener*) itemSys,
 			"CHEST_OPENED");
+
+	player_stats = new StatMenu();
+	Game::eventHandler.addEventListener((EventListener*) player_stats,
+			"STATS_CHANGED");
+	Player::getPlayer()->addChild(player_stats);
 }
 
 MyGame::~MyGame() {

@@ -192,11 +192,13 @@ void Dungeon::generate() {
 				int c = 0;
 				unsigned char doors = room_data->doors;
 				// printf("doors %x\n", doors);
+
 				string s;
 				if(ind == BOSS_ROOM-1)	s = this->scenes.at(0);
 				else 					s = this->scenes.at(ind);
 
-				Room *temp = new Room(s, doors);
+				Room *temp = new Room(s, doors, dungeonType);
+
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
 				if(ind == BOSS_ROOM-1){

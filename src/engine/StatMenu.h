@@ -9,10 +9,11 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <ctime>
+#include "EventListener.h"
 
 using namespace std;
 
-class StatMenu : public DisplayObject{
+class StatMenu : public DisplayObject, EventListener{
 public:
   StatMenu();
   ~StatMenu();
@@ -25,6 +26,7 @@ public:
   void generateText();
   virtual void draw(AffineTransform &at);
 	virtual void update(set<SDL_Scancode> pressedKeys);
+  virtual void handleEvent(Event* e);
   static SDL_Texture* loadFont(const std::string &font_path, int font_size, const std::string &message_text, const SDL_Color &color);
   void chunkString(string s, int chunkSize);
 
@@ -32,12 +34,12 @@ private:
   string font_path = "resources/fonts/dtm.ttf";
   string default_path = "./resources/miscellaneous/tablet.png";
   string overall_title = "Attributes";
-  string health = "Health:"; string speed = "Speed:"; string damage = "Damage:"; string modifiers_title = "Modifiers";
+  string health = "Health:"; string speed = "Speed:"; string damage = "Damage:"; string modifiers_title = "Modifiers"; string attack_speed = "Attack Speed:";
   int title_font_size = 30;
   int font_size = 20;
   SDL_Color textColor = {0, 0, 0, 255};
-  SDL_Texture * title_texture, * health_texture, * speed_texture, * damage_texture, *modifiers_title_texture;
-  SDL_Rect title_rect, health_rect, speed_rect, damage_rect, modifiers_title_rect;
+  SDL_Texture * title_texture, * health_texture, * speed_texture, * damage_texture, * attack_speed_texture, *modifiers_title_texture;
+  SDL_Rect title_rect, health_rect, speed_rect, damage_rect, attack_speed_rect, modifiers_title_rect;
   AffineTransform * my_at;
 
 };

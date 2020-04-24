@@ -24,6 +24,7 @@
 #include "Cerb.h"
 #include "Urchin.h"
 #include "ItemSystem.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -50,6 +51,7 @@ private:
 	Sound effect;
 	Sound hades_theme;
 	TweenJuggler * animationJuggler;
+	StatMenu * player_stats;
 };
 
 #endif

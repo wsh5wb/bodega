@@ -17,6 +17,43 @@ Urchin::Urchin(Player *player) :
 	state = 0;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
+	this->xp = 10;
+}
+
+Urchin::Urchin(Player *player, int d) :
+		Enemy(player) {
+	switch (d) {
+	case 0: {
+		this->loadTexture("resources/enemies/gordo_one.png");
+		this->id = "ENEMY_Urchin";
+		this->scaleX *= 0.5;
+		this->scaleY *= 0.5;
+		//this->pivot.x = w * scaleX / 2;
+		//this->pivot.y = h * scaleY / 2;
+		xSpe = 1;
+		ySpe = 1;
+		state = 0;
+		this->xBound = 512 - (w * scaleX);
+		this->yBound = 384 - (h * scaleY);
+		this->xp = 10;
+		break;
+	}
+	default: {
+		this->loadTexture("resources/enemies/gordo_one.png");
+		this->id = "ENEMY_Urchin";
+		this->scaleX *= 0.5;
+		this->scaleY *= 0.5;
+		//this->pivot.x = w * scaleX / 2;
+		//this->pivot.y = h * scaleY / 2;
+		xSpe = 1;
+		ySpe = 1;
+		state = 0;
+		this->xBound = 512 - (w * scaleX);
+		this->yBound = 384 - (h * scaleY);
+		this->xp = 10;
+	}
+	}
+
 }
 
 void Urchin::update(set<SDL_Scancode> pressedKeys) {
