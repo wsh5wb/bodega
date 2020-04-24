@@ -120,7 +120,8 @@ float Player::percentOfHealthLost(){
 
 float Player::percentOfXP(){
 	if(level == maxLevel){ return 0.0;}
-	float d = (float(this->xpChart[level-1] - this->xp)/ float(this->xpChart[level-1]));
+	//float d = (float(this->xpChart[level-1] - this->xp)/ float(this->xpChart[level-1]));
+	float d = (float(this->xpNeeded - this->xp)/ float(this->xpNeeded));
 	//printf("Max Health: %x, health %x, percentLoss %9.6f \n", this->maxHealth, this->health, d);
 	return d;
 }
@@ -147,13 +148,16 @@ void Player::changeMaxHealth(int value){
 bool Player::checkLevelUp(){
 	if(level == maxLevel){
 		return false;
-	}return xp >= xpChart[level-1];
+	}//return xp >= xpChart[level-1];
+	return xp >= xpNeeded;
 }
 
 void Player::changeXP(int value){
 	this->xp += value;
 	while(checkLevelUp()){
-		xp -= xpChart[level-1];
+		//xp -= xpChart[level-1];
+		xp -= xpNeeded;
+		xpNeeded *= xpScale;
 		levelUp();
 	}
 

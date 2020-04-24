@@ -13,7 +13,7 @@
 #include "TextBox.h"
 #include "StatMenu.h"
 
-#define LEVELS 5
+#define LEVELS 255
 using namespace std;
 
 class Player : public AnimatedSprite{
@@ -65,8 +65,10 @@ public:
 private:
 	unsigned int xp = 0;
 	unsigned int level = 1, maxLevel = LEVELS;
-	unsigned int xpChart[LEVELS-1] = {10,25,50,100};
-	int health = 114;
+	//unsigned int xpChart[LEVELS-1] = {10,25,50,100};
+	double xpScale = 1.5;
+	unsigned int xpNeeded = 10;
+	int health = 120;
 	int maxHealth = 320;
 	bool displayHealth = true;
 	int runSpeed = 2;

@@ -17,6 +17,7 @@ Urchin::Urchin(Player *player) :
 	state = 0;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
+	this->xp = 10;
 }
 
 void Urchin::update(set<SDL_Scancode> pressedKeys) {
