@@ -20,7 +20,7 @@ class Scene : public DisplayObjectContainer{
 
 public:
 	Scene();
-
+	~Scene();
 	/* Load scene from a file */
 	void loadScene(string sceneFilePath);
 

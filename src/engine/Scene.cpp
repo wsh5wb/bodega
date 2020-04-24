@@ -12,6 +12,10 @@ Scene::Scene() :
 	//just calling parent constructor
 }
 
+Scene::~Scene(){
+
+}
+
 /* Load scene from a file */
 void Scene::loadScene(string sceneFilePath) {
 	//code retrieved from https://github.com/nlohmann/json
