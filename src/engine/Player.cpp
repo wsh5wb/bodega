@@ -175,7 +175,9 @@ double Player::getSpeed(){
 double Player::getDamage(){
 	return this->damage;
 }
-
+double Player::getAttackSpeed(){
+	return this->attackSpeed;
+}
 // Can maybe do stuff at special levels like increase speed of projectiles or amount of health or something
 void Player::levelUp(){
 	level++;
@@ -257,6 +259,12 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 				this->play("Run");
 			}
 			idle = false;
+		} else if (k == SDL_SCANCODE_1){
+			this->current_ball_type = 0;
+		}	else if (k == SDL_SCANCODE_2){
+			this->current_ball_type = 1;
+		} else if (k == SDL_SCANCODE_3){
+			this->current_ball_type = 2;
 		}
 
 		//for shooting projectiles
@@ -269,33 +277,6 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		}if(k == SDL_SCANCODE_DOWN){
 			yMov = 6;
 		}
-		//for tweening Demo
-//		else if (k == SDL_SCANCODE_T){
-//			TweenJuggler * juggle = TweenJuggler::getInstance();
-//			Tween * position_tween = new Tween(this);
-//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX + 200, 200, TWEEN_QUADRATIC, EASE_IN);
-//			juggle->add(position_tween);
-//		}
-//		else if (k == SDL_SCANCODE_R){
-//			TweenJuggler * juggle = TweenJuggler::getInstance();
-//			Tween * position_tween = new Tween(this);
-//			position_tween->animate(TWEEN_POSITION_X, oldX, oldX - 200, 200, TWEEN_SINE, EASE_OUT);
-//			juggle->add(position_tween);
-//		}
-		// else if (k == SDL_SCANCODE_SEMICOLON){
-		// 	changeHealth(-2);
-		// }
-		else if (k == SDL_SCANCODE_APOSTROPHE){
-			changeHealth(2);
-		}
-		/*else if (k == SDL_SCANCODE_COMMA){
-			toggleHealthDisplay();
-		*/
-		/*else if (k == SDL_SCANCODE_SPACE){
-			if (this->currAnimation != "Dead"){
-				this->play("Dead");
-			}
-		}*/
 	}
 	//play idle animation if player is just standing still on ground
 	if (this->currAnimation == "Run" && idle) {
@@ -342,15 +323,6 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			lastFired = std::clock();
 		}
 	}
-
-	/* Jumping */
-	//if(_standing && controls::pressJump()){
-	//	this->_yVel = _jumpVel;
-	//	_standing = false;
-	//	this->play("Jump");
-	//}
-	/* Actual falling depending on falling versus whether a jump occurred */
-	//this->position.y += _yVel;
 }
 
 //void Player::onEnemyCollision(Enemy* enemy){

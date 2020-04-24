@@ -38,6 +38,7 @@ public:
 	int getMaxHealth();
 	double getSpeed();
 	double getDamage();
+	double getAttackSpeed();
 	bool changeHealth(int value);
 	void changeMaxHealth(int value);
 	void changeDamage(int value);
@@ -72,6 +73,7 @@ private:
 	int maxHealth = 320;
 	bool displayHealth = true;
 	int runSpeed = 2;
+	int current_ball_type = 0;
 
 	int oldX=0, oldY=0;
 
