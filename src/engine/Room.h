@@ -27,6 +27,8 @@ public:
 	void openDoors();
 	void closeDoors();
 
+	void removeWall(int wall);
+
 private:
 	void generateDoors(unsigned char doors);
 	void generateWalls();

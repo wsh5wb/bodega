@@ -99,25 +99,14 @@ void CollisionSystem::update(){
 							}
 						}
 						// printf("Door addr: %x\n", obj2);
-						cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
+						// cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
 						
 					}
 					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
 						if(pair == "PROJECTILE-OBSTACLE" || pair == "OBSTACLE-PROJECTILE"){
 							DisplayObject* obj;
-							if(type1 == "PROJECTILE"){
-								obj = obj1;
-								auto it = find(vec1.begin(), vec1.end(), obj);
-								if(it != vec1.end())
-									vec1.erase(it);
-							}
-							else if(type2 == "PROJECTILE") {
-							 	obj = obj2;
-								auto it = find(vec2.begin(), vec2.end(), obj);
-								if(it != vec2.end())
-									vec2.erase(it);
-							}
-							
+							if(type1 == "PROJECTILE")		obj = obj1;
+							else if(type2 == "PROJECTILE")	obj = obj2;
 							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
 							continue;
 						}
@@ -128,6 +117,7 @@ void CollisionSystem::update(){
 
 						// obj1->updateDelta(0,0,0,0,0);
 						// obj2->updateDelta(0,0,0,0,0);
+						printf("%s collided with %s\n", obj1->id.c_str(), obj2->id.c_str());
 					}
 					// ADD code to handle decreasing health
 					else if(type1 == "PROJECTILE" || type2 == "PROJECTILE"){
@@ -135,17 +125,10 @@ void CollisionSystem::update(){
 							DisplayObject* obj;
 							if(type1 == "PROJECTILE"){
 								obj = obj1;
-								auto it = find(vec1.begin(), vec1.end(), obj);
-								if(it != vec1.end())
-									vec1.erase(it);
-
 								((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
 							}
 							else if(type2 == "PROJECTILE") {
 							 	obj = obj2;
-								auto it = find(vec2.begin(), vec2.end(), obj);
-								if(it != vec2.end())
-									vec2.erase(it);
 								((Enemy*)obj1)->changeHealth(-Player::getPlayer()->damage);
 							}
 							
@@ -156,21 +139,8 @@ void CollisionSystem::update(){
 
 					else if(pair == "chest-PLAYER" || pair == "PLAYER-chest"){
 						DisplayObject* obj;
-						if(type1 == "chest"){
-							obj = obj1;
-							auto it = find(vec1.begin(), vec1.end(), obj);
-							if(it != vec1.end())
-								vec1.erase(it);
-
-							//((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
-						}
-						else if(type2 == "chest") {
-						 	obj = obj2;
-							auto it = find(vec2.begin(), vec2.end(), obj);
-							if(it != vec2.end())
-								vec2.erase(it);
-							//((Enemy*)obj1)->changeHealth(-Player::getPlayer()->damage);
-						}
+						if(type1 == "chest")		obj = obj1;
+						else if(type2 == "chest")	obj = obj2;
 						((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
 						Event e("CHEST_OPENED", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
@@ -244,6 +214,7 @@ void CollisionSystem::handleEvent(Event* e){
 		objects[str].push_back(child);
 	}
 	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
+		printf("removing %s from CS\n", child->id.c_str());
 		objects[str].erase(it);
 	}
 

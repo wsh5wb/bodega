@@ -37,8 +37,6 @@ MyGame::MyGame() :
 	dunMan->activeDungeon = dungeon;
 	myCamera->addScene(dunMan->activeDungeon);
 
-	// myCamera->addScene(dunMan->dungeons[OCEAN]);
-
 	// Music and tweens
 	hades_theme.loadMusic("./resources/sounds/lullaby.wav");
 	effect.loadMusic("./resources/sounds/clock_ticking.wav");
@@ -56,7 +54,6 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 
 	// Initial event watching
-	
 	Game::eventHandler.addEventListener((EventListener*) dunMan,
 			"CHANGE_DUNGEON");
 	Game::eventHandler.addEventListener((EventListener*) dunMan,

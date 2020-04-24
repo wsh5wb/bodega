@@ -25,6 +25,10 @@ void Room::removeFromDisplayTree(){
 }
 
 void Room::generateDoors(unsigned char doors){
+	if(!doors){
+		printf("ROOM HAD NO DOORS\n");
+		return;
+	}
 	// need a way to dynamically change these paths. Probably just pass them in from dungeon
 	string paths[2][4] = {{"./resources/art/hades/u_door2.png","./resources/art/hades/r_door2.png",
 			"./resources/art/hades/lo_door2.png","./resources/art/hades/l_door2.png"},{"./resources/art/ocean/u_door.png","./resources/art/ocean/r_door.png",
@@ -80,6 +84,10 @@ void Room::generateWalls(){
 		// printf("Adding wall%d at (%d,%d)\n", i+1,position[i%3].x,position[i%3].y);
 		room->addChild(wall);
 	}
+}
+
+void Room::removeWall(int wall){
+	room->removeImmediateChild("OBSTACLE_WALL"+to_string(wall+1));
 }
 
 void Room::update(set<SDL_Scancode> pressedKeys) {
