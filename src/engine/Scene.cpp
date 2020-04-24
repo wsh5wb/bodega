@@ -341,7 +341,7 @@ void Scene::loadScene(string sceneFilePath) {
 			break;
 		}
 		default: {
-			cerr << "ERROR: Object type not recognized!\n";
+			cerr << "ERROR: Object type " << type << " not recognized!\n";
 			break;
 		}
 
