@@ -65,6 +65,8 @@ MyGame::MyGame() :
 			"CHEST_OPENED");
 
 	player_stats = new StatMenu();
+	Game::eventHandler.addEventListener((EventListener*) player_stats,
+			"STATS_CHANGED");
 	Player::getPlayer()->addChild(player_stats);
 }
 

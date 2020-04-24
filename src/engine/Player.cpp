@@ -135,14 +135,20 @@ bool Player::changeHealth(int value){
 		health = maxHealth;
 		Event e("PLAYER_KILLED", &Game::eventHandler);
 		Game::eventHandler.dispatchEvent(&e);
+		Event e2("STATS_CHANGED", &Game::eventHandler);
+		Game::eventHandler.dispatchEvent(&e2);
 		return true;
 	}
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 	return false;
 }
 
 void Player::changeMaxHealth(int value){
 	maxHealth += value;
 	health += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 bool Player::checkLevelUp(){
@@ -186,18 +192,26 @@ void Player::levelUp(){
 	health += 10;
 	maxHealth += 10;
 	attackSpeed += .2;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::modifySpeed(int value){
 	runSpeed += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::changeDamage(int value){
 	damage += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::changeAttackSpeed(double value){
 	attackSpeed += value;
+	Event e("STATS_CHANGED", &Game::eventHandler);
+	Game::eventHandler.dispatchEvent(&e);
 }
 
 void Player::toggleHealthDisplay(){

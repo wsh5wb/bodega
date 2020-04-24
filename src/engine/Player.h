@@ -70,7 +70,7 @@ private:
 	double xpScale = 1.5;
 	unsigned int xpNeeded = 10;
 	int health = 120;
-	int maxHealth = 320;
+	int maxHealth = 120;
 	bool displayHealth = true;
 	int runSpeed = 2;
 	int current_ball_type = 0;

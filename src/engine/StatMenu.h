@@ -9,10 +9,11 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <ctime>
+#include "EventListener.h"
 
 using namespace std;
 
-class StatMenu : public DisplayObject{
+class StatMenu : public DisplayObject, EventListener{
 public:
   StatMenu();
   ~StatMenu();
@@ -25,6 +26,7 @@ public:
   void generateText();
   virtual void draw(AffineTransform &at);
 	virtual void update(set<SDL_Scancode> pressedKeys);
+  virtual void handleEvent(Event* e);
   static SDL_Texture* loadFont(const std::string &font_path, int font_size, const std::string &message_text, const SDL_Color &color);
   void chunkString(string s, int chunkSize);
 
