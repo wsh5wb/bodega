@@ -93,15 +93,21 @@ void AnimatedSprite::play(string animName){
 			buffer += c;
 		}in.close();
 		vector<string> positions;
-		unsigned int pos = 0;
-		unsigned int start;
+		int pos = 0;
+		int start;
 		while(true){
-			start = buffer.find ("<TextureAtlas",pos);
-			if(start == string::npos) {break;}
+			start = buffer.find("<TextureAtlas",pos);
+			if(start == string::npos) {
+				start = buffer.find("<textureatlas",pos);
+				if(start == string::npos) {break;}
+			}
 			start = buffer.find(">",start);
 			start++;
 			pos = buffer.find("</TextureAtlas",start);
-			if(pos == string::npos) {break;}
+			if(pos == string::npos) {
+				pos = buffer.find("</textureatlas",start);
+				if(pos == string::npos) {break;}
+			}
 			buffer = buffer.substr(start,pos-start);
 			break;
 		}
@@ -121,10 +127,22 @@ void AnimatedSprite::play(string animName){
 			int x = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
 			start = s.find("y=\"");
 			int y = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			start = s.find("w=\"");
-			int w = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
-			start = s.find("h=\"");
-			int h = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
+			start = s.find("width=\"");
+			int w,h;
+			if(start == string::npos){
+				start = s.find("w=\"");
+				w = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
+			}else{
+				w = atoi(s.substr(start+7,s.find("\" ",start)-start-7).c_str());
+			}
+			start = s.find("height=\"");
+			if(start == string::npos){
+				start = s.find("h=\"");
+				h = atoi(s.substr(start+3,s.find("\" ",start)-start-3).c_str());
+			}else{
+				h = atoi(s.substr(start+8,s.find("\">",start)-start-8).c_str());
+			}
+			
 			SDL_Rect r = {x, y, w, h};
 			locations.push_back(r);
 		}

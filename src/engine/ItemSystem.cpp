@@ -14,7 +14,6 @@ int ItemSystem::getItemCase(){
 }
 
 void ItemSystem::generateItem(){
-	//
 	int itemNum = getItemCase();
 	cout << "Item num:" << itemNum << endl;
 	chestsOpened++;

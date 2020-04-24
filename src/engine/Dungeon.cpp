@@ -8,19 +8,13 @@
 
 using namespace std;
 
-Dungeon::Dungeon(){
-	Game::eventHandler.addEventListener((EventListener*) this,
-			"DUNG_TRANS_U");
-	Game::eventHandler.addEventListener((EventListener*) this,
-			"DUNG_TRANS_D");
-	Game::eventHandler.addEventListener((EventListener*) this,
-			"DUNG_TRANS_R");
-	Game::eventHandler.addEventListener((EventListener*) this,
-			"DUNG_TRANS_L");
-	Game::eventHandler.addEventListener((EventListener*) this,
-			"ENEMY_KILLED");
-	Game::eventHandler.addEventListener((EventListener*) this,
-			"PLAYER_KILLED");
+Dungeon::Dungeon() {
+	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_U");
+	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_D");
+	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_R");
+	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_L");
+	Game::eventHandler.addEventListener((EventListener*) this, "ENEMY_KILLED");
+	Game::eventHandler.addEventListener((EventListener*) this, "PLAYER_KILLED");
 
 }
 Dungeon::~Dungeon() {
@@ -146,6 +140,15 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			break;
 		}
 
+		}
+	}
+	if (changingRoom) {
+		if (timer <= ROOM_START_DELAY) {
+			timer++;
+		} else {
+			changingRoom->active = true;
+			changingRoom = NULL;
+			timer = 0;
 		}
 	}
 }
@@ -334,10 +337,10 @@ void Dungeon::transitionRoom(string type) {
 		juggler->add(camPosTween);
 	}
 	if (new_room) {
-		new_room->active = true;
-		if (new_room->room->numEnemies > 0)
-			new_room->closeDoors();
-
+		changingRoom = new_room;
+		if (changingRoom->room->numEnemies > 0)
+			changingRoom->closeDoors();
+		timer = 0;
 	}
 
 }
