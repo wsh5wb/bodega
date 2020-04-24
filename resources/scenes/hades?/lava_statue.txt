@@ -1,6 +1,6 @@
 3 2
 0 Scene ./resources/art/hades/background.png 2.34375 2.34375 
-9 Statue1_OBSTACLE ./resources/art/hades/statue2.png 0 0 0 true false 64 96 5 1 1 0 0.05 0 0 0 224 112 .3 .7 .17 .3
-9 lava1_FLOOR ./resources/art/hades/large_lava.png 0 0 0 true false 160 160 5 1 1 0 0.05 0 0 0 176 112 .2 .8 0 .65
+9 Statue1_OBSTACLE ./resources/art/hades/statue2.png 5 1 1 0 0.05 0 0 0 224 112 .3 .7 .17 .3
+9 lava1_FLOOR ./resources/art/hades/large_lava.png 5 1 1 0 0.05 0 0 0 176 112 .2 .8 0 .65
 Scene lava1_FLOOR
 Scene Statue1_OBSTACLE

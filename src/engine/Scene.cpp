@@ -33,8 +33,7 @@ void Scene::loadScene(string sceneFilePath) {
 			Scene *temp = this;
 			double scaleX;
 			double scaleY;
-			i >> id >> imgPath >> scaleX
-					>> scaleY ;
+			i >> id >> imgPath >> scaleX >> scaleY;
 			objects.push_back(temp);
 			temp->setScale(scaleX, scaleY);
 			if (temp->imgPath != "0") {
@@ -269,13 +268,10 @@ void Scene::loadScene(string sceneFilePath) {
 			double rotationAmount;
 			int alpha;
 			SDL_Point pivot, position;
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
-					>> temp->blue >> std::boolalpha >> temp->vis
-					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
-					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
-					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y
-					>> temp->boundLowX >> temp->boundHighX >> temp->boundLowY
-					>> temp->boundHighY;
+			i >> temp->id >> temp->imgPath >> speed >> scaleX >> scaleY
+					>> rotation >> rotationAmount >> alpha >> pivot.x >> pivot.y
+					>> position.x >> position.y >> temp->boundLowX
+					>> temp->boundHighX >> temp->boundLowY >> temp->boundHighY;
 			temp->setSpeed(speed);
 			temp->setScale(scaleX, scaleY);
 			temp->setRotationValue(rotation);
