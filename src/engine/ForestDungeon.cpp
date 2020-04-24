@@ -16,7 +16,7 @@ ForestDungeon::ForestDungeon() {
 	}
 
 	scenes.push_back("./resources/scenes/forest/basic_room.txt");
-	scenes.push_back("./resources/scenes/ocean/start.txt");
+	scenes.push_back("./resources/scenes/forest/start.txt");
 	scenes.push_back("./resources/scenes/forest/bush_chest.txt");
 	scenes.push_back("./resources/scenes/forest/shade_room1.txt");
 	scenes.push_back("./resources/scenes/ocean/jelly_room.txt");
