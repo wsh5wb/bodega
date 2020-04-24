@@ -218,6 +218,8 @@ void Dungeon::generate() {
 	floor_t level = M.getLevel();
 	cerr << "here1\n";
 	Room *start_room;
+	bool seenBoss = false;
+	int bossRoomsCount = 0;
 	for (int i = GRID_SIZE; i--;) {
 		for (int j = GRID_SIZE; j--;) {
 			int ind = layout[i][j];
@@ -228,14 +230,34 @@ void Dungeon::generate() {
 				int c = 0;
 				unsigned char doors = room_data->doors;
 				// printf("doors %x\n", doors);
+				string s;
 				if(ind == BOSS_ROOM -1){
-					boss_x = j; boss_y = i;
-					ind = 0;
-				}
-				string s = this->scenes.at(ind);
+					if(!seenBoss){	
+						seenBoss = true;
+						boss_x = j; boss_y = i;
+					}
+					s = this->scenes.at(0);
+				}else 	s = this->scenes.at(ind);
 				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
+
+				if(ind == BOSS_ROOM-1){
+					if(bossRoomsCount == 0){
+						temp->removeWall(NORTH);
+						temp->removeWall(WEST);
+					}else if(bossRoomsCount == 1){
+						temp->removeWall(NORTH);
+						temp->removeWall(EAST);
+					}else if(bossRoomsCount == 2){
+						temp->removeWall(SOUTH);
+						temp->removeWall(WEST);
+					}else if(bossRoomsCount == 3){
+						temp->removeWall(SOUTH);
+						temp->removeWall(EAST);
+					}
+					bossRoomsCount++;
+				}
 
 				if (start_x == j && start_y == i) {
 					printf("Setting start room to active\n");
