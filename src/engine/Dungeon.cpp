@@ -61,7 +61,7 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 	}
 
 	//camera for being in dungeon
-	if (!zoomed_out && current_x == boss_x && current_y == boss_y) {
+	if (!zoomed_out && (current_x==boss_x||current_x==boss_x-1)&&(current_y==boss_y||current_y==boss_y-1)) {
 		int room_size_x = 512;
 		int room_size_y = 384;
 		int x_adj = (boss_x - start_x) * room_size_x;
@@ -72,19 +72,19 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		int c_y = -myCamera->container->position.y;
 		if (p->position.x - x_adj < (room_size_x / 2)
 				&& p->position.x - x_adj > (-room_size_x / 2)) {
-			c_x = 1200 * current_x + 2.34375 * (p->position.x - x_adj) - 600;
+			c_x = 1200 * boss_x + 2.34375 * (p->position.x - x_adj) - 600;
 		} else if (p->position.x - x_adj > (-room_size_x / 2)) {
-			c_x = 1200 * (current_x);
+			c_x = 1200 * (boss_x);
 		} else {
-			c_x = 1200 * (current_x - 1);
+			c_x = 1200 * (boss_x - 1);
 		}
 		if (p->position.y - y_adj < (room_size_y / 2)
 				&& p->position.y - y_adj > (-room_size_y / 2)) {
-			c_y = 900 * current_y + 2.34375 * (p->position.y - y_adj) - 450;
+			c_y = 900 * boss_y + 2.34375 * (p->position.y - y_adj) - 450;
 		} else if (p->position.y - y_adj > (-room_size_y / 2)) {
-			c_y = 900 * (current_y);
+			c_y = 900 * (boss_y);
 		} else {
-			c_y = 900 * (current_y - 1);
+			c_y = 900 * (boss_y - 1);
 		}
 		myCamera->setLocation(c_x, c_y);
 	}
@@ -171,6 +171,8 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 
 		case SDL_SCANCODE_C: {
 			Player *p = Player::getPlayer();
+			cerr << "current room: (" << current_x << ", " << current_y << ")\n";
+			cerr << "boss room: (" << boss_x << ", " << boss_y << ")\n";
 			cerr << "player x: " << p->position.x;
 			cerr << "\nplayer y: " << p->position.y << "\n\n";
 			break;
@@ -391,8 +393,13 @@ void Dungeon::transitionRoom(string type) {
 
 	// no tweening until we add functionality to tween camera
 	Camera *myCamera = Camera::getCamera();
+	if((current_x==boss_x||current_x==boss_x-1)&&(current_y==boss_y||current_y==boss_y-1)){
+		//current_x = boss_x;
+		//current_y = boss_y;
+
+	}
 	if (!zoomed_out) {
-		if (current_x == boss_x && current_y == boss_y) {
+		if ((current_x==boss_x||current_x==boss_x-1)&&(current_y==boss_y||current_y==boss_y-1)) {
 			int room_size_x = 512;
 			int room_size_y = 384;
 			int x_adj = (boss_x - start_x) * room_size_x;
@@ -401,14 +408,14 @@ void Dungeon::transitionRoom(string type) {
 			Camera *myCamera = Camera::getCamera();
 			int c_x, c_y;
 			if (p->position.x - x_adj > 0) {
-				c_x = 1200 * (current_x);
+				c_x = 1200 * (boss_x);
 			} else {
-				c_x = 1200 * (current_x - 1);
+				c_x = 1200 * (boss_x - 1);
 			}
 			if (p->position.y - y_adj > 0) {
-				c_y = 900 * (current_y);
+				c_y = 900 * (boss_y);
 			} else {
-				c_y = 900 * (current_y - 1);
+				c_y = 900 * (boss_y - 1);
 			}
 			myCamera->setLocation(c_x, c_y);
 		}
