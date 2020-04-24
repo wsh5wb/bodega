@@ -21,7 +21,11 @@ Note, you may need to first run sudo apt-get install libsdl2-mixer-dev on Linux 
 
 * V to show entire map
 
-* Arrow keys to shoot basic projectiles 
+* I to show Player Stat-Bar
+
+* Arrow keys to shoot basic projectiles.
+
+* 1, 2, 3 to toggle projectile types. (1 = damage, 2 = slow, 3 = enemy damage reduction). 
 
 * Space to switch dungeons
 
@@ -40,3 +44,5 @@ Engine Team Updates:
 Our team made a couple small engine bug fixes in various areas such as collision resolutions and event dispatchers. In other areas, we worked on adding player levels/an XP system, random item generation, and a combat system. We also helped the level team add the ability to switch between dungeons and worked on boss room generation and door locking mechanics.
 
 Level Team Updates:
+
+For Daniel and Tonks, we focused on removing bugs with scene transitions, removing faulty environemnt collisions, adding in preliminary spawners for our third and fourth areas, added in a player information system and textbox, worked out bugs in our projectile/collision system and updated visuals for player projectiles, and locating theme music for each of our four areas. We also helped the design team with boss room generation and viewing with Camera and reworking all our enemy programming. 
