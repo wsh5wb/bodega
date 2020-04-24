@@ -220,7 +220,7 @@ void Dungeon::generate() {
 	floor_t level = M.getLevel();
 	cerr << "here1\n";
 	Room *start_room;
-	// bool seenBoss = false;
+	bool seenBoss = false;
 	int bossRoomsCount = 0;
 	for (int i = GRID_SIZE; i--;) {
 		for (int j = GRID_SIZE; j--;) {
@@ -235,7 +235,8 @@ void Dungeon::generate() {
 				string s;
 				if(ind == BOSS_ROOM -1){
 					boss_locations[bossRoomsCount] = {j,i};
-					if(room_data->doors != 0){
+					if(!seenBoss){
+						seenBoss = true;
 						boss_y = i; boss_x = j;
 					}
 					s = this->scenes.at(0);
@@ -257,6 +258,15 @@ void Dungeon::generate() {
 					}else if(bossRoomsCount == 3){
 						temp->removeWall(SOUTH);
 						temp->removeWall(EAST);
+						DisplayObject* portal = 
+							new DisplayObject("PORTAL", "./resources/character/floryan_head.png");
+						portal->scale(.25);
+						portal->moveTo(512, 384);
+						portal->translate(-portal->w/8, -portal->h/8);
+						// portal->movePivot(portal->w/2, portal->h/2);
+						portal->setHitbox(.1,.9);
+						portal->showHitbox = true;
+						temp->room->addChild(portal);
 					}
 					bossRoomsCount++;
 				}
@@ -267,13 +277,6 @@ void Dungeon::generate() {
 					temp->start = true;
 					temp->visible = true;
 					start_room = temp;
-					// DisplayObject* portal = 
-					// 	new DisplayObject("PORTAL", "./resources/character/floryan_head.png");
-					// portal->scale(.25);
-					// portal->moveTo(240,180);
-					// portal->setHitbox(.1,.9);
-					// portal->showHitbox = true;
-					// temp->room->addChild(portal);
 				} else {
 					DisplayObjectContainer::addChild(temp);
 				}
