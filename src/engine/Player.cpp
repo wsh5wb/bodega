@@ -365,7 +365,7 @@ void Player::initIFrames(int numFrames) {
 void Player::draw(AffineTransform &at) {
 	AnimatedSprite::draw(at);
 	renderHPBar(20, 20, 200, 25, percentOfHealthLost(), colorSDL(128, 0, 0, 220), colorSDL(34, 139, 34, 220));
-	renderXPBar(950, 20, 200, 25, percentOfXP(), colorSDL(128, 0, 0, 220), colorSDL(114, 218, 255, 220));
+	renderXPBar(950, 20, 200, 25, percentOfXP(), colorSDL(3, 12, 80, 220), colorSDL(220, 230, 120, 220));
 	// for(Projectile* p : projectiles){
 	// 	p->draw(at);
 	// }
