@@ -39,6 +39,7 @@ public:
 	double getSpeed();
 	double getDamage();
 	double getAttackSpeed();
+	int getLevel();
 	bool changeHealth(int value);
 	void changeMaxHealth(int value);
 	void changeDamage(int value);
