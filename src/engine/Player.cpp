@@ -223,11 +223,36 @@ void Player::toggleHealthDisplay(){
 }
 
 void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
-	string path = "./resources/PlayerSprites/fireball.png";
-	int midX = this->position.x + (w*scaleX)/3;
-	int midY = this->position.y + (w*scaleX)/3;
+	int midX, midY;
+	switch(this->direction){
+		case 1:{
+			//left
+			midX = this->position.x + (dstrect.w)/3;
+		  midY = this->position.y + (dstrect.h)/3;
+			break;
+		}case 2:{
+			//right
+			midX = this->position.x + (dstrect.w)/6;
+			midY = this->position.y + (dstrect.h)/6;
+			break;
+		}case 3:{
+			//up
+			midX = this->position.x + (dstrect.w)/6;
+		 	midY = this->position.y + (dstrect.h)/3;
+			break;
+		}case 4:{
+			//down
+			midX = this->position.x + (dstrect.w)/3;
+			midY = this->position.y + (dstrect.h)/6;
+			break;
+		}default:{
+			printf("Error reached with %x \n", this->direction);
+			cerr << "ERROR: Direction Parameter Not Recognized!\n";
+			break;
+		}
+	}
 	printf("Adding new projectile\n");
-	Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
+	Projectile * p = new Projectile(current_ball_type, midX, midY,speedX,speedY,timeout,scaleX,scaleY);
 	// projectiles.push_back(p);
 	((DisplayObjectContainer*)this->parent)->addChild(p);
 	DTEvent e("OBJ_ADD", &Game::eventHandler, p);
@@ -278,22 +303,26 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_1){
-			this->current_ball_type = 0;
-		}	else if (k == SDL_SCANCODE_2){
 			this->current_ball_type = 1;
-		} else if (k == SDL_SCANCODE_3){
+		}	else if (k == SDL_SCANCODE_2){
 			this->current_ball_type = 2;
+		} else if (k == SDL_SCANCODE_3){
+			this->current_ball_type = 3;
 		}
 
 		//for shooting projectiles
 		if(k == SDL_SCANCODE_LEFT){
-			xMov = -6;
+			xMov = -3;
+			this->direction = 1;
 		}if(k == SDL_SCANCODE_RIGHT){
-			xMov = 6;
+			xMov = 3;
+			this->direction = 2;
 		}if(k == SDL_SCANCODE_UP){
-			yMov = -6;
+			yMov = -3;
+			this->direction = 3;
 		}if(k == SDL_SCANCODE_DOWN){
-			yMov = 6;
+			yMov = 3;
+			this->direction = 4;
 		}
 	}
 	//play idle animation if player is just standing still on ground
@@ -337,7 +366,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 
 	if(xMov != 0 || yMov != 0){
 		if((double)(((double)attackSpeed*(std::clock() - lastFired) / (double) (CLOCKS_PER_SEC)) > 1.0)){
-			addProjectile(xMov,yMov,1000,0.3,0.3);
+			addProjectile(xMov,yMov,2000,1.0,1.0);
 			lastFired = std::clock();
 		}
 	}

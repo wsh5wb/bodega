@@ -74,7 +74,8 @@ private:
 	int maxHealth = 120;
 	bool displayHealth = true;
 	int runSpeed = 2;
-	int current_ball_type = 0;
+	int current_ball_type = 1;
+	int direction = 1;
 
 	int oldX=0, oldY=0;
 
