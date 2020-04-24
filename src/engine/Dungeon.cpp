@@ -234,6 +234,7 @@ void Dungeon::generate() {
 				// printf("doors %x\n", doors);
 				string s;
 				if(ind == BOSS_ROOM -1){
+					printf("Boss room being processed\n");
 					boss_locations[bossRoomsCount] = {j,i};
 					if(!seenBoss){
 						seenBoss = true;

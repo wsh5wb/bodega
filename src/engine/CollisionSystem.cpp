@@ -240,6 +240,7 @@ void CollisionSystem::ignoreCollisions(string type1, string type2){
 			return;
 		}
 	}
+
 }
 
 /* Return:

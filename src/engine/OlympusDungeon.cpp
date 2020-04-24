@@ -21,6 +21,11 @@ OlympusDungeon::OlympusDungeon() {
 	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
 	scenes.push_back("./resources/scenes/ocean/jelly_room.txt");
 	scenes.push_back("./resources/scenes/ocean/urchin_room.txt");
+	// these must go at bottom
+	scenes.push_back("./resources/scenes/ocean/boss_top_left.txt");
+	scenes.push_back("./resources/scenes/ocean/boss_top_right.txt");
+	scenes.push_back("./resources/scenes/ocean/boss_bot_left.txt");
+	scenes.push_back("./resources/scenes/ocean/boss_bot_right.txt");
 }
 
 
