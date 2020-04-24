@@ -56,13 +56,16 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 
 	// Initial event watching
-	
+
 	Game::eventHandler.addEventListener((EventListener*) dunMan,
 			"CHANGE_DUNGEON");
 	Game::eventHandler.addEventListener((EventListener*) dunMan,
 			"PLAYER_KILLED");
 	Game::eventHandler.addEventListener((EventListener*) itemSys,
 			"CHEST_OPENED");
+
+	player_stats = new StatMenu();
+	Player::getPlayer()->addChild(player_stats);
 }
 
 MyGame::~MyGame() {

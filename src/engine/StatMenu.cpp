@@ -46,14 +46,16 @@ void StatMenu::draw(AffineTransform &at){
 }
 
 void StatMenu::generateText(){
-  //int x = Player::getPlayer()->getHealth(); this line destroys everything????
+  int curr_health = Player::getPlayer()->getHealth();
+  int curr_speed = Player::getPlayer()->getSpeed();
+  int curr_damage = Player::getPlayer()->getDamage();
   title_texture = loadFont(font_path, title_font_size, overall_title, textColor);
   SDL_QueryTexture(title_texture, nullptr, nullptr, &title_rect.w, &title_rect.h);
-  health_texture = loadFont(font_path, font_size, health, textColor);
+  health_texture = loadFont(font_path, font_size, health + to_string(curr_health), textColor);
   SDL_QueryTexture(health_texture, nullptr, nullptr, &health_rect.w, &health_rect.h);
-  speed_texture = loadFont(font_path, font_size, speed, textColor);
+  speed_texture = loadFont(font_path, font_size, speed + to_string(curr_speed), textColor);
   SDL_QueryTexture(speed_texture, nullptr, nullptr, &speed_rect.w, &speed_rect.h);
-  damage_texture = loadFont(font_path, font_size, damage, textColor);
+  damage_texture = loadFont(font_path, font_size, damage + to_string(curr_damage), textColor);
   SDL_QueryTexture(damage_texture, nullptr, nullptr, &damage_rect.w, &damage_rect.h);
   modifiers_title_texture = loadFont(font_path, font_size, modifiers_title, textColor);
   SDL_QueryTexture(modifiers_title_texture, nullptr, nullptr, &modifiers_title_rect.w, &modifiers_title_rect.h);
