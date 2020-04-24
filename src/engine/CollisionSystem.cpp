@@ -214,7 +214,6 @@ void CollisionSystem::handleEvent(Event* e){
 		objects[str].push_back(child);
 	}
 	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
-		printf("removed %s from CS\n", child->id.c_str());
 		objects[str].erase(it);
 	}
 

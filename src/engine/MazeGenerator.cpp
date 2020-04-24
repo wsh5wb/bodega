@@ -12,7 +12,10 @@ int MazeGenerator::adjacentRooms(int x, int y, room_t **arr) {
 	for (int *dir : directions) {
 		if (x + dir[1] >= 0 && x + dir[1] < GRID_SIZE && y + dir[0] >= 0
 				&& y + dir[0] < GRID_SIZE && grid[y + dir[0]][x + dir[1]]) {
-			if(grid[y+dir[0]][x+dir[1]] == BOSS_ROOM)	return 0;
+			if(grid[y+dir[0]][x+dir[1]] == BOSS_ROOM){
+				// printf("Boss room at (%x,%x)\n", y+dir[0],x+dir[1]);
+				return 0;
+			}
 			rooms++;
 			pos_t pos(x+dir[1], y+dir[0]);
 			arr[i] = level.rooms[pos.to_str()];
@@ -204,18 +207,24 @@ void MazeGenerator::setStartRoom(){
 // X,Y is boss's adjacent room's x,y
 bool MazeGenerator::checkPossible(int x, int y){
 	// x or y out of bounds, not possible
-	printf("Checking generation for (%x,%x)\n", x,y);
+	printf("Checking generation for (%x,%x)\n", y,x);
 	if(x<0 || y<0 || x>=GRID_SIZE || y>=GRID_SIZE)
 		return false;
 	// if room is in top left or bottom right corner area, not possible
 	if(x+y==0 || x+y==1 || x+y==2*(GRID_SIZE-1)-1 || x+y==2*(GRID_SIZE-1))
 		return false;
 	// if room is in bottom left corner area, not possible
-	if(x<2 && y>GRID_SIZE-3 && x!=1 && y!=GRID_SIZE-2)
+	if(x<2 && y>GRID_SIZE-3){
+		if(x==1 && y==GRID_SIZE-2)
+			return true;
 		return false;
+	}
 	// if room is in top right corner area, not possible
-	if(x>GRID_SIZE-3 && y<2 && x!=GRID_SIZE-2 && y!=1)
+	if(x>GRID_SIZE-3 && y<2){
+		if(x==GRID_SIZE-2 && y==1)
+			return true;
 		return false;
+	}
 
 	printf("Generation is possible\n");
 
