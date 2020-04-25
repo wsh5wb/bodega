@@ -128,6 +128,9 @@ void Enemy::changeHealth(int amount){
 	}
 }
 
+int Enemy::getDamage(){
+	return damage;
+}
 //void Enemy::onEssenceStrike(Weapon* w){
 //
 //	if(this->shield <= 0) this->health -= w->damage;
