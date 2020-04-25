@@ -134,6 +134,7 @@ public:
 			} else {
 				activeDungeon->generate();
 			}
+			activeDungeon->zoomed_out=true;
 			Camera::getCamera()->addScene(activeDungeon);
 		}
 	}
