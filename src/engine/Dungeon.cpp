@@ -47,13 +47,15 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		if (!zoomed_out) {
 			zoomed_out = true;
 			Camera *myCamera = Camera::getCamera();
+			printf("Camera being set to (0,0)\n");
 			myCamera->setLocation(0, 0);
 
 			myCamera->setZoom(500 / GRID_SIZE, 500 / GRID_SIZE);
 		}
 	} else {
 		if (zoomed_out) {
-			zoomed_out = false;
+			zoomed_out = false;printf
+			("Camera being set to (%x,%x)\n", current_y, current_x);
 			Camera *myCamera = Camera::getCamera();
 			myCamera->setLocation(1200 * current_x, 900 * current_y);
 			myCamera->setZoom(500, 500);
