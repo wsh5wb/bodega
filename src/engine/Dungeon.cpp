@@ -351,13 +351,6 @@ void Dungeon::generateNoBoss() {
 					temp->start = true;
 					temp->visible = true;
 					start_room = temp;
-					// DisplayObject* portal =
-					// 	new DisplayObject("PORTAL", "./resources/character/floryan_head.png");
-					// portal->scale(.25);
-					// portal->moveTo(240,180);
-					// portal->setHitbox(.1,.9);
-					// portal->showHitbox = true;
-					// temp->room->addChild(portal);
 				} else {
 					DisplayObjectContainer::addChild(temp);
 				}
@@ -418,10 +411,6 @@ void Dungeon::transitionRoom(string type) {
 	if (type == "DUNG_TRANS_D") {
 		startPos = 900 * current_y;
 		current_y += 1;
-		if (isBossRoom(current_x, current_y)) {
-			current_y = boss_y;
-			current_x = boss_x;
-		}
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
 		old_room->active = false;
@@ -437,10 +426,6 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_L") {
 		startPos = 1200 * current_x;
 		current_x -= 1;
-		if (isBossRoom(current_x, current_y)) {
-			current_y = boss_y;
-			current_x = boss_x;
-		}
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
 		player->translate(-player_dist, 0);
@@ -456,10 +441,6 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_U") {
 		startPos = 900 * current_y;
 		current_y -= 1;
-		if (isBossRoom(current_x, current_y)) {
-			current_y = boss_y;
-			current_x = boss_x;
-		}
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
 		player->translate(0, -player_dist);
@@ -475,10 +456,6 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_R") {
 		startPos = 1200 * current_x;
 		current_x += 1;
-		if (isBossRoom(current_x, current_y)) {
-			current_y = boss_y;
-			current_x = boss_x;
-		}
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
 		player->translate(player_dist, 0);
@@ -496,10 +473,7 @@ void Dungeon::transitionRoom(string type) {
 
 	// close doors if enemies exist
 
-//	Tween *playerPosTween = new Tween(player);
 	TweenJuggler *juggler = TweenJuggler::getInstance();
-//	playerPosTween->animate(field, player->position.x, player->position.x + (((int)(endPos-startPos)>>31)^100), 100, TWEEN_LINEAR, EASE_IN);
-//	juggler->add(playerPosTween);
 
 	// no tweening until we add functionality to tween camera
 	Camera *myCamera = Camera::getCamera();
