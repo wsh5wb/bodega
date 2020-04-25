@@ -288,6 +288,69 @@ void Dungeon::generate() {
 	cerr << "here2\n";
 }
 
+void Dungeon::generateNoBoss() {
+
+	Game::cs->watchForCollisions("PLAYER", "DOOR");
+	MazeGenerator M;
+	cerr << "here0\n";
+	layout = (int**) (M.getLayout());
+	srand (time(NULL));for
+(	int i = GRID_SIZE; i--;) {
+		for (int j = GRID_SIZE; j--;) {
+			if (layout[i][j] == START_ROOM) {
+				start_x = current_x = j;
+				start_y = current_y = i;
+			}
+			layout[i][j] -= 1;
+			if(!(layout[i][j]) && basic_rooms_size > 0) {
+				int ind = rand()%basic_rooms_size;
+				layout[i][j] = basic_rooms[ind];
+			}
+		}
+	}
+
+	floor_t level = M.getLevel();
+	cerr << "here1\n";
+	Room *start_room;
+	for (int i = GRID_SIZE; i--;) {
+		for (int j = GRID_SIZE; j--;) {
+			int ind = layout[i][j];
+			if (ind >= 0) {
+				// printf("room at (%d,%d) ", j, i);
+				room_t *room_data = level.rooms["(" + to_string(i) + ","
+						+ to_string(j) + ")"];
+				int c = 0;
+				unsigned char doors = room_data->doors;
+				// printf("doors %x\n", doors);
+				if(ind == BOSS_ROOM-1)	ind = 0;
+				string s = this->scenes.at(ind);
+				Room *temp = new Room(s, doors, dungeonType);
+				temp->id = id + to_string(i) + "-" + to_string(j);
+				temp->moveTo(1200 * j, 900 * i);
+
+				if (start_x == j && start_y == i) {
+					printf("Setting start room to active\n");
+					temp->active = true;
+					temp->start = true;
+					temp->visible = true;
+					start_room = temp;
+					// DisplayObject* portal =
+					// 	new DisplayObject("PORTAL", "./resources/character/floryan_head.png");
+					// portal->scale(.25);
+					// portal->moveTo(240,180);
+					// portal->setHitbox(.1,.9);
+					// portal->showHitbox = true;
+					// temp->room->addChild(portal);
+				} else {
+					DisplayObjectContainer::addChild(temp);
+				}
+			}
+		}
+	}
+	DisplayObjectContainer::addChild(start_room);
+	cerr << "here2\n";
+}
+
 void Dungeon::handleEvent(Event *e) {
 	string type = e->getType();
 	if (type == "DUNG_TRANS_D" || type == "DUNG_TRANS_L"
