@@ -25,7 +25,7 @@ public:
 			switch (curr_dungeon) {
 			case HADES: {
 				curr_floor++;
-				if (curr_floor + 1 < FLOORS_PER_DUNGEON) {
+				if (curr_floor < FLOORS_PER_DUNGEON) {
 					printf("GENERATING HADES\n");
 					activeDungeon = new HadesDungeon();
 					curr_dungeon = HADES;
@@ -44,7 +44,7 @@ public:
 			}
 			case OCEAN: {
 				curr_floor++;
-				if (curr_floor + 1 < FLOORS_PER_DUNGEON) {
+				if (curr_floor < FLOORS_PER_DUNGEON) {
 					printf("GENERATING OCEAN\n");
 					activeDungeon = new OceanDungeon();
 					curr_dungeon = OCEAN;
@@ -63,7 +63,7 @@ public:
 			}
 			case FOREST: {
 				curr_floor++;
-				if (curr_floor + 1 < FLOORS_PER_DUNGEON) {
+				if (curr_floor < FLOORS_PER_DUNGEON) {
 					printf("GENERATING FOREST\n");
 					activeDungeon = new ForestDungeon();
 					curr_dungeon = FOREST;
@@ -82,7 +82,7 @@ public:
 			}
 			case OLYMPUS: {
 				curr_floor++;
-				if (curr_floor + 1 < FLOORS_PER_DUNGEON) {
+				if (curr_floor < FLOORS_PER_DUNGEON) {
 					printf("GENERATING OLYMPUS\n");
 					activeDungeon = new OlympusDungeon();
 					curr_dungeon = OLYMPUS;
@@ -110,8 +110,8 @@ public:
 			activeDungeon = new HadesDungeon();
 			curr_dungeon = HADES;
 			activeDungeon->dungeonType = curr_dungeon;
-			curr_floor = 0;
-			if (curr_floor + 1 < FLOORS_PER_DUNGEON) {
+			curr_floor = 1;
+			if (curr_floor < FLOORS_PER_DUNGEON) {
 				activeDungeon->generateNoBoss();
 			} else {
 				activeDungeon->generate();
