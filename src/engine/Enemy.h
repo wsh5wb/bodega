@@ -32,7 +32,8 @@ public:
 	void moveToTarget();
 	bool isTargetReached();
 	void changeHealth(int amount);
-	void changeSpeed
+	int getDamage();
+	void changeSpeed();
 
 
 	/* Health and such */
@@ -41,6 +42,7 @@ public:
 	int shield = 100;
 	int maxHealth = 100;
 	int maxShield = 100;
+	int damage = 2;
 
 	//iFrames
 	bool iFrames = false;

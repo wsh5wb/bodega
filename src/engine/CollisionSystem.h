@@ -61,7 +61,7 @@ public:
 private:
 	map<string,vector<DisplayObject*> > objects;
 	vector<string> pairs;
-	
+	bool removedDoorPlayer = false;
 };
 
 #endif

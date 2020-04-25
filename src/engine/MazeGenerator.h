@@ -71,9 +71,11 @@ public:
 
 	int adjacentRooms(int x, int y, room_t** arr);
 	void generate();
+	void generateNoBoss();
 	void print_map();
 	void clear_grid();
 	int** getLayout();
+	int** getLayoutNoBoss();
 	floor_t getLevel();
 
 private:

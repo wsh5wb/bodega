@@ -12,34 +12,43 @@ Jelly::Jelly(Player *player) :
 	this->scaleY *= 48./h;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
-	xSpe = 1;
-	ySpe = 1;
+	xSpe = 2;
+	ySpe = 2;
 	state = 0;
 }
 
 Jelly::Jelly(Player *player, int d) :
 		Enemy(player) {
+	xSpe = 1;
+	ySpe = 1;
 	switch (d) {
-	case 0: {
-		this->loadTexture("./resources/art/hades/ghost.png");
-		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
-		this->scaleX *= 1;
-		this->scaleY *= 1;
-		this->setAlpha(100);
-		break;
-	}
-	default: {
-		this->loadTexture("resources/enemies/jelly.png");
-		this->id = "ENEMY_Jellyfish";
-		this->scaleX *= 32./w;
-		this->scaleY *= 48./h;
-	}
+		case 0: {
+			this->loadTexture("./resources/art/hades/ghost.png");
+			this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+			this->scaleX *= 1;
+			this->scaleY *= 1;
+			this->setAlpha(100);
+			this->setHitbox(.1,.9,.1,.7);
+			this->showHitbox = true;
+			break;
+		}
+		default: {
+			this->loadTexture("resources/enemies/jelly.png");
+			this->id = "ENEMY_Jellyfish";
+			this->scaleX *= 32./w;
+			this->scaleY *= 48./h;
+			xSpe = 2;
+			ySpe = 2;
+			damage = 3;
+			health = 300;
+			this->setHitbox(.1,.9,.1,.9);
+			this->showHitbox = true;
+		}
 	}
 
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
-	xSpe = 1;
-	ySpe = 1;
+	
 	state = 0;
 }
 

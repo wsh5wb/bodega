@@ -53,6 +53,8 @@ void CollisionSystem::update(){
 				i++;
 				
 				if((collision= collidesWith(obj1, obj2))){
+					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"))
+						printf("FUCK\n");
 					// Maybe handle some of this in other classes via events to reduce cluter?
 					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
@@ -117,7 +119,7 @@ void CollisionSystem::update(){
 
 						// obj1->updateDelta(0,0,0,0,0);
 						// obj2->updateDelta(0,0,0,0,0);
-						printf("%s collided with %s\n", obj1->id.c_str(), obj2->id.c_str());
+						// printf("%s collided with %s\n", obj1->id.c_str(), obj2->id.c_str());
 					}
 					// ADD code to handle decreasing health
 					else if(type1 == "PROJECTILE" || type2 == "PROJECTILE"){
@@ -150,18 +152,19 @@ void CollisionSystem::update(){
 					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
 						if(type1 == "ENEMY"){
 							// must leave outdated scope if vec1/vec2 change
-							if(((Player*) obj2)->changeHealth(-1))
+							if(((Player*) obj2)->changeHealth(-((Enemy*) obj1)->getDamage()))
 								return;
 						}
 						else if(type2 == "ENEMY") {
 							// must leave outdated scope if vec1/vec2 change
-							if(((Player*)obj1)->changeHealth(-1))
+							if(((Player*)obj1)->changeHealth(-((Enemy*)obj2)->getDamage()))
 								return;
 						}
 					}
 					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
 						Event e("CHANGE_DUNGEON", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
+						return;
 					}
 					else if(pair == "FLOOR-PLAYER" || pair == "PLAYER-FLOOR"){
 						resolveObstacleCollision(obj1, obj2,
@@ -214,7 +217,6 @@ void CollisionSystem::handleEvent(Event* e){
 		objects[str].push_back(child);
 	}
 	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
-		printf("removed %s from CS\n", child->id.c_str());
 		objects[str].erase(it);
 	}
 
@@ -225,6 +227,11 @@ void CollisionSystem::handleEvent(Event* e){
 //against all platform objects that are in the current scene.
 void CollisionSystem::watchForCollisions(string type1, string type2){
 	string pair = type1 + "-" + type2;
+	printf("Adding pair: %s\n", pair.c_str());
+
+	if(pair == "PLAYER-DOOR" || pair == "DOOR-PLAYER")
+		removedDoorPlayer = false;
+	
 	if(find(pairs.begin(), pairs.end(), pair) != pairs.end())	return;
 
 	pairs.push_back(pair);
@@ -237,10 +244,13 @@ void CollisionSystem::ignoreCollisions(string type1, string type2){
 	for(auto it = pairs.begin(); it != pairs.end(); ++it){
 		if(*it == pair1 || *it == pair2){
 			printf("Removed pair %s\n", pair1.c_str());
+			removedDoorPlayer = (*it == "PLAYER-DOOR" || *it == "DOOR-PLAYER");
+
 			pairs.erase(it);
 			return;
 		}
 	}
+
 }
 
 /* Return:

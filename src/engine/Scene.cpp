@@ -12,6 +12,10 @@ Scene::Scene() :
 	//just calling parent constructor
 }
 
+Scene::~Scene(){
+
+}
+
 /* Load scene from a file */
 void Scene::loadScene(string sceneFilePath) {
 	//code retrieved from https://github.com/nlohmann/json
@@ -316,7 +320,7 @@ void Scene::loadScene(string sceneFilePath) {
 			i >> temp->id >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
 			temp->setHitbox(.1, .9);
-			temp->showHitbox = true;
+			// temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
 			// printf("Adding enemy (Urchin) %d\n", this->numEnemies);
@@ -337,7 +341,7 @@ void Scene::loadScene(string sceneFilePath) {
 			break;
 		}
 		default: {
-			cerr << "ERROR: Object type not recognized!\n";
+			cerr << "ERROR: Object type " << type << " not recognized!\n";
 			break;
 		}
 

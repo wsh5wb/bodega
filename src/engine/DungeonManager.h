@@ -13,6 +13,8 @@
 #define FOREST		 	2
 #define OLYMPUS			3
 
+#define FLOORS_PER_DUNGEON 2
+
 class DungeonManager: EventListener {
 public:
 	virtual void handleEvent(Event *e) {
@@ -22,35 +24,101 @@ public:
 			// delete activeDungeon;
 			switch (curr_dungeon) {
 			case HADES: {
-				printf("GENERATING OCEAN\n");
-				activeDungeon = new OceanDungeon();
-				curr_dungeon = OCEAN;
-				activeDungeon->dungeonType = curr_dungeon;
-				activeDungeon->generate();
+				curr_floor++;
+				if (curr_floor < FLOORS_PER_DUNGEON) {
+					printf("GENERATING HADES\n");
+					activeDungeon = new HadesDungeon();
+					curr_dungeon = HADES;
+					activeDungeon->dungeonType = curr_dungeon;
+					if (curr_floor == FLOORS_PER_DUNGEON - 1) {
+						activeDungeon->generate();
+					} else {
+						activeDungeon->generateNoBoss();
+					}
+					cerr << "no boss hades\n";
+				} else {
+					printf("GENERATING OCEAN\n");
+					activeDungeon = new OceanDungeon();
+					curr_dungeon = OCEAN;
+					activeDungeon->dungeonType = curr_dungeon;
+					activeDungeon->generateNoBoss();
+					curr_floor = 0;
+					cerr << "boss hades\n";
+				}
+				activeDungeon->zoomed_out=true;
+
 				break;
 			}
 			case OCEAN: {
-				printf("GENERATING FOREST\n");
-				activeDungeon = new ForestDungeon();
-				curr_dungeon = FOREST;
-				activeDungeon->dungeonType = curr_dungeon;
-				activeDungeon->generate();
+				curr_floor++;
+				if (curr_floor < FLOORS_PER_DUNGEON) {
+					printf("GENERATING OCEAN\n");
+					activeDungeon = new OceanDungeon();
+					curr_dungeon = OCEAN;
+					activeDungeon->dungeonType = curr_dungeon;
+					if (curr_floor == FLOORS_PER_DUNGEON - 1) {
+						activeDungeon->generate();
+					} else {
+						activeDungeon->generateNoBoss();
+					}
+				} else {
+					printf("GENERATING FOREST\n");
+					activeDungeon = new ForestDungeon();
+					curr_dungeon = FOREST;
+					activeDungeon->dungeonType = curr_dungeon;
+					activeDungeon->generateNoBoss();
+					curr_floor = 0;
+				}
+				activeDungeon->zoomed_out=true;
+
 				break;
 			}
 			case FOREST: {
-				printf("GENERATING OLYMPUS\n");
-				activeDungeon = new OlympusDungeon();
-				curr_dungeon = OLYMPUS;
-				activeDungeon->dungeonType = curr_dungeon;
-				activeDungeon->generate();
+				curr_floor++;
+				if (curr_floor < FLOORS_PER_DUNGEON) {
+					printf("GENERATING FOREST\n");
+					activeDungeon = new ForestDungeon();
+					curr_dungeon = FOREST;
+					activeDungeon->dungeonType = curr_dungeon;
+					if (curr_floor == FLOORS_PER_DUNGEON - 1) {
+						activeDungeon->generate();
+					} else {
+						activeDungeon->generateNoBoss();
+					}
+				} else {
+					printf("GENERATING OLYMPUS\n");
+					activeDungeon = new OlympusDungeon();
+					curr_dungeon = OLYMPUS;
+					activeDungeon->dungeonType = curr_dungeon;
+					activeDungeon->generateNoBoss();
+					curr_floor = 0;
+				}
+				activeDungeon->zoomed_out=true;
+
 				break;
 			}
 			case OLYMPUS: {
-				printf("GENERATING HADES\n");
-				activeDungeon = new HadesDungeon();
-				curr_dungeon = HADES;
-				activeDungeon->dungeonType = curr_dungeon;
-				activeDungeon->generate();
+				curr_floor++;
+				if (curr_floor < FLOORS_PER_DUNGEON) {
+					printf("GENERATING OLYMPUS\n");
+					activeDungeon = new OlympusDungeon();
+					curr_dungeon = OLYMPUS;
+					activeDungeon->dungeonType = curr_dungeon;
+					if (curr_floor == FLOORS_PER_DUNGEON - 1) {
+						activeDungeon->generate();
+					} else {
+						activeDungeon->generateNoBoss();
+					}
+				} else {
+					printf("GENERATING HADES\n");
+					activeDungeon = new HadesDungeon();
+					curr_dungeon = HADES;
+					activeDungeon->dungeonType = curr_dungeon;
+					activeDungeon->generateNoBoss();
+					curr_floor = 0;
+				}
+				activeDungeon->zoomed_out=true;
+
 				break;
 			}
 			}
@@ -64,13 +132,21 @@ public:
 			activeDungeon = new HadesDungeon();
 			curr_dungeon = HADES;
 			activeDungeon->dungeonType = curr_dungeon;
-			activeDungeon->generate();
+			curr_floor = 0;
+			if (curr_floor < FLOORS_PER_DUNGEON) {
+				activeDungeon->generateNoBoss();
+			} else {
+				activeDungeon->generate();
+			}
+			activeDungeon->zoomed_out=true;
 			Camera::getCamera()->addScene(activeDungeon);
 		}
 	}
 
 	Dungeon *activeDungeon = NULL;
 	unsigned char curr_dungeon = HADES;
+
+	unsigned char curr_floor = 0;
 	// probably put num dungeons in define statement somewhere
 	Dungeon *dungeons[NUM_DUNGEONS];
 };
