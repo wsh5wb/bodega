@@ -325,6 +325,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->direction = 4;
 		}
 	}
+	if(xMov != 0 && yMov != 0){
+		xMov = xMov/3;
+		yMov = yMov/3;
+	}
 	//play idle animation if player is just standing still on ground
 	if (this->currAnimation == "Run" && idle) {
 		this->play("Idle");

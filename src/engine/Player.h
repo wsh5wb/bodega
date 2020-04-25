@@ -53,8 +53,8 @@ public:
 	/* Health and such */
 	int damage = 100;
 	int slow = 1;
-	int reduce = 10;
-	
+	int lifesteal = 20;
+
 	double attackSpeed = 1;
 
 	//iFrames
