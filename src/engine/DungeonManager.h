@@ -128,7 +128,7 @@ public:
 			activeDungeon = new HadesDungeon();
 			curr_dungeon = HADES;
 			activeDungeon->dungeonType = curr_dungeon;
-			curr_floor = 1;
+			curr_floor = 0;
 			if (curr_floor < FLOORS_PER_DUNGEON) {
 				activeDungeon->generateNoBoss();
 			} else {
