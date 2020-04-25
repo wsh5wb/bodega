@@ -48,8 +48,6 @@ private:
 	string scene;
 	bool changed;
 	bool isQuestDone;
-	Sound effect;
-	Sound hades_theme;
 	TweenJuggler * animationJuggler;
 	StatMenu * player_stats;
 };

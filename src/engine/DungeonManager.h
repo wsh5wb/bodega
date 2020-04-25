@@ -6,6 +6,7 @@
 #include "OceanDungeon.h"
 #include "ForestDungeon.h"
 #include "OlympusDungeon.h"
+#include "Sound.h"
 
 #define NUM_DUNGEONS	4
 #define HADES		 	0
@@ -145,7 +146,6 @@ public:
 
 	Dungeon *activeDungeon = NULL;
 	unsigned char curr_dungeon = HADES;
-
 	unsigned char curr_floor = 0;
 	// probably put num dungeons in define statement somewhere
 	Dungeon *dungeons[NUM_DUNGEONS];

@@ -42,9 +42,6 @@ MyGame::MyGame() :
 	myCamera->addScene(dunMan->activeDungeon);
 
 	// Music and tweens
-	hades_theme.loadMusic("./resources/sounds/lullaby.wav");
-	effect.loadMusic("./resources/sounds/clock_ticking.wav");
-	hades_theme.playMusic();
 	animationJuggler = TweenJuggler::getInstance();
 	addChild(myCamera->container);
 
@@ -93,11 +90,6 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
-
-		case SDL_SCANCODE_P: {
-			hades_theme.playMusic();
-			break;
-		}
 		case SDL_SCANCODE_O: {
 			Event e("ENEMY_KILLED", &Game::eventHandler);
 			Game::eventHandler.dispatchEvent(&e);

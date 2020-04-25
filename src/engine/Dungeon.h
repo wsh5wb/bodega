@@ -6,6 +6,7 @@
 #include "MazeGenerator.h"
 #include "Camera.h"
 #include "EventListener.h"
+#include "Sound.h"
 
 #define ROOM_START_DELAY 90 //number of frames before room starts being active after player enters
 

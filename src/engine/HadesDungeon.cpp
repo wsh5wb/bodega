@@ -15,8 +15,8 @@ HadesDungeon::HadesDungeon(){
 	for(int i = 0;i<basic_rooms_size;i++){
 		basic_rooms[i] = basic_rooms0[i];
 	}
-
-
+	hades_theme.loadMusic("./resources/sounds/lullaby.wav");
+	hades_theme.playMusic();
 	scenes.push_back("./resources/scenes/hades?/basic_room.txt");
 	scenes.push_back("./resources/scenes/hades?/start.txt");
 	scenes.push_back("./resources/scenes/hades?/basic_room2.txt");
@@ -49,4 +49,3 @@ void HadesDungeon::draw(AffineTransform &at) {
 void HadesDungeon::generate() {
 	Dungeon::generate();
 }
-

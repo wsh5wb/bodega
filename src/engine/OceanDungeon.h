@@ -19,7 +19,7 @@ public:
 
 
 private:
-
+	Sound ocean_theme;
 };
 
 #endif
