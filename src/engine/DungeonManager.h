@@ -85,7 +85,7 @@ public:
 				if (curr_floor + 1 < FLOORS_PER_DUNGEON) {
 					printf("GENERATING OLYMPUS\n");
 					activeDungeon = new OlympusDungeon();
-					curr_dungeon = Olympus;
+					curr_dungeon = OLYMPUS;
 					activeDungeon->dungeonType = curr_dungeon;
 					activeDungeon->generateNoBoss();
 				} else {
