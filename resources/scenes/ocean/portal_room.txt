@@ -1,0 +1,4 @@
+2 1
+0 Scene ./resources/art/ocean/background.png 2.34375 2.34375
+9 Statue1_PORTAL ./resources/character/floryan_head.png 5 1 1 0 0.05 0 0 0 224 128 .3 .7 .3 .7
+Scene Statue1_PORTAL

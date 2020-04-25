@@ -75,6 +75,7 @@ public:
 	void print_map();
 	void clear_grid();
 	int** getLayout();
+	int** getLayoutNoBoss();
 	floor_t getLevel();
 
 private:

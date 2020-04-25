@@ -33,7 +33,11 @@ MyGame::MyGame() :
 
 	printf("Generating Ocean\n");
 	Dungeon *dungeon = new HadesDungeon();
-	dungeon->generate();
+	if (FLOORS_PER_DUNGEON > 1) {
+		dungeon->generateNoBoss();
+	} else {
+		dungeon->generate();
+	}
 	dunMan->activeDungeon = dungeon;
 	myCamera->addScene(dunMan->activeDungeon);
 

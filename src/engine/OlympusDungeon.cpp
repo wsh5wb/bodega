@@ -9,6 +9,7 @@ OlympusDungeon::OlympusDungeon() {
 	id = "OlympusDungeon";
 
 	basic_rooms_size = 5;
+	portal_index = 6;
 	int basic_rooms0[] = { 0, 2, 3, 4, 5 };
 	basic_rooms = (int*) malloc(sizeof(int) * basic_rooms_size);
 	for (int i = 0; i < basic_rooms_size; i++) {
@@ -21,6 +22,7 @@ OlympusDungeon::OlympusDungeon() {
 	scenes.push_back("./resources/scenes/olympus/torch_chest.txt");
 	scenes.push_back("./resources/scenes/ocean/jelly_room.txt");
 	scenes.push_back("./resources/scenes/ocean/urchin_room.txt");
+	scenes.push_back("./resources/scenes/olympus/portal_room.txt");
 	// these must go at bottom
 	scenes.push_back("./resources/scenes/ocean/boss_top_left.txt");
 	scenes.push_back("./resources/scenes/ocean/boss_top_right.txt");

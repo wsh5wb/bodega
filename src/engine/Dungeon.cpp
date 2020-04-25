@@ -61,7 +61,8 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 	}
 
 	//camera for being in dungeon
-	if (!zoomed_out && (current_x==boss_x||current_x==boss_x-1)&&(current_y==boss_y||current_y==boss_y-1)) {
+	if (!zoomed_out && (current_x == boss_x || current_x == boss_x - 1)
+			&& (current_y == boss_y || current_y == boss_y - 1)) {
 		int room_size_x = 512;
 		int room_size_y = 384;
 		int x_adj = (boss_x - start_x) * room_size_x;
@@ -171,7 +172,8 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 
 		case SDL_SCANCODE_C: {
 			Player *p = Player::getPlayer();
-			cerr << "current room: (" << current_x << ", " << current_y << ")\n";
+			cerr << "current room: (" << current_x << ", " << current_y
+					<< ")\n";
 			cerr << "boss room: (" << boss_x << ", " << boss_y << ")\n";
 			cerr << "player x: " << p->position.x;
 			cerr << "\nplayer y: " << p->position.y << "\n\n";
@@ -233,39 +235,42 @@ void Dungeon::generate() {
 				unsigned char doors = room_data->doors;
 				// printf("doors %x\n", doors);
 				string s;
-				if(ind == BOSS_ROOM -1){
+				if (ind == BOSS_ROOM - 1) {
 					printf("Boss room being processed\n");
-					boss_locations[bossRoomsCount] = {j,i};
-					if(!seenBoss){
+					boss_locations[bossRoomsCount] = { j, i };
+					if (!seenBoss) {
 						seenBoss = true;
-						boss_y = i; boss_x = j;
+						boss_y = i;
+						boss_x = j;
 					}
-					s = this->scenes.at(this->scenes.size()-1-bossRoomsCount);
-				}else 	s = this->scenes.at(ind);
+					s = this->scenes.at(
+							this->scenes.size() - 1 - bossRoomsCount);
+				} else
+					s = this->scenes.at(ind);
 				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
 
-				if(ind == BOSS_ROOM-1){
-					if(bossRoomsCount == 0){
+				if (ind == BOSS_ROOM - 1) {
+					if (bossRoomsCount == 0) {
 						temp->removeWall(NORTH);
 						temp->removeWall(WEST);
-					}else if(bossRoomsCount == 1){
+					} else if (bossRoomsCount == 1) {
 						temp->removeWall(NORTH);
 						temp->removeWall(EAST);
-					}else if(bossRoomsCount == 2){
+					} else if (bossRoomsCount == 2) {
 						temp->removeWall(SOUTH);
 						temp->removeWall(WEST);
-					}else if(bossRoomsCount == 3){
+					} else if (bossRoomsCount == 3) {
 						temp->removeWall(SOUTH);
 						temp->removeWall(EAST);
-						DisplayObject* portal = 
-							new DisplayObject("PORTAL", "./resources/character/floryan_head.png");
+						DisplayObject *portal = new DisplayObject("PORTAL",
+								"./resources/character/floryan_head.png");
 						portal->scale(.25);
 						portal->moveTo(512, 384);
-						portal->translate(-portal->w/8, -portal->h/8);
+						portal->translate(-portal->w / 8, -portal->h / 8);
 						// portal->movePivot(portal->w/2, portal->h/2);
-						portal->setHitbox(.1,.9);
+						portal->setHitbox(.1, .9);
 						portal->showHitbox = true;
 						temp->room->addChild(portal);
 					}
@@ -293,18 +298,28 @@ void Dungeon::generateNoBoss() {
 	Game::cs->watchForCollisions("PLAYER", "DOOR");
 	MazeGenerator M;
 	cerr << "here0\n";
-	layout = (int**) (M.getLayout());
-	srand (time(NULL));for
-(	int i = GRID_SIZE; i--;) {
+	layout = (int**) (M.getLayoutNoBoss());
+	srand (time(NULL));int
+	portal = 0;
+	int count = 0;
+	if (portal_index != -1) {
+		portal = rand() % (NUM_ROOMS - 1);
+	}
+	for (int i = GRID_SIZE; i--; i += 0) {
 		for (int j = GRID_SIZE; j--;) {
 			if (layout[i][j] == START_ROOM) {
 				start_x = current_x = j;
 				start_y = current_y = i;
 			}
 			layout[i][j] -= 1;
-			if(!(layout[i][j]) && basic_rooms_size > 0) {
-				int ind = rand()%basic_rooms_size;
-				layout[i][j] = basic_rooms[ind];
+			if (!(layout[i][j]) && basic_rooms_size > 0) {
+				if (portal && (portal == count)) {
+					layout[i][j] = portal_index;
+				} else {
+					int ind = rand() % basic_rooms_size;
+					layout[i][j] = basic_rooms[ind];
+				}
+				count++;
 			}
 		}
 	}
@@ -322,7 +337,8 @@ void Dungeon::generateNoBoss() {
 				int c = 0;
 				unsigned char doors = room_data->doors;
 				// printf("doors %x\n", doors);
-				if(ind == BOSS_ROOM-1)	ind = 0;
+				if (ind == BOSS_ROOM - 1)
+					ind = 0;
 				string s = this->scenes.at(ind);
 				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);
@@ -374,9 +390,9 @@ void Dungeon::handleEvent(Event *e) {
 
 }
 
-bool Dungeon::isBossRoom(int x, int y){
-	for(SDL_Point loc : boss_locations){
-		if(loc.x == x && loc.y == y){
+bool Dungeon::isBossRoom(int x, int y) {
+	for (SDL_Point loc : boss_locations) {
+		if (loc.x == x && loc.y == y) {
 			printf("in boss room!\n");
 			return true;
 		}
@@ -401,8 +417,9 @@ void Dungeon::transitionRoom(string type) {
 	if (type == "DUNG_TRANS_D") {
 		startPos = 900 * current_y;
 		current_y += 1;
-		if(isBossRoom(current_x, current_y)){
-			current_y = boss_y; current_x = boss_x;
+		if (isBossRoom(current_x, current_y)) {
+			current_y = boss_y;
+			current_x = boss_x;
 		}
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
@@ -419,8 +436,9 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_L") {
 		startPos = 1200 * current_x;
 		current_x -= 1;
-		if(isBossRoom(current_x, current_y)){
-			current_y = boss_y; current_x = boss_x;
+		if (isBossRoom(current_x, current_y)) {
+			current_y = boss_y;
+			current_x = boss_x;
 		}
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
@@ -437,8 +455,9 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_U") {
 		startPos = 900 * current_y;
 		current_y -= 1;
-		if(isBossRoom(current_x, current_y)){
-			current_y = boss_y; current_x = boss_x;
+		if (isBossRoom(current_x, current_y)) {
+			current_y = boss_y;
+			current_x = boss_x;
 		}
 		field = TWEEN_POSITION_Y;
 		endPos = 900 * current_y;
@@ -455,8 +474,9 @@ void Dungeon::transitionRoom(string type) {
 	} else if (type == "DUNG_TRANS_R") {
 		startPos = 1200 * current_x;
 		current_x += 1;
-		if(isBossRoom(current_x, current_y)){
-			current_y = boss_y; current_x = boss_x;
+		if (isBossRoom(current_x, current_y)) {
+			current_y = boss_y;
+			current_x = boss_x;
 		}
 		field = TWEEN_POSITION_X;
 		endPos = 1200 * current_x;
@@ -482,13 +502,15 @@ void Dungeon::transitionRoom(string type) {
 
 	// no tweening until we add functionality to tween camera
 	Camera *myCamera = Camera::getCamera();
-	if((current_x==boss_x||current_x==boss_x-1)&&(current_y==boss_y||current_y==boss_y-1)){
+	if ((current_x == boss_x || current_x == boss_x - 1)
+			&& (current_y == boss_y || current_y == boss_y - 1)) {
 		//current_x = boss_x;
 		//current_y = boss_y;
 
 	}
 	if (!zoomed_out) {
-		if ((current_x==boss_x||current_x==boss_x-1)&&(current_y==boss_y||current_y==boss_y-1)) {
+		if ((current_x == boss_x || current_x == boss_x - 1)
+				&& (current_y == boss_y || current_y == boss_y - 1)) {
 			int room_size_x = 512;
 			int room_size_y = 384;
 			int x_adj = (boss_x - start_x) * room_size_x;

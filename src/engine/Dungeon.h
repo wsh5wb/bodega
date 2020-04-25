@@ -32,6 +32,7 @@ public:
 	bool DEBUG_CHANGE_ROOM = false;
 	int * basic_rooms;
 	int basic_rooms_size = 0;
+	int portal_index = -1;
 	int dungeonType = 0;
 	int timer = 0;
 	Room* changingRoom = NULL;

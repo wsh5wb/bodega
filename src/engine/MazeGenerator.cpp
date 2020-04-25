@@ -351,6 +351,11 @@ int** MazeGenerator::getLayout() {
 	return (int**) grid;
 }
 
+int** MazeGenerator::getLayoutNoBoss() {
+	generateNoBoss();
+	return (int**) grid;
+}
+
 floor_t MazeGenerator::getLevel(){
 	return this->level;
 }
