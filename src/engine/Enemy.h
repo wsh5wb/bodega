@@ -32,6 +32,7 @@ public:
 	void moveToTarget();
 	bool isTargetReached();
 	void changeHealth(int amount);
+	void changeSpeed
 
 
 	/* Health and such */
@@ -45,7 +46,7 @@ public:
 	bool iFrames = false;
 	int iFrameCount = 0;
 	int numIFrames = 0;
-
+	int xSpe, ySpe;
 	//variables
 	int targX, targY;
 	//int pivotX, pivotY;
@@ -66,7 +67,6 @@ private:
 	int oldX=0, oldY=0;
 
 	int _jumpVel = -15;
-
 	/* Falling variables */
 	bool _standing = false;
 	int _maxFall = 9;

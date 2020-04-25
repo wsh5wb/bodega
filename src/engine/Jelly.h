@@ -15,7 +15,6 @@ public:
   virtual void draw(AffineTransform &at);
 
   int timer;
-  int xSpe, ySpe;
   int xBound, yBound;
 };
 
