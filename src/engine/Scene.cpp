@@ -320,7 +320,7 @@ void Scene::loadScene(string sceneFilePath) {
 			i >> temp->id >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
 			temp->setHitbox(.1, .9);
-			temp->showHitbox = true;
+			// temp->showHitbox = true;
 			objects.push_back(temp);
 			this->numEnemies += 1;
 			// printf("Adding enemy (Urchin) %d\n", this->numEnemies);
