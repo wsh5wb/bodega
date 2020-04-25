@@ -13,7 +13,7 @@
 #define FOREST		 	2
 #define OLYMPUS			3
 
-#define FLOORS_PER_DUNGEON 1
+#define FLOORS_PER_DUNGEON 2
 
 class DungeonManager: EventListener {
 public:
