@@ -28,6 +28,8 @@ Jelly::Jelly(Player *player, int d) :
 			this->scaleX *= 1;
 			this->scaleY *= 1;
 			this->setAlpha(100);
+			this->setHitbox(.1,.9,.1,.7);
+			this->showHitbox = true;
 			break;
 		}
 		default: {
@@ -39,6 +41,8 @@ Jelly::Jelly(Player *player, int d) :
 			ySpe = 2;
 			damage = 3;
 			health = 300;
+			this->setHitbox(.1,.9,.1,.9);
+			this->showHitbox = true;
 		}
 	}
 

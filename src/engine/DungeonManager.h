@@ -45,6 +45,7 @@ public:
 					curr_floor = 0;
 					cerr << "boss hades\n";
 				}
+				activeDungeon->zoomed_out=true;
 
 				break;
 			}
@@ -68,6 +69,7 @@ public:
 					activeDungeon->generateNoBoss();
 					curr_floor = 0;
 				}
+				activeDungeon->zoomed_out=true;
 
 				break;
 			}
@@ -91,6 +93,7 @@ public:
 					activeDungeon->generateNoBoss();
 					curr_floor = 0;
 				}
+				activeDungeon->zoomed_out=true;
 
 				break;
 			}
@@ -114,6 +117,7 @@ public:
 					activeDungeon->generateNoBoss();
 					curr_floor = 0;
 				}
+				activeDungeon->zoomed_out=true;
 
 				break;
 			}
