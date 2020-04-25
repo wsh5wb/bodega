@@ -18,6 +18,7 @@ StatMenu::StatMenu(): DisplayObject("StatMenu", "./resources/miscellaneous/table
   setScale(.8,.8);
   my_at = new AffineTransform();
   setAlpha(0);
+  text_active = false;
   //generateText();
 }
 

@@ -25,6 +25,88 @@ int MazeGenerator::adjacentRooms(int x, int y, room_t **arr) {
 	return rooms;
 }
 
+void MazeGenerator::generateNoBoss() {
+
+	cerr << "making grid0\n";
+	grid = new int*[GRID_SIZE];
+	for (int i = 0; i < GRID_SIZE; i++) {
+		grid[i] = new int[GRID_SIZE];
+		for (int j = 0; j < GRID_SIZE; j++) {
+			grid[i][j] = 0;
+		}
+	}
+	cerr << "making grid1\n";
+	random_device rd;
+	mt19937 e(rd());
+	uniform_int_distribution<int> dist(0, GRID_SIZE - 1);
+
+	room_t *startRoom = new room_t;
+	startRoom->pos.x = dist(e);
+	startRoom->pos.y = dist(e);
+	grid[startRoom->pos.y][startRoom->pos.x] = START_ROOM;
+	level.rooms[startRoom->pos.to_str()] = startRoom;
+
+	// cout << "Making room @ " << startRoom->pos.to_str() << endl;
+	unsigned int numRooms = 1;
+	cerr << "adding rooms0\n";
+	while (numRooms < NUM_ROOMS) {
+		int x = dist(e);
+		int y = dist(e);
+		pos_t pos(x,y);
+
+		// if room already in the generated position
+		if (level.rooms.count(pos.to_str()) > 0)
+			continue;
+
+		room_t* adjRooms[4];
+		int adjacent = adjacentRooms(x, y, adjRooms);
+		// printf("adjecent rooms %d\n", adjacent);
+		if (adjacent == 1) {
+			// cout << "Making room @ " << pos.to_str() << endl;
+			room_t* room = new room_t;
+			numRooms++;
+			grid[y][x] = REG_ROOM;
+
+			// layout is WSEN
+			//			 0000
+			if (adjRooms[NORTH]) {
+				// printf("Adding N-S connection b/w (%d,%d) and (%d,%d)\n", x,y,x,y-1);
+				room->doors |= (1<<NORTH);
+				adjRooms[NORTH]->doors |= (1<<SOUTH);
+				room->availableDoors++;
+				adjRooms[NORTH]->availableDoors++;
+			}
+			if (adjRooms[EAST]) {
+				// printf("Adding E-W connection b/w (%d,%d) and (%d,%d)\n", x,y,x+1,y);
+				room->doors |= (1<<EAST);
+				adjRooms[EAST]->doors |= (1<<WEST);
+				room->availableDoors++;
+				adjRooms[EAST]->availableDoors++;
+			}
+			if (adjRooms[SOUTH]) {
+				// printf("Adding S-N connection b/w (%d,%d) and (%d,%d)\n", x,y,x,y+1);
+				room->doors |= (1<<SOUTH);
+				adjRooms[SOUTH]->doors |= (1<<NORTH);
+				room->availableDoors++;
+				adjRooms[SOUTH]->availableDoors++;
+			}
+			if (adjRooms[WEST]) {
+				// printf("Adding W-E connection b/w (%d,%d) and (%d,%d)\n", x,y,x-1,y);
+				room->doors |= (1<<WEST);
+				adjRooms[WEST]->doors |= (1<<EAST);
+				room->availableDoors++;
+				adjRooms[WEST]->availableDoors++;
+			}
+
+			level.rooms[pos.to_str()] = room;
+			// delete [] adjRooms;
+		}
+	}
+	cerr << "adding rooms0\n";
+
+}
+
+
 void MazeGenerator::generate() {
 
 	cerr << "making grid0\n";
@@ -105,6 +187,7 @@ void MazeGenerator::generate() {
 	cerr << "adding rooms0\n";
 
 }
+
 void MazeGenerator::print_map() {
 	bool first_seen = false;
 	bool not_seen = true;
