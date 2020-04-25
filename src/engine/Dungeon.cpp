@@ -108,7 +108,8 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 				p->moveTo(224, 224);
 				Room *old_room = (Room*) DisplayObjectContainer::getChild(
 						id + to_string(current_y) + "-" + to_string(current_x));
-				old_room->active = false;
+				if(old_room)
+					old_room->active = false;
 				current_x = start_x;
 				current_y = start_y;
 				Room *start_room = (Room*) DisplayObjectContainer::getChild(
@@ -511,6 +512,23 @@ void Dungeon::transitionRoom(string type) {
 	if (!zoomed_out) {
 		if ((current_x == boss_x || current_x == boss_x - 1)
 				&& (current_y == boss_y || current_y == boss_y - 1)) {
+			Room *br0 = (Room*) DisplayObjectContainer::getChild(
+					id + to_string(boss_y) + "-" + to_string(boss_x));
+			Room *br1 = (Room*) DisplayObjectContainer::getChild(
+					id + to_string(boss_y - 1) + "-" + to_string(boss_x));
+			Room *br2 = (Room*) DisplayObjectContainer::getChild(
+					id + to_string(boss_y) + "-" + to_string(boss_x - 1));
+			Room *br3 = (Room*) DisplayObjectContainer::getChild(
+					id + to_string(boss_y - 1) + "-" + to_string(boss_x - 1));
+			if(br0)
+				br0->visible = true;
+			if(br1)
+				br1->visible = true;
+			if (br2)
+				br2->visible = true;
+			if (br3)
+				br3->visible = true;
+
 			int room_size_x = 512;
 			int room_size_y = 384;
 			int x_adj = (boss_x - start_x) * room_size_x;
