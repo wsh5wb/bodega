@@ -162,6 +162,7 @@ void CollisionSystem::update(){
 					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
 						Event e("CHANGE_DUNGEON", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
+						return;
 					}
 					else if(pair == "FLOOR-PLAYER" || pair == "PLAYER-FLOOR"){
 						resolveObstacleCollision(obj1, obj2,
@@ -224,6 +225,7 @@ void CollisionSystem::handleEvent(Event* e){
 //against all platform objects that are in the current scene.
 void CollisionSystem::watchForCollisions(string type1, string type2){
 	string pair = type1 + "-" + type2;
+	printf("Adding pair: %s\n", pair.c_str());
 	if(find(pairs.begin(), pairs.end(), pair) != pairs.end())	return;
 
 	pairs.push_back(pair);
