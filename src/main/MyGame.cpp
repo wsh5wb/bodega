@@ -51,6 +51,7 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PLAYER", "ENEMY");
 	Game::cs->watchForCollisions("PLAYER", "PORTAL");
 	Game::cs->watchForCollisions("PLAYER", "chest");
+	Game::cs->watchForCollisions("PLAYER", "PLAYER-EN_PROJECTILE");
 	Game::cs->watchForCollisions("PROJECTILE", "OBSTACLE");
 	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 

@@ -166,6 +166,7 @@ void DisplayObjectContainer::resetDelta() {
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys) {
 	DisplayObject::update(pressedKeys);
 	for (DisplayObject *child : children) {
+		if(child == NULL){continue;}
 		child->update(pressedKeys);
 	}
 }

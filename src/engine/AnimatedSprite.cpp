@@ -12,10 +12,12 @@ AnimatedSprite::AnimatedSprite(string id){
 AnimatedSprite::AnimatedSprite(string id, string filepath){
 	SDL_Surface* image = IMG_Load(filepath.c_str());
 	images.push_back(image);
+	cout << "New animated Sprite" << endl;
 	this->id = id;
 	this->imgPath = filepath;
 	loop = false;
 	curFrame = 0;
+	usesSheet = false;
 	DisplayObject::setImage(image);
 }
 
@@ -41,6 +43,7 @@ AnimatedSprite::~AnimatedSprite(){
 void AnimatedSprite::addAnimation(string basepath, string animName, int numFrames, int frameRate, bool loop){
 	Animation * a = new Animation(basepath,images.size(),numFrames,frameRate,loop);
 	animationMap.emplace(animName,a);
+	usesSheet = true;
 
 	for(int i=1; i<numFrames+1;i++){
 		SDL_Surface* image = IMG_Load((basepath + "_" + to_string(i) + ".png").c_str());

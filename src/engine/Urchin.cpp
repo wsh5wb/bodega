@@ -1,6 +1,8 @@
 #include "Urchin.h"
 #include "DisplayObjectContainer.h"
 #include <cstdlib>
+#include "Projectile.h"
+#include "DTEvent.h"
 
 using namespace std;
 
@@ -22,36 +24,53 @@ Urchin::Urchin(Player *player) :
 
 Urchin::Urchin(Player *player, int d) :
 		Enemy(player) {
+	this->type = d;
 	switch (d) {
-	case 0: {
-		this->loadTexture("resources/enemies/gordo_one.png");
-		this->id = "ENEMY_Urchin";
-		this->scaleX *= 0.5;
-		this->scaleY *= 0.5;
-		//this->pivot.x = w * scaleX / 2;
-		//this->pivot.y = h * scaleY / 2;
-		xSpe = 2;
-		ySpe = 2;
-		state = 0;
-		this->xBound = 512 - (w * scaleX);
-		this->yBound = 384 - (h * scaleY);
-		this->xp = 10;
-		break;
-	}
-	default: {
-		this->loadTexture("resources/enemies/gordo_one.png");
-		this->id = "ENEMY_Urchin";
-		this->scaleX *= 0.5;
-		this->scaleY *= 0.5;
-		//this->pivot.x = w * scaleX / 2;
-		//this->pivot.y = h * scaleY / 2;
-		xSpe = 2;
-		ySpe = 2;
-		state = 0;
-		this->xBound = 512 - (w * scaleX);
-		this->yBound = 384 - (h * scaleY);
-		this->xp = 10;
-	}
+		case 0: {
+			this->loadTexture("resources/enemies/gordo_one.png");
+			this->id = "ENEMY_Urchin";
+			this->scaleX *= 0.5;
+			this->scaleY *= 0.5;
+			//this->pivot.x = w * scaleX / 2;
+			//this->pivot.y = h * scaleY / 2;
+			xSpe = 2;
+			ySpe = 2;
+			state = 0;
+			this->xBound = 512 - (w * scaleX);
+			this->yBound = 384 - (h * scaleY);
+			this->xp = 10;
+			break;
+		}case 2: {
+			this->loadTexture("resources/enemies/gordo_one.png");
+			this->id = "ENEMY_Urchin";
+			this->scaleX *= 0.5;
+			this->scaleY *= 0.5;
+			//this->pivot.x = w * scaleX / 2;
+			//this->pivot.y = h * scaleY / 2;
+			xSpe = 2;
+			ySpe = 2;
+			state = 0;
+			this->xBound = 512 - (w * scaleX);
+			this->yBound = 384 - (h * scaleY);
+			projectileDamage = 10;
+			this->xp = 20;
+			break;
+		}
+		default: {
+			this->loadTexture("resources/enemies/gordo_one.png");
+			this->id = "ENEMY_Urchin";
+			this->scaleX *= 0.5;
+			this->scaleY *= 0.5;
+			//this->pivot.x = w * scaleX / 2;
+			//this->pivot.y = h * scaleY / 2;
+			xSpe = 2;
+			ySpe = 2;
+			state = 0;
+			this->xBound = 512 - (w * scaleX);
+			this->yBound = 384 - (h * scaleY);
+			this->xp = 10;
+			break;
+		}
 	}
 
 }
@@ -75,7 +94,27 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 		}
 
 	} else if (state == 1) {
-		state++;
+		if(type < 2){
+			state++;
+			return;
+		}
+		timer++;
+		if (timer % 50 == 0) {
+			cout << "FIRED" << endl;
+			//Generate projectiles 
+			string path = "resources/Projectiles/spikedball.png";
+			int midX = this->position.x + (dstrect.w)/3;
+		    int midY = this->position.y + (dstrect.h)/3;
+			Projectile * p = new Projectile(path, midX, midY,0,3,500,0.25,0.25,projectileDamage);
+			((DisplayObjectContainer*)this->parent)->addChild(p);
+			DTEvent e("OBJ_ADD", &Game::eventHandler, p);
+			Game::eventHandler.dispatchEvent(&e);
+		}
+		if (timer > 200) {
+			timer = 0;
+			state++;
+		}
+		//state++;
 	} else if (state == 2) {
 		timer++;
 		if (timer <= 360) {

@@ -38,6 +38,26 @@ Projectile::Projectile(int my_type, int x, int y, int speedX, int speedY, int ti
 	// this->showHitbox = true;
 }
 
+Projectile::Projectile(string path, int x, int y, int speedX, int speedY, int timeout, double scaleX, double scaleY, int damage) : AnimatedSprite("EN_PROJECTILE",path){
+	cout << "new en proj" << endl;
+	//this->my_type = my_type;
+	this->speedX = speedX;
+	this->speedY = speedY;
+
+	this->rotate(atan2(speedY,speedX));
+
+	this->timeout = timeout;
+	this->setScale(scaleX,scaleY);
+	this->moveTo(x, y);
+	this->start = std::clock();
+	setHitbox(0.05,0.95);
+	// this->showHitbox = true;
+}
+
+int Projectile::getDamage(){
+	return damage;
+}
+
 Projectile::~Projectile(){
 
 }
@@ -57,5 +77,6 @@ void Projectile::update(set<SDL_Scancode> pressedKeys){
 	// TODO: If we get strange behavior rarely, fix this :)
 	if((((std::clock() - start ) / (double) CLOCKS_PER_SEC)*1000) > timeout){
 		((DisplayObjectContainer*)this->parent)->removeImmediateChild(this);
+		cout << "Deleted" << endl;
 	}
 }
