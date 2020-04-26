@@ -8,7 +8,9 @@
 #include "DemoSprite.h"
 #include "Object.h"
 #include "Layer.h"
-#include "Door.h"
+#include "Jelly.h"
+#include "Urchin.h"
+#include "Spirit.h"
 #include <string>
 #include <vector>
 #include <fstream>
@@ -19,7 +21,7 @@ class Scene : public DisplayObjectContainer{
 
 public:
 	Scene();
-
+	~Scene();
 	/* Load scene from a file */
 	void loadScene(string sceneFilePath);
 

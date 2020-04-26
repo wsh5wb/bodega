@@ -1,0 +1,18 @@
+9 8
+0 Scene ./resources/art/hades/background.png 2.34375 2.34375 
+9 lava1_FLOOR ./resources/art/hades/medium_lava.png 5 1 1 0 0.05 0 0 0 32 32 .3 .7 .1 .45
+9 lava2_FLOOR ./resources/art/hades/medium_lava.png 5 1 1 0 0.05 0 0 0 352 32 .3 .7 .1 .45
+9 lava3_FLOOR ./resources/art/hades/medium_lava.png 5 1 1 0 0.05 0 0 0 32 240 .3 .7 .1 .45
+9 lava4_FLOOR ./resources/art/hades/medium_lava.png 5 1 1 0 0.05 0 0 0 352 240 .3 .7 .1 .45
+10 0 ENEMY_e1 64 64
+10 0 ENEMY_e2 384 64
+10 0 ENEMY_e3 64 272
+10 0 ENEMY_e4 384 272
+Scene lava1_FLOOR
+Scene lava2_FLOOR
+Scene lava3_FLOOR
+Scene lava4_FLOOR
+Scene ENEMY_e1
+Scene ENEMY_e2
+Scene ENEMY_e3
+Scene ENEMY_e4

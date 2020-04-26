@@ -55,6 +55,7 @@ DisplayObject::DisplayObject(string id, int red, int green, int blue) {
 DisplayObject::~DisplayObject(){
 	if(image != NULL) SDL_FreeSurface(image);
 	if(texture != NULL) SDL_DestroyTexture(texture);
+	cleanUpDisplayTree();
 }
 
 void DisplayObject::loadTexture(string filepath) {
@@ -362,7 +363,7 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		int distAdj = dist(topL,topR);
 		int distOpp = dist(topR,bottomR);
-		SDL_Rect dstrect = { topL.x, topL.y, distAdj, distOpp};
+	  dstrect = { topL.x, topL.y, distAdj, distOpp};
 
 		double angle = atan2(topR.y - topL.y, topR.x - topL.x) * 180 / PI;
 
@@ -373,7 +374,7 @@ void DisplayObject::draw(AffineTransform &at) {
 
 		reverseTransformations(at);
 
-		
+
 	}
 	if(showHitbox)	drawHitbox(isCollided);
 
@@ -392,6 +393,11 @@ void DisplayObject::saveSelf(vector<string> &objects,
 			<< "\n";
 	desc = sstm.str();
 	objects.push_back(desc);
+}
+
+
+void DisplayObject::cleanUpDisplayTree(){
+	//do nothing
 }
 
 

@@ -10,7 +10,10 @@
 #include "Sprite.h"
 #include "TweenJuggler.h"
 #include "Projectile.h"
+#include "TextBox.h"
+#include "StatMenu.h"
 
+#define LEVELS 255
 using namespace std;
 
 class Player : public AnimatedSprite{
@@ -28,11 +31,31 @@ public:
 	virtual void onCollision(DisplayObject* other);
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 	virtual void renderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
+	virtual void renderXPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor);
 	virtual float percentOfHealthLost();
-	void changeHealth(int value);
+	virtual float percentOfXP();
+	int getHealth();
+	int getMaxHealth();
+	double getSpeed();
+	double getDamage();
+	double getAttackSpeed();
+	int getLevel();
+	bool changeHealth(int value);
+	void changeMaxHealth(int value);
+	void changeDamage(int value);
+	void changeAttackSpeed(double value);
 	void toggleHealthDisplay();
+	bool checkLevelUp();
+	void levelUp();
+	void changeXP(int value);
+	void modifySpeed(int value);
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
+	int damage = 100;
+	int slow = 1;
+	int lifesteal = 20;
+
+	double attackSpeed = 1;
 
 	//iFrames
 	bool iFrames = false;
@@ -45,10 +68,17 @@ public:
 	//Enemy* curEnemy = NULL;
 
 private:
-
-	int health = 114;
-	int maxHealth = 320;
+	unsigned int xp = 0;
+	unsigned int level = 1, maxLevel = LEVELS;
+	//unsigned int xpChart[LEVELS-1] = {10,25,50,100};
+	double xpScale = 1.5;
+	unsigned int xpNeeded = 10;
+	int health = 120;
+	int maxHealth = 120;
 	bool displayHealth = true;
+	int runSpeed = 2;
+	int current_ball_type = 1;
+	int direction = 1;
 
 	int oldX=0, oldY=0;
 
@@ -60,7 +90,9 @@ private:
 	int _yAcc = 2; //one pixel every two frames
 	int _yAccCount = 0;
 	int _yVel = 0;
-	std::clock_t lastFired;
+	TextBox * chat_box;
+	StatMenu * my_stats;
+	std::clock_t lastFired = 0;
 
 	static Player* player;
 	void initIFrames(int numFrames);

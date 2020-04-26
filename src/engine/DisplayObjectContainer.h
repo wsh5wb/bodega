@@ -22,8 +22,12 @@ public:
 	void addChild(DisplayObject* child);
 	void removeImmediateChild(DisplayObject* child);
 	void removeImmediateChild(string id);
+	void removeImmediateChildNoDelete(DisplayObject* child);
 	void removeChild(int index);
 	void removeThis();
+
+	void addToCollisionSystem();
+	void removeFromCollisionSystem();
 
 	virtual void resetDelta();
 	
@@ -34,6 +38,8 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
+	virtual void cleanUpDisplayTree();
+
 
 	vector<DisplayObject*> children;
 private:

@@ -39,6 +39,8 @@ public:
 	//against all platform objects that are in the current scene.
 	void watchForCollisions(string type1, string type2);
 
+	void ignoreCollisions(string type1, string type2);
+
 	//returns true iff obj1 hitbox and obj2 hitbox overlap. Uses the following method from DO:
 	//	SDL_Point* DisplayObject::getGlobalHitbox();
 	bool collidesWith(DisplayObject* obj1, DisplayObject* obj2);
@@ -59,7 +61,7 @@ public:
 private:
 	map<string,vector<DisplayObject*> > objects;
 	vector<string> pairs;
-	
+	bool removedDoorPlayer = false;
 };
 
 #endif

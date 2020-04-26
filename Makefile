@@ -15,7 +15,7 @@ CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -std=c++17 -g
 CXX := g++-8
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lstdc++fs
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lstdc++fs -lSDL2_mixer
 FSAN_FLAGS = -fsanitize=address,leak
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

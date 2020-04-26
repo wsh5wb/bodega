@@ -37,6 +37,7 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
+	virtual void cleanUpDisplayTree();
 
 	void loadTexture(string filepath);
 	void loadRGBTexture(int red, int green, int blue);
@@ -83,8 +84,6 @@ public:
 	double getScaleX();
 	double getScaleY();
 
-
-
 	SDL_Color colorSDL(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	int getAlpha();
 	void setAlpha(int a);
@@ -116,6 +115,8 @@ public:
 	double scaleY = 1;
 	int speed = 5;
 
+	int numEnemies = 0;
+
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	SDL_Point pivot, position;
 private:
@@ -127,7 +128,7 @@ private:
 
 protected:
 	SDL_Rect srcrect;
-
+	SDL_Rect dstrect;
 
 	double rotation = 0;
 	double rotationAmount = 0.05;

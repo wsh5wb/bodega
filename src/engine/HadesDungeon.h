@@ -19,7 +19,7 @@ public:
 
 
 private:
-
+	Sound hades_theme;
 };
 
 #endif

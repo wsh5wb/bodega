@@ -6,6 +6,8 @@
 #include <algorithm>
 #include "Projectile.h"
 #include "Player.h"
+#include "Door.h"
+#include "Room.h"
 
 bool compare_xval(DORange_t do1, DORange_t do2){
 	// Assuming getGlobalHitbox returns four points for the hitbox (tl, tr, br, bl)
@@ -40,6 +42,7 @@ void CollisionSystem::update(){
 
 		vector vec1 = objects[type1];
 		vector vec2 = objects[type2];
+
 		// sort(vec1.begin(), vec1.end(), compare_xval);
 		// sort(vec2.begin(), vec2.end(), compare_xval);
 		int i = 0;
@@ -48,32 +51,50 @@ void CollisionSystem::update(){
 				if(obj1 == obj2)	continue;
 				bool collision;
 				i++;
-				
-				if((collision= collidesWith(obj1, obj2))){
 
+				if((collision= collidesWith(obj1, obj2))){
+					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"))
+						printf("FUCK\n");
+					// Maybe handle some of this in other classes via events to reduce cluter?
 					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
 						char dir;
-						if(obj1->id.substr(0,obj1->id.length()-1) == "Door")	dir = obj1->id[4];
-						else													dir = obj2->id[4];
+						Door* door;
+						if(obj1->id.substr(0,obj1->id.length()-1) == "Door"){
+							dir = obj1->id[4];
+							door = (Door*) obj1;
+						}
+						else{
+							dir = obj2->id[4];
+							door = (Door*) obj2;
+						}
+
+						if(!((Room*) door->room) ||
+							(!((Room*) door->room)->active && (Room*) door->room)){
+							continue;
+						}
 
 						switch(dir){
 							case '1':{
+								printf("Collided down\n");
 								Event e("DUNG_TRANS_D", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
 							}
 							case '2':{
+								printf("Collided left\n");
 								Event e("DUNG_TRANS_L", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
 							}
 							case '3':{
+								printf("Collided up\n");
 								Event e("DUNG_TRANS_U", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
 							}
 							case '4':{
+								printf("Collided right\n");
 								Event e("DUNG_TRANS_R", &Game::eventHandler);
 								Game::eventHandler.dispatchEvent(&e);
 								break;
@@ -81,10 +102,86 @@ void CollisionSystem::update(){
 						}
 						// printf("Door addr: %x\n", obj2);
 						// cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
-						
+
 					}
 					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
+						if(pair == "PROJECTILE-OBSTACLE" || pair == "OBSTACLE-PROJECTILE"){
+							DisplayObject* obj;
+							if(type1 == "PROJECTILE")		obj = obj1;
+							else if(type2 == "PROJECTILE")	obj = obj2;
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							continue;
+						}
 						// printf("Player collided with obstacle\n");
+						resolveObstacleCollision(obj1, obj2,
+							obj1->deltaX, obj1->deltaY,
+							obj2->deltaX, obj2->deltaY);
+
+						// obj1->updateDelta(0,0,0,0,0);
+						// obj2->updateDelta(0,0,0,0,0);
+						// printf("%s collided with %s\n", obj1->id.c_str(), obj2->id.c_str());
+					}
+					// ADD code to handle decreasing health
+					else if(type1 == "PROJECTILE" || type2 == "PROJECTILE"){
+						if(pair == "PROJECTILE-ENEMY" || pair == "ENEMY-PROJECTILE"){
+							DisplayObject* obj;
+							if(type1 == "PROJECTILE"){
+								obj = obj1;
+								if(((Projectile *) obj)->my_type == 1){
+								((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
+							} else if(((Projectile *) obj)->my_type == 2){
+								((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
+								}
+								else{
+									((Enemy*) obj2)->changeHealth(-Player::getPlayer()->lifesteal);
+									Player::getPlayer()->changeHealth(Player::getPlayer()->lifesteal);
+								}
+							}
+							else if(type2 == "PROJECTILE") {
+							 	obj = obj2;
+								if(((Projectile *) obj)->my_type == 1){
+								((Enemy*) obj1)->changeHealth(-Player::getPlayer()->damage);
+							} else if(((Projectile *) obj)->my_type == 2){
+								((Enemy*) obj1)->changeHealth(-Player::getPlayer()->damage);
+								}
+								else{
+								((Enemy*) obj1)->changeHealth(-Player::getPlayer()->damage);
+								}
+							}
+
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							continue;
+						}
+					}
+
+					else if(pair == "chest-PLAYER" || pair == "PLAYER-chest"){
+						DisplayObject* obj;
+						if(type1 == "chest")		obj = obj1;
+						else if(type2 == "chest")	obj = obj2;
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+						Event e("CHEST_OPENED", &Game::eventHandler);
+						Game::eventHandler.dispatchEvent(&e);
+						continue;
+					}
+
+					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
+						if(type1 == "ENEMY"){
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*) obj2)->changeHealth(-((Enemy*) obj1)->getDamage()))
+								return;
+						}
+						else if(type2 == "ENEMY") {
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*)obj1)->changeHealth(-((Enemy*)obj2)->getDamage()))
+								return;
+						}
+					}
+					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
+						Event e("CHANGE_DUNGEON", &Game::eventHandler);
+						Game::eventHandler.dispatchEvent(&e);
+						return;
+					}
+					else if(pair == "FLOOR-PLAYER" || pair == "PLAYER-FLOOR"){
 						resolveObstacleCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,
 							obj2->deltaX, obj2->deltaY);
@@ -96,9 +193,6 @@ void CollisionSystem::update(){
 						resolveCollision(obj1, obj2,
 							obj1->deltaX, obj1->deltaY,
 							obj2->deltaX, obj2->deltaY);
-
-						// obj1->updateDelta(0,0,0,0,0);
-						// obj2->updateDelta(0,0,0,0,0);
 					}
 				}
 				// you can turn this into an event dispatch. Definitely would be a good idea.
@@ -108,15 +202,6 @@ void CollisionSystem::update(){
 		}
 
 	}
-	// Handle user projectile/enemy collisions
-	/*for(Projectile* p : Player::getPlayer()->projectiles){
-		vector ens = objects["ENEMY"];
-		for(DisplayObject* en : ens){
-			if(collidesWith(p,en)){
-				cout << en->id << " collied with " << "Projectile" << endl;
-			}
-		}
-	}*/
 }
 
 //This system watches the game's display tree and is notified whenever a display object is placed onto
@@ -124,22 +209,31 @@ void CollisionSystem::update(){
 void CollisionSystem::handleEvent(Event* e){
 	DisplayObject* child = ((DTEvent*) e)->getAddedObject();
 
-    string str;
+    string str="";
 
+    // Do some longest string matching for strings
 	if(child->id.find("ENEMY") != string::npos)				str = "ENEMY";
 	else if(child->id.find("PLAYER") != string::npos)		str = "PLAYER";
 	else if(child->id.find("SETTING") != string::npos)		str = "SETTING";
 	// TODO: Make a new OBJECT category?
 	else if(child->id.find("Door") != string::npos)			str = "DOOR";
+	else if(child->id.find("chest") != string::npos)		str = "chest"; //before obstacle to overrule it
 	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
+	else if(child->id.find("FLOOR") != string::npos)		str = "FLOOR";
+	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
+	else if(child->id.find("PORTAL") != string::npos)		str = "PORTAL";
+
+
+	if(str == "")	return;
 
 	auto it = find(objects[str].begin(), objects[str].end(), child);
 
 	if(e->getType() == "OBJ_ADD" && it == objects[str].end()){
-		// printf("Adding %s to DT\n", child->id.c_str());
 		objects[str].push_back(child);
 	}
-	else if(e->getType() == "OBJ_RM")							objects[str].erase(it);
+	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
+		objects[str].erase(it);
+	}
 
 }
 
@@ -148,9 +242,30 @@ void CollisionSystem::handleEvent(Event* e){
 //against all platform objects that are in the current scene.
 void CollisionSystem::watchForCollisions(string type1, string type2){
 	string pair = type1 + "-" + type2;
+	printf("Adding pair: %s\n", pair.c_str());
+
+	if(pair == "PLAYER-DOOR" || pair == "DOOR-PLAYER")
+		removedDoorPlayer = false;
+
 	if(find(pairs.begin(), pairs.end(), pair) != pairs.end())	return;
 
 	pairs.push_back(pair);
+}
+
+void CollisionSystem::ignoreCollisions(string type1, string type2){
+	string pair1 = type1 + "-" + type2;
+	string pair2 = type2 + "-" + type1;
+
+	for(auto it = pairs.begin(); it != pairs.end(); ++it){
+		if(*it == pair1 || *it == pair2){
+			printf("Removed pair %s\n", pair1.c_str());
+			removedDoorPlayer = (*it == "PLAYER-DOOR" || *it == "DOOR-PLAYER");
+
+			pairs.erase(it);
+			return;
+		}
+	}
+
 }
 
 /* Return:
@@ -210,9 +325,6 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	//AffineTransform *at1 = globalTransform(obj1);
 	//AffineTransform *at2 = globalTransform(obj2);
 
-	double boundLow = 0.15;
-	double boundHigh = 1 - boundLow;
-
 	SDL_Point* p1 = obj1->getGlobalHitbox();
 	SDL_Point topL1 = p1[0];
 	SDL_Point topR1 = p1[1];
@@ -252,7 +364,7 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 
 // prevCol = -1 for coming from a collision and 1 for not
 void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int deltaX, bool sameDir, bool isCol){
-	
+
 	int n = (deltaX)/2;
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
@@ -264,7 +376,7 @@ void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int 
 	}
 
 	d->translate(n,0);
-	
+
 	if(collidesWith(d,other)){
 		return binarySearchX(d,other,n,isCol,true);
 	}else{
@@ -274,7 +386,7 @@ void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int 
 }
 
 void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int deltaY, bool sameDir, bool isCol){
-	
+
 	int n = (deltaY)/2;
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
@@ -286,7 +398,7 @@ void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int 
 	}
 
 	d->translate(0,n);
-	
+
 	if(collidesWith(d,other)){
 		return binarySearchY(d,other,n,isCol,true);
 	}else{

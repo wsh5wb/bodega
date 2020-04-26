@@ -3,8 +3,9 @@
 
 #include "DisplayObject.h"
 #include "DisplayObjectContainer.h"
+#include "StatMenu.h"
 
-class Camera{ 
+class Camera{
 
 public:
 	Camera();
@@ -29,12 +30,11 @@ public:
 	void update(set<SDL_Scancode> pressedKeys);
 	void draw(AffineTransform &at);
 	DisplayObjectContainer* container;
-	
+
 
 private:
-
 	static Camera* camera;
-	
+
 };
 
 

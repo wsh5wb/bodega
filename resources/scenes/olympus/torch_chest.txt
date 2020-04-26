@@ -1,0 +1,15 @@
+6 5
+0 Scene ./resources/art/olympus/backgroundO.png 2.34375 2.34375 
+9 chest1_OBSTACLE ./resources/art/hades/small_chest.png 5 1 1 0 0.05 0 0 0 240 176 .3 .7 -.05 .3
+9 torch1_OBSTACLE ./resources/art/olympus/torch.png 5 1 1 0 0.05 0 0 0 96 64 .49 .51 .2 .4
+9 torch2_OBSTACLE ./resources/art/olympus/torch.png 5 1 1 0 0.05 0 0 0 352 64 .49 .51 .2 .4
+9 torch3_OBSTACLE ./resources/art/olympus/torch.png 5 1 1 0 0.05 0 0 0 96 224 .49 .51 .2 .4
+9 torch4_OBSTACLE ./resources/art/olympus/torch.png 5 1 1 0 0.05 0 0 0 352 224 .49 .51 .2 .4
+Scene chest1_OBSTACLE
+Scene torch1_OBSTACLE
+Scene torch2_OBSTACLE
+Scene torch3_OBSTACLE
+Scene torch4_OBSTACLE
+
+
+

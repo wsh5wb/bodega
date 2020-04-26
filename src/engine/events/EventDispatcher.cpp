@@ -1,5 +1,6 @@
 #include "EventDispatcher.h"
 #include <iostream>
+#include <algorithm>
 
 EventDispatcher::EventDispatcher(){
 	listeners = new std::unordered_map<std::string, std::vector<EventListener*>>;
@@ -13,7 +14,7 @@ EventDispatcher::~EventDispatcher(){
 		for(EventListener* listener : l){
 			// cerr << "addr of stuff: " << it->first << " " << listener << endl;
 			if(listener){
-				delete listener;
+				//delete listener;
 				listener = NULL;
 			}
 		}
@@ -25,16 +26,19 @@ EventDispatcher::~EventDispatcher(){
 void EventDispatcher::addEventListener(EventListener* l, string eventType){
 	// if(!(*listeners)[eventType])
 	// 	(*listeners)[eventType] = new std::vector<EventListener*>;
-	(*listeners)[eventType].push_back(l);
+	auto vec = (*listeners)[eventType];
+	auto it = vec.begin();
+	if((it = find(vec.begin(), vec.end(), l)) == vec.end())
+		(*listeners)[eventType].push_back(l);
 }
 
 void EventDispatcher::removeEventListener(EventListener* l, string eventType){
 	if(listeners->find(eventType) != listeners->end()){
-		vector<EventListener*> vec = (*listeners)[eventType];
-		for (auto it = vec.begin(); it != vec.end(); ++it){
+		vector<EventListener*> *vec = &(*listeners)[eventType];
+		for (auto it = vec->begin(); it != vec->end(); ++it){
 			if(*it == l){
-				delete *it;
-				vec.erase(it);
+				// delete *it;
+				vec->erase(it);
 				return;
 			}
 		}
@@ -54,6 +58,7 @@ void EventDispatcher::dispatchEvent(Event* e){
 	}
 
 	vector<EventListener*> l = (*listeners)[e->getType()];
-	for (EventListener* listener : l)
+	for (EventListener* listener : l){
 		listener->handleEvent(e);
+	}
 }

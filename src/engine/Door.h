@@ -1,10 +1,11 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include <vector>
+#include "Room.h"
 #include "DisplayObject.h"
 #include "AffineTransform.h"
 #include <string>
+#include <vector>
 #include <fstream>
 
 using namespace std;
@@ -24,6 +25,7 @@ public:
 	virtual void saveSelf(vector<string> &objects, vector<string> &dependencies);
 
 	bool open = true;
+	Room* room = NULL;
 private:
 
 

@@ -18,10 +18,13 @@
 #include "HadesDungeon.h"
 #include "OceanDungeon.h"
 #include "CollisionSystem.h"
+#include "DungeonManager.h"
 #include "Enemy.h"
 #include "Jelly.h"
 #include "Cerb.h"
 #include "Urchin.h"
+#include "ItemSystem.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -40,14 +43,13 @@ private:
 	Scene *character;
 	Enemy *enemy;
 
-	//Scene* character;
+	DungeonManager* dunMan;
+	ItemSystem* itemSys;
 	string scene;
 	bool changed;
 	bool isQuestDone;
-	Sound effect;
-	Sound hades_theme;
-	Dungeon* dungeon;
 	TweenJuggler * animationJuggler;
+	StatMenu * player_stats;
 };
 
 #endif

@@ -74,7 +74,7 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 		//if player is close, start to prepare charge
 		int dist = std::max(std::abs(this->position.x-this->player->position.x),std::abs(this->position.y-this->player->position.y));
 		//cout<<dist<<endl;
-		if(dist<500){
+		if(dist<300){
 			this->state = 2;
 			this->vel = 0;
 			this->maxVel = 12;
@@ -98,7 +98,7 @@ void Enemy::update(set<SDL_Scancode> pressedKeys){
 			this->rotation = 0;
 			this->rotVel = 0;
 			this->targX = this->position.x;
-			this->targY = this->position.y - 350;
+			this->targY = this->position.y - 200;
 		}
 	}
 	else if(this->state == 4){
@@ -118,6 +118,19 @@ void Enemy::onMeleeStrike(){
 	if(this->shield < 0) this->shield = 0;
 }
 
+void Enemy::changeHealth(int amount){
+	health += amount;
+	if(health <= 0){
+		Player::getPlayer()->changeXP(xp);
+		Event e("ENEMY_KILLED", &Game::eventHandler);
+		Game::eventHandler.dispatchEvent(&e);
+		((DisplayObjectContainer *)this->parent)->removeImmediateChild(this);
+	}
+}
+
+int Enemy::getDamage(){
+	return damage;
+}
 //void Enemy::onEssenceStrike(Weapon* w){
 //
 //	if(this->shield <= 0) this->health -= w->damage;

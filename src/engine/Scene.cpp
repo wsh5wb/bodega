@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Door.h"
 #include <iostream>
 #include <sstream>
 
@@ -9,6 +10,10 @@
 Scene::Scene() :
 		DisplayObjectContainer() {
 	//just calling parent constructor
+}
+
+Scene::~Scene(){
+
 }
 
 /* Load scene from a file */
@@ -30,32 +35,14 @@ void Scene::loadScene(string sceneFilePath) {
 
 		case 0: { //Scene
 			Scene *temp = this;
-			int speed;
 			double scaleX;
 			double scaleY;
-			double rotation;
-			double rotationAmount;
-			int alpha;
-			SDL_Point pivot, position;
-			i >> id >> imgPath >> red >> green >> blue >> std::boolalpha >> vis
-					>> std::boolalpha >> isRGB >> w >> h >> speed >> scaleX
-					>> scaleY >> rotation >> rotationAmount >> alpha >> pivot.x
-					>> pivot.y >> position.x >> position.y;
-			temp->setSpeed(speed);
-			temp->setScale(scaleX, scaleY);
-			temp->setRotationValue(rotation);
-			temp->setRotation(rotationAmount);
-			temp->setAlpha(alpha);
-			temp->moveTo(position.x, position.y);
-			temp->movePivot(pivot.x, pivot.y);
+			i >> id >> imgPath >> scaleX >> scaleY;
 			objects.push_back(temp);
-			if (temp->isRGB) {
-				temp->loadRGBTexture(red, green, blue);
-			} else if (temp->imgPath != "0") {
+			temp->setScale(scaleX, scaleY);
+			if (temp->imgPath != "0") {
 				temp->loadTexture(temp->imgPath);
 			}
-			temp->moveTo(position.x, position.y);
-			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
 		case 1: { //DisplayObject
@@ -239,8 +226,8 @@ void Scene::loadScene(string sceneFilePath) {
 			SDL_Point position;
 			i >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
-			temp->setHitbox(.1, .9);
-			temp->showHitbox = true;
+//			temp->setHitbox(.1, .9);
+//			temp->showHitbox = true;
 			objects.push_back(temp);
 			break;
 		}
@@ -285,13 +272,10 @@ void Scene::loadScene(string sceneFilePath) {
 			double rotationAmount;
 			int alpha;
 			SDL_Point pivot, position;
-			i >> temp->id >> temp->imgPath >> temp->red >> temp->green
-					>> temp->blue >> std::boolalpha >> temp->vis
-					>> std::boolalpha >> temp->isRGB >> temp->w >> temp->h
-					>> speed >> scaleX >> scaleY >> rotation >> rotationAmount
-					>> alpha >> pivot.x >> pivot.y >> position.x >> position.y
-					>> temp->boundLowX >> temp->boundHighX >> temp->boundLowY
-					>> temp->boundHighY;
+			i >> temp->id >> temp->imgPath >> speed >> scaleX >> scaleY
+					>> rotation >> rotationAmount >> alpha >> pivot.x >> pivot.y
+					>> position.x >> position.y >> temp->boundLowX
+					>> temp->boundHighX >> temp->boundLowY >> temp->boundHighY;
 			temp->setSpeed(speed);
 			temp->setScale(scaleX, scaleY);
 			temp->setRotationValue(rotation);
@@ -310,8 +294,68 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->hitbox();
 			break;
 		}
+		case 10: { //Jelly
+
+			int skin = 0;
+			i >> skin;
+			Player *tempP = Player::getPlayer();
+			Jelly *temp = new Jelly(tempP, skin);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+//					temp->setHitbox(.1, .9);
+//					temp->showHitbox = true;
+			objects.push_back(temp);
+			this->numEnemies += 1;
+			// printf("Adding enemy (Jelly) %d\n", this->numEnemies);
+			break;
+		}
+		case 11: { //Urchin
+
+			int skin = 0;
+			i >> skin;
+			Player *tempP = Player::getPlayer();
+			Urchin *temp = new Urchin(tempP, skin);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+			temp->setHitbox(.1, .9);
+			// temp->showHitbox = true;
+			objects.push_back(temp);
+			this->numEnemies += 1;
+			// printf("Adding enemy (Urchin) %d\n", this->numEnemies);
+			break;
+		}
+		case 12: { //Enemy
+
+			Player *tempP = Player::getPlayer();
+			Enemy *temp = new Enemy(tempP);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+			//					temp->setHitbox(.1, .9);
+			//					temp->showHitbox = true;
+			objects.push_back(temp);
+			this->numEnemies += 1;
+			// printf("Adding enemy (Enemy) %d\n", this->numEnemies);
+			break;
+		}
+		case 13: { // Spirit
+			int skin = 0;
+			i >> skin;
+			Player *tempP = Player::getPlayer();
+			Spirit *temp = new Spirit(tempP, skin);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+//					temp->setHitbox(.1, .9);
+//					temp->showHitbox = true;
+			objects.push_back(temp);
+			this->numEnemies += 1;
+			break;
+		}
 		default: {
-			cerr << "ERROR: Object type not recognized!\n";
+			cerr << "ERROR: Object type " << type << " not recognized!\n";
 			break;
 		}
 

@@ -13,8 +13,9 @@
 
 
 // room definitions
-#define START_ROOM 2
-#define REG_ROOM   1
+#define REG_ROOM   	1
+#define START_ROOM 	2
+#define BOSS_ROOM	100
 
 #define NORTH 0
 #define EAST  1
@@ -50,6 +51,7 @@ struct room{
 	int size[2] = {5,5};
 	pos_t pos;
 	int availableDoors = 0;
+	int distFromBoss = 0;
 
 }; typedef struct room room_t;
 
@@ -66,18 +68,23 @@ struct floor{
 class MazeGenerator{
 
 public:
-
+	MazeGenerator();
 	int adjacentRooms(int x, int y, room_t** arr);
-	void generate();
+	bool generate();
+	void generateNoBoss();
 	void print_map();
 	void clear_grid();
 	int** getLayout();
+	int** getLayoutNoBoss();
 	floor_t getLevel();
 
 private:
-
+	void generateBossRoom(uniform_int_distribution<int>& dist, mt19937 &e);
+	void setStartRoom();
+	bool checkPossible(int x, int y);
 	floor_t level;
 	int** grid;
+	int failCount = 0;
 
 };
 
