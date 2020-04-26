@@ -9,8 +9,30 @@ using namespace std;
 int main(int argc, char ** argv)
 {
 	MyGame* myGame = new MyGame();
-	myGame->start();
 
+	bool started = false, quit = false;
+	SDL_Event event;
+	DisplayObject * ts = new DisplayObject("titlescreen","resources/art/TitleScreen.png");
+	//myGame->loadTexture("resources/art/TitleScreen.png");
+	AffineTransform at;
+	ts->draw(at);
+	SDL_RenderPresent(Game::renderer);
+	cout << ts->w << " " << ts->h;
+	while(!started && !quit){
+		SDL_PollEvent(&event);
+		if(event.type == SDL_KEYDOWN){
+			if(event.key.keysym.scancode == SDL_SCANCODE_SPACE){
+				started = true;
+				myGame->start();
+			}
+		}if(event.type == SDL_QUIT){
+			quit = true;
+		}
+
+	}
+	//myGame->start();
+	//if(texture != NULL) SDL_DestroyTexture(texture);
+	delete ts;
 	delete myGame;
 	return 0;
 }

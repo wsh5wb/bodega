@@ -86,97 +86,127 @@ void Game::start(){
 	int ms_per_frame = (1.0/(double)this->frames_per_sec)*1000;
 	std::clock_t start = std::clock();
 
-	bool quit = false;
+	bool quit = false, paused = false;
 	SDL_Event event;
+	DisplayObject * ps = NULL;
 
 	while(!quit){
-		std::clock_t end = std::clock();
-		double duration = (( end - start ) / (double) CLOCKS_PER_SEC)*1000;
-		if(duration > ms_per_frame){
-			start = end;
-			this->update(pressedKeys);
-			AffineTransform at;
-			this->draw(at);
-		}
+		if(!paused){
+			std::clock_t end = std::clock();
+			double duration = (( end - start ) / (double) CLOCKS_PER_SEC)*1000;
+			if(duration > ms_per_frame){
+				start = end;
+				this->update(pressedKeys);
+				AffineTransform at;
+				this->draw(at);
+			}
 
-		SDL_PollEvent(&event);
-		switch (event.type)
-		{
-			case SDL_QUIT:
-				quit = true;
-				break;
-			case SDL_KEYDOWN:
-				pressedKeys.insert(event.key.keysym.scancode);
-				break;
-			case SDL_KEYUP:
-				pressedKeys.erase(event.key.keysym.scancode);
-				break;
-			case SDL_JOYAXISMOTION:
-				if(event.jaxis.which == 0){
-					//x axis motion
-					if(event.jaxis.axis == 0){
-						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
-							pressedKeys.insert(SDL_SCANCODE_A);
-						else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
-							pressedKeys.erase(SDL_SCANCODE_A);
-						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
-							pressedKeys.insert(SDL_SCANCODE_D);
-						else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
-							pressedKeys.erase(SDL_SCANCODE_D);
+			SDL_PollEvent(&event);
+			switch (event.type)
+			{
+				case SDL_QUIT:
+					quit = true;
+					break;
+				case SDL_KEYDOWN:
+					if(event.key.keysym.scancode == SDL_SCANCODE_P){
+						paused = true;
+						ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
+						//myGame->loadTexture("resources/art/TitleScreen.png");
+						AffineTransform at;
+						ps->draw(at);
+						SDL_RenderPresent(Game::renderer);
+
+						break;
 					}
-					if(event.jaxis.axis == 1){
-						if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
-							pressedKeys.insert(SDL_SCANCODE_S);
-						else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
-							pressedKeys.erase(SDL_SCANCODE_S);
-						else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
+					pressedKeys.insert(event.key.keysym.scancode);
+					break;
+				case SDL_KEYUP:
+					pressedKeys.erase(event.key.keysym.scancode);
+					break;
+				case SDL_JOYAXISMOTION:
+					if(event.jaxis.which == 0){
+						//x axis motion
+						if(event.jaxis.axis == 0){
+							if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
+								pressedKeys.insert(SDL_SCANCODE_A);
+							else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
+								pressedKeys.erase(SDL_SCANCODE_A);
+							else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
+								pressedKeys.insert(SDL_SCANCODE_D);
+							else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+								pressedKeys.erase(SDL_SCANCODE_D);
+						}
+						if(event.jaxis.axis == 1){
+							if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
+								pressedKeys.insert(SDL_SCANCODE_S);
+							else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
+								pressedKeys.erase(SDL_SCANCODE_S);
+							else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
+								pressedKeys.insert(SDL_SCANCODE_W);
+							else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+								pressedKeys.erase(SDL_SCANCODE_W);
+						}
+					}
+					break;
+				case SDL_CONTROLLERBUTTONDOWN:
+					switch(event.cbutton.button){
+						case SDL_CONTROLLER_BUTTON_DPAD_UP:
 							pressedKeys.insert(SDL_SCANCODE_W);
-						else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
-							pressedKeys.erase(SDL_SCANCODE_W);
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+							pressedKeys.insert(SDL_SCANCODE_S);
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+							pressedKeys.insert(SDL_SCANCODE_D);
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+							pressedKeys.insert(SDL_SCANCODE_A);
+							break;
+						case SDL_CONTROLLER_BUTTON_A:
+							pressedKeys.insert(SDL_SCANCODE_SPACE);
+							break;
 					}
-				}
-				break;
-			case SDL_CONTROLLERBUTTONDOWN:
-				switch(event.cbutton.button){
-					case SDL_CONTROLLER_BUTTON_DPAD_UP:
-						pressedKeys.insert(SDL_SCANCODE_W);
-						break;
-					case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
-						pressedKeys.insert(SDL_SCANCODE_S);
-						break;
-					case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
-						pressedKeys.insert(SDL_SCANCODE_D);
-						break;
-					case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
-						pressedKeys.insert(SDL_SCANCODE_A);
-						break;
-					case SDL_CONTROLLER_BUTTON_A:
-						pressedKeys.insert(SDL_SCANCODE_SPACE);
-						break;
-				}
-				break;
-			case SDL_CONTROLLERBUTTONUP:
-				switch(event.cbutton.button){
-					case SDL_CONTROLLER_BUTTON_DPAD_UP:
-						pressedKeys.erase(SDL_SCANCODE_W);
-						break;
-					case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
-						pressedKeys.erase(SDL_SCANCODE_S);
-						break;
-					case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
-						pressedKeys.erase(SDL_SCANCODE_D);
-						break;
-					case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
-						pressedKeys.erase(SDL_SCANCODE_A);
-						break;
-					case SDL_CONTROLLER_BUTTON_A:
-						pressedKeys.erase(SDL_SCANCODE_SPACE);
-						break;
-				}
-				break;
-		}
+					break;
+				case SDL_CONTROLLERBUTTONUP:
+					switch(event.cbutton.button){
+						case SDL_CONTROLLER_BUTTON_DPAD_UP:
+							pressedKeys.erase(SDL_SCANCODE_W);
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+							pressedKeys.erase(SDL_SCANCODE_S);
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+							pressedKeys.erase(SDL_SCANCODE_D);
+							break;
+						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+							pressedKeys.erase(SDL_SCANCODE_A);
+							break;
+						case SDL_CONTROLLER_BUTTON_A:
+							pressedKeys.erase(SDL_SCANCODE_SPACE);
+							break;
+					}
+					break;
+			}
 
+		}
+		else{
+			// Game is paused
+			SDL_PollEvent(&event);
+			if(event.type == SDL_KEYDOWN){
+				if(event.key.keysym.scancode == SDL_SCANCODE_P){
+					paused = false;
+					delete ps;
+					ps = NULL;
+				}
+			}if(event.type == SDL_QUIT){
+				quit = true;
+			}
+
+		}			
 	}
+
+	if(ps != NULL){delete ps;}
+	
 }
 
 void Game::update(set<SDL_Scancode> pressedKeys){

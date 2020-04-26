@@ -344,7 +344,6 @@ void DisplayObject::update(set<SDL_Scancode> pressedKeys) {
 }
 
 void DisplayObject::draw(AffineTransform &at) {
-
 	if (curTexture != NULL) {
 		if (!vis) {
 			return;
