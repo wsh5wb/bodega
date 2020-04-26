@@ -51,7 +51,7 @@ void CollisionSystem::update(){
 				if(obj1 == obj2)	continue;
 				bool collision;
 				i++;
-				
+
 				if((collision= collidesWith(obj1, obj2))){
 					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"))
 						printf("FUCK\n");
@@ -69,7 +69,7 @@ void CollisionSystem::update(){
 							door = (Door*) obj2;
 						}
 
-						if(!((Room*) door->room) || 
+						if(!((Room*) door->room) ||
 							(!((Room*) door->room)->active && (Room*) door->room)){
 							continue;
 						}
@@ -102,7 +102,7 @@ void CollisionSystem::update(){
 						}
 						// printf("Door addr: %x\n", obj2);
 						// cout << obj1->id << " collied with " << obj2->id << "   " << i << endl;
-						
+
 					}
 					else if(type1 == "OBSTACLE" || type2 == "OBSTACLE"){
 						if(pair == "PROJECTILE-OBSTACLE" || pair == "OBSTACLE-PROJECTILE"){
@@ -127,13 +127,28 @@ void CollisionSystem::update(){
 							DisplayObject* obj;
 							if(type1 == "PROJECTILE"){
 								obj = obj1;
+								if(((Projectile *) obj)->my_type == 1){
 								((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
+							} else if(((Projectile *) obj)->my_type == 2){
+								((Enemy*) obj2)->changeHealth(-Player::getPlayer()->damage);
+								}
+								else{
+									((Enemy*) obj2)->changeHealth(-Player::getPlayer()->lifesteal);
+									Player::getPlayer()->changeHealth(Player::getPlayer()->lifesteal);
+								}
 							}
 							else if(type2 == "PROJECTILE") {
 							 	obj = obj2;
-								((Enemy*)obj1)->changeHealth(-Player::getPlayer()->damage);
+								if(((Projectile *) obj)->my_type == 1){
+								((Enemy*) obj1)->changeHealth(-Player::getPlayer()->damage);
+							} else if(((Projectile *) obj)->my_type == 2){
+								((Enemy*) obj1)->changeHealth(-Player::getPlayer()->damage);
+								}
+								else{
+								((Enemy*) obj1)->changeHealth(-Player::getPlayer()->damage);
+								}
 							}
-							
+
 							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
 							continue;
 						}
@@ -148,7 +163,7 @@ void CollisionSystem::update(){
 						Game::eventHandler.dispatchEvent(&e);
 						continue;
 					}
-					
+
 					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
 						if(type1 == "ENEMY"){
 							// must leave outdated scope if vec1/vec2 change
@@ -231,7 +246,7 @@ void CollisionSystem::watchForCollisions(string type1, string type2){
 
 	if(pair == "PLAYER-DOOR" || pair == "DOOR-PLAYER")
 		removedDoorPlayer = false;
-	
+
 	if(find(pairs.begin(), pairs.end(), pair) != pairs.end())	return;
 
 	pairs.push_back(pair);
@@ -349,7 +364,7 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 
 // prevCol = -1 for coming from a collision and 1 for not
 void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int deltaX, bool sameDir, bool isCol){
-	
+
 	int n = (deltaX)/2;
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
@@ -361,7 +376,7 @@ void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int 
 	}
 
 	d->translate(n,0);
-	
+
 	if(collidesWith(d,other)){
 		return binarySearchX(d,other,n,isCol,true);
 	}else{
@@ -371,7 +386,7 @@ void CollisionSystem::binarySearchX(DisplayObject* d, DisplayObject* other, int 
 }
 
 void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int deltaY, bool sameDir, bool isCol){
-	
+
 	int n = (deltaY)/2;
 	if(abs(n) <= 5 && !collidesWith(d,other)){
 		return;
@@ -383,7 +398,7 @@ void CollisionSystem::binarySearchY(DisplayObject* d, DisplayObject* other, int 
 	}
 
 	d->translate(0,n);
-	
+
 	if(collidesWith(d,other)){
 		return binarySearchY(d,other,n,isCol,true);
 	}else{

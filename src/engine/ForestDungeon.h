@@ -13,7 +13,7 @@ public:
 
 
 private:
-
+	Sound forrest_theme;
 };
 
 #endif

@@ -13,7 +13,7 @@ public:
 
 
 private:
-
+	Sound olympus_dungeon;
 };
 
 #endif

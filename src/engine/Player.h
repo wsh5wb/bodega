@@ -52,6 +52,9 @@ public:
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
 	int damage = 100;
+	int slow = 1;
+	int lifesteal = 20;
+
 	double attackSpeed = 1;
 
 	//iFrames

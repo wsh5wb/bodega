@@ -15,7 +15,8 @@ ForestDungeon::ForestDungeon() {
 	for (int i = 0; i < basic_rooms_size; i++) {
 		basic_rooms[i] = basic_rooms0[i];
 	}
-
+	forrest_theme.loadMusic("./resources/sounds/solarsystem_area3.wav");
+	forrest_theme.playMusic();
 	scenes.push_back("./resources/scenes/forest/basic_room.txt");
 	scenes.push_back("./resources/scenes/forest/start.txt");
 	scenes.push_back("./resources/scenes/forest/bush_chest.txt");
@@ -28,8 +29,5 @@ ForestDungeon::ForestDungeon() {
 	scenes.push_back("./resources/scenes/ocean/boss_top_right.txt");
 	scenes.push_back("./resources/scenes/ocean/boss_bot_left.txt");
 	scenes.push_back("./resources/scenes/ocean/boss_bot_right.txt");
-	
+
 }
-
-
-

@@ -15,7 +15,8 @@ OceanDungeon::OceanDungeon() {
 	for (int i = 0; i < basic_rooms_size; i++) {
 		basic_rooms[i] = basic_rooms0[i];
 	}
-
+	ocean_theme.loadMusic("./resources/sounds/lastfish_area2.wav");
+	ocean_theme.playMusic();
 	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
 	scenes.push_back("./resources/scenes/ocean/start.txt");
 	scenes.push_back("./resources/scenes/ocean/basic_room.txt");
@@ -46,4 +47,3 @@ void OceanDungeon::draw(AffineTransform &at) {
 void OceanDungeon::generate() {
 	Dungeon::generate();
 }
-

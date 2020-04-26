@@ -68,9 +68,9 @@ struct floor{
 class MazeGenerator{
 
 public:
-
+	MazeGenerator();
 	int adjacentRooms(int x, int y, room_t** arr);
-	void generate();
+	bool generate();
 	void generateNoBoss();
 	void print_map();
 	void clear_grid();
@@ -84,6 +84,7 @@ private:
 	bool checkPossible(int x, int y);
 	floor_t level;
 	int** grid;
+	int failCount = 0;
 
 };
 

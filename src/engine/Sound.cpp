@@ -1,13 +1,20 @@
 #include "Sound.h"
 
 Sound::Sound(){
+    wave = NULL;
+    music = NULL;
 }
 
 Sound::~Sound(){
-      Mix_FreeChunk(wave);
-      wave = NULL;
-      Mix_FreeMusic(music);
-      music = NULL;
+    if(wave){
+        Mix_FreeChunk(wave);
+        wave = NULL; 
+    }
+    if(music){
+        Mix_FreeMusic(music);
+        music = NULL;
+    }
+   
 }
 
 void Sound::loadMusic(const char * filepath){

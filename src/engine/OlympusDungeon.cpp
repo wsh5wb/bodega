@@ -15,7 +15,8 @@ OlympusDungeon::OlympusDungeon() {
 	for (int i = 0; i < basic_rooms_size; i++) {
 		basic_rooms[i] = basic_rooms0[i];
 	}
-
+	olympus_dungeon.loadMusic("./resources/sounds/foreign_area4.wav");
+	olympus_dungeon.playMusic();
 	scenes.push_back("./resources/scenes/olympus/basic_room1.txt");
 	scenes.push_back("./resources/scenes/olympus/start.txt");
 	scenes.push_back("./resources/scenes/olympus/basic_room1.txt");
@@ -29,6 +30,3 @@ OlympusDungeon::OlympusDungeon() {
 	scenes.push_back("./resources/scenes/ocean/boss_bot_left.txt");
 	scenes.push_back("./resources/scenes/ocean/boss_bot_right.txt");
 }
-
-
-
