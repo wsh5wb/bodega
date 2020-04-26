@@ -76,7 +76,7 @@ void Projectile::update(set<SDL_Scancode> pressedKeys){
 
 	// TODO: If we get strange behavior rarely, fix this :)
 	if((((std::clock() - start ) / (double) CLOCKS_PER_SEC)*1000) > timeout){
+				cout << "Deleted " << id << this->parent-> id << endl;
 		((DisplayObjectContainer*)this->parent)->removeImmediateChild(this);
-		cout << "Deleted" << endl;
 	}
 }

@@ -83,9 +83,14 @@ void DisplayObjectContainer::removeImmediateChild(DisplayObject *child) {
 		if (child == *it) {
 			DTEvent e("OBJ_RM", &Game::eventHandler, child);
 			Game::eventHandler.dispatchEvent(&e);
+			cout << child->id << " delted" << endl;
 			delete *it;
+			cout << *it << endl;
 			*it = NULL;
+			cout << *it << endl;
+			cout << children.size() << endl;
 			children.erase(it);
+			cout << children.size() << endl;
 			break;
 		}
 	}
@@ -165,7 +170,10 @@ void DisplayObjectContainer::resetDelta() {
 
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys) {
 	DisplayObject::update(pressedKeys);
+	int i = 0;
 	for (DisplayObject *child : children) {
+		i++;
+		cout << "i " << i << " " << id << endl;
 		if(child == NULL){continue;}
 		child->update(pressedKeys);
 	}

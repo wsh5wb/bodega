@@ -105,7 +105,9 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 			string path = "resources/Projectiles/spikedball.png";
 			int midX = this->position.x + (dstrect.w)/3;
 		    int midY = this->position.y + (dstrect.h)/3;
+		    cout << ((DisplayObjectContainer*)this->parent)->numChildren() << endl;
 			Projectile * p = new Projectile(path, midX, midY,0,3,500,0.25,0.25,projectileDamage);
+			cout << ((DisplayObjectContainer*)this->parent)->numChildren() << endl;
 			((DisplayObjectContainer*)this->parent)->addChild(p);
 			DTEvent e("OBJ_ADD", &Game::eventHandler, p);
 			Game::eventHandler.dispatchEvent(&e);

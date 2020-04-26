@@ -250,6 +250,7 @@ void CollisionSystem::handleEvent(Event* e){
 		objects[str].push_back(child);
 	}
 	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
+		cout << str << "del" << endl;
 		objects[str].erase(it);
 	}
 

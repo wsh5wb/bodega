@@ -87,7 +87,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
-	myCamera->update(pressedKeys);
+	//myCamera->update(pressedKeys);
 
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
