@@ -310,9 +310,6 @@ bool CollisionSystem::collidesWith(DisplayObject* obj1, DisplayObject* obj2){
 	//AffineTransform *at1 = globalTransform(obj1);
 	//AffineTransform *at2 = globalTransform(obj2);
 
-	double boundLow = 0.15;
-	double boundHigh = 1 - boundLow;
-
 	SDL_Point* p1 = obj1->getGlobalHitbox();
 	SDL_Point topL1 = p1[0];
 	SDL_Point topR1 = p1[1];

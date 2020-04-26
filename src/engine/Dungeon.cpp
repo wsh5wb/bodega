@@ -251,6 +251,7 @@ void Dungeon::generate() {
 				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
+				//temp->xLoc = j; temp->yLoc = i;
 
 				if (ind == BOSS_ROOM - 1) {
 					if (bossRoomsCount == 0) {
@@ -344,6 +345,7 @@ void Dungeon::generateNoBoss() {
 				Room *temp = new Room(s, doors, dungeonType);
 				temp->id = id + to_string(i) + "-" + to_string(j);
 				temp->moveTo(1200 * j, 900 * i);
+				//temp->xLoc = j; temp->yLoc = i;
 
 				if (start_x == j && start_y == i) {
 					printf("Setting start room to active\n");

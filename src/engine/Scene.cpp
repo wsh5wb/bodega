@@ -340,6 +340,20 @@ void Scene::loadScene(string sceneFilePath) {
 			// printf("Adding enemy (Enemy) %d\n", this->numEnemies);
 			break;
 		}
+		case 13: { // Spirit
+			int skin = 0;
+			i >> skin;
+			Player *tempP = Player::getPlayer();
+			Spirit *temp = new Spirit(tempP, skin);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+//					temp->setHitbox(.1, .9);
+//					temp->showHitbox = true;
+			objects.push_back(temp);
+			this->numEnemies += 1;
+			break;
+		}
 		default: {
 			cerr << "ERROR: Object type " << type << " not recognized!\n";
 			break;

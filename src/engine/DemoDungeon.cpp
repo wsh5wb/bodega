@@ -49,7 +49,7 @@ void DemoDungeon::generate() {
 			cerr << "generating4\n";
 			string s = scenes.at(ind);
 			cerr << "generating5 " << s << "\n";
-			Room *temp = new Room(s); //crashes here???
+			Room *temp = new Room(s,0,0); //crashes here???
 			cerr << "generating6\n";
 			temp->id = "DemoDungeon_" + to_string(i) + "-" + to_string(j);
 			cerr << "generating7\n";

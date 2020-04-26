@@ -10,6 +10,7 @@
 #include "Layer.h"
 #include "Jelly.h"
 #include "Urchin.h"
+#include "Spirit.h"
 #include <string>
 #include <vector>
 #include <fstream>

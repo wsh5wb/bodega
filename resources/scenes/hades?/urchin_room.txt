@@ -1,11 +1,12 @@
-5 4
+6 5
 0 Scene ./resources/art/hades/background.png 2.34375 2.34375 
 11 0 ENEMY_Urchin1 32 32 
 11 0 ENEMY_Urchin2 432 32
 11 0 ENEMY_Urchin3 32 304
 11 0 ENEMY_Urchin4 432 304
+13 0 ENEMY_Spirit 240 176
 Scene ENEMY_Urchin1
 Scene ENEMY_Urchin2
 Scene ENEMY_Urchin3
 Scene ENEMY_Urchin4
-
+Scene ENEMY_Spirit
