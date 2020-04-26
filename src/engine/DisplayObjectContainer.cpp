@@ -83,14 +83,10 @@ void DisplayObjectContainer::removeImmediateChild(DisplayObject *child) {
 		if (child == *it) {
 			DTEvent e("OBJ_RM", &Game::eventHandler, child);
 			Game::eventHandler.dispatchEvent(&e);
-			cout << child->id << " delted" << endl;
 			delete *it;
 			cout << *it << endl;
 			*it = NULL;
-			cout << *it << endl;
-			cout << children.size() << endl;
 			children.erase(it);
-			cout << children.size() << endl;
 			break;
 		}
 	}
@@ -164,7 +160,8 @@ void DisplayObjectContainer::resetDelta() {
 	DisplayObject::resetDelta();
 	for (DisplayObject *child : children) {
 		//cout << "child " << child->id << endl;
-		child->resetDelta();
+		if(child)
+			child->resetDelta();
 	}
 }
 
