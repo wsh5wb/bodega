@@ -306,7 +306,7 @@ void Dungeon::generateNoBoss() {
 	cerr << "here0\n";
 	layout = (int**) (M.getLayoutNoBoss());
 	srand (time(NULL));int
-	portal = 0;
+	portal = -1;
 	int count = 0;
 	if (portal_index != -1) {
 		portal = rand() % (NUM_ROOMS - 1);
@@ -319,7 +319,7 @@ void Dungeon::generateNoBoss() {
 			}
 			layout[i][j] -= 1;
 			if (!(layout[i][j]) && basic_rooms_size > 0) {
-				if (portal && (portal == count)) {
+				if (portal!=-1 && (portal == count)) {
 					layout[i][j] = portal_index;
 				} else {
 					int ind = rand() % basic_rooms_size;
