@@ -52,7 +52,7 @@ While in translation mode:
 
 * Select to show map
 
-* Guide to show/hide stats
+* Left Shoudler to show/hide stats
 
 * Right Shoulder to cycle projectile types
 

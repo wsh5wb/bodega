@@ -185,7 +185,7 @@ void Game::start(){
 						case SDL_CONTROLLER_BUTTON_Y:
 							pressedKeys.insert(SDL_SCANCODE_UP);
 							break;
-						case SDL_CONTROLLER_BUTTON_GUIDE:
+						case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
 							pressedKeys.insert(SDL_SCANCODE_I);
 							break;
 						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
@@ -231,7 +231,7 @@ void Game::start(){
 						case SDL_CONTROLLER_BUTTON_Y:
 							pressedKeys.erase(SDL_SCANCODE_UP);
 							break;
-						case SDL_CONTROLLER_BUTTON_GUIDE:
+						case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
 							pressedKeys.erase(SDL_SCANCODE_I);
 							break;
 						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
