@@ -131,23 +131,24 @@ void Game::start(){
 					if(event.jaxis.which == 0){
 						//x axis motion
 						if(event.jaxis.axis == 0){
+							printf("X value is: %d\n", event.jaxis.value);
 							if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
 								pressedKeys.insert(SDL_SCANCODE_A);
-							else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
-								pressedKeys.erase(SDL_SCANCODE_A);
 							else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
 								pressedKeys.insert(SDL_SCANCODE_D);
-							else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+							if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value <= 0)
+								pressedKeys.erase(SDL_SCANCODE_A);
+							if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
 								pressedKeys.erase(SDL_SCANCODE_D);
 						}
 						if(event.jaxis.axis == 1){
 							if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
 								pressedKeys.insert(SDL_SCANCODE_W);
-							else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
-								pressedKeys.erase(SDL_SCANCODE_W);
 							else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
 								pressedKeys.insert(SDL_SCANCODE_S);
-							else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+							if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value <= 0)
+								pressedKeys.erase(SDL_SCANCODE_W);
+							if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
 								pressedKeys.erase(SDL_SCANCODE_S);
 						}
 					} else if(event.jaxis.which == 1){
@@ -248,6 +249,12 @@ void Game::start(){
 			speed = 1;
 			while(mapMode){
 				SDL_PollEvent(&event);
+				if(event.type == SDL_CONTROLLERBUTTONUP){
+					if(event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK){
+						mapMode = false;
+						paused = false;
+					}
+				}
 				if(event.type == SDL_KEYUP){
 					if(event.key.keysym.scancode == SDL_SCANCODE_M){
 						mapMode = false;
