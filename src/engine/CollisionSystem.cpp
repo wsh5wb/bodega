@@ -54,7 +54,7 @@ void CollisionSystem::update(){
 
 				if((collision= collidesWith(obj1, obj2))){
 					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"))
-						printf("FUCK\n");
+						printf("Door collision occured even though DOOR-PLAYER is not being monitored\n");
 					// Maybe handle some of this in other classes via events to reduce cluter?
 					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
