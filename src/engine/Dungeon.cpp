@@ -1,4 +1,5 @@
 #include "Dungeon.h"
+#include <SDL2/SDL.h>
 #include "TweenJuggler.h"
 #include "Camera.h"
 #include <iostream>
@@ -49,8 +50,9 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			Camera *myCamera = Camera::getCamera();
 			printf("Camera being set to (0,0)\n");
 			myCamera->setLocation(0, 0);
-
 			myCamera->setZoom(500 / GRID_SIZE, 500 / GRID_SIZE);
+			Game::instance->paused = true;
+			Game::instance->mapMode = true;
 		}
 	} else {
 		if (zoomed_out) {

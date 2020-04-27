@@ -111,12 +111,9 @@ public:
 						activeDungeon->generateNoBoss();
 					}
 				} else {
-					printf("GENERATING HADES\n");
-					activeDungeon = new HadesDungeon();
-					curr_dungeon = HADES;
-					activeDungeon->dungeonType = curr_dungeon;
-					activeDungeon->generateNoBoss();
-					curr_floor = 0;
+					Game::instance->won = true;
+					Game::instance->quit = true;
+					return;
 				}
 				activeDungeon->zoomed_out=true;
 
