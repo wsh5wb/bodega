@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
 	while(!started && !quit){
 		SDL_PollEvent(&event);
 		if(event.type == SDL_KEYDOWN){
-			if(event.key.keysym.scancode == SDL_SCANCODE_RETURN){
+			if(event.key.keysym.scancode == SDL_SCANCODE_SPACE){
 				started = true;
 				myGame->start();
 			}

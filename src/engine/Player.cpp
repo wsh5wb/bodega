@@ -308,6 +308,9 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->current_ball_type = 2;
 		} else if (k == SDL_SCANCODE_3){
 			this->current_ball_type = 3;
+		} else if(k == SDL_SCANCODE_Q){
+			this->current_ball_type++;
+			this->current_ball_type %= 3;
 		}
 
 		//for shooting projectiles

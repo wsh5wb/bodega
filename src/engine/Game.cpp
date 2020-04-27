@@ -152,6 +152,7 @@ void Game::start(){
 					}
 					break;
 				case SDL_CONTROLLERBUTTONDOWN:
+					printf("Button pressed is %d\n", event.cbutton.button);
 					switch(event.cbutton.button){
 						case SDL_CONTROLLER_BUTTON_DPAD_UP:
 							pressedKeys.insert(SDL_SCANCODE_W);
@@ -179,6 +180,12 @@ void Game::start(){
 							break;
 						case SDL_CONTROLLER_BUTTON_Y:
 							pressedKeys.insert(SDL_SCANCODE_UP);
+							break;
+						case SDL_CONTROLLER_BUTTON_GUIDE:
+							pressedKeys.insert(SDL_SCANCODE_I);
+							break;
+						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+							pressedKeys.insert(SDL_SCANCODE_Q);
 							break;
 						case SDL_CONTROLLER_BUTTON_START:
 							paused = true;
@@ -219,6 +226,12 @@ void Game::start(){
 							break;
 						case SDL_CONTROLLER_BUTTON_Y:
 							pressedKeys.erase(SDL_SCANCODE_UP);
+							break;
+						case SDL_CONTROLLER_BUTTON_GUIDE:
+							pressedKeys.erase(SDL_SCANCODE_I);
+							break;
+						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+							pressedKeys.erase(SDL_SCANCODE_Q);
 							break;
 						case SDL_CONTROLLER_BUTTON_START:
 							pressedKeys.erase(SDL_SCANCODE_P);
