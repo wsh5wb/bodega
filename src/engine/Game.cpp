@@ -152,7 +152,7 @@ void Game::start(){
 					}
 					break;
 				case SDL_CONTROLLERBUTTONDOWN:
-					printf("Button pressed is %d\n", event.cbutton.button);
+					// printf("Button pressed is %d\n", event.cbutton.button);
 					switch(event.cbutton.button){
 						case SDL_CONTROLLER_BUTTON_DPAD_UP:
 							pressedKeys.insert(SDL_SCANCODE_W);

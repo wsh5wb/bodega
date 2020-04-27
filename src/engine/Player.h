@@ -14,6 +14,7 @@
 #include "StatMenu.h"
 
 #define LEVELS 255
+#define PROJECTILE_SWAP_FRAMES 30
 using namespace std;
 
 class Player : public AnimatedSprite{
@@ -95,6 +96,7 @@ private:
 	std::clock_t lastFired = 0;
 
 	static Player* player;
+	uint projSwapDelay = 0;
 	void initIFrames(int numFrames);
 
 };

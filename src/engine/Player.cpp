@@ -269,6 +269,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	//Controls is a class we wrote that just checks the SDL Scancode values and game controller values in one check
 	int xMov = 0, yMov = 0;
 	bool idle = true;
+	projSwapDelay++;
 	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_D) {
 			this->position.x += runSpeed;
@@ -309,8 +310,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		} else if (k == SDL_SCANCODE_3){
 			this->current_ball_type = 3;
 		} else if(k == SDL_SCANCODE_Q){
-			this->current_ball_type++;
-			this->current_ball_type %= 3;
+			if(projSwapDelay >= PROJECTILE_SWAP_FRAMES){
+				this->current_ball_type = ((this->current_ball_type+1) % 3)+1;
+				projSwapDelay = 0;
+			}
 		}
 
 		//for shooting projectiles
