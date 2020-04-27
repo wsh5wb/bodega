@@ -13,6 +13,8 @@ Note, you may need to first run sudo apt-get install libsdl2-mixer-dev on Linux 
 
 # Controls for Beta demo
 
+## Keyboard
+
 * W,A,S,D to move
 
 * M to show map
@@ -29,12 +31,24 @@ Note, you may need to first run sudo apt-get install libsdl2-mixer-dev on Linux 
 
 * Space to switch dungeons
 
+* P to pause
+
 * U to enter camera translation mode
 
 While in translation mode:
 
 * I,J,K,L to move camera between adjacent room cells
 * N to reset character and camera to main room
+
+## Controller
+
+* Left analog stick & DPad
+
+* A,B,X,Y to shoot (trying to figure out how to access second analog stick)
+
+* Start to pause
+
+* Select to show map
 
 Design Team Updates:
 

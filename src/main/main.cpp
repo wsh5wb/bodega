@@ -21,11 +21,17 @@ int main(int argc, char ** argv)
 	while(!started && !quit){
 		SDL_PollEvent(&event);
 		if(event.type == SDL_KEYDOWN){
-			if(event.key.keysym.scancode == SDL_SCANCODE_SPACE){
+			if(event.key.keysym.scancode == SDL_SCANCODE_RETURN){
 				started = true;
 				myGame->start();
 			}
-		}if(event.type == SDL_QUIT){
+		} else if(event.type == SDL_CONTROLLERBUTTONDOWN){
+			if(event.cbutton.button == SDL_CONTROLLER_BUTTON_START){
+				started = true;
+				myGame->start();
+			}
+		}
+		if(event.type == SDL_QUIT){
 			quit = true;
 		}
 
