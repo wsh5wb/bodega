@@ -68,7 +68,7 @@ void Game::initSDL(){
 	 //Check for joysticks
     if( SDL_NumJoysticks() >= 1 ){
         //Load joystick
-    	fprintf(stderr, "NUMJOYSTICKS %d\n", SDL_NumJoysticks());
+
         gGameController = SDL_GameControllerOpen(0);
         if( gGameController == NULL )
         	fprintf(stderr, "Game controller failed to init (controller is NULL/incompatible)");
@@ -131,7 +131,6 @@ void Game::start(){
 					if(event.jaxis.which == 0){
 						//x axis motion
 						if(event.jaxis.axis == 0){
-							printf("X value is: %d\n", event.jaxis.value);
 							if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
 								pressedKeys.insert(SDL_SCANCODE_A);
 							else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)

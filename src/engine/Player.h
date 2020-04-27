@@ -13,8 +13,10 @@
 #include "TextBox.h"
 #include "StatMenu.h"
 
-#define LEVELS 255
-#define PROJECTILE_SWAP_FRAMES 30
+#define LEVELS 					255
+#define PROJECTILE_SWAP_FRAMES 	30
+#define IFRAME_COUNT			180
+
 using namespace std;
 
 class Player : public AnimatedSprite{

@@ -127,6 +127,8 @@ float Player::percentOfXP(){
 }
 
 bool Player::changeHealth(int value){
+	if(this->iFrames)	return false;
+
 	this->health += value;
 	if(health > maxHealth){
 		health = maxHealth;
@@ -139,6 +141,9 @@ bool Player::changeHealth(int value){
 		Game::eventHandler.dispatchEvent(&e2);
 		return true;
 	}
+
+	this->initIFrames(IFRAME_COUNT);
+
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
 	return false;
@@ -342,11 +347,12 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 
 	/* handle iFrames if player was hit by enemy recently */
 	if (this->iFrames) {
-		//this->visible = this->iFrameCount%2 == 0;
+		if(this->iFrameCount%30 == 0)	this->vis ^= 1;
+		
 		this->iFrameCount++;
 		if (this->iFrameCount == this->numIFrames) {
 			this->iFrames = false;
-			//this->visible = true;
+			this->vis = true;
 		}
 	}
 
@@ -388,6 +394,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 //}
 
 void Player::initIFrames(int numFrames) {
+	printf("INITIALIZED IFRAMES\n");
 	this->iFrameCount = 0;
 	this->numIFrames = numFrames;
 	this->iFrames = true;
