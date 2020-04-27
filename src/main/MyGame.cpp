@@ -96,7 +96,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 			SDL_Delay(50);
 			break;
 		}
-		case SDL_SCANCODE_SPACE: {
+		case SDL_SCANCODE_RETURN: {
 			Event e("CHANGE_DUNGEON", &Game::eventHandler);
 			Game::eventHandler.dispatchEvent(&e);
 			SDL_Delay(100);

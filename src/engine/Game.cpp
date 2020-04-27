@@ -39,7 +39,7 @@ void Game::quitSDL(){
 	cout << "Quitting sdl" << endl;
 
 	//Close game controller
-    SDL_JoystickClose( gGameController );
+    SDL_GameControllerClose( gGameController );
     gGameController = NULL;
 
 	SDL_DestroyRenderer(Game::renderer);
@@ -51,7 +51,7 @@ void Game::quitSDL(){
 
 void Game::initSDL(){
 
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0)
 		cout << "Failed to init SDL, Error: " << SDL_GetError() << endl;
 
   if(SDL_Init(SDL_INIT_AUDIO) < 0)
@@ -68,9 +68,10 @@ void Game::initSDL(){
 	 //Check for joysticks
     if( SDL_NumJoysticks() >= 1 ){
         //Load joystick
-        gGameController = SDL_JoystickOpen( 0 );
+    	fprintf(stderr, "NUMJOYSTICKS %d\n", SDL_NumJoysticks());
+        gGameController = SDL_GameControllerOpen(0);
         if( gGameController == NULL )
-        	cout << "Could not initialize controller" << endl;
+        	fprintf(stderr, "Game controller failed to init (controller is NULL/incompatible)");
     }
 
 	window = SDL_CreateWindow("myGame",
@@ -141,17 +142,20 @@ void Game::start(){
 						}
 						if(event.jaxis.axis == 1){
 							if(event.jaxis.value < -JOYSTICK_DEAD_ZONE)
-								pressedKeys.insert(SDL_SCANCODE_S);
-							else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
-								pressedKeys.erase(SDL_SCANCODE_S);
-							else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
 								pressedKeys.insert(SDL_SCANCODE_W);
-							else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+							else if(event.jaxis.value >= -JOYSTICK_DEAD_ZONE && event.jaxis.value < 0)
 								pressedKeys.erase(SDL_SCANCODE_W);
+							else if(event.jaxis.value > JOYSTICK_DEAD_ZONE)
+								pressedKeys.insert(SDL_SCANCODE_S);
+							else if(event.jaxis.value <= JOYSTICK_DEAD_ZONE && event.jaxis.value >= 0)
+								pressedKeys.erase(SDL_SCANCODE_S);
 						}
+					} else if(event.jaxis.which == 1){
+						fprintf(stderr, "Moving right stick\n");
 					}
 					break;
 				case SDL_CONTROLLERBUTTONDOWN:
+					printf("Button pressed is %d\n", event.cbutton.button);
 					switch(event.cbutton.button){
 						case SDL_CONTROLLER_BUTTON_DPAD_UP:
 							pressedKeys.insert(SDL_SCANCODE_W);
@@ -165,8 +169,35 @@ void Game::start(){
 						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 							pressedKeys.insert(SDL_SCANCODE_A);
 							break;
+						case SDL_CONTROLLER_BUTTON_BACK:
+							pressedKeys.insert(SDL_SCANCODE_M);
+							break;
 						case SDL_CONTROLLER_BUTTON_A:
-							pressedKeys.insert(SDL_SCANCODE_SPACE);
+							pressedKeys.insert(SDL_SCANCODE_DOWN);
+							break;
+						case SDL_CONTROLLER_BUTTON_B:
+							pressedKeys.insert(SDL_SCANCODE_RIGHT);
+							break;
+						case SDL_CONTROLLER_BUTTON_X:
+							pressedKeys.insert(SDL_SCANCODE_LEFT);
+							break;
+						case SDL_CONTROLLER_BUTTON_Y:
+							pressedKeys.insert(SDL_SCANCODE_UP);
+							break;
+						case SDL_CONTROLLER_BUTTON_GUIDE:
+							pressedKeys.insert(SDL_SCANCODE_I);
+							break;
+						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+							pressedKeys.insert(SDL_SCANCODE_Q);
+							break;
+						case SDL_CONTROLLER_BUTTON_START:
+							paused = true;
+							ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
+							//myGame->loadTexture("resources/art/TitleScreen.png");
+							AffineTransform at;
+							ps->draw(at);
+							SDL_RenderPresent(Game::renderer);
+
 							break;
 					}
 					break;
@@ -184,8 +215,29 @@ void Game::start(){
 						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 							pressedKeys.erase(SDL_SCANCODE_A);
 							break;
+						case SDL_CONTROLLER_BUTTON_BACK:
+							pressedKeys.erase(SDL_SCANCODE_M);
+							break;
 						case SDL_CONTROLLER_BUTTON_A:
-							pressedKeys.erase(SDL_SCANCODE_SPACE);
+							pressedKeys.erase(SDL_SCANCODE_DOWN);
+							break;
+						case SDL_CONTROLLER_BUTTON_B:
+							pressedKeys.erase(SDL_SCANCODE_RIGHT);
+							break;
+						case SDL_CONTROLLER_BUTTON_X:
+							pressedKeys.erase(SDL_SCANCODE_LEFT);
+							break;
+						case SDL_CONTROLLER_BUTTON_Y:
+							pressedKeys.erase(SDL_SCANCODE_UP);
+							break;
+						case SDL_CONTROLLER_BUTTON_GUIDE:
+							pressedKeys.erase(SDL_SCANCODE_I);
+							break;
+						case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+							pressedKeys.erase(SDL_SCANCODE_Q);
+							break;
+						case SDL_CONTROLLER_BUTTON_START:
+							pressedKeys.erase(SDL_SCANCODE_P);
 							break;
 					}
 					break;
@@ -213,7 +265,14 @@ void Game::start(){
 					delete ps;
 					ps = NULL;
 				}
-			}if(event.type == SDL_QUIT){
+			} else if(event.type == SDL_CONTROLLERBUTTONDOWN){
+				if(event.cbutton.button == SDL_CONTROLLER_BUTTON_START){
+					paused = false;
+					delete ps;
+					ps = NULL;
+				}
+			}
+			if(event.type == SDL_QUIT){
 				quit = true;
 			}
 

@@ -25,7 +25,13 @@ int main(int argc, char ** argv)
 				started = true;
 				myGame->start();
 			}
-		}if(event.type == SDL_QUIT){
+		} else if(event.type == SDL_CONTROLLERBUTTONDOWN){
+			if(event.cbutton.button == SDL_CONTROLLER_BUTTON_START){
+				started = true;
+				myGame->start();
+			}
+		}
+		if(event.type == SDL_QUIT){
 			quit = true;
 		}
 
