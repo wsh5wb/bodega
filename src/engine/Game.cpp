@@ -86,9 +86,12 @@ void Game::start(){
 	int ms_per_frame = (1.0/(double)this->frames_per_sec)*1000;
 	std::clock_t start = std::clock();
 
-	bool quit = false, paused = false;
+	quit = false; 
+	paused = false;
+	won = false;
+	mapMode = false;
 	SDL_Event event;
-	DisplayObject * ps = NULL;
+	DisplayObject * ps = NULL, *ws = NULL;
 
 	while(!quit){
 		if(!paused){
@@ -188,6 +191,18 @@ void Game::start(){
 					break;
 			}
 
+		}else if(mapMode){
+			while(mapMode){
+				SDL_PollEvent(&event);
+				if(event.type == SDL_KEYUP){
+					if(event.key.keysym.scancode == SDL_SCANCODE_M){
+						mapMode = false;
+						paused = false;
+					}if(event.type == SDL_QUIT){
+						quit = true;
+					}
+				}
+			}
 		}
 		else{
 			// Game is paused
@@ -205,7 +220,19 @@ void Game::start(){
 		}			
 	}
 
+	while(won){
+		ws = new DisplayObject("winscreen","resources/art/GamePaused.png");
+		AffineTransform at;
+		ws->draw(at);
+		SDL_RenderPresent(Game::renderer);
+		SDL_PollEvent(&event);
+		if(event.type == SDL_QUIT){
+			won = false;
+		}
+	}
+
 	if(ps != NULL){delete ps;}
+	if(ws != NULL){delete ws;}
 	
 }
 

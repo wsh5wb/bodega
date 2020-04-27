@@ -37,6 +37,10 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
+	bool quit = false;
+	bool paused = false;
+	bool won = false;
+	bool mapMode = false;
 private:
 
 	void initSDL();
