@@ -244,17 +244,45 @@ void Game::start(){
 			}
 
 		}else if(mapMode){
+			SDL_Point offset = {0,0};
+			speed = 1;
 			while(mapMode){
 				SDL_PollEvent(&event);
 				if(event.type == SDL_KEYUP){
 					if(event.key.keysym.scancode == SDL_SCANCODE_M){
 						mapMode = false;
 						paused = false;
-					}if(event.type == SDL_QUIT){
-						quit = true;
+					}
+				}if(event.type == SDL_KEYDOWN){
+					if(event.key.keysym.scancode == SDL_SCANCODE_UP){
+						translateUp();
+						offset.y -= 1;
+						AffineTransform at;
+						draw(at);
+					}if(event.key.keysym.scancode == SDL_SCANCODE_DOWN){
+						translateDown();
+						offset.y += 1;
+						AffineTransform at;
+						draw(at);
+					}if(event.key.keysym.scancode == SDL_SCANCODE_LEFT){
+						translateLeft();
+						offset.x -= 1;
+						AffineTransform at;
+						draw(at);
+					}if(event.key.keysym.scancode == SDL_SCANCODE_RIGHT){
+						translateRight();
+						offset.x += 1;
+						AffineTransform at;
+						draw(at);
 					}
 				}
+
+				if(event.type == SDL_QUIT){
+						quit = true;
+				}
 			}
+			speed = 5;
+			moveTo(position.x - offset.x,position.y - offset.y);
 		}
 		else{
 			// Game is paused
