@@ -348,7 +348,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	/* handle iFrames if player was hit by enemy recently */
 	if (this->iFrames) {
 		if(this->iFrameCount%30 == 0)	this->vis ^= 1;
-		
+
 		this->iFrameCount++;
 		if (this->iFrameCount == this->numIFrames) {
 			this->iFrames = false;
@@ -394,7 +394,6 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 //}
 
 void Player::initIFrames(int numFrames) {
-	printf("INITIALIZED IFRAMES\n");
 	this->iFrameCount = 0;
 	this->numIFrames = numFrames;
 	this->iFrames = true;
