@@ -9,6 +9,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <typeinfo>
+#include "TweenJuggler.h"
 
 using namespace std;
 
@@ -92,7 +93,10 @@ void Game::start(){
 	won = false;
 	mapMode = false;
 	SDL_Event event;
-	DisplayObject * ps = NULL, *ws = NULL;
+	DisplayObject *ws = NULL;
+	TweenJuggler *juggler = TweenJuggler::getInstance();
+	DisplayObject * ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
+	Tween *psTween = new Tween(ps);
 
 	while(!quit){
 		if(!paused){
@@ -114,12 +118,23 @@ void Game::start(){
 				case SDL_KEYDOWN:
 					if(event.key.keysym.scancode == SDL_SCANCODE_P){
 						paused = true;
-						ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
-						//myGame->loadTexture("resources/art/TitleScreen.png");
-						AffineTransform at;
-						ps->draw(at);
-						SDL_RenderPresent(Game::renderer);
+						ps->setAlpha(0);
+						//ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
+						psTween->animate(TWEEN_ALPHA, 0, 255, 30, TWEEN_LINEAR,EASE_IN);
+						juggler->add(psTween);
 
+						while(!psTween->isComplete()){
+							SDL_RenderClear(Game::renderer);
+							juggler->nextFrame();
+							AffineTransform at;
+
+							ps->draw(at);
+							SDL_RenderPresent(Game::renderer);
+						}
+						//myGame->loadTexture("resources/art/TitleScreen.png");
+						/*ps->draw(at);
+						SDL_RenderPresent(Game::renderer);
+						*/
 						break;
 					}
 					pressedKeys.insert(event.key.keysym.scancode);
@@ -192,11 +207,24 @@ void Game::start(){
 							break;
 						case SDL_CONTROLLER_BUTTON_START:
 							paused = true;
-							ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
+							//ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
 							//myGame->loadTexture("resources/art/TitleScreen.png");
-							AffineTransform at;
-							ps->draw(at);
-							SDL_RenderPresent(Game::renderer);
+							ps->setAlpha(0);
+							//ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
+							psTween->animate(TWEEN_ALPHA, 0, 255, 30, TWEEN_LINEAR,EASE_IN);
+							juggler->add(psTween);
+
+							while(!psTween->isComplete()){
+								SDL_RenderClear(Game::renderer);
+								juggler->nextFrame();
+								AffineTransform at;
+
+								ps->draw(at);
+								SDL_RenderPresent(Game::renderer);
+							}
+							//AffineTransform at;
+							//ps->draw(at);
+							//SDL_RenderPresent(Game::renderer);
 
 							break;
 					}
@@ -296,14 +324,39 @@ void Game::start(){
 			if(event.type == SDL_KEYDOWN){
 				if(event.key.keysym.scancode == SDL_SCANCODE_P){
 					paused = false;
-					delete ps;
-					ps = NULL;
+					ps->setAlpha(255);
+						//ps = new DisplayObject("pausescreen","resources/art/GamePaused.png");
+					psTween->animate(TWEEN_ALPHA, 255, 0, 30, TWEEN_LINEAR,EASE_OUT);
+					juggler->add(psTween);
+
+					while(!psTween->isComplete()){
+						SDL_RenderClear(Game::renderer);
+						juggler->nextFrame();
+						AffineTransform at;
+
+						ps->draw(at);
+						SDL_RenderPresent(Game::renderer);
+					}
+					//delete ps;
+					//ps = NULL;
 				}
 			} else if(event.type == SDL_CONTROLLERBUTTONDOWN){
 				if(event.cbutton.button == SDL_CONTROLLER_BUTTON_START){
 					paused = false;
-					delete ps;
-					ps = NULL;
+					ps->setAlpha(255);
+					psTween->animate(TWEEN_ALPHA, 255, 0, 30, TWEEN_LINEAR,EASE_OUT);
+					juggler->add(psTween);
+
+					while(!psTween->isComplete()){
+						SDL_RenderClear(Game::renderer);
+						juggler->nextFrame();
+						AffineTransform at;
+
+						ps->draw(at);
+						SDL_RenderPresent(Game::renderer);
+					}
+					//delete ps;
+					//ps = NULL;
 				}
 			}
 			if(event.type == SDL_QUIT){
@@ -313,19 +366,31 @@ void Game::start(){
 		}			
 	}
 
-	while(won){
-		ws = new DisplayObject("winscreen","resources/art/GamePaused.png");
-		AffineTransform at;
-		ws->draw(at);
-		SDL_RenderPresent(Game::renderer);
-		SDL_PollEvent(&event);
-		if(event.type == SDL_QUIT){
-			won = false;
+	if(won){
+		ws = new DisplayObject("winscreen","resources/art/GameOver.png");
+
+		ws->setAlpha(0);
+		Tween *wsTween = new Tween(ws);
+		wsTween->animate(TWEEN_ALPHA, 0, 255, 30, TWEEN_LINEAR,EASE_IN);
+		juggler->add(wsTween);
+
+		while(!wsTween->isComplete()){
+			SDL_RenderClear(Game::renderer);
+			juggler->nextFrame();
+			AffineTransform at;
+			ws->draw(at);
+			SDL_RenderPresent(Game::renderer);
+		}
+
+		while(won){
+			SDL_PollEvent(&event);
+			if(event.type == SDL_QUIT){won = false;}
 		}
 	}
 
 	if(ps != NULL){delete ps;}
 	if(ws != NULL){delete ws;}
+	delete psTween;
 	
 }
 
