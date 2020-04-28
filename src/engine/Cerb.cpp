@@ -19,6 +19,15 @@ Cerb::Cerb(Player* player) : Enemy(player){
 
 void Cerb::update(set<SDL_Scancode> pressedKeys){
   Sprite::update(pressedKeys);
+
+  SDL_Point charLoc = Player::getPlayer()->getPosition();
+  AffineTransform* at = getGlobalTransform(Player::getPlayer());
+  charLoc = at->transformPoint(0, 0);
+  delete at;
+
+  AffineTransform* at2 = getGlobalTransform(this);
+  SDL_Point globalPos = at2->transformPoint(0, 0);
+  delete at2;
   //states:
   //0 initial set up
   //1 prowling
@@ -29,6 +38,11 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   //6 dead
 
   //state logic
+  //cout << "STATE = " << state << endl;
+
+  //cout << "Cerb: " << position.x << ", " << position.y << endl;
+  //cout << "Player: " << this->player->position.x << ", " << this->player->position.y << endl;
+
   if (health == 0){
     state = 6;
   }
@@ -39,10 +53,22 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     Enemy::patrol();
   }
   else if (state == 2){
-    Enemy::moveToTarget();
+    //Enemy::moveToTarget();
   }
   else if (state == 3){
     //lunge();
+    if (globalPos.x < charLoc.x){
+      position.x += 1;
+    }
+    else if (globalPos.x > charLoc.x){
+      position.x -= 1;
+    }
+    if (globalPos.y < charLoc.y){
+      position.y += 1;
+    }
+    else if (globalPos.y > charLoc.y){
+      position.y -= 1;
+    }
   }
   else if (state == 4){
     //shoot();
@@ -65,15 +91,13 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   else if (state == 1){
     //cout << "In state 1" << endl;
     prowlTime++;
-    int dist = std::max(std::abs(this->position.x-this->player->position.x),std::abs(this->position.y-this->player->position.y));
+    int dist = std::max(std::abs(charLoc.x-globalPos.x),std::abs(charLoc.y-globalPos.y));
     if (dist < 300){ //starts approaching if player close
       state = 2;
       vel = 0;
       maxVel = 8;
       acc = .25;
       prowlTime = 0;
-      targX = player->position.x;
-      targY = player->position.y;
     }
     else if (prowlTime >= 180){ //ranged attack if player still far after a bit
       state = 4;
@@ -84,10 +108,22 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     }
   }
   else if (state == 2){
-    if (Enemy::isTargetReached()){
+    prowlTime++;
+    if (globalPos.x < charLoc.x){
+      position.x += 1;
+    }
+    else if (globalPos.x > charLoc.x){
+      position.x -= 1;
+    }
+    if (globalPos.y < charLoc.y){
+      position.y += 1;
+    }
+    else if (globalPos.y > charLoc.y){
+      position.y -= 1;
+    }
+    if (prowlTime > 120){
       state = 3;
-      targX = player->position.x;
-      targY = player->position.y;
+      prowlTime = 0;
     }
   }
   else if (state == 3){;
@@ -97,13 +133,13 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
       //runs away on being hit while vulnerable, to a spot at least 50 away from player
       if (wasHit()){
         if (std::rand()%2 == 0)
-        this->targX = 50 + std::rand()%(500) + player->position.x;
+        this->targX = 50 + std::rand()%(500) + this->position.x;
         else
-        this->targX = -50 + -1*std::rand()%(500) + player->position.x;
+        this->targX = -50 + -1*std::rand()%(500) + this->position.x;
         if (std::rand()%2 == 0)
-        this->targY = 50 + std::rand()%(500) + player->position.y;
+        this->targY = 50 + std::rand()%(500) + this->position.y;
         else
-        this->targY = -50 -1*std::rand()%(500) + player->position.y;
+        this->targY = -50 -1*std::rand()%(500) + this->position.y;
         state = 5;
       }
       //when below half health, less time vulnerable

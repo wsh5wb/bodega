@@ -283,6 +283,10 @@ void Dungeon::generate() {
 						portal->setHitbox(.1, .9);
 						portal->showHitbox = true;
 						temp->room->addChild(portal);
+						Cerb *c = new Cerb(Player::getPlayer());
+						c->moveTo(512, 384);
+						c->showHitbox = true;
+						temp->room->addChild(c);
 					}
 					bossRoomsCount++;
 				}
