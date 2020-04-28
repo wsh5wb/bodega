@@ -25,9 +25,9 @@ ForestDungeon::ForestDungeon() {
 	scenes.push_back("./resources/scenes/ocean/urchin_room.txt");
 	scenes.push_back("./resources/scenes/forest/portal_room.txt");
 	// these must go at bottom
-	scenes.push_back("./resources/scenes/ocean/boss_top_left.txt");
-	scenes.push_back("./resources/scenes/ocean/boss_top_right.txt");
-	scenes.push_back("./resources/scenes/ocean/boss_bot_left.txt");
-	scenes.push_back("./resources/scenes/ocean/boss_bot_right.txt");
+	scenes.push_back("./resources/scenes/forest/BossTLC.txt");
+	scenes.push_back("./resources/scenes/forest/BossTRC.txt");
+	scenes.push_back("./resources/scenes/forest/BossBLC.txt");
+	scenes.push_back("./resources/scenes/forest/BossBRC.txt");
 
 }
