@@ -53,6 +53,7 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			myCamera->setZoom(500 / GRID_SIZE, 500 / GRID_SIZE);
 			Game::instance->paused = true;
 			Game::instance->mapMode = true;
+			
 		}
 	} else {
 		if (zoomed_out) {

@@ -30,7 +30,7 @@ void StatMenu::draw(AffineTransform &at){
     DisplayObject::draw(*my_at);
     auto current_x = dstrect.x;
     auto current_y = dstrect.y;
-    if(text_active){
+    if(text_active && !mapMode){
 
 
       title_rect.x = current_x + 150;
@@ -89,7 +89,7 @@ void StatMenu::generateText(){
 void StatMenu::update(set<SDL_Scancode> pressedKeys){
   DisplayObject::update(pressedKeys);
   makeVisible();
-  text_active = true;
+  mapMode = false;
   for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_I) {
       if (this->alpha == 0){
@@ -116,7 +116,7 @@ void StatMenu::update(set<SDL_Scancode> pressedKeys){
       }
     }if(k == SDL_SCANCODE_M){
       makeInvisible();
-      text_active = false;
+      mapMode = true;
     }
 
   }
