@@ -20,14 +20,14 @@ void ItemSystem::generateItem(){
 	switch(itemNum){
 		case 0:
 		{
-			// Potion + 20 health
-			Player::getPlayer()->changeHealth(20);
+			// Potion + 4 health
+			Player::getPlayer()->changeHealth(4);
 			break;
 		}
 		case 1:
 		{
-			// Potion + 50 health
-			Player::getPlayer()->changeHealth(50);
+			// Potion + 8 health
+			Player::getPlayer()->changeHealth(8);
 			break;
 		}
 		case 2:
@@ -38,20 +38,20 @@ void ItemSystem::generateItem(){
 		}
 		case 3:
 		{
-			// + 10 Max health
-			Player::getPlayer()->changeMaxHealth(10);
+			// + 2 Max health
+			Player::getPlayer()->changeMaxHealth(2);
 			break;
 		}
 		case 4:
 		{
-			// + 20 Max health
-			Player::getPlayer()->changeMaxHealth(20);
+			// + 4 Max health
+			Player::getPlayer()->changeMaxHealth(4);
 			break;
 		}
 		case 5:
 		{
-			// + 30 Max health
-			Player::getPlayer()->changeMaxHealth(30);
+			// + 8 Max health
+			Player::getPlayer()->changeMaxHealth(8);
 			break;
 		}
 		case 6:

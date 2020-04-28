@@ -76,8 +76,8 @@ private:
 	//unsigned int xpChart[LEVELS-1] = {10,25,50,100};
 	double xpScale = 1.5;
 	unsigned int xpNeeded = 10;
-	int health = 120;
-	int maxHealth = 120;
+	int health = 8;
+	int maxHealth = 8;
 	bool displayHealth = true;
 	int runSpeed = 2;
 	int current_ball_type = 1;

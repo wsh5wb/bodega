@@ -182,7 +182,7 @@ int Player::getMaxHealth(){
 	return this->maxHealth;
 }
 double Player::getSpeed(){
-	return this->speed;
+	return this->runSpeed;
 }
 double Player::getDamage(){
 	return this->damage;
@@ -199,8 +199,8 @@ void Player::levelUp(){
 	level++;
 	cout << "You leveled up!" << endl;
 	damage += 10;
-	health += 10;
-	maxHealth += 10;
+	maxHealth += 2;
+	health = health+4>maxHealth?maxHealth:health+4;
 	attackSpeed += .2;
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
