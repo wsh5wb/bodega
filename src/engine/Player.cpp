@@ -127,7 +127,7 @@ float Player::percentOfXP(){
 }
 
 bool Player::changeHealth(int value){
-	if(this->iFrames)	return false;
+	if(this->iFrames && value < 0)	return false;
 
 	this->health += value;
 	if(health > maxHealth){
@@ -142,7 +142,8 @@ bool Player::changeHealth(int value){
 		return true;
 	}
 
-	this->initIFrames(IFRAME_COUNT);
+	if(value < 0)
+		this->initIFrames(IFRAME_COUNT);
 
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
@@ -181,7 +182,7 @@ int Player::getMaxHealth(){
 	return this->maxHealth;
 }
 double Player::getSpeed(){
-	return this->speed;
+	return this->runSpeed;
 }
 double Player::getDamage(){
 	return this->damage;
@@ -198,8 +199,8 @@ void Player::levelUp(){
 	level++;
 	cout << "You leveled up!" << endl;
 	damage += 10;
-	health += 10;
-	maxHealth += 10;
+	maxHealth += 2;
+	health = health+4>maxHealth?maxHealth:health+4;
 	attackSpeed += .2;
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
@@ -347,7 +348,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 
 	/* handle iFrames if player was hit by enemy recently */
 	if (this->iFrames) {
-		if(this->iFrameCount%30 == 0)	this->vis ^= 1;
+		if(this->iFrameCount%10 == 0)	this->vis ^= 1;
 
 		this->iFrameCount++;
 		if (this->iFrameCount == this->numIFrames) {
