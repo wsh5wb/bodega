@@ -96,6 +96,7 @@ void Spirit::update(set<SDL_Scancode> pressedKeys) {
 		position.y -= ySpe;
 		if(position.y < 0){position.y = 0;}
 	}
+	//delete charLoc;
 	//position.x += xSpe;
 	//position.y += ySpe;
 	/*if (position.x <= 0 || position.x >= xBound) {

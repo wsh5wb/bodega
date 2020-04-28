@@ -10,8 +10,8 @@ Skel::Skel(Player* player) : Enemy(player){
   this->loadTexture("resources/enemies/SkelDead.png");
   this->player = player;
   w = 40; h = 60;
-  pivot.x = w/2;
-  pivot.y = h/2;
+  pivot.x =0;// w/2;
+  pivot.y = 0;//h/2;
   state = 0;
   position.x = 0;
   position.y = 0;
@@ -52,22 +52,29 @@ void Skel::update(set<SDL_Scancode> pressedKeys){
 
   }
   //state changes
+  //SDL_Point charLoc = Player::getPlayer()->getPosition();
+  //AffineTransform* at = getGlobalTransform(Player::getPlayer());
+  SDL_Point charloc = getGlobalTransform(Player::getPlayer())->transformPoint(0,0);
+  SDL_Point globalpos = getGlobalTransform(this)->transformPoint(0,0);
+  //cout<<charloc.x<<" "<<globalpos.x<<endl;
+  //delete charloc;
+  //delete globalpos;
   if (state == 0){
-    int dist = std::max(std::abs(this->position.x-this->player->position.x),std::abs(this->position.y-this->player->position.y));
+    int dist = std::max(std::abs(globalpos.x-charloc.x),std::abs(globalpos.y-charloc.y));
     if (dist < 250){
       state = 1;
     }
   }
   else if (state == 1){
     idleTime++;
-    int dist = std::max(std::abs(this->position.x-this->player->position.x),std::abs(this->position.y-this->player->position.y));
+    int dist = std::max(std::abs(globalpos.x-charloc.x),std::abs(globalpos.y-charloc.y));
     if (dist < 300){
       state = 2;
       vel = 0;
       maxVel = 3;
       acc = .25;
-      targX = player->position.x;
-      targY = player->position.y;
+      targX = charloc.x;
+      targY = charloc.y;
       idleTime = 0;
     }
     else if (idleTime > 120){ //if idle for too long, hides
@@ -77,9 +84,9 @@ void Skel::update(set<SDL_Scancode> pressedKeys){
   }
   else if (state == 2){
     chaseTime++;
-    int dist = std::max(std::abs(this->position.x-this->player->position.x),std::abs(this->position.y-this->player->position.y));
-    targX = player->position.x;
-    targY = player->position.y;
+    int dist = std::max(std::abs(globalpos.x-charloc.x),std::abs(globalpos.y-charloc.y));
+    targX = charloc.x;
+    targY = charloc.y;
     if (chaseTime > 180 && dist > 50){
       chaseTime = 0;
       state = 1;
@@ -98,6 +105,9 @@ void Skel::update(set<SDL_Scancode> pressedKeys){
   else if (state == 4){
     //TODO: death animation, spawn bone pile
   }
+  //SDL_Point targets = getGlobalTransform(this)->reverseTransform(targX,targY);
+  targX=targX-globalpos.x+this->position.x;
+  targY=targY-globalpos.y+this->position.y;
 }
 
 void Skel::draw(AffineTransform &at){

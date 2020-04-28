@@ -10,8 +10,8 @@ Cerb::Cerb(Player* player) : Enemy(player){
   this->loadTexture("resources/enemies/CerbIdle.png");
   this->player = player;
   this->w = 150; this->h = 150;
-  this->pivot.x = this->w/2;
-  this->pivot.y = this->h/2;
+  this->pivot.x = 0;//this->w/2;
+  this->pivot.y = 0;//this->h/2;
   state = 0;
   position.x = 0;
   position.y = 0;
