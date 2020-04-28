@@ -148,15 +148,27 @@ void Cerb::draw(AffineTransform &at){
 
 void Cerb::shoot(){
   //TODO: Give Cerberus projectiles to use
+  addProjectile(3, 3, 1000, 0.5, 0.5);
 }
 
 bool Cerb::wasHit(){
   //TODO: return true if collision was with Player's attack
-
   return false;
 }
 
 bool Cerb::atWall(){
   //TODO: return true if touching wall or other solid non-player object
   return false;
+}
+
+void Cerb::addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY){
+	//string path = "./resources/PlayerSprites/fireball.png";
+	//int midX = this->position.x + (w*scaleX)/3;
+	//int midY = this->position.y + (w*scaleX)/3;
+	//printf("Adding new projectile\n");
+	////Projectile * p = new Projectile(path,midX,midY,speedX,speedY,timeout,scaleX,scaleY);
+	//// projectiles.push_back(p);
+	//((DisplayObjectContainer*)this->parent)->addChild(p);
+	//DTEvent e("OBJ_ADD", &Game::eventHandler, p);
+	//Game::eventHandler.dispatchEvent(&e);
 }
