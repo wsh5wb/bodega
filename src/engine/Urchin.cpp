@@ -106,11 +106,23 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 			int midX = this->position.x + (dstrect.w)/3;
 		    int midY = this->position.y + (dstrect.h)/3;
 		    cout << ((DisplayObjectContainer*)this->parent)->numChildren() << endl;
-			Projectile * p = new Projectile(path, midX, midY,0,3,500,0.25,0.25,projectileDamage);
+			Projectile * p1 = new Projectile(path, midX, midY,0,3,800,0.25,0.25,projectileDamage); //down
+			Projectile * p2 = new Projectile(path, midX, midY,0,-3,800,0.25,0.25,projectileDamage); //up
+			Projectile * p3 = new Projectile(path, midX, midY,3,0,800,0.25,0.25,projectileDamage); //right
+			Projectile * p4 = new Projectile(path, midX, midY,-3,0,800,0.25,0.25,projectileDamage); // left
 			cout << ((DisplayObjectContainer*)this->parent)->numChildren() << endl;
-			((DisplayObjectContainer*)this->parent)->addChild(p);
-			DTEvent e("OBJ_ADD", &Game::eventHandler, p);
-			Game::eventHandler.dispatchEvent(&e);
+			((DisplayObjectContainer*)this->parent)->addChild(p1);
+			//((DisplayObjectContainer*)this->parent)->addChild(p2);
+			//((DisplayObjectContainer*)this->parent)->addChild(p3);
+			//((DisplayObjectContainer*)this->parent)->addChild(p4);
+			DTEvent e1("OBJ_ADD", &Game::eventHandler, p1);
+			Game::eventHandler.dispatchEvent(&e1);
+			//DTEvent e2("OBJ_ADD", &Game::eventHandler, p2);
+			//Game::eventHandler.dispatchEvent(&e2);
+			//DTEvent e3("OBJ_ADD", &Game::eventHandler, p3);
+			//Game::eventHandler.dispatchEvent(&e3);
+			/*DTEvent e4("OBJ_ADD", &Game::eventHandler, p4);
+			Game::eventHandler.dispatchEvent(&e4);*/
 		}
 		if (timer > 200) {
 			timer = 0;
