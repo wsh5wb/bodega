@@ -30,27 +30,31 @@ void StatMenu::draw(AffineTransform &at){
     DisplayObject::draw(*my_at);
     auto current_x = dstrect.x;
     auto current_y = dstrect.y;
-    title_rect.x = current_x + 150;
-    title_rect.y = current_y + 50;
-    health_rect.x = current_x + 50;
-    health_rect.y = current_y + 125;
-    speed_rect.x = current_x + 50;
-    speed_rect.y = current_y + 150;
-    damage_rect.x = current_x + 50;
-    damage_rect.y = current_y + 175;
-    attack_speed_rect.x = current_x + 50;
-    attack_speed_rect.y = current_y + 200;
-    level_rect.x = current_x + 50;
-    level_rect.y = current_y + 225;
-    modifiers_title_rect.x = current_x + 250;
-    modifiers_title_rect.y = current_y + 100;
-    SDL_RenderCopy(Game::renderer, title_texture, nullptr, &title_rect);
-    SDL_RenderCopy(Game::renderer, health_texture, nullptr, &health_rect);
-    SDL_RenderCopy(Game::renderer, speed_texture, nullptr, &speed_rect);
-    SDL_RenderCopy(Game::renderer, damage_texture, nullptr, &damage_rect);
-    SDL_RenderCopy(Game::renderer, attack_speed_texture, nullptr, &attack_speed_rect);
-    SDL_RenderCopy(Game::renderer, level_texture, nullptr, &level_rect);
-    SDL_RenderCopy(Game::renderer, modifiers_title_texture, nullptr, &modifiers_title_rect);
+    if(text_active){
+
+
+      title_rect.x = current_x + 150;
+      title_rect.y = current_y + 50;
+      health_rect.x = current_x + 50;
+      health_rect.y = current_y + 125;
+      speed_rect.x = current_x + 50;
+      speed_rect.y = current_y + 150;
+      damage_rect.x = current_x + 50;
+      damage_rect.y = current_y + 175;
+      attack_speed_rect.x = current_x + 50;
+      attack_speed_rect.y = current_y + 200;
+      level_rect.x = current_x + 50;
+      level_rect.y = current_y + 225;
+      modifiers_title_rect.x = current_x + 250;
+      modifiers_title_rect.y = current_y + 100;
+      SDL_RenderCopy(Game::renderer, title_texture, nullptr, &title_rect);
+      SDL_RenderCopy(Game::renderer, health_texture, nullptr, &health_rect);
+      SDL_RenderCopy(Game::renderer, speed_texture, nullptr, &speed_rect);
+      SDL_RenderCopy(Game::renderer, damage_texture, nullptr, &damage_rect);
+      SDL_RenderCopy(Game::renderer, attack_speed_texture, nullptr, &attack_speed_rect);
+      SDL_RenderCopy(Game::renderer, level_texture, nullptr, &level_rect);
+      SDL_RenderCopy(Game::renderer, modifiers_title_texture, nullptr, &modifiers_title_rect);
+    }
 }
 
 void StatMenu::handleEvent(Event* e){
@@ -84,6 +88,8 @@ void StatMenu::generateText(){
 
 void StatMenu::update(set<SDL_Scancode> pressedKeys){
   DisplayObject::update(pressedKeys);
+  makeVisible();
+  text_active = true;
   for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_I) {
       if (this->alpha == 0){
@@ -108,7 +114,11 @@ void StatMenu::update(set<SDL_Scancode> pressedKeys){
         SDL_DestroyTexture(modifiers_title_texture);
         text_active = false;
       }
+    }if(k == SDL_SCANCODE_M){
+      makeInvisible();
+      text_active = false;
     }
+
   }
   /* TweenJuggler * juggle = TweenJuggler::getInstance();
   Tween * alpha_tween = new Tween(this);

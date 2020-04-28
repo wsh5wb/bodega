@@ -355,14 +355,11 @@ void Game::start(){
 						ps->draw(at);
 						SDL_RenderPresent(Game::renderer);
 					}
-					//delete ps;
-					//ps = NULL;
 				}
 			}
 			if(event.type == SDL_QUIT){
 				quit = true;
 			}
-
 		}			
 	}
 
