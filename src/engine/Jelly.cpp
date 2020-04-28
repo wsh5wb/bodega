@@ -12,15 +12,22 @@ Jelly::Jelly(Player *player) :
 	this->scaleY *= 48./h;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
-	xSpe = 2;
-	ySpe = 2;
+	xSpe = rand()%5-2;
+	ySpe = rand()%5-2;
 	state = 0;
 }
 
 Jelly::Jelly(Player *player, int d) :
 		Enemy(player) {
-	xSpe = 1;
-	ySpe = 1;
+	xSpe = rand()%7-3;
+	ySpe = rand()%7-3;
+	if(xSpe==ySpe){
+		xSpe=rand()%7-3;
+		ySpe=rand()%7-3;
+	}
+	if(xSpe==0){xSpe=rand()%15-7;}
+	if(ySpe==0){ySpe=rand()%15-7;}
+	timer+=rand()%30;
 	switch (d) {
 		case 0: {
 			this->loadTexture("./resources/art/hades/ghost.png");
@@ -37,8 +44,8 @@ Jelly::Jelly(Player *player, int d) :
 			this->id = "ENEMY_Jellyfish";
 			this->scaleX *= 32./w;
 			this->scaleY *= 48./h;
-			xSpe = 2;
-			ySpe = 2;
+			xSpe = rand()%5-2;
+			ySpe = rand()%5-2;
 			damage = 3;
 			health = 300;
 			this->setHitbox(.1,.9,.1,.9);
@@ -56,13 +63,18 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 	Sprite::update(pressedKeys);
 	if (state == 0) {
 		timer++;
-		if (timer >= 180) {
+		if (timer >= 250) {
 			state++;
+			xSpe=rand()%3-1;
+			ySpe=rand()%3-1;
 		}
 	} else if (state == 1) {
-		timer++;
-		if (timer >= 360) {
+		timer+=rand()%5;
+		if (timer >= 330) {
 			timer = 0;
+			state=0;
+			xSpe=rand()%15-7;
+			ySpe=rand()%15-7;
 		}
 	}
 	// cout << position.x << ", " << position.y << endl;
