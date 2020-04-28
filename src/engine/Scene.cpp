@@ -367,6 +367,20 @@ void Scene::loadScene(string sceneFilePath) {
 			this->numEnemies += 1;
 			break;
 		}
+		case 15: {
+			int skin = 0;
+			i >> skin;
+			Player *tempP = Player::getPlayer();
+			Cerb *temp = new Cerb(tempP);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+			objects.push_back(temp);
+			temp->state = 0;
+			temp->showHitbox = true;
+			this->numEnemies += 1;
+			break;
+		}
 		default: {
 			cerr << "ERROR: Object type " << type << " not recognized!\n";
 			break;

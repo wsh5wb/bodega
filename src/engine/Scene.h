@@ -12,6 +12,7 @@
 #include "Urchin.h"
 #include "Spirit.h"
 #include "Skel.h"
+#include "Cerb.h"
 #include <string>
 #include <vector>
 #include <fstream>

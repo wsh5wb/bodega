@@ -1,4 +1,4 @@
 2 1
 0 Scene ./resources/art/hades/HadesBossTRC.png 2.34375 2.34375 
-10 0 ENEMY_Jellyfish1 176 176
-Scene ENEMY_Jellyfish1
+15 0 ENEMY_Cerb 176 176
+Scene ENEMY_Cerb
