@@ -278,6 +278,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	projSwapDelay++;
 	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_D) {
+			if(runSpeed == 0){continue;}
 			this->position.x += runSpeed;
 			this->deltaX += runSpeed;
 			//this->flipH = false;
@@ -287,6 +288,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
 		} else if (k == SDL_SCANCODE_A) {
+			if(runSpeed == 0){continue;}
 			this->position.x -= runSpeed;
 			this->deltaX += -runSpeed;
 			//this->flipH = true;
@@ -296,6 +298,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
 		} else if (k == SDL_SCANCODE_W) {
+			if(runSpeed == 0){continue;}
 			this->position.y -= runSpeed;
 			this->deltaY += -runSpeed;
 			if (this->currAnimation != "Run") {
@@ -303,6 +306,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_S) {
+			if(runSpeed == 0){continue;}
 			this->position.y += runSpeed;
 			this->deltaY += runSpeed;
 			if (this->currAnimation != "Run") {

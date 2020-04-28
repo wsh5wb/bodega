@@ -53,7 +53,7 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			myCamera->setZoom(500 / GRID_SIZE, 500 / GRID_SIZE);
 			Game::instance->paused = true;
 			Game::instance->mapMode = true;
-			
+
 		}
 	} else {
 		if (zoomed_out) {
@@ -189,13 +189,16 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 	if (changingRoom) {
+		Player * p = Player::getPlayer();
 		if (timer <= ROOM_START_DELAY) {
 			timer++;
+
 		} else {
 			zoomed_out = true;
 			changingRoom->active = true;
 			changingRoom = NULL;
 			timer = 0;
+			p->modifySpeed(oldSpeed);
 		}
 	}
 }
@@ -532,9 +535,11 @@ void Dungeon::transitionRoom(string type) {
 		printf("after transition, curr x and y are %d     %d\n", current_x,
 				current_y);
 		Tween *camPosTween = new Tween(Camera::getCamera()->container);
-		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,
-		EASE_INOUT);
+		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,EASE_INOUT);
 		juggler->add(camPosTween);
+		oldSpeed = player->getSpeed();
+		player->modifySpeed(-oldSpeed);
+
 	}
 	if (new_room) {
 		changingRoom = new_room;
