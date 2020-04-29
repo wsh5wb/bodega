@@ -287,6 +287,7 @@ void Dungeon::generate() {
 						c->moveTo(512, 384);
 						c->showHitbox = true;
 						temp->room->addChild(c);
+						temp->active = true;
 					}
 					bossRoomsCount++;
 				}
