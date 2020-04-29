@@ -109,7 +109,7 @@ void CollisionSystem::update(){
 							DisplayObject* obj;
 							if(type1 == "PROJECTILE")		obj = obj1;
 							else if(type2 == "PROJECTILE")	obj = obj2;
-							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 							continue;
 						}
 						// printf("Player collided with obstacle\n");
@@ -148,7 +148,7 @@ void CollisionSystem::update(){
 								}
 							}
 
-							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 							continue;
 						}
 					}
@@ -157,7 +157,7 @@ void CollisionSystem::update(){
 						DisplayObject* obj;
 						if(type1 == "chest")		obj = obj1;
 						else if(type2 == "chest")	obj = obj2;
-						((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 						Event e("CHEST_OPENED", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
 						continue;
@@ -190,7 +190,7 @@ void CollisionSystem::update(){
 								return;
 						}
 
-						((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 							continue;
 					}
 					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
@@ -250,7 +250,6 @@ void CollisionSystem::handleEvent(Event* e){
 		objects[str].push_back(child);
 	}
 	else if(e->getType() == "OBJ_RM" && it != objects[str].end()){
-		cout << str << "del" << endl;
 		objects[str].erase(it);
 	}
 

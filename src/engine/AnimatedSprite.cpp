@@ -12,7 +12,6 @@ AnimatedSprite::AnimatedSprite(string id){
 AnimatedSprite::AnimatedSprite(string id, string filepath){
 	SDL_Surface* image = IMG_Load(filepath.c_str());
 	images.push_back(image);
-	cout << "New animated Sprite" << endl;
 	this->id = id;
 	this->imgPath = filepath;
 	loop = false;

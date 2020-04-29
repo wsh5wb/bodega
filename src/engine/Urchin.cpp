@@ -79,11 +79,11 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 	Sprite::update(pressedKeys);
 	if (state == 0) {
 		timer++;
-		if (timer <= 180) {
-			if (timer % 15 == 0)
+		if (timer <= 60) {
+			if (timer % 5 == 0)
 				this->increaseAlpha();
 		}
-		if (timer > 180) {
+		if (timer > 60) {
 			timer = 0;
 			this->scaleX = .8;
 			this->scaleY = .8;
@@ -100,29 +100,42 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 		}
 		timer++;
 		if (timer % 50 == 0) {
-			cout << "FIRED" << endl;
 			//Generate projectiles 
 			string path = "resources/Projectiles/spikedball.png";
 			int midX = this->position.x + (dstrect.w)/3;
 		    int midY = this->position.y + (dstrect.h)/3;
-		    cout << ((DisplayObjectContainer*)this->parent)->numChildren() << endl;
-			Projectile * p1 = new Projectile(path, midX, midY,0,3,800,0.25,0.25,projectileDamage); //down
-			Projectile * p2 = new Projectile(path, midX, midY,0,-3,800,0.25,0.25,projectileDamage); //up
-			Projectile * p3 = new Projectile(path, midX, midY,3,0,800,0.25,0.25,projectileDamage); //right
-			Projectile * p4 = new Projectile(path, midX, midY,-3,0,800,0.25,0.25,projectileDamage); // left
-			cout << ((DisplayObjectContainer*)this->parent)->numChildren() << endl;
-			((DisplayObjectContainer*)this->parent)->addChild(p1);
-			//((DisplayObjectContainer*)this->parent)->addChild(p2);
-			//((DisplayObjectContainer*)this->parent)->addChild(p3);
-			//((DisplayObjectContainer*)this->parent)->addChild(p4);
+			Projectile * p1 = new Projectile(path, midX, midY,0,3,1200,0.25,0.25,projectileDamage); //down
+			Projectile * p2 = new Projectile(path, midX, midY,0,-3,1200,0.25,0.25,projectileDamage); //up
+			Projectile * p3 = new Projectile(path, midX, midY,3,0,1200,0.25,0.25,projectileDamage); //right
+			Projectile * p4 = new Projectile(path, midX, midY,-3,0,1200,0.25,0.25,projectileDamage); // left
+			Projectile * p5 = new Projectile(path, midX, midY,2,2,1200,0.25,0.25,projectileDamage); //down right
+			Projectile * p6 = new Projectile(path, midX, midY,2,-2,1200,0.25,0.25,projectileDamage); //up right
+			Projectile * p7 = new Projectile(path, midX, midY,-2,2,1200,0.25,0.25,projectileDamage); //down left
+			Projectile * p8 = new Projectile(path, midX, midY,-2,-2,1200,0.25,0.25,projectileDamage); // up left
+			((DisplayObjectContainer*)(this->parent))->addChild(p1);
+			((DisplayObjectContainer*)(this->parent))->addChild(p2);
+			((DisplayObjectContainer*)this->parent)->addChild(p3);
+			((DisplayObjectContainer*)this->parent)->addChild(p4);
+			((DisplayObjectContainer*)(this->parent))->addChild(p5);
+			((DisplayObjectContainer*)(this->parent))->addChild(p6);
+			((DisplayObjectContainer*)this->parent)->addChild(p7);
+			((DisplayObjectContainer*)this->parent)->addChild(p8);
 			DTEvent e1("OBJ_ADD", &Game::eventHandler, p1);
 			Game::eventHandler.dispatchEvent(&e1);
-			//DTEvent e2("OBJ_ADD", &Game::eventHandler, p2);
-			//Game::eventHandler.dispatchEvent(&e2);
-			//DTEvent e3("OBJ_ADD", &Game::eventHandler, p3);
-			//Game::eventHandler.dispatchEvent(&e3);
-			/*DTEvent e4("OBJ_ADD", &Game::eventHandler, p4);
-			Game::eventHandler.dispatchEvent(&e4);*/
+			DTEvent e2("OBJ_ADD", &Game::eventHandler, p2);
+			Game::eventHandler.dispatchEvent(&e2);
+			DTEvent e3("OBJ_ADD", &Game::eventHandler, p3);
+			Game::eventHandler.dispatchEvent(&e3);
+			DTEvent e4("OBJ_ADD", &Game::eventHandler, p4);
+			Game::eventHandler.dispatchEvent(&e4);
+			DTEvent e5("OBJ_ADD", &Game::eventHandler, p5);
+			Game::eventHandler.dispatchEvent(&e5);
+			DTEvent e6("OBJ_ADD", &Game::eventHandler, p6);
+			Game::eventHandler.dispatchEvent(&e6);
+			DTEvent e7("OBJ_ADD", &Game::eventHandler, p7);
+			Game::eventHandler.dispatchEvent(&e7);
+			DTEvent e8("OBJ_ADD", &Game::eventHandler, p8);
+			Game::eventHandler.dispatchEvent(&e8);
 		}
 		if (timer > 200) {
 			timer = 0;

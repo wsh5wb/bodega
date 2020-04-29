@@ -33,6 +33,7 @@ Player::Player() :
 	this->addChild(chat_box);
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
+	this->runSpeed = 6;
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();
