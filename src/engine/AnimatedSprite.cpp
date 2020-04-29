@@ -45,7 +45,6 @@ void AnimatedSprite::addAnimation(string basepath, string animName, int numFrame
 	for(int i=1; i<numFrames+1;i++){
 		SDL_Surface* image = IMG_Load((basepath + "_" + to_string(i) + ".png").c_str());
 		images.push_back(image);
-		cout << basepath + "_" + to_string(i) + ".png" << endl;
 	}
 }
 
@@ -62,7 +61,6 @@ void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animN
 
 	SDL_Surface* image = IMG_Load((sheetpath).c_str());
 	images.push_back(image);
-
 }
 
 Animation* AnimatedSprite::getAnimation(string animName){
@@ -190,10 +188,14 @@ void AnimatedSprite::setFrameRate(int rate){
 
 void AnimatedSprite::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
+	if(this->id == "PORTAL")
+		printf("CHANGING PORTAL FRAME\n");
 	if(playing){
 		std::clock_t end = std::clock();
 		double duration = (( end - start ) / (double) CLOCKS_PER_SEC)*1000;
 		if(duration > frameRate){
+			if(this->id == "PORTAL")
+				printf("CHANGING PORTAL FRAME\n");
 			start = end;
 
 			if(curFrame < endIndex){

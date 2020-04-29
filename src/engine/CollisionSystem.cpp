@@ -53,8 +53,12 @@ void CollisionSystem::update(){
 				i++;
 
 				if((collision= collidesWith(obj1, obj2))){
-					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"))
+					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR")){
 						printf("Door collision occured even though DOOR-PLAYER is not being monitored\n");
+						auto it = find(pairs.begin(), pairs.end(), "PLAYER-DOOR");
+						if(it != pairs.end())
+							printf("DOOR-PLAYER was found in pairs vector\n");
+					}
 					// Maybe handle some of this in other classes via events to reduce cluter?
 					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
@@ -177,6 +181,7 @@ void CollisionSystem::update(){
 						}
 					}
 					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
+						printf("Player hit a portal!\n");
 						Event e("CHANGE_DUNGEON", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
 						return;

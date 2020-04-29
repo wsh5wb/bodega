@@ -122,7 +122,7 @@ void Room::draw(AffineTransform &at) {
 
 void Room::openDoors(){
 
-	Game::cs->watchForCollisions("DOOR", "PLAYER");
+	Game::cs->watchForCollisions("PLAYER", "DOOR");
 	for(DisplayObject* child : room->children){
 		if(child->id.substr(0,4) == "Door"){
 			printf("opening %s\n", child->id.c_str());
@@ -137,7 +137,7 @@ void Room::openDoors(){
 }
 
 void Room::closeDoors(){
-	Game::cs->ignoreCollisions("DOOR", "PLAYER");
+	Game::cs->ignoreCollisions("PLAYER", "DOOR");
 	for(DisplayObject* child : room->children){
 		if(child->id.substr(0,4) == "Door"){
 			printf("closing %s\n", child->id.c_str());

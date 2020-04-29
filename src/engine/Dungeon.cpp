@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "HadesDungeon.h"
+#include "Portal.h"
 
 using namespace std;
 
@@ -15,9 +16,9 @@ Dungeon::Dungeon() {
 	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_R");
 	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_L");
 	Game::eventHandler.addEventListener((EventListener*) this, "ENEMY_KILLED");
-	Game::eventHandler.addEventListener((EventListener*) this, "PLAYER_KILLED");
 
 }
+
 Dungeon::~Dungeon() {
 	cerr << "DUNGEON DESTRUCTOR" << endl;
 	Game::eventHandler.removeEventListener((EventListener*) this,
@@ -30,8 +31,6 @@ Dungeon::~Dungeon() {
 			"DUNG_TRANS_L");
 	Game::eventHandler.removeEventListener((EventListener*) this,
 			"ENEMY_KILLED");
-	Game::eventHandler.removeEventListener((EventListener*) this,
-			"PLAYER_KILLED");
 	cleanMatrix(layout);
 }
 
@@ -274,12 +273,10 @@ void Dungeon::generate() {
 					} else if (bossRoomsCount == 3) {
 						temp->removeWall(SOUTH);
 						temp->removeWall(EAST);
-						DisplayObject *portal = new DisplayObject("PORTAL",
-								"./resources/character/floryan_head.png");
-						portal->scale(.25);
+						DisplayObject *portal = new Portal();
+						// portal->scale(.5);
 						portal->moveTo(512, 384);
 						portal->translate(-portal->w / 8, -portal->h / 8);
-						// portal->movePivot(portal->w/2, portal->h/2);
 						portal->setHitbox(.1, .9);
 						portal->showHitbox = true;
 						temp->room->addChild(portal);
@@ -361,6 +358,13 @@ void Dungeon::generateNoBoss() {
 					temp->start = true;
 					temp->visible = true;
 					start_room = temp;
+					// DisplayObject *portal = new Portal();
+					// portal->scale(.25);
+					// portal->moveTo(512, 384);
+					// portal->translate(-portal->w / 8, -portal->h / 8);
+					// portal->setHitbox(.1, .9);
+					// portal->showHitbox = true;
+					// temp->room->addChild(portal);
 				} else {
 					DisplayObjectContainer::addChild(temp);
 				}
@@ -388,8 +392,6 @@ void Dungeon::handleEvent(Event *e) {
 
 		activeRoom->room->numEnemies = 0;
 		activeRoom->openDoors();
-	} else if (type == "PLAYER_KILLED") {
-		//do nothing
 	}
 
 }
