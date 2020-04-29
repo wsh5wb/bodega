@@ -21,8 +21,8 @@ ForestDungeon::ForestDungeon() {
 	scenes.push_back("./resources/scenes/forest/start.txt");
 	scenes.push_back("./resources/scenes/forest/bush_chest.txt");
 	scenes.push_back("./resources/scenes/forest/shade_room1.txt");
-	scenes.push_back("./resources/scenes/ocean/jelly_room.txt");
-	scenes.push_back("./resources/scenes/ocean/urchin_room.txt");
+	scenes.push_back("./resources/scenes/forest/jelly_room.txt");
+	scenes.push_back("./resources/scenes/forest/urchin_room.txt");
 	scenes.push_back("./resources/scenes/forest/portal_room.txt");
 	// these must go at bottom
 	scenes.push_back("./resources/scenes/forest/BossTLC.txt");

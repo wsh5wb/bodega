@@ -21,8 +21,8 @@ OlympusDungeon::OlympusDungeon() {
 	scenes.push_back("./resources/scenes/olympus/start.txt");
 	scenes.push_back("./resources/scenes/olympus/basic_room1.txt");
 	scenes.push_back("./resources/scenes/olympus/torch_chest.txt");
-	scenes.push_back("./resources/scenes/ocean/jelly_room.txt");
-	scenes.push_back("./resources/scenes/ocean/urchin_room.txt");
+	scenes.push_back("./resources/scenes/olympus/jelly_room.txt");
+	scenes.push_back("./resources/scenes/olympus/urchin_room.txt");
 	scenes.push_back("./resources/scenes/olympus/portal_room.txt");
 	// these must go at bottom
 	scenes.push_back("./resources/scenes/olympus/BossTLC.txt");

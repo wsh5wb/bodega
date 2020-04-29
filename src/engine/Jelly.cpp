@@ -32,6 +32,26 @@ Jelly::Jelly(Player *player, int d) :
 			this->showHitbox = true;
 			break;
 		}
+		case 2: {
+			this->loadTexture("./resources/enemies/wasp.png");
+			this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+			this->scaleX *= 1;
+			this->scaleY *= 1;
+			//this->setAlpha(100);
+			this->setHitbox(.1,.9,.2,.9);
+			this->showHitbox = true;
+			break;
+		}
+		case 3: {
+			this->loadTexture("./resources/enemies/ojelly.png");
+			this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+			this->scaleX *= 1;
+			this->scaleY *= 1;
+			this->setAlpha(100);
+			this->setHitbox(.1,.9,.1,.9);
+			this->showHitbox = true;
+			break;
+		}
 		default: {
 			this->loadTexture("resources/enemies/jelly.png");
 			this->id = "ENEMY_Jellyfish";
@@ -48,7 +68,7 @@ Jelly::Jelly(Player *player, int d) :
 
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
-	
+
 	state = 0;
 }
 
