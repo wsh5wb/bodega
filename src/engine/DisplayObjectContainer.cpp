@@ -111,8 +111,9 @@ void DisplayObjectContainer::removeImmediateChild(string id) {
 		if(c->id == id){
 			DTEvent e("OBJ_RM", &Game::eventHandler, c);
 			Game::eventHandler.dispatchEvent(&e);
-			c = NULL;
+			//c = NULL;
 			c->shouldRemove = true;
+			c->shouldDelete = true;
 			return;
 		}
 	}
@@ -149,8 +150,9 @@ void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
 		if(child == *it){
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
-			children.erase(it);
-			*it = NULL;
+			child->shouldRemove = true;
+			//children.erase(it);
+			//*it = NULL;
 			break;
 		}
 	}
