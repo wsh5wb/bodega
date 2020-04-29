@@ -79,7 +79,7 @@ private:
 	int health = 8;
 	int maxHealth = 8;
 	bool displayHealth = true;
-	int runSpeed = 2;
+	int runSpeed = 4;
 	int current_ball_type = 1;
 	int direction = 1;
 
