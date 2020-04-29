@@ -113,7 +113,7 @@ void CollisionSystem::update(){
 							DisplayObject* obj;
 							if(type1 == "PROJECTILE")		obj = obj1;
 							else if(type2 == "PROJECTILE")	obj = obj2;
-							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 							continue;
 						}
 						// printf("Player collided with obstacle\n");
@@ -125,7 +125,6 @@ void CollisionSystem::update(){
 						// obj2->updateDelta(0,0,0,0,0);
 						// printf("%s collided with %s\n", obj1->id.c_str(), obj2->id.c_str());
 					}
-					// ADD code to handle decreasing health
 					else if(type1 == "PROJECTILE" || type2 == "PROJECTILE"){
 						if(pair == "PROJECTILE-ENEMY" || pair == "ENEMY-PROJECTILE"){
 							DisplayObject* obj;
@@ -153,7 +152,7 @@ void CollisionSystem::update(){
 								}
 							}
 
-							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 							continue;
 						}
 					}
@@ -162,7 +161,7 @@ void CollisionSystem::update(){
 						DisplayObject* obj;
 						if(type1 == "chest")		obj = obj1;
 						else if(type2 == "chest")	obj = obj2;
-						((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 						Event e("CHEST_OPENED", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
 						continue;
@@ -179,6 +178,24 @@ void CollisionSystem::update(){
 							if(((Player*)obj1)->changeHealth(-((Enemy*)obj2)->getDamage()))
 								return;
 						}
+					}
+					else if(pair == "PLAYER-EN_PROJECTILE" || pair == "EN_PROJECTILE-PLAYER"){
+						DisplayObject* obj;
+						if(type1 == "EN_PROJECTILE"){
+							obj = obj1;
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*) obj2)->changeHealth(-((Projectile*) obj1)->getDamage()))
+								return;
+						}
+						else if(type2 == "EN_PROJECTILE") {
+							obj = obj2;
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*)obj1)->changeHealth(-((Projectile*)obj2)->getDamage()))
+								return;
+						}
+
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
+							continue;
 					}
 					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
 						printf("Player hit a portal!\n");
@@ -225,6 +242,7 @@ void CollisionSystem::handleEvent(Event* e){
 	else if(child->id.find("chest") != string::npos)		str = "chest"; //before obstacle to overrule it
 	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
 	else if(child->id.find("FLOOR") != string::npos)		str = "FLOOR";
+	else if(child->id.find("EN_PROJECTILE") != string::npos) str = "EN_PROJECTILE";
 	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
 	else if(child->id.find("PORTAL") != string::npos)		str = "PORTAL";
 
