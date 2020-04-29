@@ -37,6 +37,7 @@ public:
 	int dungeonType = 0;
 	int timer = 0;
 	Room* changingRoom = NULL;
+	int oldSpeed = 0;
 
 private:
 	SDL_Point boss_locations[4];

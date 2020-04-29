@@ -45,9 +45,9 @@ void Room::generateDoors(unsigned char doors){
 	// need a way to dynamically change these paths. Probably just pass them in from dungeon
 	string paths[4][4] = {{"./resources/art/hades/u_door2.png","./resources/art/hades/r_door2.png",
 			"./resources/art/hades/lo_door2.png","./resources/art/hades/l_door2.png"},{"./resources/art/ocean/u_door.png","./resources/art/ocean/r_door.png",
-		"./resources/art/ocean/lo_door.png","./resources/art/ocean/l_door.png"},{"./resources/art/hades/u_door2.png","./resources/art/hades/r_door2.png",
-				"./resources/art/hades/lo_door2.png","./resources/art/hades/l_door2.png"},{"./resources/art/ocean/u_door.png","./resources/art/ocean/r_door.png",
-			"./resources/art/ocean/lo_door.png","./resources/art/ocean/l_door.png"}};
+		"./resources/art/ocean/lo_door.png","./resources/art/ocean/l_door.png"},{"./resources/art/forest/fu_door.png","./resources/art/forest/fr_door.png",
+				"./resources/art/forest/fd_door.png","./resources/art/forest/fl_door.png"},{"./resources/art/olympus/ou_door.png","./resources/art/olympus/or_door.png",
+			"./resources/art/olympus/od_door.png","./resources/art/olympus/ol_door.png"}};
 	// if all rooms are the same dimensions for every dungeon this should be constant
 	int coords[4][2] = {{192,0},{480,128},{192,352},{0,128}};
 //	double hitboxes[4][4] =

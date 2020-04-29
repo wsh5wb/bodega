@@ -132,7 +132,7 @@ void DisplayObject::setAlpha(int a){
 	alpha = a;
 	if(a > 255){alpha = 255;}
 	else if(a < 0){alpha = 0;}
-
+	SDL_SetTextureBlendMode(curTexture,SDL_BLENDMODE_BLEND);
 	SDL_SetTextureAlphaMod(curTexture,alpha);
 }
 
@@ -344,7 +344,6 @@ void DisplayObject::update(set<SDL_Scancode> pressedKeys) {
 }
 
 void DisplayObject::draw(AffineTransform &at) {
-
 	if (curTexture != NULL) {
 		if (!vis) {
 			return;

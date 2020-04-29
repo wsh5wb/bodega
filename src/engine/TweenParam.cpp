@@ -81,7 +81,7 @@ double TweenParam::percentComplete(){
 // 	return c*t/d + b;
 
 double TweenParam::linearTransform(int dir) {
-			return (endVal - startVal) * frameCount/tweenTime + startVal;
+	return (endVal - startVal) * frameCount/tweenTime + startVal;
 }
 
 double TweenParam::quadraticTransform(int dir) {

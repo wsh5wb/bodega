@@ -32,6 +32,7 @@ public:
 
 private:
   bool text_active = true;
+  bool mapMode = false;
   string font_path = "resources/fonts/dtm.ttf";
   string default_path = "./resources/miscellaneous/tablet.png";
   string overall_title = "Attributes";

@@ -49,16 +49,24 @@ TextBox::TextBox(const string &font_path,
 }
 
 void TextBox::draw(AffineTransform &at){
+  if(text_active){
     DisplayObject::draw(at);
     auto current_x = dstrect.x;
     auto current_y = dstrect.y;
     text_rect.x = current_x + 40;
     text_rect.y = current_y + 50;
     SDL_RenderCopy(Game::renderer, text_texture, nullptr, &text_rect);
+  }
+
 }
 
 void TextBox::update(set<SDL_Scancode> pressedKeys){
   DisplayObject::update(pressedKeys);
+  text_active = true;
+  if(pressedKeys.find(SDL_SCANCODE_M) != pressedKeys.end()){ 
+    text_active = false;
+    return;
+  }
   if((((std::clock() - start ) / (double) CLOCKS_PER_SEC)*1000) > timeout){
     this->start = std::clock();
     if(current_print_loc < all_strings.size()){

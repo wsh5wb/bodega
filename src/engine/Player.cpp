@@ -128,6 +128,8 @@ float Player::percentOfXP(){
 }
 
 bool Player::changeHealth(int value){
+	if(this->iFrames && value < 0)	return false;
+
 	this->health += value;
 	if(health > maxHealth){
 		health = maxHealth;
@@ -140,6 +142,10 @@ bool Player::changeHealth(int value){
 		Game::eventHandler.dispatchEvent(&e2);
 		return true;
 	}
+
+	if(value < 0)
+		this->initIFrames(IFRAME_COUNT);
+
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
 	return false;
@@ -177,7 +183,7 @@ int Player::getMaxHealth(){
 	return this->maxHealth;
 }
 double Player::getSpeed(){
-	return this->speed;
+	return this->runSpeed;
 }
 double Player::getDamage(){
 	return this->damage;
@@ -194,8 +200,8 @@ void Player::levelUp(){
 	level++;
 	cout << "You leveled up!" << endl;
 	damage += 10;
-	health += 10;
-	maxHealth += 10;
+	maxHealth += 2;
+	health = health+4>maxHealth?maxHealth:health+4;
 	attackSpeed += .2;
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
@@ -270,8 +276,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	//Controls is a class we wrote that just checks the SDL Scancode values and game controller values in one check
 	int xMov = 0, yMov = 0;
 	bool idle = true;
+	projSwapDelay++;
 	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_D) {
+			if(runSpeed == 0){continue;}
 			this->position.x += runSpeed;
 			this->deltaX += runSpeed;
 			//this->flipH = false;
@@ -281,6 +289,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
 		} else if (k == SDL_SCANCODE_A) {
+			if(runSpeed == 0){continue;}
 			this->position.x -= runSpeed;
 			this->deltaX += -runSpeed;
 			//this->flipH = true;
@@ -290,6 +299,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
 		} else if (k == SDL_SCANCODE_W) {
+			if(runSpeed == 0){continue;}
 			this->position.y -= runSpeed;
 			this->deltaY += -runSpeed;
 			if (this->currAnimation != "Run") {
@@ -297,6 +307,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_S) {
+			if(runSpeed == 0){continue;}
 			this->position.y += runSpeed;
 			this->deltaY += runSpeed;
 			if (this->currAnimation != "Run") {
@@ -309,6 +320,11 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->current_ball_type = 2;
 		} else if (k == SDL_SCANCODE_3){
 			this->current_ball_type = 3;
+		} else if(k == SDL_SCANCODE_Q){
+			if(projSwapDelay >= PROJECTILE_SWAP_FRAMES){
+				this->current_ball_type = ((this->current_ball_type+1) % 3)+1;
+				projSwapDelay = 0;
+			}
 		}
 
 		//for shooting projectiles
@@ -337,11 +353,12 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 
 	/* handle iFrames if player was hit by enemy recently */
 	if (this->iFrames) {
-		//this->visible = this->iFrameCount%2 == 0;
+		if(this->iFrameCount%10 == 0)	this->vis ^= 1;
+
 		this->iFrameCount++;
 		if (this->iFrameCount == this->numIFrames) {
 			this->iFrames = false;
-			//this->visible = true;
+			this->vis = true;
 		}
 	}
 

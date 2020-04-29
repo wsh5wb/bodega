@@ -1,4 +1,5 @@
 #include "Dungeon.h"
+#include <SDL2/SDL.h>
 #include "TweenJuggler.h"
 #include "Camera.h"
 #include <iostream>
@@ -49,8 +50,10 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			Camera *myCamera = Camera::getCamera();
 			printf("Camera being set to (0,0)\n");
 			myCamera->setLocation(0, 0);
-
 			myCamera->setZoom(500 / GRID_SIZE, 500 / GRID_SIZE);
+			Game::instance->paused = true;
+			Game::instance->mapMode = true;
+
 		}
 	} else {
 		if (zoomed_out) {
@@ -186,13 +189,16 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 	if (changingRoom) {
+		Player * p = Player::getPlayer();
 		if (timer <= ROOM_START_DELAY) {
 			timer++;
+
 		} else {
 			zoomed_out = true;
 			changingRoom->active = true;
 			changingRoom = NULL;
 			timer = 0;
+			p->modifySpeed(oldSpeed);
 		}
 	}
 }
@@ -304,7 +310,7 @@ void Dungeon::generateNoBoss() {
 	cerr << "here0\n";
 	layout = (int**) (M.getLayoutNoBoss());
 	srand (time(NULL));int
-	portal = 0;
+	portal = -1;
 	int count = 0;
 	if (portal_index != -1) {
 		portal = rand() % (NUM_ROOMS - 1);
@@ -317,7 +323,7 @@ void Dungeon::generateNoBoss() {
 			}
 			layout[i][j] -= 1;
 			if (!(layout[i][j]) && basic_rooms_size > 0) {
-				if (portal && (portal == count)) {
+				if (portal!=-1 && (portal == count)) {
 					layout[i][j] = portal_index;
 				} else {
 					int ind = rand() % basic_rooms_size;
@@ -529,9 +535,11 @@ void Dungeon::transitionRoom(string type) {
 		printf("after transition, curr x and y are %d     %d\n", current_x,
 				current_y);
 		Tween *camPosTween = new Tween(Camera::getCamera()->container);
-		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,
-		EASE_INOUT);
+		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,EASE_INOUT);
 		juggler->add(camPosTween);
+		oldSpeed = player->getSpeed();
+		player->modifySpeed(-oldSpeed);
+
 	}
 	if (new_room) {
 		changingRoom = new_room;

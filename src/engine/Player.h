@@ -13,7 +13,10 @@
 #include "TextBox.h"
 #include "StatMenu.h"
 
-#define LEVELS 255
+#define LEVELS 					255
+#define PROJECTILE_SWAP_FRAMES 	30
+#define IFRAME_COUNT			180
+
 using namespace std;
 
 class Player : public AnimatedSprite{
@@ -73,8 +76,8 @@ private:
 	//unsigned int xpChart[LEVELS-1] = {10,25,50,100};
 	double xpScale = 1.5;
 	unsigned int xpNeeded = 10;
-	int health = 120;
-	int maxHealth = 120;
+	int health = 8;
+	int maxHealth = 8;
 	bool displayHealth = true;
 	int runSpeed = 2;
 	int current_ball_type = 1;
@@ -95,6 +98,7 @@ private:
 	std::clock_t lastFired = 0;
 
 	static Player* player;
+	uint projSwapDelay = 0;
 	void initIFrames(int numFrames);
 
 };
