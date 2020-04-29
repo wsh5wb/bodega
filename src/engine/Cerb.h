@@ -27,6 +27,9 @@ public:
   int prowlTime = 0;
   int lungeTime = 0;
   int restCount = 0;
+  int maxDist = 0;
+  int originX;
+  int originY;
   vector<Projectile*> projectiles;
 };
 

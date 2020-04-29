@@ -40,7 +40,7 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   //state logic
   //cout << "STATE = " << state << endl;
 
-  //cout << "Cerb: " << position.x << ", " << position.y << endl;
+  //cout << "Cerb: " << this->position.x << ", " << this->position.y << endl;
   //cout << "Player: " << this->player->position.x << ", " << this->player->position.y << endl;
 
   if (health == 0){
