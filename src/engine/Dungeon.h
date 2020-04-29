@@ -9,6 +9,7 @@
 #include "Sound.h"
 
 #define ROOM_START_DELAY 40 //number of frames before room starts being active after player enters
+#define PORTAL_DIST 2
 
 using namespace std;
 
@@ -40,6 +41,7 @@ public:
 	int oldSpeed = 0;
 
 private:
+	int portalDist(int x1, int x2, int y1, int y2);
 	SDL_Point boss_locations[4];
 	bool isBossRoom(int x, int y);
 	void transitionRoom(string type);

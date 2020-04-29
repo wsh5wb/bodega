@@ -56,8 +56,8 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		}
 	} else {
 		if (zoomed_out) {
-			zoomed_out = false;printf
-			("Camera being set to (%x,%x)\n", current_y, current_x);
+			zoomed_out = false;
+			printf("Camera being set to (%x,%x)\n", current_y, current_x);
 			Camera *myCamera = Camera::getCamera();
 			myCamera->setLocation(1200 * current_x, 900 * current_y);
 			myCamera->setZoom(500, 500);
@@ -112,7 +112,7 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 				p->moveTo(224, 224);
 				Room *old_room = (Room*) DisplayObjectContainer::getChild(
 						id + to_string(current_y) + "-" + to_string(current_x));
-				if(old_room)
+				if (old_room)
 					old_room->active = false;
 				current_x = start_x;
 				current_y = start_y;
@@ -188,7 +188,7 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		}
 	}
 	if (changingRoom) {
-		Player * p = Player::getPlayer();
+		Player *p = Player::getPlayer();
 		if (timer <= ROOM_START_DELAY) {
 			timer++;
 
@@ -309,9 +309,6 @@ void Dungeon::generateNoBoss() {
 	srand (time(NULL));int
 	portal = -1;
 	int count = 0;
-	if (portal_index != -1) {
-		portal = rand() % (NUM_ROOMS - 1);
-	}
 	for (int i = GRID_SIZE; i--; i += 0) {
 		for (int j = GRID_SIZE; j--;) {
 			if (layout[i][j] == START_ROOM) {
@@ -319,14 +316,31 @@ void Dungeon::generateNoBoss() {
 				start_y = current_y = i;
 			}
 			layout[i][j] -= 1;
-			if (!(layout[i][j]) && basic_rooms_size > 0) {
-				if (portal!=-1 && (portal == count)) {
-					layout[i][j] = portal_index;
-				} else {
-					int ind = rand() % basic_rooms_size;
-					layout[i][j] = basic_rooms[ind];
+		}
+	}
+	bool portal_set = (portal_index == -1);
+	while (!portal_set) {
+		portal = rand() % (NUM_ROOMS - 1);
+		count = 0;
+		for (int i = GRID_SIZE; i--; i += 0) {
+			for (int j = GRID_SIZE; j--;) {
+				if (!(layout[i][j]) && basic_rooms_size > 0) {
+					if (portal != -1 && (portal == count)) {
+						if(portalDist(i,start_y,j,start_x)>PORTAL_DIST){
+							layout[i][j] = portal_index;
+							portal_set = true;
+						}
+					}
 				}
 				count++;
+			}
+		}
+	}
+	for (int i = GRID_SIZE; i--; i += 0) {
+		for (int j = GRID_SIZE; j--;) {
+			if (!(layout[i][j]) && basic_rooms_size > 0) {
+				int ind = rand() % basic_rooms_size;
+				layout[i][j] = basic_rooms[ind];
 			}
 		}
 	}
@@ -506,9 +520,9 @@ void Dungeon::transitionRoom(string type) {
 					id + to_string(boss_y) + "-" + to_string(boss_x - 1));
 			Room *br3 = (Room*) DisplayObjectContainer::getChild(
 					id + to_string(boss_y - 1) + "-" + to_string(boss_x - 1));
-			if(br0)
+			if (br0)
 				br0->visible = true;
-			if(br1)
+			if (br1)
 				br1->visible = true;
 			if (br2)
 				br2->visible = true;
@@ -537,7 +551,8 @@ void Dungeon::transitionRoom(string type) {
 		printf("after transition, curr x and y are %d     %d\n", current_x,
 				current_y);
 		Tween *camPosTween = new Tween(Camera::getCamera()->container);
-		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,EASE_INOUT);
+		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,
+		EASE_INOUT);
 		juggler->add(camPosTween);
 		oldSpeed = player->getSpeed();
 		player->modifySpeed(-oldSpeed);
@@ -550,4 +565,8 @@ void Dungeon::transitionRoom(string type) {
 		timer = 0;
 	}
 
+}
+
+int Dungeon::portalDist(int x1, int x2, int y1, int y2){
+	return abs(x1-x2)+abs(y1-y2);
 }
