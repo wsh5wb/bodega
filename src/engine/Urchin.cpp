@@ -144,10 +144,10 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 		//state++;
 	} else if (state == 2) {
 		timer++;
-		if (timer <= 360) {
+		//if (timer <= 240) {
 
-		}
-		if (timer > 180) {
+		//}
+		if (timer > 100) {
 			this->translate(w * scaleX * .625 / 4, h * scaleY * .625 / 4);
 			this->scaleX = .5;
 			this->scaleY = .5;
