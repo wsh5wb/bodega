@@ -220,7 +220,6 @@ void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys) {
 		child->update(pressedKeys);
 	}*/for(int i = 0;i<sz;i++){
 		if(children[i] == NULL){
-			cout << "continued on i" << i << endl;
 			continue;}
 		children[i]->update(pressedKeys);
 	}
