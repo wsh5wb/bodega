@@ -12,8 +12,8 @@ Urchin::Urchin(Player *player) :
 	this->scaleY *= 0.5;
 	//this->pivot.x = w * scaleX / 2;
 	//this->pivot.y = h * scaleY / 2;
-	xSpe = 2;
-	ySpe = 2;
+	xSpe = 1;
+	ySpe = 1;
 	state = 0;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
@@ -30,8 +30,8 @@ Urchin::Urchin(Player *player, int d) :
 		this->scaleY *= 0.5;
 		//this->pivot.x = w * scaleX / 2;
 		//this->pivot.y = h * scaleY / 2;
-		xSpe = 2;
-		ySpe = 2;
+		xSpe = 1;
+		ySpe = 1;
 		state = 0;
 		this->xBound = 512 - (w * scaleX);
 		this->yBound = 384 - (h * scaleY);
@@ -45,8 +45,8 @@ Urchin::Urchin(Player *player, int d) :
 		this->scaleY *= 0.5;
 		//this->pivot.x = w * scaleX / 2;
 		//this->pivot.y = h * scaleY / 2;
-		xSpe = 2;
-		ySpe = 2;
+		xSpe = 1;
+		ySpe = 1;
 		state = 0;
 		this->xBound = 512 - (w * scaleX);
 		this->yBound = 384 - (h * scaleY);
@@ -76,6 +76,10 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 
 	} else if (state == 1) {
 		state++;
+		while(abs(xSpe)+abs(ySpe)<3){
+			xSpe=rand()%9-4;
+			ySpe=rand()%9-4;
+		}
 	} else if (state == 2) {
 		timer++;
 		if (timer <= 360) {

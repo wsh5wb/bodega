@@ -27,7 +27,7 @@ Jelly::Jelly(Player *player, int d) :
 	}
 	if(xSpe==0){xSpe=rand()%15-7;}
 	if(ySpe==0){ySpe=rand()%15-7;}
-	timer+=rand()%30;
+	timer+=rand()%200;
 	switch (d) {
 		case 0: {
 			this->loadTexture("./resources/art/hades/ghost.png");
@@ -69,12 +69,14 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			ySpe=rand()%3-1;
 		}
 	} else if (state == 1) {
-		timer+=rand()%5;
+		timer+=1;
 		if (timer >= 330) {
 			timer = 0;
 			state=0;
-			xSpe=rand()%15-7;
-			ySpe=rand()%15-7;
+			while(abs(xSpe)+abs(ySpe)<3){
+				xSpe=rand()%9-4;
+				ySpe=rand()%9-4;
+			}
 		}
 	}
 	// cout << position.x << ", " << position.y << endl;
