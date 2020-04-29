@@ -33,6 +33,7 @@ Player::Player() :
 	this->addChild(chat_box);
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
+	//this->runSpeed = 6;
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -257,7 +258,7 @@ void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, d
 			break;
 		}
 	}
-	printf("Adding new projectile\n");
+	//printf("Adding new projectile\n");
 	Projectile * p = new Projectile(current_ball_type, midX, midY,speedX,speedY,timeout,scaleX,scaleY);
 	// projectiles.push_back(p);
 	((DisplayObjectContainer*)this->parent)->addChild(p);

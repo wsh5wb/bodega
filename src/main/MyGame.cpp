@@ -51,6 +51,7 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PLAYER", "ENEMY");
 	Game::cs->watchForCollisions("PLAYER", "PORTAL");
 	Game::cs->watchForCollisions("PLAYER", "chest");
+	Game::cs->watchForCollisions("PLAYER", "EN_PROJECTILE");
 	Game::cs->watchForCollisions("PROJECTILE", "OBSTACLE");
 	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 
@@ -86,7 +87,7 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
-	myCamera->update(pressedKeys);
+	//myCamera->update(pressedKeys);
 
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
