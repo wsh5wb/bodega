@@ -7,7 +7,7 @@ using namespace std;
 Skel::Skel(Player* player) : Enemy(player){
   type = "ENEMY";
   id = "ENEMY_SKEL";
-  //this->loadTexture("resources/enemies/SkelDead.png");
+  this->loadTexture("resources/enemies/SkelDead.png");
   this->player = player;
   w = 40; h = 60;
   pivot.x =0;// w/2;
@@ -15,7 +15,7 @@ Skel::Skel(Player* player) : Enemy(player){
   state = 5;
   position.x = 0;
   position.y = 0;
-  this->setAlpha(0);
+  this->setAlpha(15);
 }
 
 void Skel::update(set<SDL_Scancode> pressedKeys){
@@ -32,14 +32,14 @@ void Skel::update(set<SDL_Scancode> pressedKeys){
   SDL_Point charloc = getGlobalTransform(Player::getPlayer())->transformPoint(0,0);
   SDL_Point globalpos = getGlobalTransform(this)->transformPoint(0,0);
   if (state==5){
-	  position.x+=rand()%200;
-	  position.y+=rand()%200-150;
+	  //position.x+=rand()%200;
+	  //position.y+=rand()%200-150;
 	  if(std::max(abs(globalpos.x-charloc.x),abs(globalpos.y-charloc.y))>250){
 	  state=0;
 	  }
   }
   if (state == 0){
-    this->setAlpha(0);
+    this->setAlpha(15);
    // hide();
   }
   else if (state == 1){
