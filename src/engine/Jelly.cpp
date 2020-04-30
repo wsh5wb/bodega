@@ -14,16 +14,17 @@ Jelly::Jelly(Player *player) :
 	this->scaleY *= 48. / h;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
-	xSpe = rand()%5-2;
-	ySpe = rand()%5-2;
+	xSpe = rand()%7-3;
+	ySpe = rand()%7-3;
 	state = 0;
 	type = 0;
 }
 
 Jelly::Jelly(Player *player, int d) :
-		Enemy(player) {
+	Enemy(player) {
 	xSpe = rand()%7-3;
 	ySpe = rand()%7-3;
+	timer+=rand()%200;
 	type = d;
 	this->path = "resources/Projectiles/Stinger2.png";
 	switch (d) {
@@ -44,8 +45,8 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish";
 		this->scaleX *= 32. / w;
 		this->scaleY *= 48. / h;
-		xSpe = 2;
-		ySpe = 2;
+		xSpe = rand()%9-4;
+		ySpe = rand()%9-4;
 		damage = 3;
 		this->xp = 100;
 		health = 75;
@@ -60,7 +61,7 @@ Jelly::Jelly(Player *player, int d) :
 		this->scaleX *= 1;
 		this->scaleY *= 1;
 		xSpe = rand()%7-3;
-    ySpe = rand()%7-3;
+	    	ySpe = rand()%7-3;
 		damage = 5;
 		this->xp = 500;
 		health = 300;
@@ -77,8 +78,8 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-    xSpe = rand()%11-5;
-    ySpe = rand()%11-5;
+	    	xSpe = rand()%11-5;
+		ySpe = rand()%11-5;
 		damage = 8;
 		this->xp = 2500;
 		health = 500;
@@ -92,8 +93,8 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish";
 		this->scaleX *= 32. / w;
 		this->scaleY *= 48. / h;
-    xSpe = rand()%7-3;
-    ySpe = rand()%7-3;
+	    	xSpe = rand()%7-3;
+	    	ySpe = rand()%7-3;
 		damage = 16;
 		health = 300;
 		this->setHitbox(.1, .9, .1, .9);
@@ -147,33 +148,47 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			nextShot = timer + (rand() % maxCoolDown);
 		}
 	}
-	/*if (state == 0) {
+	position.x+=xSpe;
+	position.y+=ySpe;
+	if(position.x<=0 || position.x>=xBound || position.y<=0 || position.y>=yBound){
+		if(position.x<=0 || position.x>=xBound){
+			xSpe*=-1;
+		}else{
+			ySpe*=-1;
+		}
+	}else{
+	if (state == 0) {
 		timer++;
-		if (timer >= 250) {
+		if (timer%340 >= 250) {
 			state++;
 			xSpe=rand()%3-1;
 			ySpe=rand()%3-1;
 		}
 	} else if (state == 1) {
 		timer+=1;
-		if (timer >= 330) {
-			timer = 0;
+		if (timer%340>= 330) {
+			//timer = 0;
 			state=0;
-			while(abs(xSpe)+abs(ySpe)<3){
-				xSpe=rand()%9-4;
-				ySpe=rand()%9-4;
+			while(abs(xSpe)+abs(ySpe)<4){
+				xSpe=rand()%11-5;
+				ySpe=rand()%11-5;
 			}
 		}
-	}*/
+	}else{
+		timer=0;
+		state=0;
+	}
+	if(timer<0){timer=0;}
+	}
 	// cout << position.x << ", " << position.y << endl;
-	position.x += xSpe;
-	position.y += ySpe;
-	if (position.x <= 0 || position.x >= xBound) {
+	//position.x += xSpe;
+	//position.y += ySpe;
+	/*if (position.x <= 0 || position.x >= xBound) {
 		xSpe *= -1;
 	}
 	if (position.y <= 0 || position.y >= yBound) {
 		ySpe *= -1;
-	}
+	}*/
 }
 
 void Jelly::draw(AffineTransform &at) {
