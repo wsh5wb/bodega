@@ -364,7 +364,7 @@ void Scene::loadScene(string sceneFilePath) {
 			objects.push_back(temp);
 			break;
 		}
-		/*case 14: {
+		case 16: {
 			int skin = 0;
 			Player *tempP = Player::getPlayer();
 			Skel *temp = new Skel(tempP);
@@ -376,7 +376,7 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->showHitbox = true;
 			this->numEnemies += 1;
 			break;
-		}*/
+		}
 		case 15: {
 			int skin = 0;
 			i >> skin;
