@@ -33,6 +33,7 @@ public:
   int projectileDamage = 10;
   int originX;
   int originY;
+  int form = 0;
   vector<Projectile*> projectiles;
 };
 

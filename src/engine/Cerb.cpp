@@ -15,6 +15,7 @@ Cerb::Cerb(Player* player) : Enemy(player){
   state = 0;
   position.x = 0;
   position.y = 0;
+  form = 0;
 }
 
 void Cerb::update(set<SDL_Scancode> pressedKeys){
@@ -218,9 +219,23 @@ void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
     projX = projX/1.4142;
     projY = projY/1.4142;
   }
-
-  int midX = this->position.x + (dstrect.w)/3;
-  int midY = this->position.y + (dstrect.h)/3;
+  int midX, midY;
+  if (form == 0){
+    midX = this->position.x + (dstrect.w)/3;
+    midY = this->position.y + (dstrect.h)/3;
+  }
+  else if (form == 1){
+    midX = this->position.x;
+    midY = this->position.y;
+  }
+  else if (form == 2){
+    midX = this->position.x + 15;
+    midY = this->position.y + 15;
+  }
+  else{
+    midX = this->position.x + 10;
+    midY = this->position.y + 10;
+  }
   //cout << "Getting to before adding the projectile" << endl;
   Projectile * p = new Projectile("resources/Projectiles/spikedball.png", midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
   p->showHitbox = true;

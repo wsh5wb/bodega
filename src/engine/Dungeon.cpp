@@ -288,17 +288,20 @@ void Dungeon::generate() {
 							c->loadTexture("resources/enemies/scylla.png");
 							c->scaleX *= 0.35;
 							c->scaleY *= 0.35;
-							c->health += 5000;
+							c->health = 7500;
+							c->form = 1;
 						}
 						else if (dungeonType == 2){
 							c->loadTexture("resources/enemies/hydra.png");
 							c->scaleX *= 1.2;
 							c->scaleY *= 1.2;
-							c->health += 10000;
+							c->health = 10000;
+							c->form = 2;
 						}
 						else if (dungeonType == 3){
 							c->loadTexture("resources/enemies/Pose.png");
-							c->health += 20000;
+							c->health = 20000;
+							c->form = 3;
 						}
 						c->moveTo(512, 384);
 						temp->room->addChild(c);
