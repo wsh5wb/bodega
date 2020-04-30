@@ -190,14 +190,10 @@ void AnimatedSprite::setFrameRate(int rate){
 
 void AnimatedSprite::update(set<SDL_Scancode> pressedKeys){
 	DisplayObjectContainer::update(pressedKeys);
-	if(this->id == "PORTAL")
-		printf("CHANGING PORTAL FRAME\n");
 	if(playing){
 		std::clock_t end = std::clock();
 		double duration = (( end - start ) / (double) CLOCKS_PER_SEC)*1000;
 		if(duration > frameRate){
-			if(this->id == "PORTAL")
-				printf("CHANGING PORTAL FRAME\n");
 			start = end;
 
 			if(curFrame < endIndex){
