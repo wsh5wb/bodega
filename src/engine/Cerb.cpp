@@ -51,6 +51,7 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   }
   else if (state == 1){
     Enemy::patrol();
+    //shoot(charLoc, globalPos);
   }
   else if (state == 2){
     //Enemy::moveToTarget();
@@ -58,16 +59,16 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   else if (state == 3){
     //lunge();
     if (globalPos.x < charLoc.x){
-      position.x += 1;
+      position.x += 3;
     }
     else if (globalPos.x > charLoc.x){
-      position.x -= 1;
+      position.x -= 3;
     }
     if (globalPos.y < charLoc.y){
-      position.y += 1;
+      position.y += 3;
     }
     else if (globalPos.y > charLoc.y){
-      position.y -= 1;
+      position.y -= 3;
     }
   }
   else if (state == 4){
@@ -81,8 +82,8 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   }
 
   //state changes
-  cout << "Cerb State: " << state << endl;
-  cout << "Cerb Pos: " << globalPos.x << ", " << globalPos.y << "\n";
+  //cout << "Cerb State: " << state << endl;
+  //cout << "Cerb Pos: " << globalPos.x << ", " << globalPos.y << "\n";
   if (state == 0){
     state = 1;
     this->targX = std::rand()%(this->maxPatX-this->minPatX) + this->minPatX;
@@ -108,20 +109,23 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
       acc = 0.25;
       prowlTime = 0;
     }
+    else{
+      shoot(charLoc, globalPos);
+    }
   }
   else if (state == 2){
     prowlTime++;
     if (globalPos.x < charLoc.x){
-      position.x += 1;
+      position.x += 2;
     }
     else if (globalPos.x > charLoc.x){
-      position.x -= 1;
+      position.x -= 2;
     }
     if (globalPos.y < charLoc.y){
-      position.y += 1;
+      position.y += 2;
     }
     else if (globalPos.y > charLoc.y){
-      position.y -= 1;
+      position.y -= 2;
     }
     if (prowlTime > 120){
       state = 3;
@@ -150,6 +154,9 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
         restCount = 0;
         state = 1;
       }
+    }
+    else{
+      shoot(charLoc, globalPos);
     }
   }
   else if (state == 4){
@@ -189,10 +196,23 @@ void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
   //TODO: Give Cerberus projectiles to use
   int projX = 0;
   int projY = 0;
-  if(globalPos.x < charLoc.x){projX = projectileSpeed;}
-  else if(globalPos.x > charLoc.x){projX = -projectileSpeed;}
-  if(globalPos.y < charLoc.y){projY = projectileSpeed;}
-  else if(globalPos.y > charLoc.y){projY = -projectileSpeed;}
+  //float angle = atan2(globalPos.y - charLoc.y, globalPos.x - charLoc.x)*180/PI;
+  //cout << "Cerb Angle: " << angle << endl;
+  int diffX = globalPos.x - charLoc.x;
+  int diffY = globalPos.y - charLoc.y;
+  if(globalPos.x < charLoc.x && abs(diffX) > 10){
+    projX = projectileSpeed;
+  }
+  else if(globalPos.x > charLoc.x && abs(diffX) > 10){
+    projX = -projectileSpeed;//*xRate;
+  }
+  if(globalPos.y < charLoc.y && abs(diffY) > 10){
+    projY = projectileSpeed;
+  }
+  else if(globalPos.y > charLoc.y && abs(diffY) > 10){
+    projY = -projectileSpeed;
+  }
+
 
   if(projX != 0 && projY != 0){
     projX = projX/1.4142;
