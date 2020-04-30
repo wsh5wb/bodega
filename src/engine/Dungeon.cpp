@@ -7,6 +7,7 @@
 #include <time.h>
 #include "HadesDungeon.h"
 #include "Portal.h"
+#include "charybdis.h"
 
 using namespace std;
 
@@ -283,12 +284,15 @@ void Dungeon::generate() {
 						Cerb *c = new Cerb(Player::getPlayer());
 						c->originX = 512;
 						c->originY = 384;
+						charybdis *whirl = new charybdis(Player::getPlayer());
 						//c->showHitbox = true;
 						if (dungeonType == 1){
 							c->loadTexture("resources/enemies/scylla.png");
 							c->scaleX *= 0.35;
 							c->scaleY *= 0.35;
 							c->health += 5000;
+							whirl->loadTexture("resources/enemies/hydra.png");
+							whirl->health = 5000;
 						}
 						else if (dungeonType == 2){
 							c->loadTexture("resources/enemies/hydra.png");
@@ -301,7 +305,9 @@ void Dungeon::generate() {
 							c->health += 20000;
 						}
 						c->moveTo(512, 384);
+						whirl->moveTo(50,50);
 						temp->room->addChild(c);
+						temp->room->addChild(whirl);
 						temp->active = true;
 					}
 					bossRoomsCount++;
