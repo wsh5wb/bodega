@@ -18,6 +18,7 @@ public:
   string path;
   int xBound, yBound;
   int projectileDamage = 5;
+  int projectileSpeed = 0;
   int maxCoolDown = 0;
   int nextShot = 0;
   int type; 

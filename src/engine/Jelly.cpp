@@ -51,6 +51,7 @@ Jelly::Jelly(Player *player, int d) :
 			maxCoolDown = 200;
 			//this->setAlpha(100);
 			this->projectileDamage = 5;
+			this->projectileSpeed = 4;
 			this->setHitbox(.1,.9,.2,.9);
 			this->showHitbox = true;
 			break;
@@ -106,10 +107,10 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 
 			int projX = 0;
 			int projY = 0; 
-			if(globalPos.x < charLoc.x){projX = type + 1;}
-			else if(globalPos.x > charLoc.x){projX = -(type+1);}
-			if(globalPos.y < charLoc.y){projY = type + 1;}
-			else if(globalPos.y > charLoc.y){projY = -(type+1);}
+			if(globalPos.x < charLoc.x){projX = projectileSpeed;}
+			else if(globalPos.x > charLoc.x){projX = -projectileSpeed;}
+			if(globalPos.y < charLoc.y){projY = projectileSpeed;}
+			else if(globalPos.y > charLoc.y){projY = -projectileSpeed;}
 
 			if(projX != 0 && projY != 0){
 				projX = projX/1.4142;
