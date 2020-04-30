@@ -138,7 +138,7 @@ void Scene::loadScene(string sceneFilePath) {
 			temp->movePivot(pivot.x, pivot.y);
 			break;
 		}
-		case 4: { //AnimatedSprite (haven't added some fields yet - needs to be finished). 
+		case 4: { //AnimatedSprite (haven't added some fields yet - needs to be finished).
 
 			AnimatedSprite *temp = new AnimatedSprite();
 			int speed;
@@ -362,6 +362,33 @@ void Scene::loadScene(string sceneFilePath) {
 //			temp->setHitbox(.1, .9);
 //			temp->showHitbox = true;
 			objects.push_back(temp);
+			break;
+		}
+		case 14: {
+			int skin = 0;
+			Player *tempP = Player::getPlayer();
+			Skel *temp = new Skel(tempP);
+			i >> skin;
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+			objects.push_back(temp);
+			temp->showHitbox = true;
+			this->numEnemies += 1;
+			break;
+		}
+		case 15: {
+			int skin = 0;
+			i >> skin;
+			Player *tempP = Player::getPlayer();
+			Cerb *temp = new Cerb(tempP);
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+			objects.push_back(temp);
+			temp->state = 0;
+			temp->showHitbox = true;
+			this->numEnemies += 1;
 			break;
 		}
 		default: {

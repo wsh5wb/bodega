@@ -14,16 +14,16 @@ Jelly::Jelly(Player *player) :
 	this->scaleY *= 48. / h;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
-	xSpe = 2;
-	ySpe = 2;
+	xSpe = rand()%5-2;
+	ySpe = rand()%5-2;
 	state = 0;
 	type = 0;
 }
 
 Jelly::Jelly(Player *player, int d) :
 		Enemy(player) {
-	xSpe = 1;
-	ySpe = 1;
+	xSpe = rand()%7-3;
+	ySpe = rand()%7-3;
 	type = d;
 	this->path = "resources/Projectiles/Stinger2.png";
 	switch (d) {
@@ -59,8 +59,8 @@ Jelly::Jelly(Player *player, int d) :
 		this->path = "resources/Projectiles/Stinger2.png";
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-		xSpe = 2;
-		ySpe = 2;
+		xSpe = rand()%7-3;
+    ySpe = rand()%7-3;
 		damage = 5;
 		this->xp = 500;
 		health = 300;
@@ -77,8 +77,8 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-		xSpe = 3;
-		ySpe = 3;
+    xSpe = rand()%11-5;
+    ySpe = rand()%11-5;
 		damage = 8;
 		this->xp = 2500;
 		health = 500;
@@ -92,8 +92,8 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish";
 		this->scaleX *= 32. / w;
 		this->scaleY *= 48. / h;
-		xSpe = 2;
-		ySpe = 2;
+    xSpe = rand()%7-3;
+    ySpe = rand()%7-3;
 		damage = 16;
 		health = 300;
 		this->setHitbox(.1, .9, .1, .9);
@@ -149,13 +149,20 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 	}
 	/*if (state == 0) {
 		timer++;
-		if (timer >= 180) {
+		if (timer >= 250) {
 			state++;
+			xSpe=rand()%3-1;
+			ySpe=rand()%3-1;
 		}
 	} else if (state == 1) {
-		timer++;
-		if (timer >= 360) {
+		timer+=1;
+		if (timer >= 330) {
 			timer = 0;
+			state=0;
+			while(abs(xSpe)+abs(ySpe)<3){
+				xSpe=rand()%9-4;
+				ySpe=rand()%9-4;
+			}
 		}
 	}*/
 	// cout << position.x << ", " << position.y << endl;
