@@ -55,9 +55,9 @@ public:
 	void modifySpeed(int value);
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
-	int damage = 100;
+	int damage = 10;
 	int slow = 1;
-	int lifesteal = 20;
+	int lifesteal = 1;
 
 	double attackSpeed = 1;
 

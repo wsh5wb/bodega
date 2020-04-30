@@ -38,7 +38,7 @@ Urchin::Urchin(Player *player, int d) :
 			state = 0;
 			this->xBound = 512 - (w * scaleX);
 			this->yBound = 384 - (h * scaleY);
-			health = 350;
+			health = 35;
 			this->xp = 10;
 			break;
 		}case 1: {
@@ -53,9 +53,9 @@ Urchin::Urchin(Player *player, int d) :
 			state = 0;
 			this->xBound = 512 - (w * scaleX);
 			this->yBound = 384 - (h * scaleY);
-			projectileDamage = 10;
-			health = 400;
-			this->xp = 20;
+			projectileDamage = 2;
+			health = 200;
+			this->xp = 200;
 			break;
 		}case 2: {
 			this->loadTexture("resources/enemies/gordo_one.png");
@@ -69,9 +69,9 @@ Urchin::Urchin(Player *player, int d) :
 			state = 0;
 			this->xBound = 512 - (w * scaleX);
 			this->yBound = 384 - (h * scaleY);
-			projectileDamage = 10;
-			health = 750;
-			this->xp = 50;
+			projectileDamage = 4;
+			health = 400;
+			this->xp = 100;
 			break;
 		}case 3: {
 			this->loadTexture("resources/enemies/gordo_one.png");
@@ -85,9 +85,9 @@ Urchin::Urchin(Player *player, int d) :
 			state = 0;
 			this->xBound = 512 - (w * scaleX);
 			this->yBound = 384 - (h * scaleY);
-			projectileDamage = 20;
+			projectileDamage = 8;
 			health = 1000;
-			this->xp = 100;
+			this->xp = 2500;
 			break;
 		}
 		default: {

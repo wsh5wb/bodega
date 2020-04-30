@@ -199,7 +199,7 @@ int Player::getLevel(){
 void Player::levelUp(){
 	level++;
 	cout << "You leveled up!" << endl;
-	damage += 10;
+	damage += 1;
 	maxHealth += 2;
 	health = health+4>maxHealth?maxHealth:health+4;
 	attackSpeed += .2;
