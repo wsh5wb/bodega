@@ -225,8 +225,8 @@ void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
     midY = this->position.y + (dstrect.h)/3;
   }
   else if (form == 1){
-    midX = this->position.x;
-    midY = this->position.y;
+    midX = this->position.x + 115;
+    midY = this->position.y + 60;
   }
   else if (form == 2){
     midX = this->position.x + 15;

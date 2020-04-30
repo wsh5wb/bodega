@@ -302,6 +302,14 @@ void Dungeon::generate() {
 							c->loadTexture("resources/enemies/Pose.png");
 							c->health = 20000;
 							c->form = 3;
+							//Skel *s1 = new Skel(Player::getPlayer());
+							//Skel *s2 = new Skel(Player::getPlayer());
+							//s2->moveTo(490, 384);
+							//s1->health = 5000;
+							//s1->moveTo(534, 384);
+							//s2->health = 5000;
+							//temp->room->addChild(s1);
+							//temp->room->addChild(s2);
 						}
 						c->moveTo(512, 384);
 						temp->room->addChild(c);
