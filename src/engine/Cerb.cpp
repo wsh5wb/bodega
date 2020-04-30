@@ -71,7 +71,7 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     }
   }
   else if (state == 4){
-    //shoot();
+    //shoot(charLoc, globalPos);
   }
   else if (state == 5){
     Enemy::moveToTarget();
@@ -182,9 +182,27 @@ void Cerb::draw(AffineTransform &at){
   Enemy::draw(at);
 }
 
-void Cerb::shoot(){
+void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
   //TODO: Give Cerberus projectiles to use
-  addProjectile(3, 3, 1000, 0.5, 0.5);
+  int projX = 0;
+  int projY = 0;
+  if(globalPos.x < charLoc.x){projX = projectileSpeed;}
+  else if(globalPos.x > charLoc.x){projX = -projectileSpeed;}
+  if(globalPos.y < charLoc.y){projY = projectileSpeed;}
+  else if(globalPos.y > charLoc.y){projY = -projectileSpeed;}
+
+  if(projX != 0 && projY != 0){
+    projX = projX/1.4142;
+    projY = projY/1.4142;
+  }
+
+  int midX = this->position.x + (dstrect.w)/3;
+  int midY = this->position.y + (dstrect.h)/3;
+  Projectile * p = new Projectile("resources/Projectiles/Bblue.png", midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
+  p->showHitbox = true;
+  ((DisplayObjectContainer*)(this->parent))->addChild(p);
+  DTEvent e("OBJ_ADD", &Game::eventHandler, p);
+  Game::eventHandler.dispatchEvent(&e);
 }
 
 bool Cerb::wasHit(){

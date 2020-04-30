@@ -5,13 +5,7 @@ Projectile::Projectile() : AnimatedSprite(){
 }
 
 Projectile::Projectile(int my_type, int x, int y, int speedX, int speedY, int timeout, double scaleX, double scaleY) : AnimatedSprite("CHAR_PROJECTILE"){
-	/*if(speedX != 0 && speedY != 0){
-		if(speedX < 0){speedX = -sqrt(-1*speedX);}
-		else {speedX = sqrt(speedX);}
 
-		if(speedY < 0){speedY = -sqrt(-1*speedY);}
-		else{speedY = sqrt(speedY);}
-	}*/
 	this->my_type = my_type;
 	this->speedX = speedX;
 	this->speedY = speedY;
@@ -29,13 +23,31 @@ Projectile::Projectile(int my_type, int x, int y, int speedX, int speedY, int ti
 		play("Pink");
 	}
 	this->rotate(atan2(speedY,speedX));
-
+	this->damage = 100;
 	this->timeout = timeout;
 	this->setScale(scaleX,scaleY);
 	this->moveTo(x, y);
 	this->start = std::clock();
 	setHitbox(0.05,0.95);
 	// this->showHitbox = true;
+}
+
+Projectile::Projectile(string path, int x, int y, int speedX, int speedY, int timeout, double scaleX, double scaleY, int damage) : AnimatedSprite("EN_PROJECTILE",path){
+	this->speedX = speedX;
+	this->speedY = speedY;
+	this->my_type = 4;
+	this->rotate(PI/6-atan2(speedY,speedX));
+	this->timeout = timeout;
+	this->setScale(scaleX,scaleY);
+	this->moveTo(x, y);
+	this->start = std::clock();
+	this->damage = damage;
+	setHitbox(0.05,0.95);
+	//this->showHitbox = true;
+}
+
+int Projectile::getDamage(){
+	return damage;
 }
 
 Projectile::~Projectile(){
