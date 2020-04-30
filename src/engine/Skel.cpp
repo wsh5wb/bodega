@@ -40,8 +40,8 @@ void Skel::update(set<SDL_Scancode> pressedKeys) {
 			0, 0);
 	SDL_Point globalpos = getGlobalTransform(this)->transformPoint(0, 0);
 	if (state == 5) {
-		//position.x+=rand()%200;
-		//position.y+=rand()%200-150;
+		position.x+=rand()%50;
+		position.y+=rand()%75-50;
 		if (std::max(abs(globalpos.x - charloc.x), abs(globalpos.y - charloc.y))
 				> 250) {
 			state = 0;
