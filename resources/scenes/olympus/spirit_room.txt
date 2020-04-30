@@ -1,0 +1,10 @@
+5 4
+0 Scene ./resources/art/olympus/backgroundO.png 2.34375 2.34375
+11 3 ENEMY_Urchin1 32 32 
+11 3 ENEMY_Urchin2 432 32
+11 3 ENEMY_Urchin3 32 304
+11 3 ENEMY_Urchin4 432 304
+Scene ENEMY_Urchin1
+Scene ENEMY_Urchin2
+Scene ENEMY_Urchin3
+Scene ENEMY_Urchin4

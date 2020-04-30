@@ -63,13 +63,13 @@ void ItemSystem::generateItem(){
 		case 7:
 		{
 			// + 10 damage
-			Player::getPlayer()->changeDamage(10);
+			Player::getPlayer()->changeDamage(2);
 			break;
 		}
 		case 8:
 		{
 			// + 20 damage
-			Player::getPlayer()->changeDamage(20);
+			Player::getPlayer()->changeDamage(5);
 			break;
 		}
 		case 9:

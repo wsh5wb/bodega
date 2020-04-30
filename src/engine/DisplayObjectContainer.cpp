@@ -78,29 +78,69 @@ void DisplayObjectContainer::removeFromCollisionSystem(){
 
 
 void DisplayObjectContainer::removeImmediateChild(DisplayObject *child) {
-	for (vector<DisplayObject*>::iterator it = children.begin();
+
+	for (DisplayObject *c: children) {
+		if(child == c){
+			DTEvent e("OBJ_RM", &Game::eventHandler, child);
+			Game::eventHandler.dispatchEvent(&e);
+			/*delete c;
+			c = NULL;
+			child = NULL;*/
+			c->shouldDelete = true;
+			c->shouldRemove = true;
+			return;
+		}
+	}
+	/*for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); ++it) {
 		if (child == *it) {
 			DTEvent e("OBJ_RM", &Game::eventHandler, child);
 			Game::eventHandler.dispatchEvent(&e);
-			delete *it;
+			//cout << "deleted " << (*it)->id << *it << endl;
+			//delete *it;
 			*it = NULL;
-			children.erase(it);
-			break;
+			//children.erase(it);
+			return;
 		}
-	}
+	}*/
 }
 
 void DisplayObjectContainer::removeImmediateChild(string id) {
-	for (vector<DisplayObject*>::iterator it = children.begin();
+
+	for (DisplayObject *c: children) {
+		if(c->id == id){
+			DTEvent e("OBJ_RM", &Game::eventHandler, c);
+			Game::eventHandler.dispatchEvent(&e);
+			//c = NULL;
+			c->shouldRemove = true;
+			c->shouldDelete = true;
+			return;
+		}
+	}
+	/*for (vector<DisplayObject*>::iterator it = children.begin();
 			it != children.end(); it++) {
 		if (id == (*it)->id) {
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
+			//delete *it;
+			*it = NULL;
+			//children.erase(it);
+			break;
+		}
+	}*/
+}
+
+void DisplayObjectContainer::removeImmediateChildNow(DisplayObject* child){
+	for (vector<DisplayObject*>::iterator it = children.begin();it != children.end(); ++it) {
+		if (child == *it) {
+			DTEvent e("OBJ_RM", &Game::eventHandler, child);
+			Game::eventHandler.dispatchEvent(&e);
+			//cout << "deleted " << (*it)->id << *it << endl;
 			delete *it;
 			*it = NULL;
+			child = NULL;
 			children.erase(it);
-			break;
+			return;
 		}
 	}
 }
@@ -110,8 +150,9 @@ void DisplayObjectContainer::removeImmediateChildNoDelete(DisplayObject* child){
 		if(child == *it){
 			DTEvent e("OBJ_RM", &Game::eventHandler, *it);
 			Game::eventHandler.dispatchEvent(&e);
-			children.erase(it);
-			*it = NULL;
+			child->shouldRemove = true;
+			//children.erase(it);
+			//*it = NULL;
 			break;
 		}
 	}
@@ -157,30 +198,80 @@ DisplayObject* DisplayObjectContainer::getChild(string id) {
 
 void DisplayObjectContainer::resetDelta() {
 	DisplayObject::resetDelta();
-	for (DisplayObject *child : children) {
-		//cout << "child " << child->id << endl;
-		child->resetDelta();
+	int sz = children.size();
+	for(int i = 0;i<sz;i++){
+		if(children[i] == NULL){continue;}
+		children[i]->resetDelta();
 	}
+	/*for (DisplayObject *child : children) {
+		//cout << "child " << child->id << endl;
+		if(child != NULL)
+			child->resetDelta();
+	}*/
 }
 
 void DisplayObjectContainer::update(set<SDL_Scancode> pressedKeys) {
 	DisplayObject::update(pressedKeys);
-	for (DisplayObject *child : children) {
+	//int i = 0;
+	int sz = children.size();
+	
+	/*for (DisplayObject *child : children) {
+		i++;
+		cout << "i " << i << " " << id << endl;
+		if(child == NULL){continue;}
 		child->update(pressedKeys);
+	}*/for(int i = 0;i<sz;i++){
+		if(children[i] == NULL){
+			continue;}
+		children[i]->update(pressedKeys);
 	}
+	/*for(vector<DisplayObject*>::iterator it = children.begin();it != children.end(); ++it){
+		if(*it == NULL){continue;}
+		(*it)->update(pressedKeys);
+	}*/
+
+	for(vector<DisplayObject*>::iterator it = children.begin();it != children.end();){
+		if((*it)->shouldRemove){
+			//delete *it;
+			if((*it)->shouldDelete) {delete *it;}
+			it = children.erase(it);
+		}else{
+			it++;
+		}
+		//(*it)->update(pressedKeys);
+	}
+	/*for (DisplayObject *child : children) {
+		i++;
+		cout << "i " << i << " " << id << endl;
+		if(child == NULL){continue;}
+		child->update(pressedKeys);
+	}*/
 }
 
 void DisplayObjectContainer::draw(AffineTransform &at) {
+	for(vector<DisplayObject*>::iterator it = children.begin();it != children.end();){
+		if(*it == NULL){
+			//delete *it;
+			it = children.erase(it);
+		}else{
+			it++;
+		}
+		//(*it)->update(pressedKeys);
+	}
 	DisplayObject::draw(at);
 	DisplayObject::applyTransformations(at);
-
-	for (DisplayObject *child : children) {
+	int sz = children.size();
+	for(int i =0; i < sz; i++){
+		if(children[i] == NULL){continue;}
+		children[i]->draw(at);
+	}
+	/*for (DisplayObject *child : children) {
 		/*if((dynamic_cast<DisplayObjectContainer*>(child)) != nullptr){
 
 		 }
-		 */
+		 if(child == NULL){continue;}
 		child->draw(at);
-	}
+	}*/
 
 	DisplayObject::reverseTransformations(at);
 }

@@ -124,7 +124,7 @@ void Enemy::changeHealth(int amount){
 		Player::getPlayer()->changeXP(xp);
 		Event e("ENEMY_KILLED", &Game::eventHandler);
 		Game::eventHandler.dispatchEvent(&e);
-		((DisplayObjectContainer *)this->parent)->removeImmediateChild(this);
+		((DisplayObjectContainer *)this->parent)->removeImmediateChildNow(this);
 	}
 }
 

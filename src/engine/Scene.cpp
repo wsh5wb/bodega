@@ -353,6 +353,16 @@ void Scene::loadScene(string sceneFilePath) {
 			objects.push_back(temp);
 			this->numEnemies += 1;
 			break;
+		}case 14: { //Portal
+
+			Portal *temp = new Portal();
+			SDL_Point position;
+			i >> temp->id >> position.x >> position.y;
+			temp->moveTo(position.x, position.y);
+//			temp->setHitbox(.1, .9);
+//			temp->showHitbox = true;
+			objects.push_back(temp);
+			break;
 		}
 		case 14: {
 			int skin = 0;

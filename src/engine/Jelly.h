@@ -15,7 +15,14 @@ public:
   virtual void draw(AffineTransform &at);
 
   int timer;
+  string path;
   int xBound, yBound;
+  int projectileDamage = 5;
+  int projectileSpeed = 0;
+  int maxCoolDown = 200;
+  int nextShot = 0;
+  int type; 
+
 };
 
 #endif

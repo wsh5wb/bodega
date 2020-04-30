@@ -38,7 +38,11 @@ void EventDispatcher::removeEventListener(EventListener* l, string eventType){
 		for (auto it = vec->begin(); it != vec->end(); ++it){
 			if(*it == l){
 				// delete *it;
+				auto loc = *it;
 				vec->erase(it);
+				if(find((*listeners)[eventType].begin(), (*listeners)[eventType].end(),loc)
+					!= (*listeners)[eventType].end())
+					printf("LISTER WAS NOT PROPERLY REMOVED FROM EVENTLIST\n");
 				return;
 			}
 		}

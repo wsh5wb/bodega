@@ -8,6 +8,7 @@ using namespace std;
 
 int main(int argc, char ** argv)
 {
+
 	MyGame* myGame = new MyGame();
 
 	bool started = false, quit = false;

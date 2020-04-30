@@ -33,6 +33,7 @@ Player::Player() :
 	this->addChild(chat_box);
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
 	chat_box->addMessagetoDisplay("OH BTW, I had more to say please please please get over the limit for sixty characters.");
+	//this->runSpeed = 6;
 	//for tweening Demo
 		// this->alpha = 30;
 		// TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -198,7 +199,7 @@ int Player::getLevel(){
 void Player::levelUp(){
 	level++;
 	cout << "You leveled up!" << endl;
-	damage += 10;
+	damage += 1;
 	maxHealth += 2;
 	health = health+4>maxHealth?maxHealth:health+4;
 	attackSpeed += .2;
@@ -257,7 +258,7 @@ void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, d
 			break;
 		}
 	}
-	printf("Adding new projectile\n");
+	//printf("Adding new projectile\n");
 	Projectile * p = new Projectile(current_ball_type, midX, midY,speedX,speedY,timeout,scaleX,scaleY);
 	// projectiles.push_back(p);
 	((DisplayObjectContainer*)this->parent)->addChild(p);
@@ -328,22 +329,22 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 
 		//for shooting projectiles
 		if(k == SDL_SCANCODE_LEFT){
-			xMov = -3;
+			xMov = -PROJ_SPEED;
 			this->direction = 1;
 		}if(k == SDL_SCANCODE_RIGHT){
-			xMov = 3;
+			xMov = PROJ_SPEED;
 			this->direction = 2;
 		}if(k == SDL_SCANCODE_UP){
-			yMov = -3;
+			yMov = -PROJ_SPEED;
 			this->direction = 3;
 		}if(k == SDL_SCANCODE_DOWN){
-			yMov = 3;
+			yMov = PROJ_SPEED;
 			this->direction = 4;
 		}
 	}
 	if(xMov != 0 && yMov != 0){
-		xMov = xMov/3;
-		yMov = yMov/3;
+		xMov = xMov/1.4142;
+		yMov = yMov/1.4142;
 	}
 	//play idle animation if player is just standing still on ground
 	if (this->currAnimation == "Run" && idle) {

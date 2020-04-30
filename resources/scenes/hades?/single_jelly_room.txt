@@ -1,14 +1,16 @@
-7 6
+8 7
 0 Scene ./resources/art/hades/background.png 2.34375 2.34375 
 9 lava1_FLOOR ./resources/art/hades/small_lava.png 5 1 1 0 0.05 0 0 0 16 16 .2 .8 .05 .65
 9 lava2_FLOOR ./resources/art/hades/small_lava.png 5 1 1 0 0.05 0 0 0 400 16 .2 .8 .05 .65
 9 lava3_FLOOR ./resources/art/hades/small_lava.png 5 1 1 0 0.05 0 0 0 16 272 .2 .8 .05 .65
 9 lava4_FLOOR ./resources/art/hades/small_lava.png 5 1 1 0 0.05 0 0 0 400 272 .2 .8 .05 .65
 10 0 ENEMY_Jellyfish1 176 176
-13 0 ENEMY_Spirit1 304 176
+13 0 ENEMY_Spirit1 224 176
+10 0 ENEMY_Jellyfish2 304 176
 Scene lava1_FLOOR
 Scene lava2_FLOOR
 Scene lava3_FLOOR
 Scene lava4_FLOOR
 Scene ENEMY_Jellyfish1
 Scene ENEMY_Spirit1
+Scene ENEMY_Jellyfish2

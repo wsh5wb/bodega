@@ -53,8 +53,12 @@ void CollisionSystem::update(){
 				i++;
 
 				if((collision= collidesWith(obj1, obj2))){
-					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"))
+					if(removedDoorPlayer && (pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR")){
 						printf("Door collision occured even though DOOR-PLAYER is not being monitored\n");
+						auto it = find(pairs.begin(), pairs.end(), "PLAYER-DOOR");
+						if(it != pairs.end())
+							printf("DOOR-PLAYER was found in pairs vector\n");
+					}
 					// Maybe handle some of this in other classes via events to reduce cluter?
 					if(pair == "DOOR-PLAYER" || pair == "PLAYER-DOOR"){
 						// assuming door1 is always S, 2 W, 3 N, 4 E
@@ -109,7 +113,7 @@ void CollisionSystem::update(){
 							DisplayObject* obj;
 							if(type1 == "PROJECTILE")		obj = obj1;
 							else if(type2 == "PROJECTILE")	obj = obj2;
-							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 							continue;
 						}
 						// printf("Player collided with obstacle\n");
@@ -121,7 +125,6 @@ void CollisionSystem::update(){
 						// obj2->updateDelta(0,0,0,0,0);
 						// printf("%s collided with %s\n", obj1->id.c_str(), obj2->id.c_str());
 					}
-					// ADD code to handle decreasing health
 					else if(type1 == "PROJECTILE" || type2 == "PROJECTILE"){
 						if(pair == "PROJECTILE-ENEMY" || pair == "ENEMY-PROJECTILE"){
 							DisplayObject* obj;
@@ -149,7 +152,7 @@ void CollisionSystem::update(){
 								}
 							}
 
-							((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+							((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 							continue;
 						}
 					}
@@ -158,7 +161,7 @@ void CollisionSystem::update(){
 						DisplayObject* obj;
 						if(type1 == "chest")		obj = obj1;
 						else if(type2 == "chest")	obj = obj2;
-						((DisplayObjectContainer*)obj->parent)->removeImmediateChild(obj);
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
 						Event e("CHEST_OPENED", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
 						continue;
@@ -167,16 +170,37 @@ void CollisionSystem::update(){
 					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
 						if(type1 == "ENEMY"){
 							// must leave outdated scope if vec1/vec2 change
+							cout << obj1->id << "hitting player" << endl;
 							if(((Player*) obj2)->changeHealth(-((Enemy*) obj1)->getDamage()))
 								return;
 						}
 						else if(type2 == "ENEMY") {
+							cout << obj2->id << "hitting player" << endl;
 							// must leave outdated scope if vec1/vec2 change
 							if(((Player*)obj1)->changeHealth(-((Enemy*)obj2)->getDamage()))
 								return;
 						}
 					}
+					else if(pair == "PLAYER-EN_PROJECTILE" || pair == "EN_PROJECTILE-PLAYER"){
+						DisplayObject* obj;
+						if(type1 == "EN_PROJECTILE"){
+							obj = obj1;
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*) obj2)->changeHealth(-((Projectile*) obj1)->getDamage()))
+								return;
+						}
+						else if(type2 == "EN_PROJECTILE") {
+							obj = obj2;
+							// must leave outdated scope if vec1/vec2 change
+							if(((Player*)obj1)->changeHealth(-((Projectile*)obj2)->getDamage()))
+								return;
+						}
+
+						((DisplayObjectContainer*)obj->parent)->removeImmediateChildNow(obj);
+							continue;
+					}
 					else if(pair == "PLAYER-PORTAL" || pair == "PORTAL-PLAYER"){
+						printf("Player hit a portal!\n");
 						Event e("CHANGE_DUNGEON", &Game::eventHandler);
 						Game::eventHandler.dispatchEvent(&e);
 						return;
@@ -220,6 +244,7 @@ void CollisionSystem::handleEvent(Event* e){
 	else if(child->id.find("chest") != string::npos)		str = "chest"; //before obstacle to overrule it
 	else if(child->id.find("OBSTACLE") != string::npos)		str = "OBSTACLE";
 	else if(child->id.find("FLOOR") != string::npos)		str = "FLOOR";
+	else if(child->id.find("EN_PROJECTILE") != string::npos) str = "EN_PROJECTILE";
 	else if(child->id.find("PROJECTILE") != string::npos)	str = "PROJECTILE";
 	else if(child->id.find("PORTAL") != string::npos)		str = "PORTAL";
 

@@ -23,6 +23,7 @@ public:
 	void removeImmediateChild(DisplayObject* child);
 	void removeImmediateChild(string id);
 	void removeImmediateChildNoDelete(DisplayObject* child);
+	void removeImmediateChildNow(DisplayObject* child);
 	void removeChild(int index);
 	void removeThis();
 

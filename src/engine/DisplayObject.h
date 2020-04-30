@@ -115,6 +115,9 @@ public:
 	double scaleY = 1;
 	int speed = 5;
 
+	bool shouldDelete = false;
+	bool shouldRemove = false;
+
 	int numEnemies = 0;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

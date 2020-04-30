@@ -16,6 +16,7 @@
 #define LEVELS 					255
 #define PROJECTILE_SWAP_FRAMES 	30
 #define IFRAME_COUNT			180
+#define PROJ_SPEED				6
 
 using namespace std;
 
@@ -54,9 +55,9 @@ public:
 	void modifySpeed(int value);
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
-	int damage = 100;
+	int damage = 10;
 	int slow = 1;
-	int lifesteal = 20;
+	int lifesteal = 1;
 
 	double attackSpeed = 1;
 
@@ -79,7 +80,7 @@ private:
 	int health = 8;
 	int maxHealth = 8;
 	bool displayHealth = true;
-	int runSpeed = 2;
+	int runSpeed = 4;
 	int current_ball_type = 1;
 	int direction = 1;
 
