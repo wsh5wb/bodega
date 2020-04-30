@@ -148,25 +148,25 @@ void Cerb::draw(AffineTransform &at){
 
 void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
   //TODO: Give Cerberus projectiles to use
-  int projX = 0;
-  int projY = 0;
-  if(globalPos.x < charLoc.x){projX = projectileSpeed;}
-  else if(globalPos.x > charLoc.x){projX = -projectileSpeed;}
-  if(globalPos.y < charLoc.y){projY = projectileSpeed;}
-  else if(globalPos.y > charLoc.y){projY = -projectileSpeed;}
+  //int projX = 0;
+  //int projY = 0;
+  //if(globalPos.x < charLoc.x){projX = projectileSpeed;}
+  //else if(globalPos.x > charLoc.x){projX = -projectileSpeed;}
+  //if(globalPos.y < charLoc.y){projY = projectileSpeed;}
+  //else if(globalPos.y > charLoc.y){projY = -projectileSpeed;}
 
-  if(projX != 0 && projY != 0){
-    projX = projX/1.4142;
-    projY = projY/1.4142;
-  }
+  //if(projX != 0 && projY != 0){
+  //  projX = projX/1.4142;
+  //  projY = projY/1.4142;
+  //}
 
-  int midX = this->position.x + (dstrect.w)/3;
-  int midY = this->position.y + (dstrect.h)/3;
-  Projectile * p = new Projectile(1, midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
-  p->showHitbox = true;
-  ((DisplayObjectContainer*)(this->parent))->addChild(p);
-  DTEvent e("OBJ_ADD", &Game::eventHandler, p);
-  Game::eventHandler.dispatchEvent(&e);
+  //int midX = this->position.x + (dstrect.w)/3;
+  //int midY = this->position.y + (dstrect.h)/3;
+  //Projectile * p = new Projectile(1, midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
+  //p->showHitbox = true;
+  //((DisplayObjectContainer*)(this->parent))->addChild(p);
+  //DTEvent e("OBJ_ADD", &Game::eventHandler, p);
+  //Game::eventHandler.dispatchEvent(&e);
 }
 
 bool Cerb::wasHit(){

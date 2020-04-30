@@ -18,7 +18,7 @@ public:
   virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
-  void shoot();
+  void shoot(SDL_Point charLoc, SDL_Point globalPos);
   bool wasHit();
   bool atWall();
 
