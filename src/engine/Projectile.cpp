@@ -36,7 +36,7 @@ Projectile::Projectile(string path, int x, int y, int speedX, int speedY, int ti
 	this->speedX = speedX;
 	this->speedY = speedY;
 	this->my_type = 4;
-	//this->rotate(atan2(speedY,speedX));
+	this->rotate(PI/6-atan2(speedY,speedX));
 	this->timeout = timeout;
 	this->setScale(scaleX,scaleY);
 	this->moveTo(x, y);
