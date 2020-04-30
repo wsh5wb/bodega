@@ -31,12 +31,13 @@ Spirit::Spirit(Player *player, int d) :
 			this->id = "ENEMY_Spirit"; //shouldn't do anything
 			//this->scaleX *= 0.08;
 			//this->scaleY *= 0.08;
-			xSpe = 2;
-			ySpe = 2;
+			xSpe = 1;
+			ySpe = 1;
 			this->setAlpha(100);
 			//this->setHitbox(.38,.58,.2,.7);
-			health = 250;
-			restTime = 3;
+			health = 350;
+			this->xp = 10;
+			restTime = 2;
 			//this->showHitbox = true;
 			break;
 		}
@@ -49,7 +50,8 @@ Spirit::Spirit(Player *player, int d) :
 			xSpe = 2;
 			ySpe = 2;
 			damage = 3;
-			health = 380;
+			health = 500;
+			this->xp = 20;
 			restTime = 2;
 		//	this->setHitbox(.38,.58,.2,.7);
 			this->showHitbox = true;
@@ -63,11 +65,12 @@ Spirit::Spirit(Player *player, int d) :
 			//this->scaleY *= 0.15; ///h;
 							cout << "spirit case 2" << endl;
 
-			xSpe = 3;
-			ySpe = 3;
+			xSpe = 1;
+			ySpe = 1;
 			damage = 5;
-			health = 450;
-			restTime = 2;
+			health = 750;
+			this->xp = 50;
+			restTime = 0;
 			//this->setHitbox(.1,.9,.1,.9);
 			this->showHitbox = true;
 			break;
@@ -78,11 +81,12 @@ Spirit::Spirit(Player *player, int d) :
 			this->id = "ENEMY_Spirit";
 			//this->scaleX *= 0.15;//32./w;
 			//this->scaleY *= 0.15; ///h;
-			xSpe = 3;
-			ySpe = 3;
+			xSpe = 1;
+			ySpe = 1;
 			damage = 8;
-			health = 510;
-			restTime = 2;
+			health = 1000;
+			this->xp = 100;
+			restTime = 0;
 
 			//this-setHitbox(.1,.9,.1,.9);
 			this->showHitbox = true;

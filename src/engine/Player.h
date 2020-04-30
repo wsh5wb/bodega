@@ -16,6 +16,7 @@
 #define LEVELS 					255
 #define PROJECTILE_SWAP_FRAMES 	30
 #define IFRAME_COUNT			180
+#define PROJ_SPEED				6
 
 using namespace std;
 

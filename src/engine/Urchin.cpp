@@ -38,7 +38,24 @@ Urchin::Urchin(Player *player, int d) :
 			state = 0;
 			this->xBound = 512 - (w * scaleX);
 			this->yBound = 384 - (h * scaleY);
+			health = 350;
 			this->xp = 10;
+			break;
+		}case 1: {
+			this->loadTexture("resources/enemies/gordo_one.png");
+			this->id = "ENEMY_Urchin";
+			this->scaleX *= 0.5;
+			this->scaleY *= 0.5;
+			//this->pivot.x = w * scaleX / 2;
+			//this->pivot.y = h * scaleY / 2;
+			xSpe = 3;
+			ySpe = 3;
+			state = 0;
+			this->xBound = 512 - (w * scaleX);
+			this->yBound = 384 - (h * scaleY);
+			projectileDamage = 10;
+			health = 400;
+			this->xp = 20;
 			break;
 		}case 2: {
 			this->loadTexture("resources/enemies/gordo_one.png");
@@ -47,13 +64,30 @@ Urchin::Urchin(Player *player, int d) :
 			this->scaleY *= 0.5;
 			//this->pivot.x = w * scaleX / 2;
 			//this->pivot.y = h * scaleY / 2;
-			xSpe = 2;
-			ySpe = 2;
+			xSpe = 3;
+			ySpe = 3;
 			state = 0;
 			this->xBound = 512 - (w * scaleX);
 			this->yBound = 384 - (h * scaleY);
 			projectileDamage = 10;
-			this->xp = 20;
+			health = 750;
+			this->xp = 50;
+			break;
+		}case 3: {
+			this->loadTexture("resources/enemies/gordo_one.png");
+			this->id = "ENEMY_Urchin";
+			this->scaleX *= 0.5;
+			this->scaleY *= 0.5;
+			//this->pivot.x = w * scaleX / 2;
+			//this->pivot.y = h * scaleY / 2;
+			xSpe = 3;
+			ySpe = 3;
+			state = 0;
+			this->xBound = 512 - (w * scaleX);
+			this->yBound = 384 - (h * scaleY);
+			projectileDamage = 20;
+			health = 1000;
+			this->xp = 100;
 			break;
 		}
 		default: {
@@ -91,6 +125,7 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 			//this->setHitbox(-.5, 1.5);
 			std::cout << "state2 urchin" << '\n';
 			state++;
+			health/=2;
 		}
 
 	} else if (state == 1) {
@@ -171,6 +206,7 @@ void Urchin::update(set<SDL_Scancode> pressedKeys) {
 		if (timer > 360) {
 			timer = 0;
 			state = 0;
+			health*=2;
 		}
 
 	}

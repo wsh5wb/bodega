@@ -329,16 +329,16 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 
 		//for shooting projectiles
 		if(k == SDL_SCANCODE_LEFT){
-			xMov = -3;
+			xMov = -PROJ_SPEED;
 			this->direction = 1;
 		}if(k == SDL_SCANCODE_RIGHT){
-			xMov = 3;
+			xMov = PROJ_SPEED;
 			this->direction = 2;
 		}if(k == SDL_SCANCODE_UP){
-			yMov = -3;
+			yMov = -PROJ_SPEED;
 			this->direction = 3;
 		}if(k == SDL_SCANCODE_DOWN){
-			yMov = 3;
+			yMov = PROJ_SPEED;
 			this->direction = 4;
 		}
 	}

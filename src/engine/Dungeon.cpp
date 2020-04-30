@@ -554,10 +554,10 @@ void Dungeon::transitionRoom(string type) {
 		camPosTween->animate(field, -startPos, -endPos, 30, TWEEN_LINEAR,
 		EASE_INOUT);
 		juggler->add(camPosTween);
-		oldSpeed = player->getSpeed();
-		player->modifySpeed(-oldSpeed);
 
 	}
+	oldSpeed = player->getSpeed();
+	player->modifySpeed(-oldSpeed);
 	if (new_room) {
 		changingRoom = new_room;
 		if (changingRoom->room->numEnemies > 0)
