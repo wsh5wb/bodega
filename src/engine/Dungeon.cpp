@@ -281,10 +281,20 @@ void Dungeon::generate() {
 						portal->setHitbox(.1, .9);
 						temp->room->addChild(portal);
 						Cerb *c = new Cerb(Player::getPlayer());
-						c->moveTo(512, 384);
 						c->originX = 512;
 						c->originY = 384;
 						//c->showHitbox = true;
+						if (dungeonType == 1){
+							c->loadTexture("resources/enemies/scylla.png");
+							c->scaleX *= 0.35;
+							c->scaleY *= 0.35;
+						}
+						else if (dungeonType == 2){
+							c->loadTexture("resources/enemies/hydra.png");
+							c->scaleX *= 1.1;
+							c->scaleY *= 1.1;
+						}
+						c->moveTo(512, 384);
 						temp->room->addChild(c);
 						temp->active = true;
 					}
