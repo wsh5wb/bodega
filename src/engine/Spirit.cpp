@@ -21,38 +21,102 @@ Spirit::Spirit(Player *player) :
 
 Spirit::Spirit(Player *player, int d) :
 		Enemy(player) {
-	xSpe = 1;
-	ySpe = 1;
+	//xSpe = 1;
+	//ySpe = 1;
+
+	cout << "spirit d" << d << endl;
 	switch (d) {
 		case 0: {
 			this->loadTexture("./resources/enemies/spirit.png");
 			this->id = "ENEMY_Spirit"; //shouldn't do anything
-			this->scaleX *= 0.08;
-			this->scaleY *= 0.08;
+			//this->scaleX *= 0.08;
+			//this->scaleY *= 0.08;
+			xSpe = 2;
+			ySpe = 2;
 			this->setAlpha(100);
-			this->setHitbox(.38,.58,.2,.7);
+			//this->setHitbox(.38,.58,.2,.7);
+			health = 250;
+			restTime = 3;
+			//this->showHitbox = true;
+			break;
+		}
+		case 1:
+		{
+			this->loadTexture("resources/enemies/spirit.png");
+			this->id = "ENEMY_Spirit";
+			//this->scaleX *= 0.08;//32./w;
+			//this->scaleY *= 0.08; ///h;
+			xSpe = 2;
+			ySpe = 2;
+			damage = 3;
+			health = 380;
+			restTime = 2;
+		//	this->setHitbox(.38,.58,.2,.7);
 			this->showHitbox = true;
 			break;
 		}
+		case 2:
+		{
+			this->loadTexture("resources/enemies/spirit.png");
+			this->id = "ENEMY_Spirit";
+			//this->scaleX *= 0.15;//32./w;
+			//this->scaleY *= 0.15; ///h;
+							cout << "spirit case 2" << endl;
+
+			xSpe = 3;
+			ySpe = 3;
+			damage = 5;
+			health = 450;
+			restTime = 2;
+			//this->setHitbox(.1,.9,.1,.9);
+			this->showHitbox = true;
+			break;
+		}		
+		case 3:
+		{
+			this->loadTexture("resources/enemies/spirit.png");
+			this->id = "ENEMY_Spirit";
+			//this->scaleX *= 0.15;//32./w;
+			//this->scaleY *= 0.15; ///h;
+			xSpe = 3;
+			ySpe = 3;
+			damage = 8;
+			health = 510;
+			restTime = 2;
+
+			//this-setHitbox(.1,.9,.1,.9);
+			this->showHitbox = true;
+			break;
+		}
+
 		default: {
 			this->loadTexture("resources/enemies/spirit.png");
 			this->id = "ENEMY_Spirit";
-			this->scaleX *= 0.15;//32./w;
-			this->scaleY *= 0.15; ///h;
+			//this->scaleX *= 0.15;//32./w;
+			//this->scaleY *= 0.15; ///h;
 			xSpe = 2;
 			ySpe = 2;
 			damage = 3;
 			health = 300;
-			this->setHitbox(.1,.9,.1,.9);
+			//this->setHitbox(.1,.9,.1,.9);
 			this->showHitbox = true;
+			break;
+
 		}
 	}
-	this->restTime = 3;
+	//this->restTime = 3;	
+	this->setAlpha(100);
+	
+	this->scaleX *= 0.08;
+	this->scaleY *= 0.08;
+	this->setHitbox(.38,.58,.2,.7);
 	this->timer = 0;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
 
 	state = 0;
+
+	cout << "spirit " << scaleX << " " << scaleY << endl;
 }
 
 void Spirit::update(set<SDL_Scancode> pressedKeys) {

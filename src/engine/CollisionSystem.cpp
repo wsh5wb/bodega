@@ -170,10 +170,12 @@ void CollisionSystem::update(){
 					else if(pair == "PLAYER-ENEMY" || pair == "ENEMY-PLAYER"){
 						if(type1 == "ENEMY"){
 							// must leave outdated scope if vec1/vec2 change
+							cout << obj1->id << "hitting player" << endl;
 							if(((Player*) obj2)->changeHealth(-((Enemy*) obj1)->getDamage()))
 								return;
 						}
 						else if(type2 == "ENEMY") {
+							cout << obj2->id << "hitting player" << endl;
 							// must leave outdated scope if vec1/vec2 change
 							if(((Player*)obj1)->changeHealth(-((Enemy*)obj2)->getDamage()))
 								return;
