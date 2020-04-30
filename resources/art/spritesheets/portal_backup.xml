@@ -1,0 +1,20 @@
+<textureatlas imagePath="portal.png" width="299" height="387">
+	<sprite n="sprite1" x="18" y="8" w="68" h="67"/>
+	<sprite n="sprite2" x="122" y="7" w="66" h="66"/>
+	<sprite n="sprite3" x="228" y="11" w="63" h="64"/>
+	<sprite n="sprite4" x="24" y="117" w="58" h="58"/>
+	<sprite n="sprite5" x="128" y="119" w="55" h="55"/>
+	<sprite n="sprite6" x="234" y="121" w="52" h="48"/>
+	<sprite n="sprite7" x="29" y="228" w="43" h="45"/>
+	<sprite n="sprite8" x="135" y="230" w="40" h="39"/>
+	<sprite n="sprite9" x="242" y="231" w="36" h="37"/>
+	<sprite n="sprite9" x="242" y="231" w="36" h="37"/>
+	<sprite n="sprite8" x="135" y="230" w="40" h="39"/>
+	<sprite n="sprite7" x="29" y="228" w="43" h="45"/>
+	<sprite n="sprite6" x="234" y="121" w="52" h="48"/>
+	<sprite n="sprite5" x="128" y="119" w="55" h="55"/>
+	<sprite n="sprite4" x="24" y="117" w="58" h="58"/>
+	<sprite n="sprite3" x="228" y="11" w="63" h="64"/>
+	<sprite n="sprite2" x="122" y="7" w="66" h="66"/>
+	<sprite n="sprite1" x="18" y="8" w="68" h="67"/>
+</textureatlas>

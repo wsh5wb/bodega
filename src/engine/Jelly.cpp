@@ -33,9 +33,10 @@ Jelly::Jelly(Player *player, int d) :
 		this->scaleX *= 1;
 		this->scaleY *= 1;
 		this->xp = 5;
+		health = 20;
 		this->setAlpha(100);
 		this->setHitbox(.1, .9, .1, .7);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 1: {
@@ -43,13 +44,13 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish";
 		this->scaleX *= 32. / w;
 		this->scaleY *= 48. / h;
-		xSpe = 3;
-		ySpe = 3;
+		xSpe = 2;
+		ySpe = 2;
 		damage = 3;
-		this->xp = 10;
-		health = 300;
+		this->xp = 100;
+		health = 75;
 		this->setHitbox(.1, .9, .1, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 2: {
@@ -58,17 +59,17 @@ Jelly::Jelly(Player *player, int d) :
 		this->path = "resources/Projectiles/Stinger2.png";
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-		xSpe = 3;
-		ySpe = 3;
+		xSpe = 2;
+		ySpe = 2;
 		damage = 5;
-		this->xp = 20;
-		health = 400;
+		this->xp = 500;
+		health = 300;
 		maxCoolDown = 200;
 		//this->setAlpha(100);
 		this->projectileDamage = 5;
 		this->projectileSpeed = 4;
 		this->setHitbox(.1, .9, .2, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 3: {
@@ -76,14 +77,14 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-		xSpe = 4;
-		ySpe = 4;
+		xSpe = 3;
+		ySpe = 3;
 		damage = 8;
-		this->xp = 50;
-		health = 600;
+		this->xp = 2500;
+		health = 500;
 		this->setAlpha(100);
 		this->setHitbox(.1, .9, .1, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	default: {
@@ -93,10 +94,10 @@ Jelly::Jelly(Player *player, int d) :
 		this->scaleY *= 48. / h;
 		xSpe = 2;
 		ySpe = 2;
-		damage = 3;
+		damage = 16;
 		health = 300;
 		this->setHitbox(.1, .9, .1, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 	}
 	}
 

@@ -278,7 +278,6 @@ void Dungeon::generate() {
 						portal->moveTo(512, 384);
 						portal->translate(-portal->w / 8, -portal->h / 8);
 						portal->setHitbox(.1, .9);
-						portal->showHitbox = true;
 						temp->room->addChild(portal);
 					}
 					bossRoomsCount++;
