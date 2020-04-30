@@ -16,7 +16,6 @@ Dungeon::Dungeon() {
 	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_R");
 	Game::eventHandler.addEventListener((EventListener*) this, "DUNG_TRANS_L");
 	Game::eventHandler.addEventListener((EventListener*) this, "ENEMY_KILLED");
-
 }
 
 Dungeon::~Dungeon() {
@@ -274,11 +273,20 @@ void Dungeon::generate() {
 						temp->removeWall(SOUTH);
 						temp->removeWall(EAST);
 						DisplayObject *portal = new Portal();
+						portal->makeInvisible();
+						Game::cs->ignoreCollisions("PLAYER", "PORTAL");
 						// portal->scale(.5);
 						portal->moveTo(512, 384);
 						portal->translate(-portal->w / 8, -portal->h / 8);
 						portal->setHitbox(.1, .9);
 						temp->room->addChild(portal);
+						Cerb *c = new Cerb(Player::getPlayer());
+						c->moveTo(512, 384);
+						c->originX = 512;
+						c->originY = 384;
+						c->showHitbox = true;
+						temp->room->addChild(c);
+						temp->active = true;
 					}
 					bossRoomsCount++;
 				}

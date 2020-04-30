@@ -14,8 +14,8 @@ Urchin::Urchin(Player *player) :
 	this->scaleY *= 0.5;
 	//this->pivot.x = w * scaleX / 2;
 	//this->pivot.y = h * scaleY / 2;
-	xSpe = 2;
-	ySpe = 2;
+	xSpe = 1;
+	ySpe = 1;
 	state = 0;
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);

@@ -118,7 +118,7 @@ public:
 				activeDungeon->zoomed_out=true;
 
 				break;
-			}
+				}
 			}
 
 			Camera::getCamera()->addScene(activeDungeon);
