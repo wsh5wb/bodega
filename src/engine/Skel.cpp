@@ -13,6 +13,7 @@ Skel::Skel(Player* player) : Enemy(player){
   pivot.x =0;// w/2;
   pivot.y = 0;//h/2;
   state = 5;
+  health = 25;
   position.x = 0;
   position.y = 0;
   this->setAlpha(15);

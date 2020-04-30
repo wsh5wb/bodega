@@ -30,7 +30,7 @@ public:
   int restCount = 0;
   int maxDist = 0;
   int projectileSpeed = 3;
-  int projectileDamage = 5;
+  int projectileDamage = 10;
   int originX;
   int originY;
   vector<Projectile*> projectiles;

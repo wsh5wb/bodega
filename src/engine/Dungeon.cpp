@@ -284,7 +284,7 @@ void Dungeon::generate() {
 						c->moveTo(512, 384);
 						c->originX = 512;
 						c->originY = 384;
-						c->showHitbox = true;
+						//c->showHitbox = true;
 						temp->room->addChild(c);
 						temp->active = true;
 					}
