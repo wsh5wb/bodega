@@ -18,7 +18,6 @@ public:
   int xSpe, ySpe;
   int xBound, yBound;
   SDL_Point globalPos;
-  int restTime = 3;
 };
 
 #endif

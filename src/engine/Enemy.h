@@ -11,10 +11,10 @@
 
 using namespace std;
 
-class Enemy : public Sprite{
+class Enemy: public Sprite {
 
 public:
-	Enemy(Player* player);
+	Enemy(Player *player);
 
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
@@ -22,7 +22,7 @@ public:
 	//void onEnemyCollision(Enemy* enemy);
 	void onMeleeStrike();
 	void onEssenceStrike();
-	void onCollision(DisplayObject* other);
+	void onCollision(DisplayObject *other);
 	//virtual void draw(AffineTransform &at);
 	void save(ofstream &out);
 	void charge();
@@ -34,7 +34,6 @@ public:
 	void changeHealth(int amount);
 	int getDamage();
 	void changeSpeed();
-
 
 	/* Health and such */
 	unsigned int xp = 5;
@@ -59,14 +58,15 @@ public:
 	int minPatX, minPatY, maxPatX, maxPatY;
 	int pauseCount;
 	double acc, rotAcc;
-	Player* player;
+	Player *player;
+	int restTime = 0;
+	int restTimer = 0;
 
 	/* Current Enemy player is engaging with*/
 	//Enemy* curEnemy = NULL;
-
 private:
 
-	int oldX=0, oldY=0;
+	int oldX = 0, oldY = 0;
 
 	int _jumpVel = -15;
 	/* Falling variables */
