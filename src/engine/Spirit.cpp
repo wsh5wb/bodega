@@ -24,7 +24,6 @@ Spirit::Spirit(Player *player, int d) :
 	//xSpe = 1;
 	//ySpe = 1;
 
-	cout << "spirit d" << d << endl;
 	switch (d) {
 		case 0: {
 			this->loadTexture("./resources/enemies/spirit.png");
@@ -34,7 +33,6 @@ Spirit::Spirit(Player *player, int d) :
 			xSpe = 2;
 			ySpe = 2;
 			this->setAlpha(100);
-			//this->setHitbox(.38,.58,.2,.7);
 			health = 250;
 			restTime = 3;
 			//this->showHitbox = true;
@@ -61,8 +59,6 @@ Spirit::Spirit(Player *player, int d) :
 			this->id = "ENEMY_Spirit";
 			//this->scaleX *= 0.15;//32./w;
 			//this->scaleY *= 0.15; ///h;
-							cout << "spirit case 2" << endl;
-
 			xSpe = 3;
 			ySpe = 3;
 			damage = 5;
@@ -76,8 +72,6 @@ Spirit::Spirit(Player *player, int d) :
 		{
 			this->loadTexture("resources/enemies/spirit.png");
 			this->id = "ENEMY_Spirit";
-			//this->scaleX *= 0.15;//32./w;
-			//this->scaleY *= 0.15; ///h;
 			xSpe = 3;
 			ySpe = 3;
 			damage = 8;
@@ -115,8 +109,6 @@ Spirit::Spirit(Player *player, int d) :
 	this->yBound = 384 - (h * scaleY);
 
 	state = 0;
-
-	cout << "spirit " << scaleX << " " << scaleY << endl;
 }
 
 void Spirit::update(set<SDL_Scancode> pressedKeys) {

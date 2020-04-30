@@ -1,6 +1,8 @@
 #include "Jelly.h"
 #include "DisplayObjectContainer.h"
 #include <cstdlib>
+#include "Projectile.h"
+#include "DTEvent.h"
 
 using namespace std;
 
@@ -15,12 +17,15 @@ Jelly::Jelly(Player *player) :
 	xSpe = 2;
 	ySpe = 2;
 	state = 0;
+	type = 0;
 }
 
 Jelly::Jelly(Player *player, int d) :
 		Enemy(player) {
 	xSpe = 1;
 	ySpe = 1;
+	type = d;
+	this->path = "resources/Projectiles/Stinger2.png";
 	switch (d) {
 		case 0: {
 			this->loadTexture("./resources/art/hades/ghost.png");
@@ -35,9 +40,17 @@ Jelly::Jelly(Player *player, int d) :
 		case 2: {
 			this->loadTexture("./resources/enemies/wasp.png");
 			this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+			this->path = "resources/Projectiles/Stinger2.png";
 			this->scaleX *= 1;
 			this->scaleY *= 1;
+			xSpe = 2;
+			ySpe = 2;
+			damage = 4;
+			xp = 15;
+			health = 300;
+			maxCoolDown = 200;
 			//this->setAlpha(100);
+			this->projectileDamage = 5;
 			this->setHitbox(.1,.9,.2,.9);
 			this->showHitbox = true;
 			break;
@@ -47,7 +60,8 @@ Jelly::Jelly(Player *player, int d) :
 			this->id = "ENEMY_Jellyfish"; //shouldn't do anything
 			this->scaleX *= 1;
 			this->scaleY *= 1;
-			this->setAlpha(100);
+			this->setAlpha(130);
+			maxCoolDown = 100;
 			this->setHitbox(.1,.9,.1,.9);
 			this->showHitbox = true;
 			break;
@@ -68,13 +82,51 @@ Jelly::Jelly(Player *player, int d) :
 
 	this->xBound = 512 - (w * scaleX);
 	this->yBound = 384 - (h * scaleY);
+	nextShot = (rand() % (1+maxCoolDown))-1;
 
 	state = 0;
 }
 
 void Jelly::update(set<SDL_Scancode> pressedKeys) {
 	Sprite::update(pressedKeys);
-	if (state == 0) {
+	timer++;
+	/*if (timer >= 360) {
+		timer = 0;
+	}*/
+	if(type > 1){
+		if(timer > nextShot){
+			SDL_Point charLoc = Player::getPlayer()->getPosition();
+			AffineTransform* at = getGlobalTransform(Player::getPlayer());
+			charLoc = at->transformPoint(0, 0);
+			delete at;
+
+			AffineTransform* at2 = getGlobalTransform(this);
+			SDL_Point globalPos = at2->transformPoint(0,0);
+			delete at2;
+
+			int projX = 0;
+			int projY = 0; 
+			if(globalPos.x < charLoc.x){projX = type + 1;}
+			else if(globalPos.x > charLoc.x){projX = -(type+1);}
+			if(globalPos.y < charLoc.y){projY = type + 1;}
+			else if(globalPos.y > charLoc.y){projY = -(type+1);}
+
+			if(projX != 0 && projY != 0){
+				projX = projX/1.4142;
+				projY = projY/1.4142;
+			}
+
+			int midX = this->position.x + (dstrect.w)/3;
+		    int midY = this->position.y + (dstrect.h)/3;
+			Projectile * p = new Projectile(path, midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
+			p->showHitbox = true;
+			((DisplayObjectContainer*)(this->parent))->addChild(p);
+			DTEvent e("OBJ_ADD", &Game::eventHandler, p);
+			Game::eventHandler.dispatchEvent(&e);
+			nextShot = timer + (rand() % maxCoolDown);
+		}
+	}
+	/*if (state == 0) {
 		timer++;
 		if (timer >= 180) {
 			state++;
@@ -84,7 +136,7 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 		if (timer >= 360) {
 			timer = 0;
 		}
-	}
+	}*/
 	// cout << position.x << ", " << position.y << endl;
 	position.x += xSpe;
 	position.y += ySpe;

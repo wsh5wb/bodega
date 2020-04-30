@@ -52,7 +52,7 @@ Urchin::Urchin(Player *player, int d) :
 			state = 0;
 			this->xBound = 512 - (w * scaleX);
 			this->yBound = 384 - (h * scaleY);
-			projectileDamage = 10;
+			projectileDamage = 5;
 			this->xp = 20;
 			break;
 		}
