@@ -52,7 +52,7 @@ Spirit::Spirit(Player *player, int d) :
 		this->xp = 20;
 		restTime = 2;
 		//	this->setHitbox(.38,.58,.2,.7);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 2: {
@@ -69,7 +69,7 @@ Spirit::Spirit(Player *player, int d) :
 		this->xp = 50;
 		restTime = 0;
 		//this->setHitbox(.1,.9,.1,.9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 3: {
@@ -85,7 +85,7 @@ Spirit::Spirit(Player *player, int d) :
 		restTime = 0;
 
 		//this-setHitbox(.1,.9,.1,.9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 
@@ -99,7 +99,7 @@ Spirit::Spirit(Player *player, int d) :
 		damage = 3;
 		health = 300;
 		//this->setHitbox(.1,.9,.1,.9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 
 	}

@@ -35,7 +35,7 @@ Jelly::Jelly(Player *player, int d) :
 		this->xp = 5;
 		this->setAlpha(100);
 		this->setHitbox(.1, .9, .1, .7);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 1: {
@@ -49,7 +49,7 @@ Jelly::Jelly(Player *player, int d) :
 		this->xp = 10;
 		health = 300;
 		this->setHitbox(.1, .9, .1, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 2: {
@@ -68,7 +68,7 @@ Jelly::Jelly(Player *player, int d) :
 		this->projectileDamage = 5;
 		this->projectileSpeed = 4;
 		this->setHitbox(.1, .9, .2, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	case 3: {
@@ -83,7 +83,7 @@ Jelly::Jelly(Player *player, int d) :
 		health = 600;
 		this->setAlpha(100);
 		this->setHitbox(.1, .9, .1, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 		break;
 	}
 	default: {
@@ -96,7 +96,7 @@ Jelly::Jelly(Player *player, int d) :
 		damage = 3;
 		health = 300;
 		this->setHitbox(.1, .9, .1, .9);
-		this->showHitbox = true;
+		// this->showHitbox = true;
 	}
 	}
 
