@@ -81,6 +81,8 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   }
 
   //state changes
+  cout << "Cerb State: " << state << endl;
+  cout << "Cerb Pos: " << globalPos.x << ", " << globalPos.y << "\n";
   if (state == 0){
     state = 1;
     this->targX = std::rand()%(this->maxPatX-this->minPatX) + this->minPatX;
@@ -151,6 +153,7 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
     }
   }
   else if (state == 4){
+    //state = 1;
     restCount++;
     if (wasHit()){
       if (std::rand()%2 == 0)
@@ -198,11 +201,13 @@ void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
 
   int midX = this->position.x + (dstrect.w)/3;
   int midY = this->position.y + (dstrect.h)/3;
+  cout << "Getting to before adding the projectile" << endl;
   Projectile * p = new Projectile("resources/Projectiles/Bblue.png", midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
   p->showHitbox = true;
   ((DisplayObjectContainer*)(this->parent))->addChild(p);
   DTEvent e("OBJ_ADD", &Game::eventHandler, p);
   Game::eventHandler.dispatchEvent(&e);
+  cout << "Getting to the end of Shoot" << endl;
 }
 
 bool Cerb::wasHit(){
