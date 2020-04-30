@@ -200,16 +200,16 @@ void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
   //cout << "Cerb Angle: " << angle << endl;
   int diffX = globalPos.x - charLoc.x;
   int diffY = globalPos.y - charLoc.y;
-  if(globalPos.x < charLoc.x && abs(diffX) > 10){
+  if(globalPos.x < charLoc.x && abs(diffX) > 30){
     projX = projectileSpeed;
   }
-  else if(globalPos.x > charLoc.x && abs(diffX) > 10){
+  else if(globalPos.x > charLoc.x && abs(diffX) > 30){
     projX = -projectileSpeed;//*xRate;
   }
-  if(globalPos.y < charLoc.y && abs(diffY) > 10){
+  if(globalPos.y < charLoc.y && abs(diffY) > 30){
     projY = projectileSpeed;
   }
-  else if(globalPos.y > charLoc.y && abs(diffY) > 10){
+  else if(globalPos.y > charLoc.y && abs(diffY) > 30){
     projY = -projectileSpeed;
   }
 
