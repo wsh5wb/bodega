@@ -5,6 +5,9 @@
 #include "AnimatedSprite.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Projectile.h"
+#include "DTEvent.h"
+
 
 using namespace std;
 
@@ -24,6 +27,8 @@ public:
   int prowlTime = 0;
   int lungeTime = 0;
   int restCount = 0;
+  int projectileSpeed = 3;
+  int projectileDamage = 5;
 };
 
 #endif
