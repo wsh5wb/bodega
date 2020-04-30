@@ -33,10 +33,10 @@ void charybdis::update(set<SDL_Scancode> pressedKeys){
 
   position.x += xSpe;
   position.y += ySpe;
-  if (position.x <= 25 || position.x >= 1000) {
+  if (position.x <= 25 || position.x >= 900) {
     xSpe *= -1;
   }
-  if (position.y <= 25 || position.y >= 743) {
+  if (position.y <= 25 || position.y >= 600) {
     ySpe *= -1;
 }
 }
