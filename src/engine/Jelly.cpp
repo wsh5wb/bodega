@@ -24,7 +24,7 @@ Jelly::Jelly(Player *player, int d) :
 	Enemy(player) {
 	xSpe = rand()%7-3;
 	ySpe = rand()%7-3;
-	timer+=rand()%200;
+	timer+=20*rand()%15;
 	type = d;
 	this->path = "resources/Projectiles/Stinger2.png";
 	switch (d) {
@@ -156,7 +156,11 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 		}else{
 			ySpe*=-1;
 		}
-	}else{
+		if(position.x<0){position.x=1;}else{
+		if(position.x>xBound){position.x=xBound-1;}}//xSpe=-rand()%5;}
+		if(position.y<0){position.y=1;}else{
+		if(position.y>yBound){position.y=yBound-1;}}//ySpe=-rand()%5;}
+	}
 	if (state == 0) {
 		timer++;
 		if (timer%340 >= 250) {
@@ -169,9 +173,10 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 		if (timer%340>= 330) {
 			//timer = 0;
 			state=0;
+			timer+=10+rand()%20;
 			while(abs(xSpe)+abs(ySpe)<4){
-				xSpe=rand()%11-5;
-				ySpe=rand()%11-5;
+				xSpe=rand()%(10+timer/300)-5;
+				ySpe=rand()%(10+timer/300)-5;
 			}
 		}
 	}else{
@@ -179,7 +184,7 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 		state=0;
 	}
 	if(timer<0){timer=0;}
-	}
+
 	// cout << position.x << ", " << position.y << endl;
 	//position.x += xSpe;
 	//position.y += ySpe;
