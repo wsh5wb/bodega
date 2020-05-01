@@ -17,9 +17,9 @@ OlympusDungeon::OlympusDungeon() {
 	}
 	olympus_dungeon.loadMusic("./resources/sounds/foreign_area4.wav");
 	olympus_dungeon.playMusic();
-	scenes.push_back("./resources/scenes/olympus/basic_room1.txt");
+	scenes.push_back("./resources/scenes/olympus/jelly_room.txt");
 	scenes.push_back("./resources/scenes/olympus/start.txt");
-	scenes.push_back("./resources/scenes/olympus/basic_room1.txt");
+	scenes.push_back("./resources/scenes/olympus/jelly_room.txt");
 	scenes.push_back("./resources/scenes/olympus/torch_chest.txt");
 	scenes.push_back("./resources/scenes/olympus/jelly_room.txt");
 	scenes.push_back("./resources/scenes/olympus/urchin_room.txt");
