@@ -16,9 +16,9 @@ TextBox::TextBox() : DisplayObject(){
 
 TextBox::TextBox(const string &message_text): DisplayObject("TextBox", "./resources/miscellaneous/pixelart.png"){
   this->fullMessageText = message_text;
-  position.x = 40;
-  position.y = -80;
-  setScale(.25, .3);
+  position.x = 32;
+  position.y = -32;
+  setScale(.125, .15);
   this->start = std::clock();
   this->timeout = 2000;
   chunkString(fullMessageText, 60);
@@ -36,9 +36,9 @@ TextBox::TextBox(const string &font_path,
     this->font_path = font_path;
     this->font_size = font_size;
     this->textColor = color;
-     position.x = 40;
-    position.y = -80;
-    setScale(.25, .3);
+    position.x = 32;
+    position.y = -32;
+    setScale(.125, .15);
     this->start = std::clock();
     this->timeout = 2000;
     chunkString(message_text, 60);
@@ -53,8 +53,8 @@ void TextBox::draw(AffineTransform &at){
     DisplayObject::draw(at);
     auto current_x = dstrect.x;
     auto current_y = dstrect.y;
-    text_rect.x = current_x + 40;
-    text_rect.y = current_y + 50;
+    text_rect.x = current_x + 45;
+    text_rect.y = current_y + 60;
     SDL_RenderCopy(Game::renderer, text_texture, nullptr, &text_rect);
   }
 
@@ -63,7 +63,7 @@ void TextBox::draw(AffineTransform &at){
 void TextBox::update(set<SDL_Scancode> pressedKeys){
   DisplayObject::update(pressedKeys);
   text_active = true;
-  if(pressedKeys.find(SDL_SCANCODE_M) != pressedKeys.end()){ 
+  if(pressedKeys.find(SDL_SCANCODE_M) != pressedKeys.end()){
     text_active = false;
     return;
   }
