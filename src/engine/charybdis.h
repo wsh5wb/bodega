@@ -14,7 +14,7 @@ using namespace std;
 class charybdis : public Enemy{
 public:
   charybdis(Player* player);
-
+  charybdis(Player* player, int d);
   virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
@@ -33,7 +33,7 @@ public:
   int projectileDamage = 10;
   int originX;
   int originY;
-  
+
   //vector<Projectile*> projectiles;
 };
 

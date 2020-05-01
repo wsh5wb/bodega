@@ -282,6 +282,10 @@ void Dungeon::generate() {
 						portal->setHitbox(.1, .9);
 						temp->room->addChild(portal);
 						Cerb *c = new Cerb(Player::getPlayer());
+						charybdis *whirl = new charybdis(Player::getPlayer());
+						charybdis *w2 = new charybdis(Player::getPlayer());
+						charybdis *w3 = new charybdis(Player::getPlayer());
+						charybdis *w4 = new charybdis(Player::getPlayer());
 						c->originX = 512;
 						c->originY = 384;
 						//c->showHitbox = true;
@@ -289,7 +293,7 @@ void Dungeon::generate() {
 							c->loadTexture("resources/enemies/scylla.png");
 							c->scaleX *= 0.35;
 							c->scaleY *= 0.35;
-							charybdis *whirl = new charybdis(Player::getPlayer());
+
 							whirl->loadTexture("resources/enemies/charyb.png");
 							whirl->scaleX *= 1.1;
 							whirl->scaleY *= 1.1;
@@ -302,23 +306,65 @@ void Dungeon::generate() {
 						}
 						else if (dungeonType == 2){
 							c->loadTexture("resources/enemies/hydra.png");
-							c->scaleX *= 1.2;
-							c->scaleY *= 1.2;
+							c->scaleX *= 2;
+							c->scaleY *= 2;
 							c->health = 10000;
 							c->form = 2;
+							whirl->loadTexture("resources/enemies/wasp.png");
+							whirl->scaleX *= 1;
+							whirl->scaleY *= 1;
+							whirl->health = 500;
+							whirl->moveTo(50,50);
+							temp->room->addChild(whirl);
+							w2->loadTexture("resources/enemies/wasp.png");
+							w2->scaleX *= 1;
+							w2->scaleY *= 1;
+							w2->health = 500;
+							w2->moveTo(850,500);
+							temp->room->addChild(w2);
+							w3->loadTexture("resources/enemies/wasp.png");
+							w3->scaleX *= 1;
+							w3->scaleY *= 1;
+							w3->health = 500;
+							w3->moveTo(50,500);
+							temp->room->addChild(w3);
+							w4->loadTexture("resources/enemies/wasp.png");
+							w4->scaleX *= 1;
+							w4->scaleY *= 1;
+							w4->health = 500;
+							w4->moveTo(850,50);
+							temp->room->addChild(w4);
+
+
 						}
 						else if (dungeonType == 3){
 							c->loadTexture("resources/enemies/Pose.png");
 							c->health = 20000;
 							c->form = 3;
-							//Skel *s1 = new Skel(Player::getPlayer());
-							//Skel *s2 = new Skel(Player::getPlayer());
-							//s2->moveTo(490, 384);
-							//s1->health = 5000;
-							//s1->moveTo(534, 384);
-							//s2->health = 5000;
-							//temp->room->addChild(s1);
-							//temp->room->addChild(s2);
+							whirl->loadTexture("resources/enemies/ojelly.png");
+							whirl->scaleX *= 1;
+							whirl->scaleY *= 1;
+							whirl->health = 5000;
+							whirl->moveTo(50,50);
+							temp->room->addChild(whirl);
+							w2->loadTexture("resources/enemies/ojelly.png");
+							w2->scaleX *= 1;
+							w2->scaleY *= 1;
+							w2->health = 5000;
+							w2->moveTo(850,500);
+							temp->room->addChild(w2);
+							w3->loadTexture("resources/enemies/ojelly.png");
+							w3->scaleX *= 1;
+							w3->scaleY *= 1;
+							w3->health = 5000;
+							w3->moveTo(50,500);
+							temp->room->addChild(w3);
+							w4->loadTexture("resources/enemies/ojelly.png");
+							w4->scaleX *= 1;
+							w4->scaleY *= 1;
+							w4->health = 5000;
+							w4->moveTo(850,50);
+							temp->room->addChild(w4);
 						}
 						c->moveTo(512, 384);
 

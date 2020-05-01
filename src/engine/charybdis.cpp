@@ -19,6 +19,64 @@ charybdis::charybdis(Player* player) : Enemy(player){
 	ySpe = rand()%5-2;
 }
 
+charybdis::charybdis(Player *player, int d) :
+		Enemy(player) {
+	xSpe = rand() % 7 - 3;
+	ySpe = rand() % 7 - 3;
+	//timer += 20 * rand() % 15;
+	type = d;
+	//this->path = "resources/Projectiles/Stinger2.png";
+	switch (d) {
+	case 2: {
+		this->loadTexture("./resources/enemies/wasp.png");
+		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+		//this->path = "resources/Projectiles/Stinger2.png";
+		this->scaleX *= 1;
+		this->scaleY *= 1;
+		xSpe = rand() % 7 - 3;
+		ySpe = rand() % 7 - 3;
+		damage = 5;
+		this->xp = 500;
+		health = 300;
+		//maxCoolDown = 200;
+		//this->setAlpha(100);
+		//this->projectileDamage = 5;
+		//this->projectileSpeed = 4;
+		this->setHitbox(.1, .9, .2, .9);
+		// this->showHitbox = true;
+		break;
+	}
+	case 3: {
+		this->loadTexture("./resources/enemies/ojelly.png");
+		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+		this->scaleX *= 1;
+		this->scaleY *= 1;
+		xSpe = rand() % 11 - 5;
+		ySpe = rand() % 11 - 5;
+		damage = 8;
+		this->xp = 2500;
+		health = 500;
+		this->setAlpha(100);
+		this->setHitbox(.1, .9, .1, .9);
+		// this->showHitbox = true;
+		break;
+	}
+	default: {
+		this->loadTexture("resources/enemies/charyb.png");
+		this->id = "ENEMY_Jellyfish";
+		this->scaleX *= 32. / w;
+		this->scaleY *= 48. / h;
+		xSpe = rand() % 7 - 3;
+		ySpe = rand() % 7 - 3;
+		damage = 16;
+		health = 300;
+		this->setHitbox(.1, .9, .1, .9);
+		// this->showHitbox = true;
+	}
+	}
+
+}
+
 void charybdis::update(set<SDL_Scancode> pressedKeys){
   Sprite::update(pressedKeys);
 
