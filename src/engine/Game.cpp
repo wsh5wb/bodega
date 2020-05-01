@@ -243,9 +243,11 @@ void Game::start(){
 						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 							pressedKeys.erase(SDL_SCANCODE_A);
 							break;
-						case SDL_CONTROLLER_BUTTON_BACK:
-							pressedKeys.erase(SDL_SCANCODE_M);
-							break;
+						// case SDL_CONTROLLER_BUTTON_BACK:{
+						// 	pressedKeys.erase(SDL_SCANCODE_M);
+						// 	printf("removed M\n");
+						// 	break;
+						// }
 						case SDL_CONTROLLER_BUTTON_A:
 							pressedKeys.erase(SDL_SCANCODE_DOWN);
 							break;
@@ -278,10 +280,12 @@ void Game::start(){
 				SDL_PollEvent(&event);
 				if(event.type == SDL_CONTROLLERBUTTONUP){
 					if(event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK){
-						printf("HELLO?\n");
 						mapMode = false;
 						paused = false;
+						pressedKeys.erase(SDL_SCANCODE_M);
+						printf("removed M\n");
 					}
+
 				}
 				if(event.type == SDL_KEYUP){
 					if(event.key.keysym.scancode == SDL_SCANCODE_M){
@@ -314,7 +318,7 @@ void Game::start(){
 				}
 
 				if(event.type == SDL_QUIT){
-						quit = true;
+					quit = true;
 				}
 			}
 			speed = 5;
