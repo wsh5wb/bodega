@@ -243,9 +243,11 @@ void Game::start(){
 						case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
 							pressedKeys.erase(SDL_SCANCODE_A);
 							break;
-						case SDL_CONTROLLER_BUTTON_BACK:
-							pressedKeys.erase(SDL_SCANCODE_M);
-							break;
+						// case SDL_CONTROLLER_BUTTON_BACK:{
+						// 	pressedKeys.erase(SDL_SCANCODE_M);
+						// 	printf("removed M\n");
+						// 	break;
+						// }
 						case SDL_CONTROLLER_BUTTON_A:
 							pressedKeys.erase(SDL_SCANCODE_DOWN);
 							break;
@@ -280,10 +282,14 @@ void Game::start(){
 					if(event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK){
 						mapMode = false;
 						paused = false;
+						pressedKeys.erase(SDL_SCANCODE_M);
+						printf("removed M\n");
 					}
+
 				}
 				if(event.type == SDL_KEYUP){
 					if(event.key.keysym.scancode == SDL_SCANCODE_M){
+						printf("Key Hello?\n");
 						mapMode = false;
 						paused = false;
 					}
@@ -312,7 +318,7 @@ void Game::start(){
 				}
 
 				if(event.type == SDL_QUIT){
-						quit = true;
+					quit = true;
 				}
 			}
 			speed = 5;
@@ -342,7 +348,7 @@ void Game::start(){
 				}
 			} else if(event.type == SDL_CONTROLLERBUTTONDOWN){
 				if(event.cbutton.button == SDL_CONTROLLER_BUTTON_START){
-					paused = false;
+					paused = false;	
 					ps->setAlpha(255);
 					psTween->animate(TWEEN_ALPHA, 255, 0, 30, TWEEN_LINEAR,EASE_OUT);
 					juggler->add(psTween);
