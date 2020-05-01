@@ -226,8 +226,8 @@ void Scene::loadScene(string sceneFilePath) {
 			SDL_Point position;
 			i >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
-//			temp->setHitbox(.1, .9);
-//			temp->showHitbox = true;
+			temp->setHitbox(.4,.6,.2, .8);
+			temp->showHitbox = true;
 			objects.push_back(temp);
 			break;
 		}
@@ -373,7 +373,8 @@ void Scene::loadScene(string sceneFilePath) {
 			i >> temp->id >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
 			objects.push_back(temp);
-			temp->showHitbox = true;
+			temp->health = 25;
+			//temp->showHitbox = true;
 			this->numEnemies += 1;
 			break;
 		}
