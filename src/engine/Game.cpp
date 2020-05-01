@@ -278,12 +278,14 @@ void Game::start(){
 				SDL_PollEvent(&event);
 				if(event.type == SDL_CONTROLLERBUTTONUP){
 					if(event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK){
+						printf("HELLO?\n");
 						mapMode = false;
 						paused = false;
 					}
 				}
 				if(event.type == SDL_KEYUP){
 					if(event.key.keysym.scancode == SDL_SCANCODE_M){
+						printf("Key Hello?\n");
 						mapMode = false;
 						paused = false;
 					}
@@ -342,7 +344,7 @@ void Game::start(){
 				}
 			} else if(event.type == SDL_CONTROLLERBUTTONDOWN){
 				if(event.cbutton.button == SDL_CONTROLLER_BUTTON_START){
-					paused = false;
+					paused = false;	
 					ps->setAlpha(255);
 					psTween->animate(TWEEN_ALPHA, 255, 0, 30, TWEEN_LINEAR,EASE_OUT);
 					juggler->add(psTween);
