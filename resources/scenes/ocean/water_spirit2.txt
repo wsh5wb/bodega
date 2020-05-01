@@ -1,9 +1,9 @@
 9 8
 0 Scene ./resources/art/ocean/background.png 2.34375 2.34375
-9 lava1_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 64 64 .3 .7 .1 .45
-9 lava2_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 352 64 .3 .7 .1 .45
-9 lava3_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 64 224 .3 .7 .1 .45
-9 lava4_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 352 224 .3 .7 .1 .45
+9 lava1_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 64 64 .1 .9 .1 .45
+9 lava2_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 352 64 .1 .9 .1 .45
+9 lava3_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 64 224 .1 .9 .1 .45
+9 lava4_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 352 224 .1 .9 .1 .45
 13 1 ENEMY_Urchin1 32 32 
 13 1 ENEMY_Urchin2 432 32
 13 1 ENEMY_Urchin3 32 304
