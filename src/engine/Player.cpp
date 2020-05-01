@@ -321,8 +321,11 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	int xMov = 0, yMov = 0;
 	bool idle = true;
 	projSwapDelay++;
-	for (auto k : pressedKeys) {
-		if (k == SDL_SCANCODE_D) {
+	for (auto k : pressedKeys){
+		if (k == SDL_SCANCODE_L) {
+			if (level < 69)
+				levelUp();
+		}else if (k == SDL_SCANCODE_D) {
 			if (runSpeed == 0) {
 				continue;
 			}

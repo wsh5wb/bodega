@@ -15,6 +15,7 @@ Cerb::Cerb(Player* player) : Enemy(player){
   state = 0;
   position.x = 0;
   position.y = 0;
+  form = 0;
 }
 
 void Cerb::update(set<SDL_Scancode> pressedKeys){
@@ -51,6 +52,7 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   }
   else if (state == 1){
     Enemy::patrol();
+    //shoot(charLoc, globalPos);
   }
   else if (state == 2){
     //Enemy::moveToTarget();
@@ -58,20 +60,20 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   else if (state == 3){
     //lunge();
     if (globalPos.x < charLoc.x){
-      position.x += 1;
+      position.x += 3;
     }
     else if (globalPos.x > charLoc.x){
-      position.x -= 1;
+      position.x -= 3;
     }
     if (globalPos.y < charLoc.y){
-      position.y += 1;
+      position.y += 3;
     }
     else if (globalPos.y > charLoc.y){
-      position.y -= 1;
+      position.y -= 3;
     }
   }
   else if (state == 4){
-    //shoot(charLoc, globalPos);
+    shoot(charLoc, globalPos);
   }
   else if (state == 5){
     Enemy::moveToTarget();
@@ -81,8 +83,8 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
   }
 
   //state changes
-  cout << "Cerb State: " << state << endl;
-  cout << "Cerb Pos: " << globalPos.x << ", " << globalPos.y << "\n";
+  //cout << "Cerb State: " << state << endl;
+  //cout << "Cerb Pos: " << globalPos.x << ", " << globalPos.y << "\n";
   if (state == 0){
     state = 1;
     this->targX = std::rand()%(this->maxPatX-this->minPatX) + this->minPatX;
@@ -108,20 +110,23 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
       acc = 0.25;
       prowlTime = 0;
     }
+    else{
+      shoot(charLoc, globalPos);
+    }
   }
   else if (state == 2){
     prowlTime++;
     if (globalPos.x < charLoc.x){
-      position.x += 1;
+      position.x += 2;
     }
     else if (globalPos.x > charLoc.x){
-      position.x -= 1;
+      position.x -= 2;
     }
     if (globalPos.y < charLoc.y){
-      position.y += 1;
+      position.y += 2;
     }
     else if (globalPos.y > charLoc.y){
-      position.y -= 1;
+      position.y -= 2;
     }
     if (prowlTime > 120){
       state = 3;
@@ -150,6 +155,9 @@ void Cerb::update(set<SDL_Scancode> pressedKeys){
         restCount = 0;
         state = 1;
       }
+    }
+    else{
+      shoot(charLoc, globalPos);
     }
   }
   else if (state == 4){
@@ -189,25 +197,52 @@ void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
   //TODO: Give Cerberus projectiles to use
   int projX = 0;
   int projY = 0;
-  if(globalPos.x < charLoc.x){projX = projectileSpeed;}
-  else if(globalPos.x > charLoc.x){projX = -projectileSpeed;}
-  if(globalPos.y < charLoc.y){projY = projectileSpeed;}
-  else if(globalPos.y > charLoc.y){projY = -projectileSpeed;}
+  //float angle = atan2(globalPos.y - charLoc.y, globalPos.x - charLoc.x)*180/PI;
+  //cout << "Cerb Angle: " << angle << endl;
+  int diffX = globalPos.x - charLoc.x;
+  int diffY = globalPos.y - charLoc.y;
+  if(globalPos.x < charLoc.x && abs(diffX) > 30){
+    projX = projectileSpeed;
+  }
+  else if(globalPos.x > charLoc.x && abs(diffX) > 30){
+    projX = -projectileSpeed;//*xRate;
+  }
+  if(globalPos.y < charLoc.y && abs(diffY) > 30){
+    projY = projectileSpeed;
+  }
+  else if(globalPos.y > charLoc.y && abs(diffY) > 30){
+    projY = -projectileSpeed;
+  }
+
 
   if(projX != 0 && projY != 0){
     projX = projX/1.4142;
     projY = projY/1.4142;
   }
-
-  int midX = this->position.x + (dstrect.w)/3;
-  int midY = this->position.y + (dstrect.h)/3;
-  cout << "Getting to before adding the projectile" << endl;
-  Projectile * p = new Projectile("resources/Projectiles/Bblue.png", midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
+  int midX, midY;
+  if (form == 0){
+    midX = this->position.x + (dstrect.w)/3;
+    midY = this->position.y + (dstrect.h)/3;
+  }
+  else if (form == 1){
+    midX = this->position.x + 115;
+    midY = this->position.y + 60;
+  }
+  else if (form == 2){
+    midX = this->position.x + 15;
+    midY = this->position.y + 15;
+  }
+  else{
+    midX = this->position.x + 10;
+    midY = this->position.y + 10;
+  }
+  //cout << "Getting to before adding the projectile" << endl;
+  Projectile * p = new Projectile("resources/Projectiles/spikedball.png", midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
   p->showHitbox = true;
   ((DisplayObjectContainer*)(this->parent))->addChild(p);
   DTEvent e("OBJ_ADD", &Game::eventHandler, p);
   Game::eventHandler.dispatchEvent(&e);
-  cout << "Getting to the end of Shoot" << endl;
+  //cout << "Getting to the end of Shoot" << endl;
 }
 
 bool Cerb::wasHit(){

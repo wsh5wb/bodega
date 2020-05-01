@@ -10,4 +10,3 @@ Scene Statue2_OBSTACLE
 Scene Statue3_OBSTACLE
 Scene Statue4_OBSTACLE
 Scene PLAYER_YOU
-

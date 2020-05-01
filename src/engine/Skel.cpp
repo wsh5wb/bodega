@@ -18,6 +18,7 @@ Skel::Skel(Player *player) :
 	position.x = 0;
 	position.y = 0;
 	this->setAlpha(15);
+
 }
 
 void Skel::update(set<SDL_Scancode> pressedKeys) {
