@@ -42,11 +42,13 @@ AnimatedSprite::~AnimatedSprite(){
 void AnimatedSprite::addAnimation(string basepath, string animName, int numFrames, int frameRate, bool loop){
 	Animation * a = new Animation(basepath,images.size(),numFrames,frameRate,loop);
 	animationMap.emplace(animName,a);
-	usesSheet = true;
-
+	usesSheet = false;
 	for(int i=1; i<numFrames+1;i++){
 		SDL_Surface* image = IMG_Load((basepath + "_" + to_string(i) + ".png").c_str());
-		images.push_back(image);
+		if(image)
+			images.push_back(image);
+		else
+			fprintf(stderr, "Image at %s not found\n", basepath.c_str());
 	}
 }
 
@@ -57,6 +59,7 @@ void AnimatedSprite::addAnimation(string sheetpath, string xmlpath, string animN
 		return;
 	}
     in.close();
+	usesSheet = true;
 
 	Animation * a = new Animation(sheetpath,xmlpath,images.size(),frameRate,loop);
 	animationMap.emplace(animName,a);

@@ -15,19 +15,40 @@ Player::Player() :
 
 	this->position.x = 55;
 	this->position.y = 200;
-	this->w = 416;
-	this->h = 454;
-	this->scaleX = 0.15;
-	this->scaleY = 0.15;
+	// this->w = 416;
+	// this->h = 454;
+	// this->scaleX = 0.15;
+	// this->scaleY = 0.15;
 
 	this->pivot.x = 0; //this->w / 2;
 	this->pivot.y = 0; //this->h / 2;
-	this->addAnimation("resources/PlayerSprites/idleSprite.png",
-			"resources/PlayerSprites/idleSheet.xml", "Idle", 1, 60, true);
-	this->addAnimation("resources/PlayerSprites/runSprite.png",
-			"resources/PlayerSprites/runSheet.xml", "Run", 1, 60, true);
-	this->addAnimation("resources/PlayerSprites/jumpsprites.png",
-			"resources/PlayerSprites/jumpSheet.xml", "Jump", 1, 60, false);
+
+	// Temporary idle for simplicity sake
+	this->addAnimation("resources/playerAssets/idle.png",
+			"resources/playerAssets/idle.xml", "Idle", 1, 1, true);
+
+	// projectile firing 
+	this->addAnimation("resources/PlayerSprites/fireLeft.png",
+			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 60, false);
+	this->addAnimation("resources/PlayerSprites/fireRight.png",
+			"resources/PlayerSprites/fireRight.xml", "fireRight", 1, 60, false);
+	this->addAnimation("resources/PlayerSprites/fireUp.png",
+			"resources/PlayerSprites/fireUp.xml", "fireUp", 1, 60, false);
+	this->addAnimation("resources/PlayerSprites/fireDown.png",
+			"resources/PlayerSprites/fireDown.xml", "fireDown", 1, 60, false);
+
+	// walking
+	this->addAnimation("resources/PlayerSprites/walkRight.png",
+			"resources/PlayerSprites/walkRight.xml", "walkRight", 1, 60, true);
+	this->addAnimation("resources/PlayerSprites/walkUp.png",
+			"resources/PlayerSprites/walkUp.xml", "walkUp", 1, 60, true);
+	this->addAnimation("resources/PlayerSprites/walkDown.png",
+			"resources/PlayerSprites/walkDown.xml", "walkDown", 1, 60, true);
+
+	// dead
+	this->addAnimation("resources/PlayerSprites/dead.png",
+			"resources/PlayerSprites/dead.xml", "dead", 1, 60, false);
+
 	this->play("Idle");
 	chat_box = new TextBox("There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand");
 	this->addChild(chat_box);
@@ -267,6 +288,7 @@ void Player::addProjectile(int speedX, int speedY, int timeout, double scaleX, d
 }
 
 void Player::update(set<SDL_Scancode> pressedKeys) {
+
 	AnimatedSprite::update(pressedKeys);
 	oldY = this->position.y;
 	oldX = this->position.x;
@@ -283,8 +305,8 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->position.x += runSpeed;
 			this->deltaX += runSpeed;
 			//this->flipH = false;
-			if (this->currAnimation != "Run") {
-				this->play("Run");
+			if (this->currAnimation != "walkRight") {
+				this->play("walkRight");
 			}
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
@@ -293,8 +315,8 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			this->position.x -= runSpeed;
 			this->deltaX += -runSpeed;
 			//this->flipH = true;
-			if (this->currAnimation != "Run") {
-				this->play("Run");
+			if (this->currAnimation != "walkRight") {
+				this->play("walkRight");
 			}
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
@@ -302,16 +324,16 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			if(runSpeed == 0){continue;}
 			this->position.y -= runSpeed;
 			this->deltaY += -runSpeed;
-			if (this->currAnimation != "Run") {
-				this->play("Run");
+			if (this->currAnimation != "walkUp") {
+				this->play("walkUp");
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_S) {
 			if(runSpeed == 0){continue;}
 			this->position.y += runSpeed;
 			this->deltaY += runSpeed;
-			if (this->currAnimation != "Run") {
-				this->play("Run");
+			if (this->currAnimation != "walkDown") {
+				this->play("walkDown");
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_1){
@@ -347,7 +369,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		yMov = yMov/1.4142;
 	}
 	//play idle animation if player is just standing still on ground
-	if (this->currAnimation == "Run" && idle) {
+	if (this->currAnimation != "Idle" && idle) {
 		this->play("Idle");
 	}
 
@@ -385,9 +407,11 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	// 	}
 
 	// }
-
+	string fireAnims[4] = {"fireLeft", "fireRight", "fireUp", "fireDown"};
 	if(xMov != 0 || yMov != 0){
 		if((double)(((double)attackSpeed*(std::clock() - lastFired) / (double) (CLOCKS_PER_SEC)) > 1.0)){
+			if(this->currAnimation != fireAnims[this->direction-1])
+				this->play(fireAnims[this->direction-1]);
 			addProjectile(xMov,yMov,2000,1.0,1.0);
 			lastFired = std::clock();
 		}

@@ -16,9 +16,9 @@ TextBox::TextBox() : DisplayObject(){
 
 TextBox::TextBox(const string &message_text): DisplayObject("TextBox", "./resources/miscellaneous/pixelart.png"){
   this->fullMessageText = message_text;
-  position.x = 350;
-  position.y = -250;
-  setScale(1.25, 1.5);
+  position.x = 40;
+  position.y = -80;
+  setScale(.25, .3);
   this->start = std::clock();
   this->timeout = 2000;
   chunkString(fullMessageText, 60);
@@ -36,9 +36,9 @@ TextBox::TextBox(const string &font_path,
     this->font_path = font_path;
     this->font_size = font_size;
     this->textColor = color;
-    position.x = 350;
-    position.y = -250;
-    setScale(1.25, 1.5);
+     position.x = 40;
+    position.y = -80;
+    setScale(.25, .3);
     this->start = std::clock();
     this->timeout = 2000;
     chunkString(message_text, 60);
