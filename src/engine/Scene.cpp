@@ -227,7 +227,7 @@ void Scene::loadScene(string sceneFilePath) {
 			i >> position.x >> position.y;
 			temp->moveTo(position.x, position.y);
 			temp->setHitbox(.4,.6,.2, .8);
-			temp->showHitbox = true;
+			//temp->showHitbox = true;
 			objects.push_back(temp);
 			break;
 		}
