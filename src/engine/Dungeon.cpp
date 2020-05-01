@@ -284,14 +284,16 @@ void Dungeon::generate() {
 						Cerb *c = new Cerb(Player::getPlayer());
 						c->originX = 512;
 						c->originY = 384;
-						charybdis *whirl = new charybdis(Player::getPlayer());
 						//c->showHitbox = true;
 						if (dungeonType == 1){
 							c->loadTexture("resources/enemies/scylla.png");
 							c->scaleX *= 0.35;
 							c->scaleY *= 0.35;
+							charybdis *whirl = new charybdis(Player::getPlayer());
 							whirl->loadTexture("resources/enemies/hydra.png");
 							whirl->health = 5000;
+							whirl->moveTo(50,50);
+							temp->room->addChild(whirl);
 							c->health = 7500;
 							c->form = 1;
 
@@ -317,9 +319,9 @@ void Dungeon::generate() {
 							//temp->room->addChild(s2);
 						}
 						c->moveTo(512, 384);
-						whirl->moveTo(50,50);
+
 						temp->room->addChild(c);
-						temp->room->addChild(whirl);
+
 						temp->active = true;
 					}
 					bossRoomsCount++;
