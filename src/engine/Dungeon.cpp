@@ -7,6 +7,7 @@
 #include <time.h>
 #include "HadesDungeon.h"
 #include "Portal.h"
+#include "charybdis.h"
 
 using namespace std;
 
@@ -281,11 +282,94 @@ void Dungeon::generate() {
 						portal->setHitbox(.1, .9);
 						temp->room->addChild(portal);
 						Cerb *c = new Cerb(Player::getPlayer());
-						c->moveTo(512, 384);
+						charybdis *whirl = new charybdis(Player::getPlayer());
+						charybdis *w2 = new charybdis(Player::getPlayer());
+						charybdis *w3 = new charybdis(Player::getPlayer());
+						charybdis *w4 = new charybdis(Player::getPlayer());
 						c->originX = 512;
 						c->originY = 384;
-						c->showHitbox = true;
+						//c->showHitbox = true;
+						if (dungeonType == 1){
+							c->loadTexture("resources/enemies/scylla.png");
+							c->scaleX *= 0.35;
+							c->scaleY *= 0.35;
+
+							whirl->loadTexture("resources/enemies/charyb.png");
+							whirl->scaleX *= 1.1;
+							whirl->scaleY *= 1.1;
+							whirl->health = 5000;
+							whirl->moveTo(50,50);
+							temp->room->addChild(whirl);
+							c->health = 7500;
+							c->form = 1;
+
+						}
+						else if (dungeonType == 2){
+							c->loadTexture("resources/enemies/hydra.png");
+							c->scaleX *= 2;
+							c->scaleY *= 2;
+							c->health = 10000;
+							c->form = 2;
+							whirl->loadTexture("resources/enemies/wasp.png");
+							whirl->scaleX *= 1;
+							whirl->scaleY *= 1;
+							whirl->health = 500;
+							whirl->moveTo(50,50);
+							temp->room->addChild(whirl);
+							w2->loadTexture("resources/enemies/wasp.png");
+							w2->scaleX *= 1;
+							w2->scaleY *= 1;
+							w2->health = 500;
+							w2->moveTo(850,500);
+							temp->room->addChild(w2);
+							w3->loadTexture("resources/enemies/wasp.png");
+							w3->scaleX *= 1;
+							w3->scaleY *= 1;
+							w3->health = 500;
+							w3->moveTo(50,500);
+							temp->room->addChild(w3);
+							w4->loadTexture("resources/enemies/wasp.png");
+							w4->scaleX *= 1;
+							w4->scaleY *= 1;
+							w4->health = 500;
+							w4->moveTo(850,50);
+							temp->room->addChild(w4);
+
+
+						}
+						else if (dungeonType == 3){
+							c->loadTexture("resources/enemies/Pose.png");
+							c->health = 20000;
+							c->form = 3;
+							whirl->loadTexture("resources/enemies/ojelly.png");
+							whirl->scaleX *= 1;
+							whirl->scaleY *= 1;
+							whirl->health = 5000;
+							whirl->moveTo(50,50);
+							temp->room->addChild(whirl);
+							w2->loadTexture("resources/enemies/ojelly.png");
+							w2->scaleX *= 1;
+							w2->scaleY *= 1;
+							w2->health = 5000;
+							w2->moveTo(850,500);
+							temp->room->addChild(w2);
+							w3->loadTexture("resources/enemies/ojelly.png");
+							w3->scaleX *= 1;
+							w3->scaleY *= 1;
+							w3->health = 5000;
+							w3->moveTo(50,500);
+							temp->room->addChild(w3);
+							w4->loadTexture("resources/enemies/ojelly.png");
+							w4->scaleX *= 1;
+							w4->scaleY *= 1;
+							w4->health = 5000;
+							w4->moveTo(850,50);
+							temp->room->addChild(w4);
+						}
+						c->moveTo(512, 384);
+
 						temp->room->addChild(c);
+
 						temp->active = true;
 					}
 					bossRoomsCount++;

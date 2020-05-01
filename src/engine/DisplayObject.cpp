@@ -61,7 +61,9 @@ DisplayObject::~DisplayObject(){
 void DisplayObject::loadTexture(string filepath) {
 	image = IMG_Load(filepath.c_str());
 	if (image == NULL) {
+		printf("%s",filepath.c_str());
 		printf("Bruh you done fucked up with the filepath. \n");
+		printf("%s",filepath);
 	}
 	texture = SDL_CreateTextureFromSurface(Game::renderer, image);
 	setTexture(texture);
