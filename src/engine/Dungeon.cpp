@@ -290,7 +290,9 @@ void Dungeon::generate() {
 							c->scaleX *= 0.35;
 							c->scaleY *= 0.35;
 							charybdis *whirl = new charybdis(Player::getPlayer());
-							whirl->loadTexture("resources/enemies/hydra.png");
+							whirl->loadTexture("resources/enemies/charyb.png");
+							whirl->scaleX *= 1.1;
+							whirl->scaleY *= 1.1;
 							whirl->health = 5000;
 							whirl->moveTo(50,50);
 							temp->room->addChild(whirl);
