@@ -49,8 +49,9 @@ MyGame::MyGame() :
 	Game::cs->watchForCollisions("PLAYER", "OBSTACLE");
 	Game::cs->watchForCollisions("PLAYER", "FLOOR");
 	Game::cs->watchForCollisions("PLAYER", "ENEMY");
-	Game::cs->watchForCollisions("PLAYER", "PORTAL");
 	Game::cs->watchForCollisions("PLAYER", "chest");
+	Game::cs->watchForCollisions("PLAYER", "PORTAL");
+	Game::cs->watchForCollisions("PLAYER", "EN_PROJECTILE");
 	Game::cs->watchForCollisions("PROJECTILE", "OBSTACLE");
 	Game::cs->watchForCollisions("PROJECTILE", "ENEMY");
 
@@ -86,20 +87,31 @@ void MyGame::update(set<SDL_Scancode> pressedKeys) {
 
 	Game::update(pressedKeys);
 	DisplayObjectContainer::update(pressedKeys);
-	myCamera->update(pressedKeys);
+	//myCamera->update(pressedKeys);
 
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
-		case SDL_SCANCODE_O: {
-			Event e("ENEMY_KILLED", &Game::eventHandler);
-			Game::eventHandler.dispatchEvent(&e);
-			SDL_Delay(50);
+		case SDL_SCANCODE_F10: {
+			DEBUG_CHANGE_STUFF = true;
 			break;
 		}
-		case SDL_SCANCODE_SPACE: {
-			Event e("CHANGE_DUNGEON", &Game::eventHandler);
-			Game::eventHandler.dispatchEvent(&e);
-			SDL_Delay(100);
+		case SDL_SCANCODE_O: {
+			if (DEBUG_CHANGE_STUFF) {
+				DEBUG_CHANGE_STUFF = false;
+				Event e("ENEMY_KILLED", &Game::eventHandler);
+				Game::eventHandler.dispatchEvent(&e);
+				SDL_Delay(50);
+			}
+			break;
+		}
+		case SDL_SCANCODE_RETURN: {
+			if (DEBUG_CHANGE_STUFF) {
+				DEBUG_CHANGE_STUFF = false;
+				Event e("CHANGE_DUNGEON", &Game::eventHandler);
+				Game::eventHandler.dispatchEvent(&e);
+				SDL_Delay(100);
+			}
+			break;
 		}
 		}
 	}

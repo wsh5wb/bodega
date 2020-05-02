@@ -11,6 +11,9 @@
 #include "Jelly.h"
 #include "Urchin.h"
 #include "Spirit.h"
+#include "Skel.h"
+#include "Cerb.h"
+#include "Portal.h"
 #include <string>
 #include <vector>
 #include <fstream>

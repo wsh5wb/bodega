@@ -8,7 +8,8 @@
 #include "EventListener.h"
 #include "Sound.h"
 
-#define ROOM_START_DELAY 90 //number of frames before room starts being active after player enters
+#define ROOM_START_DELAY 31 //number of frames before room starts being active after player enters
+#define PORTAL_DIST 2
 
 using namespace std;
 
@@ -37,8 +38,10 @@ public:
 	int dungeonType = 0;
 	int timer = 0;
 	Room* changingRoom = NULL;
+	int oldSpeed = 0;
 
 private:
+	int portalDist(int x1, int x2, int y1, int y2);
 	SDL_Point boss_locations[4];
 	bool isBossRoom(int x, int y);
 	void transitionRoom(string type);

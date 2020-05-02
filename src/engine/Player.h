@@ -12,8 +12,13 @@
 #include "Projectile.h"
 #include "TextBox.h"
 #include "StatMenu.h"
+#include "Sound.h"
 
-#define LEVELS 255
+#define LEVELS 					255
+#define PROJECTILE_SWAP_FRAMES 	30
+#define IFRAME_COUNT			180
+#define PROJ_SPEED				6
+
 using namespace std;
 
 class Player : public AnimatedSprite{
@@ -45,15 +50,16 @@ public:
 	void changeDamage(int value);
 	void changeAttackSpeed(double value);
 	void toggleHealthDisplay();
+	void newMessage(string message);
 	bool checkLevelUp();
 	void levelUp();
 	void changeXP(int value);
 	void modifySpeed(int value);
 	void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 	/* Health and such */
-	int damage = 100;
+	int damage = 10;
 	int slow = 1;
-	int lifesteal = 20;
+	int lifesteal = 1;
 
 	double attackSpeed = 1;
 
@@ -69,14 +75,15 @@ public:
 
 private:
 	unsigned int xp = 0;
+	Sound sound_effect;
 	unsigned int level = 1, maxLevel = LEVELS;
 	//unsigned int xpChart[LEVELS-1] = {10,25,50,100};
 	double xpScale = 1.5;
 	unsigned int xpNeeded = 10;
-	int health = 120;
-	int maxHealth = 120;
+	int health = 8;
+	int maxHealth = 8;
 	bool displayHealth = true;
-	int runSpeed = 2;
+	int runSpeed = 4;
 	int current_ball_type = 1;
 	int direction = 1;
 
@@ -95,7 +102,9 @@ private:
 	std::clock_t lastFired = 0;
 
 	static Player* player;
+	uint projSwapDelay = 0;
 	void initIFrames(int numFrames);
+	bool toggleSoundEffects0 = false,soundEffects = true;
 
 };
 

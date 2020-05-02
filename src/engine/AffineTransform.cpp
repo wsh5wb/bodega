@@ -47,6 +47,7 @@ SDL_Point AffineTransform::transformPoint(int x, int y){
 	return temp;
 }
 
+
 /* Add another transform to this one, is basically just matrix multiply */
 void AffineTransform::concatenate(AffineTransform &at){
 	//TODO in future assignment

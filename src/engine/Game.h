@@ -37,6 +37,10 @@ public:
 	virtual void update(set<SDL_Scancode> pressedKeys);
 	virtual void draw(AffineTransform &at);
 
+	bool quit = false;
+	bool paused = false;
+	bool won = false;
+	bool mapMode = false;
 private:
 
 	void initSDL();
@@ -44,7 +48,7 @@ private:
 	set<SDL_Scancode> pressedKeys;
 
 	const int JOYSTICK_DEAD_ZONE = 8000;
-	SDL_Joystick* gGameController = NULL;
+	SDL_GameController* gGameController = NULL;
 };
 
 #endif

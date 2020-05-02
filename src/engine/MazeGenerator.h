@@ -76,6 +76,7 @@ public:
 	void clear_grid();
 	int** getLayout();
 	int** getLayoutNoBoss();
+	void clearLayout();
 	floor_t getLevel();
 
 private:

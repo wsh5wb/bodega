@@ -122,9 +122,14 @@ void Enemy::changeHealth(int amount){
 	health += amount;
 	if(health <= 0){
 		Player::getPlayer()->changeXP(xp);
-		Event e("ENEMY_KILLED", &Game::eventHandler);
-		Game::eventHandler.dispatchEvent(&e);
-		((DisplayObjectContainer *)this->parent)->removeImmediateChild(this);
+		if(this->id == "ENEMY_BOSS1"){
+			Event e("BOSS_KILLED", &Game::eventHandler);
+			Game::eventHandler.dispatchEvent(&e);
+		}else{
+			Event e("ENEMY_KILLED", &Game::eventHandler);
+			Game::eventHandler.dispatchEvent(&e);
+		}
+		((DisplayObjectContainer *)this->parent)->removeImmediateChildNow(this);
 	}
 }
 

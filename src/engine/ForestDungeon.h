@@ -10,6 +10,7 @@ class ForestDungeon: public Dungeon {
 public:
 
 	ForestDungeon();
+	~ForestDungeon();
 
 
 private:

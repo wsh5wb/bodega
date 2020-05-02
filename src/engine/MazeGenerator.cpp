@@ -14,6 +14,21 @@ MazeGenerator::MazeGenerator(){
 	}
 }
 
+void MazeGenerator::clearLayout(){
+
+	for(auto it = level.rooms.begin(); it != level.rooms.end(); ++it){
+		delete it->second;
+	}
+
+	level.rooms.clear();
+
+	for(int i = 0; i < GRID_SIZE; i++){
+		for(int j = 0; j < GRID_SIZE; j++){
+			grid[i][j] = 0;
+		}
+	}
+}
+
 int MazeGenerator::adjacentRooms(int x, int y, room_t **arr) {
 	int directions[4][2] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
 	int i = 0;
@@ -40,10 +55,14 @@ int MazeGenerator::adjacentRooms(int x, int y, room_t **arr) {
 	if(rooms > 0)	failCount++;
 	if(adjToBoss)	return 0;
 
+
+	// printf("Adj rooms: %d\n", rooms);
 	return rooms;
 }
 
 void MazeGenerator::generateNoBoss() {
+
+	clearLayout();
 
 	random_device rd;
 	mt19937 e(rd());
@@ -71,7 +90,7 @@ void MazeGenerator::generateNoBoss() {
 		int adjacent = adjacentRooms(x, y, adjRooms);
 		// printf("adjecent rooms %d\n", adjacent);
 		if (adjacent == 1) {
-			// cout << "Making room at " << pos.to_str() << endl;
+			cout << "Making room at " << pos.to_str() << endl;
 			room_t* room = new room_t;
 			numRooms++;
 			grid[y][x] = REG_ROOM;
@@ -117,6 +136,8 @@ void MazeGenerator::generateNoBoss() {
 
 
 bool MazeGenerator::generate() {
+
+	clearLayout();
 
 	random_device rd;
 	mt19937 e(rd());

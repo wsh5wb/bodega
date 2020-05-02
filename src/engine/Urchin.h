@@ -17,6 +17,8 @@ public:
   int timer = 0;
   int xSpe, ySpe;
   int xBound, yBound;
+  int type;
+  int projectileDamage = 5;
 };
 
 #endif

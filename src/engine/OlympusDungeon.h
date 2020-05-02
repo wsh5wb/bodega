@@ -10,6 +10,7 @@ class OlympusDungeon: public Dungeon {
 public:
 
 	OlympusDungeon();
+	~OlympusDungeon();
 
 
 private:

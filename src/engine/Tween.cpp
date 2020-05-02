@@ -16,12 +16,18 @@ void Tween::animate(int fieldToAnimate, double startVal, double endVal,
 //invoked once per frame by the TweenJuggler. Updates this tween / DisplayObject
 void Tween::update() {
 	//printf(" Size of TweenParams %x, \n", tweenParams.size());
-	for (TweenParam *t : tweenParams) {
+	for (vector<TweenParam*>::iterator it = tweenParams.begin(); it != tweenParams.end(); ) {
+		TweenParam *t = *it;
+
 		double currentValue = currentParamValue(t->getParam());
 		if(t->getEndVal() != currentValue){
 			currentValue = t->update(currentValue);
 			setValue(t->getParam(), currentValue);
+			it++;
+		}else{
+			it = tweenParams.erase(it);
 		}
+
 	}
 }
 

@@ -16,9 +16,9 @@ TextBox::TextBox() : DisplayObject(){
 
 TextBox::TextBox(const string &message_text): DisplayObject("TextBox", "./resources/miscellaneous/pixelart.png"){
   this->fullMessageText = message_text;
-  position.x = 350;
-  position.y = -250;
-  setScale(1.25, 1.5);
+  position.x = 32;
+  position.y = -32;
+  setScale(.125, .15);
   this->start = std::clock();
   this->timeout = 2000;
   chunkString(fullMessageText, 60);
@@ -36,9 +36,9 @@ TextBox::TextBox(const string &font_path,
     this->font_path = font_path;
     this->font_size = font_size;
     this->textColor = color;
-    position.x = 350;
-    position.y = -250;
-    setScale(1.25, 1.5);
+    position.x = 32;
+    position.y = -32;
+    setScale(.125, .15);
     this->start = std::clock();
     this->timeout = 2000;
     chunkString(message_text, 60);
@@ -49,16 +49,24 @@ TextBox::TextBox(const string &font_path,
 }
 
 void TextBox::draw(AffineTransform &at){
+  if(text_active){
     DisplayObject::draw(at);
     auto current_x = dstrect.x;
     auto current_y = dstrect.y;
-    text_rect.x = current_x + 40;
-    text_rect.y = current_y + 50;
+    text_rect.x = current_x + 45;
+    text_rect.y = current_y + 60;
     SDL_RenderCopy(Game::renderer, text_texture, nullptr, &text_rect);
+  }
+
 }
 
 void TextBox::update(set<SDL_Scancode> pressedKeys){
   DisplayObject::update(pressedKeys);
+  //text_active = true;
+  if(pressedKeys.find(SDL_SCANCODE_M) != pressedKeys.end()){
+    text_active = false;
+    return;
+  }
   if((((std::clock() - start ) / (double) CLOCKS_PER_SEC)*1000) > timeout){
     this->start = std::clock();
     if(current_print_loc < all_strings.size()){
@@ -73,6 +81,7 @@ void TextBox::update(set<SDL_Scancode> pressedKeys){
       Tween * alpha_tween = new Tween(this);
       alpha_tween->animate(TWEEN_ALPHA, this->alpha, 0, 30, TWEEN_SINE, EASE_OUT);
       juggle->add(alpha_tween);
+      all_strings.clear();
       SDL_DestroyTexture(text_texture);
     }
     else if (text_active){
@@ -111,5 +120,18 @@ SDL_Texture* TextBox::loadFont(const std::string &font_path, int font_size, cons
 void TextBox::addMessagetoDisplay(string message){
   this->fullMessageText = fullMessageText + message;
   chunkString(message, 60);
+  if(text_active == false){
+  this->start = std::clock();
+  this->timeout = 1000;
   text_active = true;
+  TweenJuggler * juggle = TweenJuggler::getInstance();
+  Tween * alpha_tween = new Tween(this);
+  alpha_tween->animate(TWEEN_ALPHA, this->alpha, 255, 30, TWEEN_SINE, EASE_OUT);
+  juggle->add(alpha_tween);
+  current_print_loc = 0;
+  current_print = all_strings[current_print_loc];
+  current_print_loc++;
+  text_texture = loadFont(font_path, font_size, current_print, textColor);
+  SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+  }
 }

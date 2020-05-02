@@ -1,0 +1,12 @@
+6 5
+0 Scene ./resources/art/ocean/background.png 2.34375 2.34375
+9 lava1_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 64 64 .1 .9 .1 .45
+9 lava2_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 352 64 .1 .9 .1 .45
+9 lava3_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 64 224 .1 .9 .1 .45
+9 lava4_FLOOR ./resources/art/ocean/water.png 5 1 1 0 0.05 0 0 0 352 224 .1 .9 .1 .45
+9 chest1_OBSTACLE ./resources/art/hades/small_chest.png 5 1 1 0 0.05 0 0 0 240 176 .1 .9 -.05 .3
+Scene lava1_FLOOR
+Scene lava2_FLOOR
+Scene lava3_FLOOR
+Scene lava4_FLOOR
+Scene chest1_OBSTACLE

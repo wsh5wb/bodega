@@ -1,2 +1,4 @@
-1 0
+2 1
 0 Scene ./resources/art/hades/background.png 2.34375 2.34375 
+16 0 ENEMY_skel1 176 176
+Scene ENEMY_skel1
