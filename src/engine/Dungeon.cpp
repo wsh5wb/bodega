@@ -98,8 +98,11 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 		switch (code) {
 
 		case SDL_SCANCODE_V: {
-			for (auto c : children) {
-				((Room*) (c))->visible = true;
+			if (DEBUG_CHANGE_ROOM) {
+				DEBUG_CHANGE_ROOM = false;
+				for (auto c : children) {
+					((Room*) (c))->visible = true;
+				}
 			}
 			break;
 		}
@@ -170,34 +173,37 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			break;
 		}
 
-		case SDL_SCANCODE_U: {
+		case SDL_SCANCODE_F9: {
 			DEBUG_CHANGE_ROOM = true;
 			break;
 		}
 
 		case SDL_SCANCODE_C: {
+			if (DEBUG_CHANGE_ROOM) {
+				DEBUG_CHANGE_ROOM = false;
+				Player *p = Player::getPlayer();
+				cerr << "current room: (" << current_x << ", " << current_y
+						<< ")\n";
+				cerr << "boss room: (" << boss_x << ", " << boss_y << ")\n";
+				cerr << "player x: " << p->position.x;
+				cerr << "\nplayer y: " << p->position.y << "\n\n";
+				break;
+			}
+
+		}
+		}
+		if (changingRoom) {
 			Player *p = Player::getPlayer();
-			cerr << "current room: (" << current_x << ", " << current_y
-					<< ")\n";
-			cerr << "boss room: (" << boss_x << ", " << boss_y << ")\n";
-			cerr << "player x: " << p->position.x;
-			cerr << "\nplayer y: " << p->position.y << "\n\n";
-			break;
-		}
+			if (timer <= ROOM_START_DELAY) {
+				timer++;
 
-		}
-	}
-	if (changingRoom) {
-		Player *p = Player::getPlayer();
-		if (timer <= ROOM_START_DELAY) {
-			timer++;
-
-		} else {
-			zoomed_out = true;
-			changingRoom->active = true;
-			changingRoom = NULL;
-			timer = 0;
-			p->modifySpeed(oldSpeed);
+			} else {
+				zoomed_out = true;
+				changingRoom->active = true;
+				changingRoom = NULL;
+				timer = 0;
+				p->modifySpeed(oldSpeed);
+			}
 		}
 	}
 }
@@ -288,82 +294,88 @@ void Dungeon::generate() {
 						charybdis *w4 = new charybdis(Player::getPlayer());
 						c->originX = 512;
 						c->originY = 384;
+						c->health = 1000;
+						c->damage = 10;
 						//c->showHitbox = true;
-						if (dungeonType == 1){
+						if (dungeonType == 1) {
 							c->loadTexture("resources/enemies/scylla.png");
 							c->scaleX *= 0.35;
 							c->scaleY *= 0.35;
+							c->projectileDamage = 25;
+							c->damage = 30;
 
 							whirl->loadTexture("resources/enemies/charyb.png");
 							whirl->scaleX *= 1.1;
 							whirl->scaleY *= 1.1;
-							whirl->health = 5000;
-							whirl->moveTo(50,50);
+							whirl->health = 2000;
+							whirl->moveTo(50, 50);
+							whirl->damage = 30;
 							temp->room->addChild(whirl);
-							c->health = 7500;
+							c->health = 2000;
 							c->form = 1;
 
-						}
-						else if (dungeonType == 2){
+						} else if (dungeonType == 2) {
 							c->loadTexture("resources/enemies/hydra.png");
 							c->scaleX *= 2;
 							c->scaleY *= 2;
-							c->health = 10000;
+							c->health = 3500;
 							c->form = 2;
+							c->projectileDamage = 35;
+							c->damage = 50;
 							whirl->loadTexture("resources/enemies/wasp.png");
 							whirl->scaleX *= 1;
 							whirl->scaleY *= 1;
 							whirl->health = 500;
-							whirl->moveTo(50,50);
+							whirl->moveTo(50, 50);
 							temp->room->addChild(whirl);
 							w2->loadTexture("resources/enemies/wasp.png");
 							w2->scaleX *= 1;
 							w2->scaleY *= 1;
 							w2->health = 500;
-							w2->moveTo(850,500);
+							w2->moveTo(850, 500);
 							temp->room->addChild(w2);
 							w3->loadTexture("resources/enemies/wasp.png");
 							w3->scaleX *= 1;
 							w3->scaleY *= 1;
 							w3->health = 500;
-							w3->moveTo(50,500);
+							w3->moveTo(50, 500);
 							temp->room->addChild(w3);
 							w4->loadTexture("resources/enemies/wasp.png");
 							w4->scaleX *= 1;
 							w4->scaleY *= 1;
 							w4->health = 500;
-							w4->moveTo(850,50);
+							w4->moveTo(850, 50);
 							temp->room->addChild(w4);
 
-
-						}
-						else if (dungeonType == 3){
+						} else if (dungeonType == 3) {
 							c->loadTexture("resources/enemies/Pose.png");
-							c->health = 20000;
+							c->health = 10000;
 							c->form = 3;
+							c->projectileDamage = 75;
+							c->damage = 100;
 							whirl->loadTexture("resources/enemies/ojelly.png");
 							whirl->scaleX *= 1;
 							whirl->scaleY *= 1;
 							whirl->health = 5000;
-							whirl->moveTo(50,50);
+							whirl->moveTo(50, 50);
 							temp->room->addChild(whirl);
 							w2->loadTexture("resources/enemies/ojelly.png");
 							w2->scaleX *= 1;
 							w2->scaleY *= 1;
 							w2->health = 5000;
-							w2->moveTo(850,500);
+							w2->moveTo(850, 500);
 							temp->room->addChild(w2);
 							w3->loadTexture("resources/enemies/ojelly.png");
 							w3->scaleX *= 1;
 							w3->scaleY *= 1;
 							w3->health = 5000;
-							w3->moveTo(50,500);
+							w3->moveTo(50, 500);
 							temp->room->addChild(w3);
 							w4->loadTexture("resources/enemies/ojelly.png");
 							w4->scaleX *= 1;
 							w4->scaleY *= 1;
 							w4->health = 5000;
-							w4->moveTo(850,50);
+							w4->moveTo(850, 50);
 							temp->room->addChild(w4);
 						}
 						c->moveTo(512, 384);
@@ -417,7 +429,7 @@ void Dungeon::generateNoBoss() {
 			for (int j = GRID_SIZE; j--;) {
 				if (!(layout[i][j]) && basic_rooms_size > 0) {
 					if (portal != -1 && (portal == count)) {
-						if(portalDist(i,start_y,j,start_x)>PORTAL_DIST){
+						if (portalDist(i, start_y, j, start_x) > PORTAL_DIST) {
 							layout[i][j] = portal_index;
 							portal_set = true;
 						}
@@ -658,6 +670,6 @@ void Dungeon::transitionRoom(string type) {
 
 }
 
-int Dungeon::portalDist(int x1, int x2, int y1, int y2){
-	return abs(x1-x2)+abs(y1-y2);
+int Dungeon::portalDist(int x1, int x2, int y1, int y2) {
+	return abs(x1 - x2) + abs(y1 - y2);
 }

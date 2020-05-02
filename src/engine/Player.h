@@ -12,6 +12,7 @@
 #include "Projectile.h"
 #include "TextBox.h"
 #include "StatMenu.h"
+#include "Sound.h"
 
 #define LEVELS 					255
 #define PROJECTILE_SWAP_FRAMES 	30
@@ -73,6 +74,7 @@ public:
 
 private:
 	unsigned int xp = 0;
+	Sound sound_effect;
 	unsigned int level = 1, maxLevel = LEVELS;
 	//unsigned int xpChart[LEVELS-1] = {10,25,50,100};
 	double xpScale = 1.5;
@@ -101,6 +103,7 @@ private:
 	static Player* player;
 	uint projSwapDelay = 0;
 	void initIFrames(int numFrames);
+	bool toggleSoundEffects0 = false,soundEffects = true;
 
 };
 

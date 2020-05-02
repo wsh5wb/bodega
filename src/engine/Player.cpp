@@ -30,7 +30,7 @@ Player::Player() :
 	this->addAnimation("resources/playerAssets/idle.png",
 			"resources/playerAssets/idle.xml", "Idle", 1, 1, true);
 
-	// projectile firing 
+	// projectile firing
 	this->addAnimation("resources/PlayerSprites/fireLeft.png",
 			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireRight.png",
@@ -42,17 +42,19 @@ Player::Player() :
 
 	// walking
 	this->addAnimation("resources/PlayerSprites/walkRight.png",
-			"resources/PlayerSprites/walkRight.xml", "walkRight", 1, 60, true);
+			"resources/PlayerSprites/walkRight.xml", "walkRight", 3, 60, true);
 	this->addAnimation("resources/PlayerSprites/walkUp.png",
-			"resources/PlayerSprites/walkUp.xml", "walkUp", 1, 60, true);
+			"resources/PlayerSprites/walkUp.xml", "walkUp", 3, 60, true);
 	this->addAnimation("resources/PlayerSprites/walkDown.png",
-			"resources/PlayerSprites/walkDown.xml", "walkDown", 1, 60, true);
+			"resources/PlayerSprites/walkDown.xml", "walkDown", 3, 60, true);
 
 	// dead
 	this->addAnimation("resources/PlayerSprites/dead.png",
-			"resources/PlayerSprites/dead.xml", "dead", 1, 60, false);
+			"resources/PlayerSprites/dead.xml", "dead", 2, 60, false);
 
 	this->play("Idle");
+	//sound_effect.loadSFX("./resources/sounds/hum.wav");
+	//sound_effect.playSFX();
 	chat_box =
 			new TextBox(
 					"There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand");
@@ -183,6 +185,10 @@ bool Player::changeHealth(int value) {
 	if (value < 0)
 		this->initIFrames(IFRAME_COUNT);
 
+	if (soundEffects) {
+		sound_effect.loadSFX("./resources/sounds/pain.wav");
+		sound_effect.playSFX();
+	}
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
 	return false;
@@ -321,11 +327,21 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	int xMov = 0, yMov = 0;
 	bool idle = true;
 	projSwapDelay++;
-	for (auto k : pressedKeys){
-		if (k == SDL_SCANCODE_L) {
-			if (level < 69)
-				levelUp();
-		}else if (k == SDL_SCANCODE_D) {
+
+	auto findSoundToggle = pressedKeys.find(SDL_SCANCODE_T);
+	if (findSoundToggle != pressedKeys.end()) {
+		if (!toggleSoundEffects0) {
+			toggleSoundEffects0 = true;
+			soundEffects = !soundEffects;
+		}
+	} else {
+		if (toggleSoundEffects0) {
+			toggleSoundEffects0 = false;
+
+		}
+	}
+	for (auto k : pressedKeys) {
+		if (k == SDL_SCANCODE_D) {
 			if (runSpeed == 0) {
 				continue;
 			}
@@ -334,6 +350,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			//this->flipH = false;
 			if (this->currAnimation != "walkRight") {
 				this->play("walkRight");
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
@@ -346,6 +366,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			//this->flipH = true;
 			if (this->currAnimation != "walkRight") {
 				this->play("walkRight");
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
@@ -355,8 +379,13 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y -= runSpeed;
 			this->deltaY += -runSpeed;
-			if (this->currAnimation != "walkUp") {
+			if (this->currAnimation != "walkUp"
+					&& this->currAnimation != "walkRight") {
 				this->play("walkUp");
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_S) {
@@ -365,8 +394,13 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y += runSpeed;
 			this->deltaY += runSpeed;
-			if (this->currAnimation != "walkDown") {
+			if (this->currAnimation != "walkDown"
+					&& this->currAnimation != "walkRight") {
 				this->play("walkDown");
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_1) {
@@ -387,18 +421,34 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		if (k == SDL_SCANCODE_LEFT) {
 			xMov = -PROJ_SPEED;
 			this->direction = 1;
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 		if (k == SDL_SCANCODE_RIGHT) {
 			xMov = PROJ_SPEED;
 			this->direction = 2;
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 		if (k == SDL_SCANCODE_UP) {
 			yMov = -PROJ_SPEED;
 			this->direction = 3;
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 		if (k == SDL_SCANCODE_DOWN) {
 			yMov = PROJ_SPEED;
 			this->direction = 4;
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 	}
 	if (xMov != 0 && yMov != 0) {
