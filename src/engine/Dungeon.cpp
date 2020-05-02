@@ -97,12 +97,12 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 	for (SDL_Scancode code : pressedKeys) {
 		switch (code) {
 
-		case SDL_SCANCODE_V: {
-			for (auto c : children) {
-				((Room*) (c))->visible = true;
-			}
-			break;
-		}
+		// case SDL_SCANCODE_V: {
+		// 	for (auto c : children) {
+		// 		((Room*) (c))->visible = true;
+		// 	}
+		// 	break;
+		// }
 
 		case SDL_SCANCODE_N: {
 			if (DEBUG_CHANGE_ROOM) {
@@ -170,20 +170,20 @@ void Dungeon::update(set<SDL_Scancode> pressedKeys) {
 			break;
 		}
 
-		case SDL_SCANCODE_U: {
-			DEBUG_CHANGE_ROOM = true;
-			break;
-		}
+		// case SDL_SCANCODE_U: {
+		// 	DEBUG_CHANGE_ROOM = true;
+		// 	break;
+		// }
 
-		case SDL_SCANCODE_C: {
-			Player *p = Player::getPlayer();
-			cerr << "current room: (" << current_x << ", " << current_y
-					<< ")\n";
-			cerr << "boss room: (" << boss_x << ", " << boss_y << ")\n";
-			cerr << "player x: " << p->position.x;
-			cerr << "\nplayer y: " << p->position.y << "\n\n";
-			break;
-		}
+		// case SDL_SCANCODE_C: {
+		// 	Player *p = Player::getPlayer();
+		// 	cerr << "current room: (" << current_x << ", " << current_y
+		// 			<< ")\n";
+		// 	cerr << "boss room: (" << boss_x << ", " << boss_y << ")\n";
+		// 	cerr << "player x: " << p->position.x;
+		// 	cerr << "\nplayer y: " << p->position.y << "\n\n";
+		// 	break;
+		// }
 
 		}
 	}
