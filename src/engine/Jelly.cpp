@@ -196,28 +196,29 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			}
 		} //ySpe=-rand()%5;}
 	}
-//	if (state == 0) {
-//		timer++;
-//		if (timer % 340 >= 250) {
-//			state++;
-//			xSpe = rand() % 3 - 1;
-//			ySpe = rand() % 3 - 1;
-//		}
-//	} else if (state == 1) {
-//		timer += 1;
-//		if (timer % 340 >= 330) {
-//			//timer = 0;
-//			state = 0;
-//			timer += 10 + rand() % 20;
-//			while (abs(xSpe) + abs(ySpe) < 4) {
-//				xSpe = rand() % (10 + timer / 300) - 5;
-//				ySpe = rand() % (10 + timer / 300) - 5;
-//			}
-//		}
-//	} else {
-//		timer = 0;
-//		state = 0;
-//	}
+	if(position.x>5 && position.x <xBound-5 && position.y>5 && position.y<yBound-5){
+	if (state == 0) {
+		timer++;
+		if (timer % 340 >= 250) {
+			state++;
+			xSpe = rand() % 3 - 1;
+			ySpe = rand() % 3 - 1;
+		}
+	} else if (state == 1) {
+		timer += 1;
+		if (timer % 340 >= 330) {
+			//timer = 0;
+			state = 0;
+			timer += 10 + rand() % 20;
+			while (abs(xSpe) + abs(ySpe) < 4 || abs(xSpe)+abs(ySpe)>11) {
+				xSpe = rand() % (9 + timer / 3000) - 5;
+				ySpe = rand() % (9 + timer / 3000) - 5;
+			}
+		}
+	} else {
+		timer = 0;
+		state = 0;
+	}}
 	if (timer < 0) {
 		timer = 0;
 	}

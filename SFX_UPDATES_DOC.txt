@@ -1,0 +1,28 @@
+1) made camera reset to start room on death
+2) caused whole boss room to become visible on entrance
+3) made boss rooms spawn after dying
+4)made hitboxes around lava feel more natural
+5)made torch hotboxes not be able to trap the player
+6)made portal rooms always spawn (1/24 times they did not)
+7)adjusted player health down to account for iframes
+8)changed portals in portal rooms to portal objects for easier inclusion in text files
+9)prevented portal room spawning within two rooms of start room
+10)doubled player run speed
+11)changed stats of enemies to be much harder later in nthe game
+12)adjusted damage numbers to look more reasonable
+13)made skeletons health reference the correct member variable to work with projectiles
+14)caused slow projectile to work properly
+15)added more rooms to be drawn from for ocean
+16)adjusted hitboxes to work with new player sprite
+17)fixed bug where jellys would get stuck in corner
+18) Adjusted rate of fire for fireball and animation frame-rate to smoothen transitions
+19) Fixed odd bug where a full sprite sheet would draw when a player collided with an animated sprite
+20) worked on the iframe code so that it wouldn’t constantly be up/making player immortal
+21) Reworked Scaling on fireballs to work with new player sprite
+22) Reworked Scaling on textbox to work with new player sprite
+23) Made sure enemies speed all drew from same variable (originally inconsistent)
+24) adjusted projectile hit boxes to reflect actual dimensions
+25) Decreased music delay from looping
+26) Developed Item Pick Up UI
+27) Fixed textbox delayed delete issue
+28) Added in Sound Effects for all player movements

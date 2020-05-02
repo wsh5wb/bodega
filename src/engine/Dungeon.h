@@ -8,7 +8,8 @@
 #include "EventListener.h"
 #include "Sound.h"
 
-#define ROOM_START_DELAY 30 //number of frames before room starts being active after player enters
+#define ROOM_START_DELAY 15 //number of frames before room starts being active after player enters
+
 #define PORTAL_DIST 2
 
 using namespace std;

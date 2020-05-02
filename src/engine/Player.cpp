@@ -28,17 +28,17 @@ Player::Player() :
 
 	// Temporary idle for simplicity sake
 	this->addAnimation("resources/playerAssets/idle.png",
-			"resources/playerAssets/idle.xml", "Idle", 1, 1, true);
+			"resources/playerAssets/idle.xml", "Idle", 3, 60, true);
 
 	// projectile firing
 	this->addAnimation("resources/PlayerSprites/fireLeft.png",
-			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 300, false);
+			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 2, 120, false);
 	this->addAnimation("resources/PlayerSprites/fireRight.png",
-			"resources/PlayerSprites/fireRight.xml", "fireRight", 1, 300, false);
+			"resources/PlayerSprites/fireRight.xml", "fireRight", 2, 120, false);
 	this->addAnimation("resources/PlayerSprites/fireUp.png",
-			"resources/PlayerSprites/fireUp.xml", "fireUp", 1, 300, false);
+			"resources/PlayerSprites/fireUp.xml", "fireUp", 2, 120, false);
 	this->addAnimation("resources/PlayerSprites/fireDown.png",
-			"resources/PlayerSprites/fireDown.xml", "fireDown", 1, 300, false);
+			"resources/PlayerSprites/fireDown.xml", "fireDown", 2, 120, false);
 
 	// walking
 	this->addAnimation("resources/PlayerSprites/walkRight.png",
@@ -57,13 +57,13 @@ Player::Player() :
 	//sound_effect.playSFX();
 	chat_box =
 			new TextBox(
-					"There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand");
+					"What a dank and dark place.");
 	this->addChild(chat_box);
 	chat_box->addMessagetoDisplay(
-			"OH BTW, I had more to say please please please get over the limit for sixty characters.");
+			"I feel, different. Almost as if I've been imbued with some unnerving energy, giving me the ability to spawn fires. I wonder how to use them.");
 	chat_box->addMessagetoDisplay(
-			"OH BTW, I had more to say please please please get over the limit for sixty characters.");
-	//this->runSpeed = 6;
+			"The first channel the might of the Phelgethon to damage my foes. The second unleashes a frost drawn from the River Lethe. The third seems to restore my strength.");
+	//this->runSpeed = 6;d
 	//for tweening Demo
 	// this->alpha = 30;
 	// TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -88,6 +88,9 @@ Player* Player::getPlayer() {
 	return player;
 }
 
+void Player::newMessage(string message){
+	chat_box->addMessagetoDisplay(message);
+}
 //Called automatically by collision system when something collides with the player
 //our job is to simply react to that collision.
 void Player::onCollision(DisplayObject *other) {
@@ -416,7 +419,6 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 				projSwapDelay = 0;
 			}
 		}
-
 		//for shooting projectiles
 		if (k == SDL_SCANCODE_LEFT) {
 			xMov = -PROJ_SPEED;
