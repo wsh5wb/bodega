@@ -50,6 +50,7 @@ private:
 	bool isQuestDone;
 	TweenJuggler * animationJuggler;
 	StatMenu * player_stats;
+	bool DEBUG_CHANGE_STUFF=false;
 };
 
 #endif
