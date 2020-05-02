@@ -187,8 +187,11 @@ bool Player::changeHealth(int value) {
 
 	if (value < 0)
 		this->initIFrames(IFRAME_COUNT);
+
+	if (soundEffects) {
 		sound_effect.loadSFX("./resources/sounds/pain.wav");
 		sound_effect.playSFX();
+	}
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
 	return false;
@@ -327,6 +330,19 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	int xMov = 0, yMov = 0;
 	bool idle = true;
 	projSwapDelay++;
+
+	auto findSoundToggle = pressedKeys.find(SDL_SCANCODE_T);
+	if (findSoundToggle != pressedKeys.end()) {
+		if (!toggleSoundEffects0) {
+			toggleSoundEffects0 = true;
+			soundEffects = !soundEffects;
+		}
+	} else {
+		if (toggleSoundEffects0) {
+			toggleSoundEffects0 = false;
+
+		}
+	}
 	for (auto k : pressedKeys) {
 		if (k == SDL_SCANCODE_D) {
 			if (runSpeed == 0) {
@@ -337,8 +353,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			//this->flipH = false;
 			if (this->currAnimation != "walkRight") {
 				this->play("walkRight");
-				sound_effect.loadSFX("./resources/sounds/walking.wav");
-				sound_effect.playSFX();
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			this->flip = SDL_FLIP_NONE;
 			idle = false;
@@ -351,8 +369,10 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			//this->flipH = true;
 			if (this->currAnimation != "walkRight") {
 				this->play("walkRight");
-				sound_effect.loadSFX("./resources/sounds/walking.wav");
-				sound_effect.playSFX();
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			this->flip = SDL_FLIP_HORIZONTAL;
 			idle = false;
@@ -362,10 +382,13 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y -= runSpeed;
 			this->deltaY += -runSpeed;
-			if (this->currAnimation != "walkUp" && this->currAnimation != "walkRight") {
+			if (this->currAnimation != "walkUp"
+					&& this->currAnimation != "walkRight") {
 				this->play("walkUp");
-				sound_effect.loadSFX("./resources/sounds/walking.wav");
-				sound_effect.playSFX();
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_S) {
@@ -374,10 +397,13 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y += runSpeed;
 			this->deltaY += runSpeed;
-			if (this->currAnimation != "walkDown" && this->currAnimation != "walkRight") {
+			if (this->currAnimation != "walkDown"
+					&& this->currAnimation != "walkRight") {
 				this->play("walkDown");
-				sound_effect.loadSFX("./resources/sounds/walking.wav");
-				sound_effect.playSFX();
+				if (soundEffects) {
+					sound_effect.loadSFX("./resources/sounds/walking.wav");
+					sound_effect.playSFX();
+				}
 			}
 			idle = false;
 		} else if (k == SDL_SCANCODE_1) {
@@ -400,26 +426,34 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 		if (k == SDL_SCANCODE_LEFT) {
 			xMov = -PROJ_SPEED;
 			this->direction = 1;
-			sound_effect.loadSFX("./resources/sounds/fireball.wav");
-			sound_effect.playSFX();
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 		if (k == SDL_SCANCODE_RIGHT) {
 			xMov = PROJ_SPEED;
 			this->direction = 2;
-			sound_effect.loadSFX("./resources/sounds/fireball.wav");
-			sound_effect.playSFX();
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 		if (k == SDL_SCANCODE_UP) {
 			yMov = -PROJ_SPEED;
 			this->direction = 3;
-			sound_effect.loadSFX("./resources/sounds/fireball.wav");
-			sound_effect.playSFX();
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 		if (k == SDL_SCANCODE_DOWN) {
 			yMov = PROJ_SPEED;
 			this->direction = 4;
-			sound_effect.loadSFX("./resources/sounds/fireball.wav");
-			sound_effect.playSFX();
+			if (soundEffects) {
+				sound_effect.loadSFX("./resources/sounds/fireball.wav");
+				sound_effect.playSFX();
+			}
 		}
 	}
 	if (xMov != 0 && yMov != 0) {

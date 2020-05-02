@@ -104,6 +104,7 @@ private:
 	static Player* player;
 	uint projSwapDelay = 0;
 	void initIFrames(int numFrames);
+	bool toggleSoundEffects0 = false,soundEffects = true;
 
 };
 
