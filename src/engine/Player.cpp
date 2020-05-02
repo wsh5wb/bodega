@@ -359,7 +359,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y -= runSpeed;
 			this->deltaY += -runSpeed;
-			if (this->currAnimation != "walkUp") {
+			if (this->currAnimation != "walkUp" && this->currAnimation != "walkRight") {
 				this->play("walkUp");
 				sound_effect.loadSFX("./resources/sounds/walking.wav");
 				sound_effect.playSFX();
@@ -371,7 +371,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y += runSpeed;
 			this->deltaY += runSpeed;
-			if (this->currAnimation != "walkDown") {
+			if (this->currAnimation != "walkDown" && this->currAnimation != "walkRight") {
 				this->play("walkDown");
 				sound_effect.loadSFX("./resources/sounds/walking.wav");
 				sound_effect.playSFX();
