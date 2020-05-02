@@ -37,6 +37,7 @@ HadesDungeon::HadesDungeon(){
 
 HadesDungeon::~HadesDungeon() {
 	free(basic_rooms);
+	//hades_theme.playMusic();
 }
 
 void HadesDungeon::update(set<SDL_Scancode> pressedKeys) {

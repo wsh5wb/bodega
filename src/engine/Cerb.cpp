@@ -250,7 +250,7 @@ void Cerb::shoot(SDL_Point charLoc, SDL_Point globalPos){
   }
   //cout << "Getting to before adding the projectile" << endl;
   Projectile * p = new Projectile("resources/Projectiles/spikedball.png", midX, midY,projX,projY,1500,0.15,0.15,projectileDamage);
-  p->showHitbox = true;
+  //p->showHitbox = true;
   ((DisplayObjectContainer*)(this->parent))->addChild(p);
   DTEvent e("OBJ_ADD", &Game::eventHandler, p);
   Game::eventHandler.dispatchEvent(&e);

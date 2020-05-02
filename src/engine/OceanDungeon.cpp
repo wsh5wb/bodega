@@ -33,6 +33,7 @@ OceanDungeon::OceanDungeon() {
 }
 
 OceanDungeon::~OceanDungeon() {
+	free(basic_rooms);
 //	for (int i = 0; i < 5; i++)
 //		delete layout[i];
 //	delete layout;

@@ -31,3 +31,8 @@ ForestDungeon::ForestDungeon() {
 	scenes.push_back("./resources/scenes/forest/BossBRC.txt");
 
 }
+
+ForestDungeon::~ForestDungeon() {
+	free(basic_rooms);
+	//hades_theme.playMusic();
+}

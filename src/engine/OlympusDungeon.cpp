@@ -31,3 +31,7 @@ OlympusDungeon::OlympusDungeon() {
 	scenes.push_back("./resources/scenes/olympus/BossBLC.txt");
 	scenes.push_back("./resources/scenes/olympus/BossBRC.txt");
 }
+
+OlympusDungeon::~OlympusDungeon(){
+	free(basic_rooms);
+}
