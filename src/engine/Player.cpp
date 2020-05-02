@@ -62,7 +62,7 @@ Player::Player() :
 	chat_box->addMessagetoDisplay(
 			"I feel, different. Almost as if I've been imbued with some unnerving energy, giving me the ability to spawn fires. I wonder how to use them.");
 	chat_box->addMessagetoDisplay(
-			"The first channel the might of the Phelgethon to damage my foes. The second unleashes a frost drawn from the River Lether. The third seems to restore my strength.");
+			"The first channel the might of the Phelgethon to damage my foes. The second unleashes a frost drawn from the River Lethe. The third seems to restore my strength.");
 	//this->runSpeed = 6;d
 	//for tweening Demo
 	// this->alpha = 30;
@@ -184,7 +184,7 @@ bool Player::changeHealth(int value) {
 
 	if (value < 0)
 		this->initIFrames(IFRAME_COUNT);
-		sound_effect.loadSFX("./resources/sounds/hum.wav");
+		sound_effect.loadSFX("./resources/sounds/pain.wav");
 		sound_effect.playSFX();
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
