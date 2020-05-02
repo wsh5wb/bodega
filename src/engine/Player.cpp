@@ -63,7 +63,10 @@ Player::Player() :
 			"I feel, different. Almost as if I've been imbued with some unnerving energy, giving me the ability to spawn fires. I wonder how to use them.");
 	chat_box->addMessagetoDisplay(
 			"The first channel the might of the Phelgethon to damage my foes. The second unleashes a frost drawn from the River Lethe. The third seems to restore my strength.");
-	//this->runSpeed = 6;d
+	chat_box->addMessagetoDisplay(
+			"Maybe with these new found powers, I can take revenge on Poseidon for his floods that killed my wife.");
+			
+			//this->runSpeed = 6;d
 	//for tweening Demo
 	// this->alpha = 30;
 	// TweenJuggler * juggle = TweenJuggler::getInstance();
