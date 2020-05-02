@@ -211,8 +211,8 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			state = 0;
 			timer += 10 + rand() % 20;
 			while (abs(xSpe) + abs(ySpe) < 4 || abs(xSpe)+abs(ySpe)>11) {
-				xSpe = rand() % (9 + timer / 3000) - 5;
-				ySpe = rand() % (9 + timer / 3000) - 5;
+				xSpe = rand() % (9 + type) - 5;
+				ySpe = rand() % (9 + type) - 5;
 			}
 		}
 	} else {
