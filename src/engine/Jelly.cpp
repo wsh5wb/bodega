@@ -64,7 +64,7 @@ Jelly::Jelly(Player *player, int d) :
 		ySpe = rand() % 7 - 3;
 		damage = 5;
 		this->xp = 500;
-		health = 300;
+		health = 600;
 		maxCoolDown = 200;
 		//this->setAlpha(100);
 		this->projectileDamage = 5;
@@ -76,13 +76,17 @@ Jelly::Jelly(Player *player, int d) :
 	case 3: {
 		this->loadTexture("./resources/enemies/ojelly.png");
 		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+		this->path = "resources/Projectiles/Stinger2.png";
 		this->scaleX *= 1;
 		this->scaleY *= 1;
 		xSpe = rand() % 9 - 4;
 		ySpe = rand() % 9 - 4;
 		damage = 8;
 		this->xp = 2500;
-		health = 500;
+		health = 1200;
+		maxCoolDown = 150;
+		this->projectileDamage = 8;
+		this->projectileSpeed = 6;
 		this->setAlpha(100);
 		this->setHitbox(.1, .9, .1, .9);
 		// this->showHitbox = true;
