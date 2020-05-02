@@ -32,7 +32,7 @@ Player::Player() :
 
 	// projectile firing
 	this->addAnimation("resources/PlayerSprites/fireLeft.png",
-			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 60, false);
+				"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireRight.png",
 			"resources/PlayerSprites/fireRight.xml", "fireRight", 1, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireUp.png",
@@ -418,10 +418,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 						+ 1;
 				projSwapDelay = 0;
 			}
-		}else if(k == SDL_SCANCODE_0){
-			this->newMessage("hey there");
 		}
-
 		//for shooting projectiles
 		if (k == SDL_SCANCODE_LEFT) {
 			xMov = -PROJ_SPEED;
