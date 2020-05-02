@@ -28,17 +28,17 @@ Player::Player() :
 
 	// Temporary idle for simplicity sake
 	this->addAnimation("resources/playerAssets/idle.png",
-			"resources/playerAssets/idle.xml", "Idle", 1, 1, true);
+			"resources/playerAssets/idle.xml", "Idle", 3, 60, true);
 
 	// projectile firing
 	this->addAnimation("resources/PlayerSprites/fireLeft.png",
-			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 60, false);
+			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 3, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireRight.png",
-			"resources/PlayerSprites/fireRight.xml", "fireRight", 1, 60, false);
+			"resources/PlayerSprites/fireRight.xml", "fireRight", 3, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireUp.png",
-			"resources/PlayerSprites/fireUp.xml", "fireUp", 1, 60, false);
+			"resources/PlayerSprites/fireUp.xml", "fireUp", 3, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireDown.png",
-			"resources/PlayerSprites/fireDown.xml", "fireDown", 1, 60, false);
+			"resources/PlayerSprites/fireDown.xml", "fireDown", 3, 60, false);
 
 	// walking
 	this->addAnimation("resources/PlayerSprites/walkRight.png",
