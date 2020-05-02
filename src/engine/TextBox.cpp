@@ -62,7 +62,7 @@ void TextBox::draw(AffineTransform &at){
 
 void TextBox::update(set<SDL_Scancode> pressedKeys){
   DisplayObject::update(pressedKeys);
-  text_active = true;
+  //text_active = true;
   if(pressedKeys.find(SDL_SCANCODE_M) != pressedKeys.end()){
     text_active = false;
     return;
@@ -81,6 +81,7 @@ void TextBox::update(set<SDL_Scancode> pressedKeys){
       Tween * alpha_tween = new Tween(this);
       alpha_tween->animate(TWEEN_ALPHA, this->alpha, 0, 30, TWEEN_SINE, EASE_OUT);
       juggle->add(alpha_tween);
+      all_strings.clear();
       SDL_DestroyTexture(text_texture);
     }
     else if (text_active){
@@ -119,5 +120,18 @@ SDL_Texture* TextBox::loadFont(const std::string &font_path, int font_size, cons
 void TextBox::addMessagetoDisplay(string message){
   this->fullMessageText = fullMessageText + message;
   chunkString(message, 60);
+  if(text_active == false){
+  this->start = std::clock();
+  this->timeout = 1000;
   text_active = true;
+  TweenJuggler * juggle = TweenJuggler::getInstance();
+  Tween * alpha_tween = new Tween(this);
+  alpha_tween->animate(TWEEN_ALPHA, this->alpha, 255, 30, TWEEN_SINE, EASE_OUT);
+  juggle->add(alpha_tween);
+  current_print_loc = 0;
+  current_print = all_strings[current_print_loc];
+  current_print_loc++;
+  text_texture = loadFont(font_path, font_size, current_print, textColor);
+  SDL_QueryTexture(text_texture, nullptr, nullptr, &text_rect.w, &text_rect.h);
+  }
 }
