@@ -58,6 +58,8 @@ While in translation mode:
 
 Design Team Updates:
 
+The design team has a list of improvements/fixes [here](https://docs.google.com/document/d/1Vw37CF8795uhCfMkIPn0JKTlangwVjGw3f4ACLpiLIM/edit?usp=sharing).
+
 
 Engine Team Updates:
 
