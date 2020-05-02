@@ -196,6 +196,7 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			}
 		} //ySpe=-rand()%5;}
 	}
+	if(position.x>5 && position.x <xBound-5 && position.y>5 && position.y<yBound-5){
 	if (state == 0) {
 		timer++;
 		if (timer % 340 >= 250) {
@@ -209,7 +210,7 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			//timer = 0;
 			state = 0;
 			timer += 10 + rand() % 20;
-			while (abs(xSpe) + abs(ySpe) < 4) {
+			while (abs(xSpe) + abs(ySpe) < 4 || abs(xSpe)+abs(ySpe)>11) {
 				xSpe = rand() % (9 + timer / 3000) - 5;
 				ySpe = rand() % (9 + timer / 3000) - 5;
 			}
@@ -217,7 +218,7 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 	} else {
 		timer = 0;
 		state = 0;
-	}
+	}}
 	if (timer < 0) {
 		timer = 0;
 	}
