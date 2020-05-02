@@ -32,13 +32,13 @@ Player::Player() :
 
 	// projectile firing
 	this->addAnimation("resources/PlayerSprites/fireLeft.png",
-			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 60, false);
+			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 2, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireRight.png",
-			"resources/PlayerSprites/fireRight.xml", "fireRight", 1, 60, false);
+			"resources/PlayerSprites/fireRight.xml", "fireRight", 2, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireUp.png",
-			"resources/PlayerSprites/fireUp.xml", "fireUp", 1, 60, false);
+			"resources/PlayerSprites/fireUp.xml", "fireUp", 2, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireDown.png",
-			"resources/PlayerSprites/fireDown.xml", "fireDown", 1, 60, false);
+			"resources/PlayerSprites/fireDown.xml", "fireDown", 2, 60, false);
 
 	// walking
 	this->addAnimation("resources/PlayerSprites/walkRight.png",
