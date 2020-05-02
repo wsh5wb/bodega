@@ -22,8 +22,10 @@ Jelly::Jelly(Player *player) :
 
 Jelly::Jelly(Player *player, int d) :
 		Enemy(player) {
-	xSpe = rand() % 5 - 2;
-	ySpe = rand() % 5 - 2;
+	do {
+		xSpe = rand() % 5 - 2;
+		ySpe = rand() % 5 - 2;
+	} while ((xSpe == 0 && ySpe == 0));
 	timer += 20 * rand() % 15;
 	type = d;
 	this->path = "resources/Projectiles/Stinger2.png";
@@ -45,8 +47,10 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish";
 		this->scaleX *= 32. / w;
 		this->scaleY *= 48. / h;
-		xSpe = rand() % 7 - 3;
-		ySpe = rand() % 7 - 3;
+		do {
+			xSpe = rand() % 7 - 3;
+			ySpe = rand() % 7 - 3;
+		} while ((xSpe == 0 && ySpe == 0));
 		damage = 3;
 		this->xp = 100;
 		health = 75;
@@ -60,8 +64,10 @@ Jelly::Jelly(Player *player, int d) :
 		this->path = "resources/Projectiles/Stinger2.png";
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-		xSpe = rand() % 7 - 3;
-		ySpe = rand() % 7 - 3;
+		do {
+			xSpe = rand() % 7 - 3;
+			ySpe = rand() % 7 - 3;
+		} while ((xSpe == 0 && ySpe == 0));
 		damage = 5;
 		this->xp = 500;
 		health = 600;
@@ -79,8 +85,10 @@ Jelly::Jelly(Player *player, int d) :
 		this->path = "resources/Projectiles/Stinger2.png";
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-		xSpe = rand() % 9 - 4;
-		ySpe = rand() % 9 - 4;
+		do {
+			xSpe = rand() % 9 - 4;
+			ySpe = rand() % 9 - 4;
+		} while ((xSpe == 0 && ySpe == 0));
 		damage = 8;
 		this->xp = 2500;
 		health = 1200;
