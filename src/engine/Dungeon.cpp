@@ -288,6 +288,7 @@ void Dungeon::generate() {
 						charybdis *w4 = new charybdis(Player::getPlayer());
 						c->originX = 512;
 						c->originY = 384;
+						c->health = 1000;
 						//c->showHitbox = true;
 						if (dungeonType == 1){
 							c->loadTexture("resources/enemies/scylla.png");
@@ -297,10 +298,10 @@ void Dungeon::generate() {
 							whirl->loadTexture("resources/enemies/charyb.png");
 							whirl->scaleX *= 1.1;
 							whirl->scaleY *= 1.1;
-							whirl->health = 5000;
+							whirl->health = 2000;
 							whirl->moveTo(50,50);
 							temp->room->addChild(whirl);
-							c->health = 7500;
+							c->health = 2000;
 							c->form = 1;
 
 						}
@@ -308,7 +309,7 @@ void Dungeon::generate() {
 							c->loadTexture("resources/enemies/hydra.png");
 							c->scaleX *= 2;
 							c->scaleY *= 2;
-							c->health = 10000;
+							c->health = 3500;
 							c->form = 2;
 							whirl->loadTexture("resources/enemies/wasp.png");
 							whirl->scaleX *= 1;
@@ -339,7 +340,7 @@ void Dungeon::generate() {
 						}
 						else if (dungeonType == 3){
 							c->loadTexture("resources/enemies/Pose.png");
-							c->health = 20000;
+							c->health = 10000;
 							c->form = 3;
 							whirl->loadTexture("resources/enemies/ojelly.png");
 							whirl->scaleX *= 1;

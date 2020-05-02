@@ -30,7 +30,7 @@ Player::Player() :
 	this->addAnimation("resources/playerAssets/idle.png",
 			"resources/playerAssets/idle.xml", "Idle", 1, 1, true);
 
-	// projectile firing 
+	// projectile firing
 	this->addAnimation("resources/PlayerSprites/fireLeft.png",
 			"resources/PlayerSprites/fireLeft.xml", "fireLeft", 1, 60, false);
 	this->addAnimation("resources/PlayerSprites/fireRight.png",
@@ -323,8 +323,8 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 	projSwapDelay++;
 	for (auto k : pressedKeys){
 		if (k == SDL_SCANCODE_L) {
-			if (level < 69)
-				levelUp();
+			//if (level < 69)
+				//levelUp();
 		}else if (k == SDL_SCANCODE_D) {
 			if (runSpeed == 0) {
 				continue;
@@ -355,7 +355,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y -= runSpeed;
 			this->deltaY += -runSpeed;
-			if (this->currAnimation != "walkUp") {
+			if (this->currAnimation != "walkUp" && this->currAnimation != "walkRight") {
 				this->play("walkUp");
 			}
 			idle = false;
@@ -365,7 +365,7 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 			}
 			this->position.y += runSpeed;
 			this->deltaY += runSpeed;
-			if (this->currAnimation != "walkDown") {
+			if (this->currAnimation != "walkDown" && this->currAnimation != "walkRight") {
 				this->play("walkDown");
 			}
 			idle = false;

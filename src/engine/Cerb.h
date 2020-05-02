@@ -23,8 +23,8 @@ public:
   bool atWall();
   void addProjectile(int speedX, int speedY, int timeout, double scaleX, double scaleY);
 
-  int health = 5000;
-  int maxHealth = 5000;
+  //int health = 5000;
+  //int maxHealth = 5000;
   int prowlTime = 0;
   int lungeTime = 0;
   int restCount = 0;
