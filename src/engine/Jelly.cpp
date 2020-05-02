@@ -157,7 +157,7 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			int midY = this->position.y + (dstrect.h) / 3;
 			Projectile *p = new Projectile(path, midX, midY, projX, projY, 1500,
 					0.15, 0.15, projectileDamage);
-			p->showHitbox = true;
+			//p->showHitbox = true;
 			((DisplayObjectContainer*) (this->parent))->addChild(p);
 			DTEvent e("OBJ_ADD", &Game::eventHandler, p);
 			Game::eventHandler.dispatchEvent(&e);

@@ -77,8 +77,8 @@ Spirit::Spirit(Player *player, int d) :
 		this->id = "ENEMY_Spirit";
 		//this->scaleX *= 0.15;//32./w;
 		//this->scaleY *= 0.15; ///h;
-		xSpe = 1;
-		ySpe = 1;
+		xSpe = 2;
+		ySpe = 2;
 		damage = 32;
 		health = 3000;
 		this->xp = 2000;
