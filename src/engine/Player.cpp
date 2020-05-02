@@ -88,6 +88,9 @@ Player* Player::getPlayer() {
 	return player;
 }
 
+void Player::newMessage(string message){
+	chat_box->addMessagetoDisplay(message);
+}
 //Called automatically by collision system when something collides with the player
 //our job is to simply react to that collision.
 void Player::onCollision(DisplayObject *other) {
@@ -389,6 +392,8 @@ void Player::update(set<SDL_Scancode> pressedKeys) {
 						+ 1;
 				projSwapDelay = 0;
 			}
+		}else if(k == SDL_SCANCODE_0){
+			this->newMessage("hey there");
 		}
 
 		//for shooting projectiles

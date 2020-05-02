@@ -50,6 +50,7 @@ public:
 	void changeDamage(int value);
 	void changeAttackSpeed(double value);
 	void toggleHealthDisplay();
+	void newMessage(string message);
 	bool checkLevelUp();
 	void levelUp();
 	void changeXP(int value);
