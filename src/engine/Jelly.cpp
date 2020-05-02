@@ -22,8 +22,8 @@ Jelly::Jelly(Player *player) :
 
 Jelly::Jelly(Player *player, int d) :
 		Enemy(player) {
-	xSpe = rand() % 7 - 3;
-	ySpe = rand() % 7 - 3;
+	xSpe = rand() % 5 - 2;
+	ySpe = rand() % 5 - 2;
 	timer += 20 * rand() % 15;
 	type = d;
 	this->path = "resources/Projectiles/Stinger2.png";
@@ -45,8 +45,8 @@ Jelly::Jelly(Player *player, int d) :
 		this->id = "ENEMY_Jellyfish";
 		this->scaleX *= 32. / w;
 		this->scaleY *= 48. / h;
-		xSpe = rand() % 9 - 4;
-		ySpe = rand() % 9 - 4;
+		xSpe = rand() % 7 - 3;
+		ySpe = rand() % 7 - 3;
 		damage = 3;
 		this->xp = 100;
 		health = 75;
@@ -64,7 +64,7 @@ Jelly::Jelly(Player *player, int d) :
 		ySpe = rand() % 7 - 3;
 		damage = 5;
 		this->xp = 500;
-		health = 300;
+		health = 600;
 		maxCoolDown = 200;
 		//this->setAlpha(100);
 		this->projectileDamage = 5;
@@ -76,13 +76,17 @@ Jelly::Jelly(Player *player, int d) :
 	case 3: {
 		this->loadTexture("./resources/enemies/ojelly.png");
 		this->id = "ENEMY_Jellyfish"; //shouldn't do anything
+		this->path = "resources/Projectiles/Stinger2.png";
 		this->scaleX *= 1;
 		this->scaleY *= 1;
-		xSpe = rand() % 11 - 5;
-		ySpe = rand() % 11 - 5;
+		xSpe = rand() % 9 - 4;
+		ySpe = rand() % 9 - 4;
 		damage = 8;
 		this->xp = 2500;
-		health = 500;
+		health = 1200;
+		maxCoolDown = 150;
+		this->projectileDamage = 8;
+		this->projectileSpeed = 6;
 		this->setAlpha(100);
 		this->setHitbox(.1, .9, .1, .9);
 		// this->showHitbox = true;
@@ -184,28 +188,28 @@ void Jelly::update(set<SDL_Scancode> pressedKeys) {
 			}
 		} //ySpe=-rand()%5;}
 	}
-	if (state == 0) {
-		timer++;
-		if (timer % 340 >= 250) {
-			state++;
-			xSpe = rand() % 3 - 1;
-			ySpe = rand() % 3 - 1;
-		}
-	} else if (state == 1) {
-		timer += 1;
-		if (timer % 340 >= 330) {
-			//timer = 0;
-			state = 0;
-			timer += 10 + rand() % 20;
-			while (abs(xSpe) + abs(ySpe) < 4) {
-				xSpe = rand() % (10 + timer / 300) - 5;
-				ySpe = rand() % (10 + timer / 300) - 5;
-			}
-		}
-	} else {
-		timer = 0;
-		state = 0;
-	}
+//	if (state == 0) {
+//		timer++;
+//		if (timer % 340 >= 250) {
+//			state++;
+//			xSpe = rand() % 3 - 1;
+//			ySpe = rand() % 3 - 1;
+//		}
+//	} else if (state == 1) {
+//		timer += 1;
+//		if (timer % 340 >= 330) {
+//			//timer = 0;
+//			state = 0;
+//			timer += 10 + rand() % 20;
+//			while (abs(xSpe) + abs(ySpe) < 4) {
+//				xSpe = rand() % (10 + timer / 300) - 5;
+//				ySpe = rand() % (10 + timer / 300) - 5;
+//			}
+//		}
+//	} else {
+//		timer = 0;
+//		state = 0;
+//	}
 	if (timer < 0) {
 		timer = 0;
 	}

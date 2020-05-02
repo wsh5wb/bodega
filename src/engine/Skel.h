@@ -18,8 +18,6 @@ public:
   void hide();
   void axeAttack();
 
-  int health = 25;
-  int maxHealth = 25;
   int idleTime = 0;
   int chaseTime = 0;
   int attackTime = 0;
