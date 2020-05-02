@@ -57,13 +57,13 @@ Player::Player() :
 	//sound_effect.playSFX();
 	chat_box =
 			new TextBox(
-					"There exists a fault in the totality of man that leads me ton believe in his effervesent knowledge of all things on a much deeper plane of existence give me all that you can possibly ever believe or understand");
+					"What a dank and dark place.");
 	this->addChild(chat_box);
 	chat_box->addMessagetoDisplay(
-			"OH BTW, I had more to say please please please get over the limit for sixty characters.");
+			"I feel, different. Almost as if I've been imbued with some unnerving energy, giving me the ability to spawn fires. I wonder how to use them.");
 	chat_box->addMessagetoDisplay(
-			"OH BTW, I had more to say please please please get over the limit for sixty characters.");
-	//this->runSpeed = 6;
+			"The first channel the might of the Phelgethon to damage my foes. The second unleashes a frost drawn from the River Lether. The third seems to restore my strength.");
+	//this->runSpeed = 6;d
 	//for tweening Demo
 	// this->alpha = 30;
 	// TweenJuggler * juggle = TweenJuggler::getInstance();
@@ -184,7 +184,7 @@ bool Player::changeHealth(int value) {
 
 	if (value < 0)
 		this->initIFrames(IFRAME_COUNT);
-		sound_effect.loadSFX("./resources/sounds/pain.wav");
+		sound_effect.loadSFX("./resources/sounds/hum.wav");
 		sound_effect.playSFX();
 	Event e("STATS_CHANGED", &Game::eventHandler);
 	Game::eventHandler.dispatchEvent(&e);
