@@ -55,7 +55,7 @@ Urchin::Urchin(Player *player, int d) :
 		this->xBound = 512 - (w * scaleX);
 		this->yBound = 384 - (h * scaleY);
 		projectileDamage = 2;
-		health = 200;
+		health = 300;
 		this->xp = 200;
 		break;
 	}
@@ -71,8 +71,9 @@ Urchin::Urchin(Player *player, int d) :
 		state = 0;
 		this->xBound = 512 - (w * scaleX);
 		this->yBound = 384 - (h * scaleY);
+		damage = 8;
 		projectileDamage = 4;
-		health = 400;
+		health = 800;
 		this->xp = 100;
 		break;
 	}
@@ -88,8 +89,9 @@ Urchin::Urchin(Player *player, int d) :
 		state = 0;
 		this->xBound = 512 - (w * scaleX);
 		this->yBound = 384 - (h * scaleY);
+		damage = 16;
 		projectileDamage = 8;
-		health = 1000;
+		health = 2000;
 		this->xp = 2500;
 		break;
 	}

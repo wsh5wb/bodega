@@ -48,7 +48,7 @@ Spirit::Spirit(Player *player, int d) :
 		xSpe = 2;
 		ySpe = 2;
 		damage = 8;
-		health = 100;
+		health = 200;
 		this->xp = 200;
 		restTime = 2;
 		//	this->setHitbox(.38,.58,.2,.7);
@@ -65,7 +65,7 @@ Spirit::Spirit(Player *player, int d) :
 		xSpe = 1;
 		ySpe = 1;
 		damage = 16;
-		health = 300;
+		health = 800;
 		this->xp = 1000;
 		restTime = 0;
 		//this->setHitbox(.1,.9,.1,.9);
@@ -80,7 +80,7 @@ Spirit::Spirit(Player *player, int d) :
 		xSpe = 1;
 		ySpe = 1;
 		damage = 32;
-		health = 700;
+		health = 3000;
 		this->xp = 2000;
 		restTime = 0;
 
